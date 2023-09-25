@@ -50,7 +50,7 @@ coverage.xml
 .hypothesis/
 .pytest_cache/
 cover/
-
+.cfg
 # Translations
 *.mo
 *.pot
@@ -137,6 +137,8 @@ venv.bak/
 
 # mkdocs documentation
 /site
+
+migrations/
 
 # mypy
 .mypy_cache/
