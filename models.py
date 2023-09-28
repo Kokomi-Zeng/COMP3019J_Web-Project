@@ -23,7 +23,7 @@ class Buyer(db.Model):
     balance = db.Column(db.Float)
 
     # Relationships
-    reviews = db.relationship("Review", backref="buyer")
+    comments = db.relationship("Comment", backref="buyer")
     purchases = db.relationship("Purchase", backref="buyer")
 
 class Seller(db.Model):
@@ -46,7 +46,7 @@ class Product(db.Model):
     product_name = db.Column(db.String(150))
 
     # Relationships
-    reviews = db.relationship("Review", backref="product")
+    comments = db.relationship("Comment", backref="product")
     purchases = db.relationship("Purchase", backref="product")
 
 class Comment(db.Model):
