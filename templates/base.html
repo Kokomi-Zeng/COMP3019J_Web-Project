@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+{#
+页面需要参数：
+phone:当前用户phone（String）,<<<若未登录返回None></若未登录返回None></若未登录返回None></若未登录返回None>
+name:当前用户name
+type:当前用户类型，1为买家，0为卖家
+#}
+    <meta charset="UTF-8">
+    <title>{% block title %}{% endblock %}</title>
+{#通用css#}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}">
+{#独有css#}
+     <link rel="stylesheet" href="{% block css %}{% endblock %}">
+</head>
+<body>
+<div class="top-box">
+{#LOGO#}
+    <div class="logo-box">
+        <img src="{{ url_for('static', filename='img/logo.img') }}" alt="LOGO">
+    </div>
+{#可能的searchbox#}
+    <div class="search-box">
+        {% block search_box %}{% endblock %}
+    </div>
+{#用户info#}
+    <div class="user-box">
+        {% if username %}
+            <div class="username">
+                {% if type==0 %}
+                    <a href="seller.html">{{ username }}</a>
+                {% elif type==1 %}
+                    <a href="buyer.html">{{ username }}</a>
+                {% endif %} 
+            </div>
+        {% else %}
+            <a href="Login.html">Login</a>
+        {% endif %}
+    </div>
+{#主体#}
+</div>
+<div class="main">
+    {% block main %}{% endblock %}
+</div>
+</body>
+</html>
