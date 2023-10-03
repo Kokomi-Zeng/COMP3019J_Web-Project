@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}{% endblock %}</title>
+{#通用css#}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}">
+{#独有css#}
+     <link rel="stylesheet" href="{% block css %}{% endblock %}">
+</head>
+<body>
+<div class="top-box">
+    <div class="logo-box">
+        <img src="{{ url_for('static', filename='img/logo.img') }}" alt="LOGO">
+    </div>
+    <div class="search-box">
+        {% block search_box %}{% endblock %}
+    </div>
+    <div class="user-box">
+
+    </div>
+</div>
+</body>
+</html>
