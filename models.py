@@ -7,7 +7,7 @@ class User(db.Model):
     password = db.Column(db.String(128))
     user_type = db.Column(db.String(10))
 
-    # Relationships
+    # 这里这么做是为了方便查询，使得可以反向查询，即通过buyer或者seller查询到user
     buyer = db.relationship("Buyer", backref="user", uselist=False)
     seller = db.relationship("Seller", backref="user", uselist=False)
 
@@ -22,7 +22,6 @@ class Buyer(db.Model):
     # 余额
     balance = db.Column(db.Float)
 
-    # Relationships
     comments = db.relationship("Comment", backref="buyer")
     purchases = db.relationship("Purchase", backref="buyer")
 
@@ -33,7 +32,6 @@ class Seller(db.Model):
     name = db.Column(db.String(100))
     description = db.Column(db.Text)
 
-    # Relationships
     products = db.relationship("Product", backref="seller")
 
 class Product(db.Model):
@@ -45,7 +43,6 @@ class Product(db.Model):
     storage = db.Column(db.Integer)
     product_name = db.Column(db.String(150))
 
-    # Relationships
     comments = db.relationship("Comment", backref="product")
     purchases = db.relationship("Purchase", backref="product")
 
