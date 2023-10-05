@@ -6,18 +6,27 @@
 用户phone
 #}
 {% block main %}
-    <link rel="stylesheet" href="/css/shop.css">
+    <link rel="stylesheet" href="/static/css/shop.css">
     <div class="item-box">
         <script>
-            $.ajax(
+            $("#search-box").keyup(function (){
+                $.ajax({
+                url:"/searchItemByName",
+                type:"get",
+                data:{
+                    phone:phone,
+                    keyword:$("#search-box").val(),
+                    page_num: "{{ page }}",
+                },
+                success:function (data){
+                    for (int i=0; i<data.length; i++){
 
-            )
+                    }
+                }
+            })
+            })
         </script>
-
-    {% for foo in  %}
-
-    {% endfor %}
-
+    <input id="search-box" type="search">
 
     </div>
 {% endblock %}
