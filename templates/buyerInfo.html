@@ -1,0 +1,94 @@
+{% extends "base_personInfo.html" %}
+
+{#
+页面需要参数：
+phone:当前用户phone（String）,<<<若未登录返回None></若未登录返回None></若未登录返回None></若未登录返回None>
+name:当前用户name
+#}
+
+{#title应放入base中#}
+{% block title %}
+{{ name }}的个人界面
+{% endblock %}
+
+{% block nav_bar %}
+    <button class="nav-button" id="info">info</button>
+    <button class="nav-button" id="charge">charge</button>
+    <button class="nav-button" id="purchased">purchased</button>
+{% endblock %}
+
+{% block script %}
+    <script>
+    window.onload = function (){
+        $("#info").click(info())
+        $("#charge").click(charge())
+        $("#purchased").click(purchased())
+    }
+    </script>
+
+    <script>
+    function info(){
+        $.ajax({
+            url:"/buyerInfo",
+            type:"get",
+            data:"{{ phone }}",
+            success:function (data){
+                var name = "";
+                var password = "";
+                var introduction = "";
+
+                var name_div = document.createElement("div");
+                var name_input = document.createElement("input");
+                name_div.setAttribute("class", "info-div");
+                name_input.setAttribute("type", "text");
+                name_input.setAttribute("value", name);
+                name_input.setAttribute("id", "name");
+
+                var phone_div = document.createElement("div");
+                var phone_input = document.createElement("input");
+                phone_div.setAttribute("class", "info-div");
+                phone_input.setAttribute("type", "text");
+                phone_input.setAttribute("value", "{{ phone }}");
+                phone_input.setAttribute("id", "phone");
+
+                var introduction_div = document.createElement("div");
+                var introduction_input = document.createElement("input");
+                introduction_div.setAttribute("class", "info-div");
+                introduction_input.setAttribute("type", "text");
+                introduction_input.setAttribute("value", introduction);
+                introduction_input.setAttribute("id", "introduction");
+
+                var password_div = document.createElement("div");
+                var password_input = document.createElement("input");
+                password_div.setAttribute("class", "info-div");
+                password_input.setAttribute("type", "text");
+                password_input.setAttribute("value", password);
+                password_input.setAttribute("id", "password");
+
+                var submit_div = document.createElement("div");
+                submit_div.click(function (){
+                    $.ajax({
+                        url:'/modifyBuyerInfo',
+                        type:'get',
+                        data:{
+                            phone:"{{ phone }}",
+                            name:$("#name").val(),
+                            password:$("#password").val(),
+                            introduction:$("#introduction").val(),
+                        },
+                        success:info()
+                    })
+                })
+            }
+        })
+
+
+    }
+    function charge(){
+
+    }
+    function purchased(){
+
+    }
+    </script>
+{% endblock %}
