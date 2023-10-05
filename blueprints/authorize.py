@@ -56,3 +56,5 @@ def register():
         return jsonify(success=False, errors=form.errors)
         # redirect("/authorize/register")
 
+
+
