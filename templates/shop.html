@@ -5,28 +5,72 @@
 用户类型type
 用户phone
 #}
-{% block main %}
-    <link rel="stylesheet" href="/static/css/shop.css">
-    <div class="item-box">
-        <script>
-            $("#search-box").keyup(function (){
+{% block script %}
+    <script>
+        function generate(){
+            $("#search-box").keyup(function () {
                 $.ajax({
-                url:"/searchItemByName",
-                type:"get",
-                data:{
-                    phone:phone,
-                    keyword:$("#search-box").val(),
-                    page_num: "{{ page }}",
-                },
-                success:function (data){
-                    for (int i=0; i<data.length; i++){
-
+                    url: "/searchItemByName",
+                    type: "get",
+                    data: {
+                        phone:" {{ phone }}",
+                        keyword: $("#search-box").val(),
+                        page_num: page_num,
+                    },
+                    success: function (data) {
+                    {#    创建item内容#}
                     }
-                }
+                })
             })
-            })
-        </script>
-    <input id="search-box" type="search">
 
+            $.ajax({
+                url:"/hasNextPage",
+                type:"get",
+                data: {
+                        phone: phone,
+                        keyword: $("#search-box").val(),
+                        page_num: page_num,
+                    },
+                    success: function (data) {
+                        var button = document.createElement("button");
+                        button.setAttribute("class", "page-button");
+                        button.click(function (){
+                            page_num++;
+                            generate();
+                        })
+                        $(".next").append(button);
+                    }
+            })
+
+            if (page_num>1){
+                var button = document.createElement("button");
+                button.setAttribute("class", "page-button");
+                button.click(function (){
+                    page_num--;
+                    generate();
+                })
+                $(".prev").append(button);
+            }
+        }
+
+
+        var page_num;
+        window.onload = function () {
+            page_num = 0;
+            generate();
+
+
+        }
+    </script>
+{% endblock %}
+
+{% block css %}
+    /static/css/shop.css
+{% endblock %}
+
+{% block main %}
+    <div class="item-box">
     </div>
+    <div class="prev"></div>
+    <div class="next"></div>
 {% endblock %}
