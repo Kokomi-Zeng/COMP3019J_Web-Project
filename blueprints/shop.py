@@ -46,8 +46,6 @@ def has_next_page():
     return jsonify({"has_next": items.has_next})
 
 
-
-
 def get_user_info():
     phone = session.get('phone')
 

@@ -1,8 +1,16 @@
-from flask import Blueprint, render_template, request, jsonify
+from flask import Blueprint, render_template, request, jsonify, session
 
-from models import Product, Comment, Buyer
+from models import Product, Comment, Buyer, User
 
 buyer_bp = Blueprint('buyer', __name__, url_prefix='/buyer')
+
+
+@buyer_bp.route('/')
+def buyer():
+    user_info = get_user_info()
+
+    # **user_info相当于phone=user_info['phone'], name=user_info['name']]
+    return render_template('buyer.html', **user_info)
 
 @buyer_bp.route('/buyerInfo', methods=['GET'])
 def buyer_info():
@@ -29,4 +37,44 @@ def buyer_info():
     })
 
 
+
+def get_user_info():
+    phone = session.get('phone')
+
+    # 先判断session中是否有phone，如果没有，返回None
+    if not phone:
+        return {
+            'phone': None,
+            'name': None,
+        }
+
+    # 如果有phone，但是数据库中没有该用户，返回None
+    user = User.query.get(phone)
+    if not user:
+        return {
+            'phone': None,
+            'name': None,
+        }
+
+    # 根据用户类型获取姓名, 里面的if判断是为了防止数据库中没有该用户的信息，导致程序报错
+    if user.user_type == '0':  # 卖家
+        if user.seller:
+            # name = user.seller.name
+            # 因为是buyer的蓝图，所以这么设置none或者直接设置为user.buyer.name都可以(但是前者更好)
+            name = None
+        else:
+            name = None
+
+    elif user.user_type == '1':  # 买家
+        if user.seller:
+            name = user.buyer.name
+        else:
+            name = None
+    else:
+        name = None
+
+    return {
+        'phone': phone,
+        'name': name,
+    }
 
