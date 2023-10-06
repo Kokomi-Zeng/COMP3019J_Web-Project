@@ -1,24 +1,36 @@
-from flask import jsonify, request
+from flask import Blueprint, jsonify, request
+from models import Product, db
 
-from models import Product
+products_bp = Blueprint('products', __name__, url_prefix='/products')
 
-# @app.route('/get-products', methods=['GET'])
-def get_products():
-    # 使用request.args.get从请求的URL参数中获取页码page。如果该参数不存在，它会默认为1。type=int确保返回的是整数类型。
-    page = request.args.get('page', 1, type=int)
-    per_page = 5
-    pagination = Product.query.paginate(page, per_page=per_page, error_out=False)
+@products_bp.route('/modifyItem', methods=['POST'])
+def modify_item():
+    product_id = request.form.get('product_id')
+    seller_phone = request.form.get('seller_phone')
+    price = float(request.form.get('price'))
+    image_src = request.form.get('image_src')
+    storage = int(request.form.get('storage'))
+    product_name = request.form.get('product_name')
+    description = request.form.get('description')
 
-    # 获取当前页上的所有商品。它是一个商品对象的列表
-    products = pagination.items
+    # 验证商品是否存在
+    product = Product.query.get(product_id)
+    if not product:
+        return jsonify({"message": "Product not found"}), 404
 
-    # 将数据转换为可以JSON化的格式
-    products_data = [{"id": product.id} for product in products]
+    # 检查商品是否属于该卖家
+    if product.seller_phone != seller_phone:
+        return jsonify({"message": "Unauthorized"}), 403
 
-    return jsonify({
-        'products': products_data,
-        'has_next': pagination.has_next,
-        'has_prev': pagination.has_prev,
-        'next_num': pagination.next_num,
-        'prev_num': pagination.prev_num
-    })
+    # 更改商品信息
+    product.price = price
+    product.image_src = image_src
+    product.storage = storage
+    product.product_name = product_name
+    product.description = description
+
+    # 弄到数据库中
+    db.session.commit()
+
+    return jsonify({"message": "Product updated successfully!"}), 200
+
