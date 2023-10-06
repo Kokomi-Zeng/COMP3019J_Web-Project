@@ -1,5 +1,7 @@
 from flask import Blueprint, render_template, request, jsonify, session
+from werkzeug.security import check_password_hash
 
+from exts import db
 from models import Product, Comment, Buyer, User
 
 buyer_bp = Blueprint('buyer', __name__, url_prefix='/buyer')
@@ -36,6 +38,27 @@ def buyer_info():
         "balance": buyer.balance
     })
 
+@buyer_bp.route('/charge', methods=['POST'])
+def charge():
+    phone = request.form.get('phone')
+    charge_num = float(request.form.get('charge_num'))
+    password = request.form.get('password')
+
+    # 查询用户
+    user = User.query.filter_by(phone=phone).first()
+
+    # 如果没有找到用户或密码不正确
+    if not user or not check_password_hash(user.password, password):
+        return jsonify({"success": False}), 400
+
+    # 给用户充值
+    buyer = Buyer.query.filter_by(phone=phone).first()
+    if not buyer:
+        return jsonify({"success": False}), 400
+    buyer.balance += charge_num
+    db.session.commit()
+
+    return jsonify({"success": True}), 200
 
 
 def get_user_info():
