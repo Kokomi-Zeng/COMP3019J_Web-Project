@@ -1,8 +1,10 @@
+from datetime import datetime
+
 from flask import Blueprint, render_template, request, jsonify, session
 from werkzeug.security import check_password_hash
 
 from exts import db
-from models import Product, Comment, Buyer, User
+from models import Product, Comment, Buyer, User, Purchase
 
 buyer_bp = Blueprint('buyer', __name__, url_prefix='/buyer')
 
@@ -60,18 +62,60 @@ def charge():
 
     return jsonify({"success": True}), 200
 
-@buyer_bp.route('/buyerItem', methods=['POST'])
-def get_buyer_item():
+@buyer.route('/buyerItem', methods=['POST'])
+def get_buyer_items():
+    phone = request.json.get('phone')
+    buyer = Buyer.query.filter_by(phone=phone).first()
+
+    if not buyer:
+        return jsonify({"error": "Buyer not found"}), 404
+
+    purchased_items = []
+    for purchase in buyer.purchases:
+        purchased_items.append({
+            'product_name': purchase.product.product_name,
+            'total_price': purchase.purchase_price * purchase.purchase_number,
+            'image_src': purchase.image_src_at_time_of_purchase,
+            'purchase_time': purchase.purchase_time.strftime('%Y-%m-%d %H:%M:%S'),
+            'purchase_quantity': purchase.purchase_number
+        })
+
+    return jsonify(purchased_items), 200
 
 
+@buyer.route('/buyItem', methods=['POST'])
+def buy_item():
+    product_id = request.json.get('product_id')
+    phone = request.json.get('phone')
 
+    buyer = Buyer.query.filter_by(phone=phone).first()
+    product = Product.query.filter_by(product_id=product_id).first()
 
+    # 判断买家和商品是否存在
+    if not buyer or not product:
+        return jsonify({"error": "Buyer or product not found"}), 404
 
+    # 判断买家账户的钱是否足够
+    if buyer.balance < product.price:
+        return jsonify({"success": False, "error": "Insufficient funds"}), 400
 
+    # balance减少，storage减少，新的purchase添加到数据库中
+    buyer.balance -= product.price
+    product.storage -= 1
 
+    new_purchase = Purchase(
+        product_id=product.product_id,
+        buyer_phone=buyer.phone,
+        purchase_number=1,
+        purchase_price=product.price,
+        purchase_time=datetime.now(),
+        image_src_at_time_of_purchase=product.image_src
+    )
 
+    db.session.add(new_purchase)
+    db.session.commit()
 
-
+    return jsonify({"success": True}), 200
 
 def get_user_info():
     phone = session.get('phone')
