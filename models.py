@@ -42,6 +42,8 @@ class Product(db.Model):
     price = db.Column(db.Float)
     storage = db.Column(db.Integer)
     product_name = db.Column(db.String(150))
+    image_src = db.Column(db.String(200))
+
 
     comments = db.relationship("Comment", backref="product")
     purchases = db.relationship("Purchase", backref="product")
@@ -61,5 +63,8 @@ class Purchase(db.Model):
     purchase_id = db.Column(db.Integer, primary_key=True)
     product_id = db.Column(db.Integer, db.ForeignKey("products.product_id"))
     buyer_phone = db.Column(db.String(15), db.ForeignKey("buyers.phone"))
+    # DateTime类型, 举例: 2111-11-11 11:11:11
+    purchase_time = db.Column(db.DateTime)
+    image_src_at_time_of_purchase = db.Column(db.String(200))
     purchase_number = db.Column(db.Integer)
     purchase_price = db.Column(db.Float)
