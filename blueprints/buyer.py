@@ -16,7 +16,7 @@ def buyer():
 
 @buyer_bp.route('/buyerInfo', methods=['GET'])
 def buyer_info():
-    phone = request.args.get('phone')
+    phone = request.json.get('phone')
 
     # 假如没有传入phone，返回服务器200状态码，表示请求成功，但是没有数据
     if not phone:
@@ -40,9 +40,9 @@ def buyer_info():
 
 @buyer_bp.route('/charge', methods=['POST'])
 def charge():
-    phone = request.form.get('phone')
-    charge_num = float(request.form.get('charge_num'))
-    password = request.form.get('password')
+    phone = request.json.get('phone')
+    charge_num = float(request.json.get('charge_num'))
+    password = request.json.get('password')
 
     # 查询用户
     user = User.query.filter_by(phone=phone).first()
@@ -59,6 +59,18 @@ def charge():
     db.session.commit()
 
     return jsonify({"success": True}), 200
+
+@buyer_bp.route('/buyerItem', methods=['POST'])
+def get_buyer_item():
+
+
+
+
+
+
+
+
+
 
 
 def get_user_info():

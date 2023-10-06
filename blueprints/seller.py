@@ -14,7 +14,7 @@ def seller():
 
 @seller_bp.route('/buyerInfo', methods=['GET'])
 def seller_info():
-    phone = request.args.get('phone')
+    phone = request.json.get('phone')
 
     # 假如没有传入phone，返回服务器200状态码，表示请求成功，但是没有数据
     if not phone:

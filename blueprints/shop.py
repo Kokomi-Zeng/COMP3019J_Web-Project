@@ -1,5 +1,6 @@
 from flask import Blueprint, render_template, session, request, jsonify
 from models import User, Product, Comment
+from sqlalchemy import func
 from exts import db
 
 shop_bp = Blueprint('shop', __name__, url_prefix='/shop')
@@ -15,9 +16,9 @@ def shop():
 
 @shop_bp.route('/searchItemByName', methods=['GET'])
 def search_item_by_name():
-    phone = request.args.get('phone')
-    keyword = request.args.get('keyword')
-    page_num = int(request.args.get('page_num'))
+    phone = request.json.get('phone')
+    keyword = request.json.get('keyword')
+    page_num = int(request.json.get('page_num'))
 
     # 如果关键词存在并且不为空格
     if keyword and keyword.strip():
@@ -34,9 +35,9 @@ def search_item_by_name():
 
 @shop_bp.route('/hasNextPage', methods=['GET'])
 def has_next_page():
-    phone = request.args.get('phone')
-    keyword = request.args.get('keyword')
-    page_num = int(request.args.get('page_num'))
+    phone = request.json.get('phone')
+    keyword = request.json.get('keyword')
+    page_num = int(request.json.get('page_num'))
 
     if keyword and keyword.strip():
         items = Product.query.filter(Product.product_name.contains(keyword)).paginate(page=page_num, per_page=10, error_out=False)

@@ -5,13 +5,13 @@ products_bp = Blueprint('products', __name__, url_prefix='/products')
 
 @products_bp.route('/modifyItem', methods=['POST'])
 def modify_item():
-    product_id = request.form.get('product_id')
-    seller_phone = request.form.get('seller_phone')
-    price = float(request.form.get('price'))
-    image_src = request.form.get('image_src')
-    storage = int(request.form.get('storage'))
-    product_name = request.form.get('product_name')
-    description = request.form.get('description')
+    product_id = request.json.get('product_id')
+    seller_phone = request.json.get('seller_phone')
+    price = float(request.json.get('price'))
+    image_src = request.json.get('image_src')
+    storage = int(request.json.get('storage'))
+    product_name = request.json.get('product_name')
+    description = request.json.get('description')
 
     # 验证商品是否存在
     product = Product.query.get(product_id)
@@ -37,12 +37,12 @@ def modify_item():
 
 @products_bp.route('/addItem', methods=['POST'])
 def add_item():
-    seller_phone = request.form.get('seller_phone')
-    price = float(request.form.get('price'))
-    image_src = request.form.get('image_src')
-    storage = int(request.form.get('storage'))
-    product_name = request.form.get('product_name')
-    description = request.form.get('description')
+    seller_phone = request.json.get('seller_phone')
+    price = float(request.json.get('price'))
+    image_src = request.json.get('image_src')
+    storage = int(request.json.get('storage'))
+    product_name = request.json.get('product_name')
+    description = request.json.get('description')
 
     # 创建新的商品
     product = Product(
@@ -64,8 +64,8 @@ def add_item():
 
 @products_bp.route('/deleteItem', methods=['POST'])
 def delete_item():
-    product_id = request.form.get('product_id')
-    seller_phone = request.form.get('seller_phone')
+    product_id = request.json.get('product_id')
+    seller_phone = request.json.get('seller_phone')
 
     # 验证商品是否存在
     product = Product.query.get(product_id)

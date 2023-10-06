@@ -5,10 +5,10 @@ comment_bp = Blueprint('comment', __name__, url_prefix='/comment')
 
 @comment_bp.route('/createComment', methods=['POST'])
 def create_comment():
-    phone = request.form.get('phone')
-    content = request.form.get('content')
-    rating = int(request.form.get('rating'))
-    product_id = int(request.form.get('product_id'))
+    phone = request.json.get('phone')
+    content = request.json.get('content')
+    rating = int(request.json.get('rating'))
+    product_id = int(request.json.get('product_id'))
 
     # 验证买家是否存在
     buyer = Buyer.query.filter_by(phone=phone).first()
