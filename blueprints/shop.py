@@ -16,35 +16,28 @@ def shop():
 
 @shop_bp.route('/searchItemByName', methods=['GET'])
 def search_item_by_name():
-    phone = request.json.get('phone')
-    keyword = request.json.get('keyword')
-    page_num = int(request.json.get('page_num'))
-
-    # 如果关键词存在并且不为空格
-    if keyword and keyword.strip():
-        # error_out=False表示如果页数超出范围，不会报错，而是返回空列表
-        items = Product.query.filter(Product.product_name.contains(keyword)).paginate(page=page_num, per_page=10, error_out=False)
-    # 如果关键词为空或只有空格
-    else:
-        items = Product.query.paginate(page=page_num, per_page=10, error_out=False)
-
-    results = [{"product_name": item.product_name, "product_id": item.product_id} for item in items.items]
-    return jsonify(results)
 
 
 
 @shop_bp.route('/hasNextPage', methods=['GET'])
 def has_next_page():
-    phone = request.json.get('phone')
-    keyword = request.json.get('keyword')
-    page_num = int(request.json.get('page_num'))
 
-    if keyword and keyword.strip():
-        items = Product.query.filter(Product.product_name.contains(keyword)).paginate(page=page_num, per_page=10, error_out=False)
-    else:
-        items = Product.query.paginate(page=page_num, per_page=10, error_out=False)
 
-    return jsonify({"has_next": items.has_next})
+
+
+# 辅助函数来计算商品的平均rating
+def calculate_average_rating(product_id):
+    comments = Comment.query.filter_by(product_id=product_id).all()
+    # 如果没有评论，直接0.0分
+    if not comments:
+        return 0.0
+
+    total_rating = 0
+    for comment in comments:
+        total_rating += comment.rating
+
+    average_rating = total_rating / len(comments)
+    return average_rating
 
 
 def get_user_info():

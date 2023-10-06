@@ -18,7 +18,7 @@ def buyer():
 
 @buyer_bp.route('/buyerInfo', methods=['GET'])
 def buyer_info():
-    phone = request.json.get('phone')
+    phone = request.args.get('phone')
 
     # 假如没有传入phone，返回服务器200状态码，表示请求成功，但是没有数据
     if not phone:
@@ -42,9 +42,12 @@ def buyer_info():
 
 @buyer_bp.route('/charge', methods=['POST'])
 def charge():
-    phone = request.json.get('phone')
-    charge_num = float(request.json.get('charge_num'))
-    password = request.json.get('password')
+    phone = request.args.get('phone')
+    try:
+        charge_num = float(request.args.get('charge_num'))
+    except (TypeError, ValueError):
+        return jsonify({"error": "Invalid charge amount."}), 400
+    password = request.args.get('password')
 
     # 查询用户
     user = User.query.filter_by(phone=phone).first()
@@ -62,9 +65,9 @@ def charge():
 
     return jsonify({"success": True}), 200
 
-@buyer.route('/buyerItem', methods=['POST'])
+@buyer_bp.route('/buyerItem', methods=['POST'])
 def get_buyer_items():
-    phone = request.json.get('phone')
+    phone = request.args.get('phone')
     buyer = Buyer.query.filter_by(phone=phone).first()
 
     if not buyer:
@@ -83,10 +86,14 @@ def get_buyer_items():
     return jsonify(purchased_items), 200
 
 
-@buyer.route('/buyItem', methods=['POST'])
+@buyer_bp.route('/buyItem', methods=['POST'])
 def buy_item():
-    product_id = request.json.get('product_id')
-    phone = request.json.get('phone')
+    try:
+        product_id = int(request.args.get('product_id'))
+    except (TypeError, ValueError):
+        return jsonify({"error": "Invalid product ID."}), 400
+
+    phone = request.args.get('phone')
 
     buyer = Buyer.query.filter_by(phone=phone).first()
     product = Product.query.filter_by(product_id=product_id).first()
