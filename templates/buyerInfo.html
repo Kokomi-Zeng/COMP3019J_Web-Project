@@ -162,7 +162,22 @@ name:当前用户name
         })
     }
     function purchased(){
+        {#清除dom#}
+        $(".body").innerText='';
 
+        $.ajax({
+            url:"/buyerItem",
+            type:"get",
+            data:{
+                phone:"{{ phone }}",
+            },
+            success:function (data){
+                for (int i=0; i<data.length; i++){
+                    var item = data[i];
+                    
+                }
+            }
+        })
     }
     </script>
 {% endblock %}
