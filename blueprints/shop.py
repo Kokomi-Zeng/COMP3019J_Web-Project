@@ -16,13 +16,95 @@ def shop():
 
 @shop_bp.route('/searchItemByName', methods=['GET'])
 def search_item_by_name():
+    phone = request.args.get('phone')
+    # 没输keyword，等于输了空格
+    keyword = request.args.get('keyword', '')
+
+    try:
+        page_num = int(request.args.get('page_num', 1))
+    except (TypeError, ValueError):
+        return jsonify({"error": "Invalid page number"}), 400
+
+    per_page = 10
+    # offset是从第几个开始，limit是取多少个
+    offset = (page_num - 1) * per_page
+
+    # 找到用户
+    user = User.query.filter_by(phone=phone).first()
+    query = Product.query
+
+    # 如果keyword不为空
+    if keyword:
+        # 这实际上是买家和游客的搜索结果
+        query = query.filter(Product.product_name.like(f"%{keyword}%"))
+
+    # 如果是买家或卖家(user存在)
+    if user:
+        # 如果是卖家
+        if user.user_type == "0":
+            # 只能搜索自己的商品
+            query = query.filter_by(seller_phone=phone)
+    # 如果是游客，限制你翻页
+    else:
+        if page_num > 1:
+            return jsonify({"error": "Unauthorized access"}), 401
+
+    # 某一页的全部商品
+    products = query.limit(per_page).offset(offset).all()
+
+    # 按照平均rating从高到低排序
+    sorted_products = sorted(products, key=lambda product: calculate_average_rating(product.product_id), reverse=True)
+
+    product_list = []
+    for product in sorted_products:
+        avg_rating = calculate_average_rating(product.product_id)
+        product_list.append({
+            "product_name": product.product_name,
+            "image_src": product.image_src,
+            "rating": avg_rating,
+            "price": product.price,
+            "product_id": product.product_id
+        })
+
+    return jsonify(product_list), 200
 
 
 
-@shop_bp.route('/hasNextPage', methods=['GET'])
+
+@shop.route('/hasNextPage', methods=['GET'])
 def has_next_page():
+    phone = request.args.get('phone')
+    keyword = request.args.get('keyword', "")
 
+    try:
+        page_num = int(request.args.get('page_num', 1))
+    except ValueError:
+        return jsonify({"error": "Invalid page number"}), 400
 
+    per_page = 10
+
+    # 当前页之后的下一页还有多少个商品
+    offset = page_num * per_page
+
+    # 找到用户
+    user = User.query.filter_by(phone=phone).first()
+    query = Product.query
+
+    if keyword:
+        query = query.filter(Product.product_name.like(f"%{keyword}%"))
+
+    if user:
+        if user.user_type == "0":
+
+            query = query.filter_by(seller_phone=phone)
+    else:
+        if page_num > 1:
+            return jsonify({"error": "Unauthorized access"}), 401
+
+    # offset: 从第几个开始，limit: 取多少个, count: 一共有多少个
+    next_page_products_count = (query.limit(per_page).offset(offset)).count()
+    boolean = next_page_products_count > 0
+    return jsonify({"has_next": boolean})
 
 
 # 辅助函数来计算商品的平均rating
