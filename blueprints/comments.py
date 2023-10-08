@@ -3,7 +3,7 @@ from models import Comment, Buyer, db, Product
 
 comment_bp = Blueprint('comment', __name__, url_prefix='/comment')
 
-@comment_bp.route('/createComment', methods=['POST'])
+@comment_bp.route('/createComment', methods=['GET'])
 def create_comment():
     buyer_phone = request.args.get('buyer_phone')
     content = request.args.get('content')
@@ -35,7 +35,7 @@ def create_comment():
     return jsonify({"message": "Comment added successfully!"}), 201
 
 
-@comment_bp.route('/commentBasicInfoById', methods=['POST'])
+@comment_bp.route('/commentBasicInfoById', methods=['GET'])
 def comment_basic_info_by_id():
     product_id_data = request.args.get('product_id')
 
@@ -70,7 +70,7 @@ def comment_basic_info_by_id():
     return jsonify(comments_data), 200
 
 
-@comment_bp.route('/commentInfoById', methods=['POST'])
+@comment_bp.route('/commentInfoById', methods=['GET'])
 def comment_info_by_id():
     product_id_data = request.args.get('product_id')
     buyer_phone_data = request.args.get('buyer_phone')

@@ -11,11 +11,12 @@ from models import User
 # 创建蓝图对象,第一个：蓝图名字，第二个；__name__表示代表当前的模块，第三个：url_prefix表示前缀，所有的在这里面的路由都会加上这里的前缀
 bp = Blueprint("authorize", __name__, url_prefix="/authorize")
 
-@bp.route("/login", methods=["GET", "POST"])
+
+@bp.route("/login", methods=["POST"])
 def login():
 
-    phone = request.args.get('phone')
-    password = request.args.get('password')
+    phone = request.json.get('phone')
+    password = request.json.get('password')
 
     if len(phone) > 15:
         return jsonify(success=False, message="Invalid phone number.")
@@ -29,12 +30,12 @@ def login():
         return jsonify(success=False, message="Incorrect phone or password.")
 
 
-@bp.route("/register", methods=["GET", "POST"])
+@bp.route("/register", methods=["POST"])
 def register():
 
-    phone = request.args.get('phone')
-    password = request.args.get('password')
-    user_type = request.args.get('user_type')
+    phone = request.json.get('phone')
+    password = request.json.get('password')
+    user_type = request.json.get('user_type')
 
     if len(phone) > 15:
         return jsonify(success=False, message="Invalid phone number.")

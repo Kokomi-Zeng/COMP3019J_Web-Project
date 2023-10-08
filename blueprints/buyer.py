@@ -40,7 +40,7 @@ def buyer_info():
         "balance": buyer.balance
     })
 
-@buyer_bp.route('/charge', methods=['POST'])
+@buyer_bp.route('/charge', methods=['GET'])
 def charge():
     phone = request.args.get('phone')
     try:
@@ -65,7 +65,7 @@ def charge():
 
     return jsonify({"success": True}), 200
 
-@buyer_bp.route('/buyerItem', methods=['POST'])
+@buyer_bp.route('/buyerItem', methods=['GET'])
 def get_buyer_items():
     phone = request.args.get('phone')
     buyer = Buyer.query.filter_by(phone=phone).first()
@@ -86,7 +86,7 @@ def get_buyer_items():
     return jsonify(purchased_items), 200
 
 
-@buyer_bp.route('/buyItem', methods=['POST'])
+@buyer_bp.route('/buyItem', methods=['GET'])
 def buy_item():
     try:
         product_id = int(request.args.get('product_id'))

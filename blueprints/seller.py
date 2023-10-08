@@ -12,7 +12,7 @@ def seller():
     return render_template('seller.html', **user_info)
 
 
-@seller_bp.route('/buyerInfo', methods=['GET'])
+@seller_bp.route('/sellerInfo', methods=['GET'])
 def seller_info():
     phone = request.args.get('phone')
 

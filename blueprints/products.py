@@ -3,7 +3,7 @@ from models import Product, db, Comment
 
 products_bp = Blueprint('products', __name__, url_prefix='/products')
 
-@products_bp.route('/modifyItem', methods=['POST'])
+@products_bp.route('/modifyItem', methods=['GET'])
 def modify_item():
     seller_phone = request.args.get('seller_phone')
     image_src = request.args.get('image_src')
@@ -39,7 +39,7 @@ def modify_item():
     # 状态码200表示服务器已成功处理了请求
     return jsonify({"message": "Product updated successfully"}), 200
 
-@products_bp.route('/addItem', methods=['POST'])
+@products_bp.route('/addItem', methods=['GET'])
 def add_item():
     seller_phone = request.args.get('seller_phone')
     image_src = request.args.get('image_src')
@@ -70,7 +70,7 @@ def add_item():
     return jsonify({"message": "Product added successfully"}), 201
 
 
-@products_bp.route('/deleteItem', methods=['POST'])
+@products_bp.route('/deleteItem', methods=['GET'])
 def delete_item():
     seller_phone = request.args.get('seller_phone')
 
@@ -96,7 +96,7 @@ def delete_item():
     return jsonify({"message": "Product deleted successfully"}), 200
 
 
-@products_bp.route('/itemInfoById', methods=['POST'])
+@products_bp.route('/itemInfoById', methods=['GET'])
 def item_info_by_id():
     # product_id是否为int类型
     try:
