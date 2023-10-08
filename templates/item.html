@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block title %}
+{{ id }}
+{% endblock %}
+
+{% block script %}
+    <script>
+    window.onload = function (){
+        $.ajax({
+            url:"/itemInfoById",
+            type:"get",
+            data:"{{ id }}",
+            success: function (data){
+
+            }
+        })
+    }
+    </script>
+{% endblock %}
+
+{% block main %}
+
+{% endblock %}
