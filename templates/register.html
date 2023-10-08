@@ -18,7 +18,7 @@ register
                 type:$(".user-type").val(),
             },
             success:function (){
-                console.log("success");
+                window.location.replace("login.html");
             }
         })
     }
@@ -27,8 +27,7 @@ register
     <script>
     window.onload = function (){
         $("#submit").click(function (){
-            console.log("success");
-            login();
+            register();
         });
     }
     </script>
