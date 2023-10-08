@@ -1,0 +1,53 @@
+{% extends "base_begin.html" %}
+
+{% block title %}
+login
+{% endblock %}
+
+{% block css %}/static/css/login.css{% endblock %}
+
+{% block script %}
+    <script>
+    function login(){
+        $.ajax({
+            url:"/login",
+            type:"post",
+            dataL:{
+                phone:$("#phone").val(),
+                password:$("#password").val(),
+            },
+            success:function (){
+
+            }
+        })
+    }
+    </script>
+
+    <script>
+    window.onload = function (){
+        $("#submit").click(login())
+        $("input").keypress(function (even){
+            if (even.which==13){
+                login();
+            }
+        })
+    }
+    </script>
+{% endblock %}
+
+{% block rightbox %}
+<div class="login-background-div">
+    <div class="phone">
+        <input type="text" id="phone">
+    </div>
+
+    <div class="password">
+        <input type="password" id="password">
+    </div>
+
+    <div class="submit">
+        <button type="submit" id="submit">LOGIN</button>
+    </div>
+
+</div>
+{% endblock %}
