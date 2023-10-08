@@ -57,3 +57,7 @@
 
 /getMoney
 上传phone，返回用户金额
+
+1008新增
+/getSession
+获取session信息，包含phone，name
