@@ -110,66 +110,66 @@ name:当前用户name
         {#清除dom#}
         $(".body").innerText='';
 
-        var item_name = ""
-                var item_name_div = document.createElement("div");
-                item_name_div.setAttribute("class", "add-div");
-                item_name_div.setAttribute("id", "item_name-div");
-                var item_name_input = document.createElement("input");
-                item_name_input.setAttribute("id", "item_name");
-                item_name_div.append(item_name_input);
-                $(".body").append(item_name_div);
+        var item_name = "";
+        var item_name_div = document.createElement("div");
+        item_name_div.setAttribute("class", "add-div");
+        item_name_div.setAttribute("id", "item_name-div");
+        var item_name_input = document.createElement("input");
+        item_name_input.setAttribute("id", "item_name");
+        item_name_div.append(item_name_input);
+        $(".body").append(item_name_div);
 
-                var src_div = document.createElement("div");
-                src_div.setAttribute("class", "add-div");
-                src_div.setAttribute("id", "src-div");
-                var src_input = document.createElement("input");
-                src_input.setAttribute("id", "src");
-                src_div.append(src_input);
-                $(".body").append(src_div);
+        var src_div = document.createElement("div");
+        src_div.setAttribute("class", "add-div");
+        src_div.setAttribute("id", "src-div");
+        var src_input = document.createElement("input");
+        src_input.setAttribute("id", "src");
+        src_div.append(src_input);
+        $(".body").append(src_div);
 
-                var storage_div = document.createElement("div");
-                storage_div.setAttribute("class", "add-div");
-                storage_div.setAttribute("id", "storage-div");
-                var storage_input = document.createElement("input");
-                storage_input.setAttribute("id", "storage");
-                storage_div.append(storage_input);
-                $(".body").append(storage_div);
+        var storage_div = document.createElement("div");
+        storage_div.setAttribute("class", "add-div");
+        storage_div.setAttribute("id", "storage-div");
+        var storage_input = document.createElement("input");
+        storage_input.setAttribute("id", "storage");
+        storage_div.append(storage_input);
+        $(".body").append(storage_div);
 
-                var introduction_div = document.createElement("div");
-                introduction_div.setAttribute("class", "add-div");
-                introduction_div.setAttribute("id", "introduction-div");
-                var introduction_input = document.createElement("input");
-                introduction_input.setAttribute("id", "introduction");
-                introduction_div.append(introduction_input);
-                $(".body").append(introduction_div);
+        var introduction_div = document.createElement("div");
+        introduction_div.setAttribute("class", "add-div");
+        introduction_div.setAttribute("id", "introduction-div");
+        var introduction_input = document.createElement("input");
+        introduction_input.setAttribute("id", "introduction");
+        introduction_div.append(introduction_input);
+        $(".body").append(introduction_div);
 
-                var price_div = document.createElement("div");
-                var price_input = document.createElement("input");
-                price_div.setAttribute("class", "add-div");
-                price_div.setAttribute("id", "price-div");
-                price_input.setAttribute("type", "price");
-                price_input.setAttribute("id", "price");
-                price_div.append(price_input);
-                $(".body").append(price_div);
+        var price_div = document.createElement("div");
+        var price_input = document.createElement("input");
+        price_div.setAttribute("class", "add-div");
+        price_div.setAttribute("id", "price-div");
+        price_input.setAttribute("type", "price");
+        price_input.setAttribute("id", "price");
+        price_div.append(price_input);
+        $(".body").append(price_div);
 
-                var submit_div = document.createElement("div");
-                submit_div.click(function (){
-                    $.ajax({
-                        url:'/addItem',
-                        type:'get',
-                        data:{
-                            phone:"{{ phone }}",
-                            price:$("#price").val(),
-                            storage:$("#storage").val(),
-                            item_name:$("#item_name").val(),
-                            src:$("#src").val(),
-                            introduction:$("#introduction").val(),
-                        },
-                        success:function (data){
-                            alert(data)
-                        }
-                    })
-                })
+        var submit_div = document.createElement("div");
+        submit_div.click(function (){
+            $.ajax({
+                url:'/addItem',
+                type:'get',
+                data:{
+                    phone:"{{ phone }}",
+                    price:$("#price").val(),
+                    storage:$("#storage").val(),
+                    item_name:$("#item_name").val(),
+                    src:$("#src").val(),
+                    introduction:$("#introduction").val(),
+                },
+                success:function (data){
+                    alert(data);
+                }
+            })
+        })
     }
     </script>
 {% endblock %}
