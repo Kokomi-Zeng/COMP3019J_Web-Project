@@ -18,12 +18,14 @@ def seller_info():
 
     # 假如没有传入phone，返回服务器200状态码，表示请求成功，但是没有数据
     if not phone:
-        return jsonify({"data": None}), 200
+        # return jsonify({"data": None}), 200
+        return jsonify([])
 
     seller = Seller.query.filter_by(phone=phone).first()
     # 假如用户不存在，返回服务器200状态码，表示请求成功，但是没有数据
     if not seller:
-        return jsonify({"data": None}), 200
+        # return jsonify({"data": None}), 200
+        return jsonify([])
 
     return jsonify({
         "phone": seller.phone,
@@ -34,25 +36,26 @@ def seller_info():
     })
 
 
-
 def get_user_info():
     phone = session.get('phone')
 
     # 先判断session中是否有phone，如果没有，返回None
     if not phone:
         return {
-            'phone': None,
-            'name': None,
-            'type': None
+            # 'phone': None,
+            # 'name': None,
+            'phone': "",
+            'name': "",
         }
 
     # 如果有phone，但是数据库中没有该用户，返回None
     user = User.query.get(phone)
     if not user:
         return {
-            'phone': None,
-            'name': None,
-            'type': None
+            # 'phone': None,
+            # 'name': None,
+            'phone': "",
+            'name': "",
         }
 
     # 根据用户类型获取姓名, 里面的if判断是为了防止数据库中没有该用户的信息，导致程序报错
@@ -60,18 +63,27 @@ def get_user_info():
         if user.seller:
             name = user.seller.name
         else:
-            name = None
+            # name = None
+            name = ""
     elif user.user_type == '1':  # 买家
-        if user.seller:
-            # 这个先这么放着，等会儿再改
-            name = None
+        if user.buyer:
+            # name = user.buyer.name
+            name = ""
         else:
-            name = None
+            # name = None
+            name = ""
     else:
-        name = None
+        # name = None
+        name = ""
 
-    return {
-        'phone': phone,
-        'name': name,
-        'type': user.user_type
-    }
+    # 判断name是否为空字符串(是个游客或者卖家)
+    if name == "":
+        return {
+            'phone': "",
+            'name': "",
+        }
+    else:
+        return {
+            'phone': phone,
+            'name': name,
+        }

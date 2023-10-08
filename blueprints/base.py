@@ -19,18 +19,24 @@ def get_user_info():
     # 先判断session中是否有phone，如果没有，返回None
     if not phone:
         return {
-            'phone': None,
-            'name': None,
-            'type': None
+            # 'phone': None,
+            # 'name': None,
+            # 'type': None
+            'phone': "",
+            'name': "",
+            'type': ""
         }
 
     # 如果有phone，但是数据库中没有该用户，返回None
     user = User.query.get(phone)
     if not user:
         return {
-            'phone': None,
-            'name': None,
-            'type': None
+            # 'phone': None,
+            # 'name': None,
+            # 'type': None
+            'phone': "",
+            'name': "",
+            'type': ""
         }
 
     # 根据用户类型获取姓名, 里面的if判断是为了防止数据库中没有该用户的信息，导致程序报错
@@ -38,17 +44,25 @@ def get_user_info():
         if user.seller:
             name = user.seller.name
         else:
-            name = None
+            name = ""
     elif user.user_type == '1':  # 买家
-        if user.seller:
+        if user.buyer:
             name = user.buyer.name
         else:
-            name = None
+            name = ""
     else:
-        name = None
+        name = ""
 
-    return {
-        'phone': phone,
-        'name': name,
-        'type': user.user_type
-    }
+    # 判断name是否为空字符串(是个游客)
+    if name == "":
+        return {
+            'phone': "",
+            'name': "",
+            'type': ""
+        }
+    else:
+        return {
+            'phone': phone,
+            'name': name,
+            'type': user.user_type
+        }

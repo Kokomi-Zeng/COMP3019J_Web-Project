@@ -102,14 +102,15 @@ def item_info_by_id():
     try:
         product_id = int(request.args.get('product_id'))
     except (TypeError, ValueError):
-        return jsonify({"error": "Invalid Product ID. Please provide a valid integer."}), 400
+        # return jsonify({"error": "Invalid Product ID. Please provide a valid integer."}), 400
+        return jsonify([])
 
     product = Product.query.filter_by(product_id=product_id).first()
 
     # 根据product_id查询到的商品是否存在
     if not product:
-        return jsonify({"error": "Product not found"}), 404
-
+        # return jsonify({"error": "Product not found"}), 404
+        return jsonify([])
     avg_rating = calculate_average_rating(product_id)
 
     return jsonify({

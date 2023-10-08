@@ -22,23 +22,32 @@ def buyer_info():
 
     # 假如没有传入phone，返回服务器200状态码，表示请求成功，但是没有数据
     if not phone:
-        return jsonify({"data": None}), 200
+        # return jsonify({"data": None}), 200
+        phone = ""
 
     buyer = Buyer.query.filter_by(phone=phone).first()
     # 假如用户不存在，返回服务器200状态码，表示请求成功，但是没有数据
     if not buyer:
-        return jsonify({"data": None}), 200
+        # return jsonify({"data": None}), 200
+        phone = ""
 
-    return jsonify({
-        "phone": buyer.phone,
+    if phone == "":
+        return jsonify({
+            "phone": "",
+            "name": "",
+            "introduction": "",
+        })
+    else:
+        return jsonify({
+            "phone": buyer.phone,
 
-        # 事实上，这里不能返回密码，因为密码是加密的，除非不让加密，但这不合理，建议直接不显示得了
-        # "password": buyer.user.password,
+            # 事实上，这里不能返回密码，因为密码是加密的，除非不让加密，但这不合理，建议直接不显示得了
+            # "password": buyer.user.password,
 
-        "name": buyer.name,
-        "introduction": buyer.description,
-        # "balance": buyer.balance
-    })
+            "name": buyer.name,
+            "introduction": buyer.description,
+            # "balance": buyer.balance
+        })
 
 @buyer_bp.route('/charge', methods=['GET'])
 def charge():
@@ -71,7 +80,8 @@ def get_buyer_items():
     buyer = Buyer.query.filter_by(phone=phone).first()
 
     if not buyer:
-        return jsonify({"error": "Buyer not found"}), 404
+        # return jsonify({"error": "Buyer not found"}), 404
+        return jsonify([])
 
     purchased_items = []
     for purchase in buyer.purchases:
@@ -130,37 +140,49 @@ def get_user_info():
     # 先判断session中是否有phone，如果没有，返回None
     if not phone:
         return {
-            'phone': None,
-            'name': None,
+            # 'phone': None,
+            # 'name': None,
+            'phone': "",
+            'name': "",
         }
 
     # 如果有phone，但是数据库中没有该用户，返回None
     user = User.query.get(phone)
     if not user:
         return {
-            'phone': None,
-            'name': None,
+            # 'phone': None,
+            # 'name': None,
+            'phone': "",
+            'name': "",
         }
 
     # 根据用户类型获取姓名, 里面的if判断是为了防止数据库中没有该用户的信息，导致程序报错
     if user.user_type == '0':  # 卖家
         if user.seller:
             # name = user.seller.name
-            # 因为是buyer的蓝图，所以这么设置none或者直接设置为user.buyer.name都可以(但是前者更好)
-            name = None
+            name = ""
         else:
-            name = None
-
+            # name = None
+            name = ""
     elif user.user_type == '1':  # 买家
-        if user.seller:
+        if user.buyer:
             name = user.buyer.name
         else:
-            name = None
+            # name = None
+            name = ""
     else:
-        name = None
+        # name = None
+        name = ""
 
-    return {
-        'phone': phone,
-        'name': name,
-    }
+    # 判断name是否为空字符串(是个游客或者卖家)
+    if name == "":
+        return {
+            'phone': "",
+            'name': "",
+        }
+    else:
+        return {
+            'phone': phone,
+            'name': name,
+        }
 

@@ -43,11 +43,13 @@ def comment_basic_info_by_id():
     try:
         product_id = int(product_id_data)
     except (TypeError, ValueError):
-        return jsonify({"error": "Invalid Product ID. Please provide a valid integer."}), 400
+        # return jsonify({"error": "Invalid Product ID. Please provide a valid integer."}), 400
+        return jsonify([])
 
     product = Product.query.filter_by(product_id=product_id).first()
     if not product:
-        return jsonify({"error": "Product not found"}), 404
+        # return jsonify({"error": "Product not found"}), 404
+        return jsonify([])
 
     # 获取最高的5个评论
     top_comments = Comment.query.filter_by(product_id=product_id).order_by(Comment.rating.desc()).limit(5).all()
@@ -79,18 +81,18 @@ def comment_info_by_id():
     try:
         product_id = int(product_id_data)
     except (TypeError, ValueError):
-        return jsonify({"error": "Invalid Product ID. Please provide a valid integer."}), 400
-
+        # return jsonify({"error": "Invalid Product ID. Please provide a valid integer."}), 400
+        return jsonify([])
     # 检查买家是否存在
     buyer = Buyer.query.filter_by(phone=buyer_phone_data).first()
     if not buyer:
-        return jsonify({"error": "Buyer not found"}), 404
-
+        # return jsonify({"error": "Buyer not found"}), 404
+        return jsonify([])
     # 查询与该商品和买家相关的评论
     comment = Comment.query.filter_by(product_id=product_id, buyer_phone=buyer.phone).first()
     if not comment:
-        return jsonify({"error": "Comment not found"}), 404
-
+        # return jsonify({"error": "Comment not found"}), 404
+        return jsonify([])
     comment_data = {
         "user_name": buyer.name,
         "content": comment.content,
