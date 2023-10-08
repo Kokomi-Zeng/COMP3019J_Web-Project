@@ -12,12 +12,12 @@ login
         $.ajax({
             url:"/login",
             type:"post",
-            dataL:{
+            data:{
                 phone:$("#phone").val(),
                 password:$("#password").val(),
             },
             success:function (){
-
+                console.log("success")
             }
         })
     }
@@ -25,17 +25,19 @@ login
 
     <script>
     window.onload = function (){
-        $("#submit").click(login())
+        $("#submit").click(function (){
+            login();
+        });
         $("input").keypress(function (even){
             if (even.which==13){
                 login();
             }
-        })
+        });
     }
     </script>
 {% endblock %}
 
-{% block rightbox %}
+{% block right_box %}
 <div class="login-background-div">
     <div class="phone">
         <input type="text" id="phone">
