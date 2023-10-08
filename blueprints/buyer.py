@@ -37,7 +37,7 @@ def buyer_info():
 
         "name": buyer.name,
         "introduction": buyer.description,
-        "balance": buyer.balance
+        # "balance": buyer.balance
     })
 
 @buyer_bp.route('/charge', methods=['GET'])

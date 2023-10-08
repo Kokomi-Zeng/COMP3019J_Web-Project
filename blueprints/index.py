@@ -1,8 +1,9 @@
-from flask import Blueprint, render_template, session
+from flask import Blueprint, render_template, session, jsonify
 from models import User
 
 bp = Blueprint('index', __name__, url_prefix='/')
 # 这个是给base.html用的，我假设index.html是base.html的子模板
+
 
 @bp.route('/')
 def index():
@@ -10,6 +11,19 @@ def index():
     # **user_info相当于phone=user_info['phone'], name=user_info['name'], type=user_info['type']
     return render_template('index.html', **user_info)
 
+
+@bp.route('/getSession')
+def getSession():
+    phone = session.get('phone')
+    user = User.query.get(phone)
+    if user:
+        if user.user_type == '0':
+            name = user.seller.name
+        if user.user_type == '1':
+            name = user.buyer.name
+        return {'phone': phone, 'name': name}
+    else:
+        return {'phone': None, 'name': None}
 
 def get_user_info():
     phone = session.get('phone')
