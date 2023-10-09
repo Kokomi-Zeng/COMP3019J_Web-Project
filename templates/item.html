@@ -8,6 +8,15 @@
     <script>
     window.onload = function (){
         $.ajax({
+            url:"/getSession",
+            type:"get",
+            success:function (data){
+                phone = data.phone;
+                name = data.name;
+            }
+        })
+
+        $.ajax({
             url:"/itemInfoById",
             type:"get",
             data:{
