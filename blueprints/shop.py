@@ -72,7 +72,7 @@ def search_item_by_name():
 
 
 
-@shop.route('/hasNextPage', methods=['GET'])
+@shop_bp.route('/hasNextPage', methods=['GET'])
 def has_next_page():
     phone = request.args.get('phone')
     keyword = request.args.get('keyword', "")
