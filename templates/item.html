@@ -13,6 +13,7 @@
             success:function (data){
                 phone = data.phone;
                 name = data.name;
+                type = data.type;
             }
         })
 
@@ -56,7 +57,7 @@
                 id:"{{ id }}"
             },
             success:function (data){
-                for (var i = 0; i<data.length; i++) {
+                for (let i = 0; i<data.length; i++) {
                     const comment = data[i];
                     const comment_div = document.createElement("div");
                     comment_div.setAttribute("class", "comment");
@@ -79,20 +80,23 @@
             }
         })
 
+        {% if type.equals %}
         $("#buy-button").click(function (){
             $.ajax({
                 url:"/buyItem",
                 type:"post",
                 data:{
                     id:"{{ id }}",
-                    phone:"{{ phone }}",
+                    phone: phone,
                     num:$("#buy-num").val(),
                 },
                 success:function (data){
-                    
+                    alert(data)
                 }
             })
         })
+        {% endif %}
+
     }
     </script>
 {% endblock %}
