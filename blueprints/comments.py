@@ -1,7 +1,12 @@
-from flask import Blueprint, jsonify, request
+from flask import Blueprint, jsonify, request, render_template
 from models import Comment, Buyer, db, Product
 
 comment_bp = Blueprint('comment', __name__, url_prefix='/comment')
+
+@comment_bp.route('/')
+def comment():
+    return render_template('comment.html')
+
 
 @comment_bp.route('/createComment', methods=['GET'])
 def create_comment():
@@ -57,8 +62,8 @@ def comment_basic_info_by_id():
     # 获取最低的5个评论
     bottom_comments = Comment.query.filter_by(product_id=product_id).order_by(Comment.rating.asc()).limit(5).all()
 
-    # top5 + 低5
-    combined_comments = top_comments + bottom_comments
+    # 使用集合运算去除重复评论
+    combined_comments = list(set(top_comments + bottom_comments))
 
     comments_data = []
     for comment in combined_comments:

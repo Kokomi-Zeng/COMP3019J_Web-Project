@@ -10,7 +10,7 @@ def base():
     user_info = get_user_info()
 
     # **user_info相当于phone=user_info['phone'], name=user_info['name'], type=user_info['type']
-    return render_template('shop.html', **user_info)
+    return render_template('base.html', **user_info)
 
 
 def get_user_info():

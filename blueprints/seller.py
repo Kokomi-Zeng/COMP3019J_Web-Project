@@ -1,4 +1,7 @@
 from flask import Blueprint, render_template, session, request, jsonify
+from werkzeug.security import generate_password_hash
+
+from exts import db
 
 seller_bp = Blueprint('seller', __name__, url_prefix='/seller')
 
@@ -34,6 +37,37 @@ def seller_info():
         "name": seller.name,
         "introduction": seller.description,
     })
+
+@seller_bp.route('/modifySellerInfo', methods=['POST'])
+def modify_seller_info():
+    phone = request.json.get('phone')
+    name = request.json.get('name')
+    introduction = request.json.get('introduction')
+    password = request.json.get('password')
+
+    # 验证 phone 是否存在
+    if not phone:
+        return jsonify({"error": "Phone number is required"}), 400
+
+    seller = Seller.query.filter_by(phone=phone).first()
+    # 判断卖家是否存在
+    if not seller:
+        return jsonify({"error": "Seller not found"}), 404
+
+    # 更新卖家信息
+    if name:
+        seller.name = name
+    if introduction:
+        seller.description = introduction
+
+    if password:
+        # 加密
+        hashed_password = generate_password_hash(password)
+        seller.user.password = hashed_password
+
+    db.session.commit()
+
+    return jsonify({"message": "Seller information updated successfully"}), 200
 
 
 def get_user_info():

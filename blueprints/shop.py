@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, session, request, jsonify
-from models import User, Product, Comment
+from models import User, Product, Comment, Purchase
 from sqlalchemy import func
 from exts import db
 
@@ -22,6 +22,9 @@ def search_item_by_name():
 
     try:
         page_num = int(request.args.get('page_num', 1))
+        # 判断页码是否小于等于0
+        if page_num <= 0:
+            page_num = 1
     except (TypeError, ValueError):
         # return jsonify({"error": "Invalid page number"}), 400
         page_num = 1
@@ -32,6 +35,8 @@ def search_item_by_name():
 
     # 找到用户
     user = User.query.filter_by(phone=phone).first()
+
+
     query = Product.query
 
     # 如果keyword不为空
@@ -53,6 +58,27 @@ def search_item_by_name():
     # 某一页的全部商品
     products = query.limit(per_page).offset(offset).all()
 
+
+
+    # # 如果用户是买家
+    # if user and user.user_type == "1":
+    #     purchases = Purchase.query.filter_by(buyer_phone=phone).all()
+    #     products = [purchase.product for purchase in purchases if purchase.product is not None]
+    # else:
+    #     query = Product.query
+    #
+    #     if keyword:
+    #         query = query.filter(Product.product_name.like(f"%{keyword}%"))
+    #
+    #     if user and user.user_type == "0":  # 如果用户是卖家
+    #         query = query.filter_by(seller_phone=phone)
+    #     else:  # 如果用户是游客
+    #         if page_num > 1:
+    #             return jsonify([])
+    #
+    #     products = query.limit(per_page).offset(offset).all()
+
+
     # 按照平均rating从高到低排序
     sorted_products = sorted(products, key=lambda product: calculate_average_rating(product.product_id), reverse=True)
 
@@ -70,8 +96,6 @@ def search_item_by_name():
     return jsonify(product_list), 200
 
 
-
-
 @shop_bp.route('/hasNextPage', methods=['GET'])
 def has_next_page():
     phone = request.args.get('phone')
@@ -79,6 +103,9 @@ def has_next_page():
 
     try:
         page_num = int(request.args.get('page_num', 1))
+        # 判断页码是否小于等于0
+        if page_num <= 0:
+            page_num = 1
     except ValueError:
         # return jsonify({"error": "Invalid page number"}), 400
         return jsonify({"has_next": False})
@@ -90,6 +117,11 @@ def has_next_page():
 
     # 找到用户
     user = User.query.filter_by(phone=phone).first()
+
+    # 如果没有输入phone或输入后在数据库中找不到该用户
+    if not phone or not user:
+        return jsonify({"has_next": False})
+
     query = Product.query
 
     if keyword:
@@ -97,9 +129,7 @@ def has_next_page():
 
     if user:
         if user.user_type == "0":
-
             query = query.filter_by(seller_phone=phone)
-
     # 如果是游客，限制你翻页
     else:
         if page_num > 1:

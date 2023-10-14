@@ -11,6 +11,10 @@ from models import User
 # 创建蓝图对象,第一个：蓝图名字，第二个；__name__表示代表当前的模块，第三个：url_prefix表示前缀，所有的在这里面的路由都会加上这里的前缀
 bp = Blueprint("authorize", __name__, url_prefix="/authorize")
 
+@bp.route("/")
+def authorize():
+    return render_template("authorize.html")
+
 
 @bp.route("/login", methods=["POST"])
 def login():
