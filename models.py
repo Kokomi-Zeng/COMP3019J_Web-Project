@@ -43,6 +43,7 @@ class Product(db.Model):
     storage = db.Column(db.Integer)
     product_name = db.Column(db.String(150))
     image_src = db.Column(db.String(200))
+    description = db.Column(db.String(500))
 
 
     comments = db.relationship("Comment", backref="product")
