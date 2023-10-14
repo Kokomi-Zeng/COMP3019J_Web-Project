@@ -45,7 +45,6 @@ class Product(db.Model):
     image_src = db.Column(db.String(200))
     description = db.Column(db.String(500))
 
-
     comments = db.relationship("Comment", backref="product")
     purchases = db.relationship("Purchase", backref="product")
 
