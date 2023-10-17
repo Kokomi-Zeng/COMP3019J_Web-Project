@@ -1,4 +1,5 @@
 import config
+from blueprints.test import test_bp
 from flask import Flask, render_template
 
 from blueprints.base import base_bp
@@ -31,6 +32,7 @@ app.register_blueprint(bp)
 app.register_blueprint(products_bp)
 app.register_blueprint(seller_bp)
 app.register_blueprint(shop_bp)
+app.register_blueprint(test_bp)
 
 # 使迁移生效
 migrate = Migrate(app, db)
