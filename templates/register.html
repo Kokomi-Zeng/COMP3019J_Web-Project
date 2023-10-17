@@ -19,7 +19,7 @@ register
             },
             success:function (data){
                 alert(data);
-                window.location.replace("login.html");
+                window.location.replace("/");
             }
         })
     }
@@ -29,11 +29,6 @@ register
     window.onload = function (){
         $("#submit").click(function (){
             register();
-        });
-        $("input").keypress(function (even){
-            if (even.which==13){
-                login();
-            }
         });
     }
     </script>
