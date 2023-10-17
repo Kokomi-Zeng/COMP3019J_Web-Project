@@ -10,16 +10,21 @@ register
     <script>
     function register(){
         $.ajax({
-            url:"/register",
+            url:"/authorize/register",
             type:"post",
-            data:{
+            contentType: "application/json",
+            dataType: "json",
+            data:JSON.stringify({
                 phone:$("#phone").val(),
                 password:$("#password").val(),
-                type:$(".user-type").val(),
-            },
+                user_type: $(".user-type.value")==="buyer"?'1':'0',
+            }),
             success:function (data){
-                alert(data);
+                if(data.success){
                 window.location.replace("/");
+            } else {
+                alert(data.message);
+            }
             }
         })
     }
@@ -37,10 +42,10 @@ register
 {% block right_box %}
 <div class="register-background-div">
     <div class="user-type">
-        <label>
+        <label>buyer
         <input type="radio" name="type" class="user-type" value="buyer">
         </label>
-        <label>
+        <label>seller
         <input type="radio" name="type" class="user-type" value="seller">
             </label>
     </div>
