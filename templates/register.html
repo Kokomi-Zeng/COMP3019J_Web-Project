@@ -17,7 +17,7 @@ register
             data:JSON.stringify({
                 phone:$("#phone").val(),
                 password:$("#password").val(),
-                user_type: $(".user-type.value")==="buyer"?'1':'0',
+                user_type: $(".user-type").val()==="buyer"?'1':'0',
             }),
             success:function (data){
                 if(data.success){
