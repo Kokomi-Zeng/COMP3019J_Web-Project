@@ -122,10 +122,10 @@
                 var button = document.createElement("button");
                 button.setAttribute("class", "page-button");
                 button.innerText = "prev";
-                button.click(function (){
+                button.onclick = function () {
                     page_num--;
-                    generate();
-                })
+                    generate()
+                }
                 $(".prev").append(button);
             }
         }
