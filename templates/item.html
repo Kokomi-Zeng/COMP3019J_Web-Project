@@ -80,22 +80,21 @@
             }
         })
 
-        {% if type.equals %}
-        $("#buy-button").click(function (){
-            $.ajax({
-                url:"/buyItem",
-                type:"post",
-                data:{
-                    id:"{{ id }}",
-                    phone: phone,
-                    num:$("#buy-num").val(),
-                },
-                success:function (data){
-                    alert(data)
-                }
+        if (!"{{ belong }}")
+            $("#buy-button").click(function (){
+                $.ajax({
+                    url:"/buyItem",
+                    type:"post",
+                    data:{
+                        id:"{{ id }}",
+                        phone: phone,
+                        num:$("#buy-num").val(),
+                    },
+                    success:function (data){
+                        alert(data)
+                    }
+                })
             })
-        })
-        {% endif %}
 
     }
     </script>
