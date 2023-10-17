@@ -36,7 +36,6 @@ def search_item_by_name():
     # 找到用户
     user = User.query.filter_by(phone=phone).first()
 
-
     query = Product.query
 
     # 如果keyword不为空
