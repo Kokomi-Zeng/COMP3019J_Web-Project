@@ -1,0 +1,68 @@
+{% extends "base_begin.html" %}
+
+{% block title %}
+register
+{% endblock %}
+
+{% block css %}/static/css/login.css{% endblock %}
+
+{% block script %}
+    <script>
+    function register(){
+        $.ajax({
+            url:"/authorize/register",
+            type:"post",
+            contentType: "application/json",
+            dataType: "json",
+            data:JSON.stringify({
+                phone:$("#phone").val(),
+                password:$("#password").val(),
+                user_type: $(".user-type").val()==="buyer"?'1':'0',
+            }),
+            success:function (data){
+                if(data.success){
+                window.location.replace("/");
+            } else {
+                alert(data.message);
+            }
+            }
+        })
+    }
+    </script>
+
+    <script>
+    window.onload = function (){
+        $("#submit").click(function (){
+            register();
+        });
+    }
+    </script>
+{% endblock %}
+
+{% block right_box %}
+<div class="register-background-div">
+    <div class="user-type">
+        <label>buyer
+        <input type="radio" name="type" class="user-type" value="buyer">
+        </label>
+        <label>seller
+        <input type="radio" name="type" class="user-type" value="seller">
+            </label>
+    </div>
+
+    <div class="phone">
+        <label for="phone">phone</label>
+        <input type="text" id="phone">
+    </div>
+
+    <div class="password">
+        <label for="password"></label>
+        <input type="password" id="password">
+    </div>
+
+    <div class="submit">
+        <button id="submit">REGISTER</button>
+    </div>
+
+</div>
+{% endblock %}
