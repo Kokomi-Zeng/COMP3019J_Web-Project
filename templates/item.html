@@ -1,0 +1,133 @@
+{% extends "base.html" %}
+
+{% block title %}
+{{ id }}
+{% endblock %}
+
+{% block script %}
+    <script>
+    window.onload = function (){
+        $.ajax({
+            url:"/getSession",
+            type:"get",
+            success:function (data){
+                phone = data.phone;
+                name = data.name;
+                type = data.type;
+            }
+        })
+
+        $.ajax({
+            url:"/itemInfoById",
+            type:"get",
+            data:{
+                id:"{{ id }}"
+            },
+            success: function (data){
+                const img = document.createElement("img");
+                img.setAttribute("src", data.src);
+                $(".img-box").append(img);
+
+                const name = document.createElement("input");
+                name.setAttribute("type", "text")
+                name.value = data.name;
+                $(".item-name-box").append(name);
+
+                const star = document.createElement("input");
+                star.setAttribute("type", "text")
+                star.value = data.star;
+                $(".item-star-box").append(star);
+
+                const price = document.createElement("input");
+                price.setAttribute("type", "text")
+                price.value = data.price;
+                $(".item-price-box").append(price);
+
+                const storage = document.createElement("input");
+                storage.setAttribute("type", "text")
+                storage.value = data.storage;
+                $(".item-storage-box").append(storage);
+            }
+        })
+
+        $.ajax({
+            url:"commentBasicInfoById",
+            type:"get",
+            data:{
+                id:"{{ id }}"
+            },
+            success:function (data){
+                for (let i = 0; i<data.length; i++) {
+                    const comment = data[i];
+                    const comment_div = document.createElement("div");
+                    comment_div.setAttribute("class", "comment");
+
+                    const comment_star_div = document.createElement("div");
+                    comment_star_div.setAttribute("class", "comment-star");
+                    comment_div.append(comment_star_div);
+
+                    {#create dom and insert data of star#}
+
+                    const comment_text_div = document.createElement("div");
+                    comment_text_div.setAttribute("class", "comment-text");
+                    comment_div.append(comment_text_div);
+
+                    const comment_text = document.createComment("p");
+                    comment_text.innerText = comment.text;
+
+                    $(".item-comment-box").append(comment_div);
+                }
+            }
+        })
+
+        {% if type.equals %}
+        $("#buy-button").click(function (){
+            $.ajax({
+                url:"/buyItem",
+                type:"post",
+                data:{
+                    id:"{{ id }}",
+                    phone: phone,
+                    num:$("#buy-num").val(),
+                },
+                success:function (data){
+                    alert(data)
+                }
+            })
+        })
+        {% endif %}
+
+    }
+    </script>
+{% endblock %}
+
+{% block main %}
+<div class="left-box">
+    <div class="img-box"></div>
+    <div class="message-box">
+        <div class="item-name-box"></div>
+        <div class="item-star-box"></div>
+        <div class="item-price-box"></div>
+        <div class="item-storage-box"></div>
+    </div>
+    <div class="operation-box">
+        <div class="buy-operation">
+            <div class="buy-num-box">
+                <input type="number" id="buy-num">
+            </div>
+            <div class="buy-box">
+                <button id="buy-button">BUY!</button>
+            </div>
+        </div>
+        <div>
+            <div class="look-more-comment">
+                <button id="comment-button"></button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="right-box">
+    <div class="item-comment-box"></div>
+    <div class="self-comment-box"></div>
+</div>
+{% endblock %}
