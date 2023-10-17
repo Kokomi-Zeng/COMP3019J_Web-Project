@@ -29,6 +29,10 @@ def getBuyerInfoPage():
     user_info = get_user_info()
     return render_template('buyerInfo.html', **user_info)
 
+@test_bp.route('/item/<product_id>/<belong>')
+def getItemPage(product_id, belong):
+    return render_template("item.html", belong=belong, product_id=product_id)
+
 def get_user_info():
     phone = session.get('phone')
 

@@ -56,7 +56,9 @@
                                         product_id:item.product_id,
                                         phone: phone
                                     },
-                                    success:function (){}
+                                    success:function (data){
+                                        window.location.replace("/item?product_id="+data.product_id+"&belong="+data.belong)
+                                    }
                                 })
                             }
                             $(".item-box").append(item_box);
