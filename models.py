@@ -7,7 +7,7 @@ class User(db.Model):
     password = db.Column(db.String(128))
     user_type = db.Column(db.String(10))
 
-    # Relationships
+    # 这里这么做是为了方便查询，使得可以反向查询，即通过buyer或者seller查询到user
     buyer = db.relationship("Buyer", backref="user", uselist=False)
     seller = db.relationship("Seller", backref="user", uselist=False)
 
@@ -22,7 +22,6 @@ class Buyer(db.Model):
     # 余额
     balance = db.Column(db.Float)
 
-    # Relationships
     comments = db.relationship("Comment", backref="buyer")
     purchases = db.relationship("Purchase", backref="buyer")
 
@@ -33,7 +32,6 @@ class Seller(db.Model):
     name = db.Column(db.String(100))
     description = db.Column(db.Text)
 
-    # Relationships
     products = db.relationship("Product", backref="seller")
 
 class Product(db.Model):
@@ -44,8 +42,9 @@ class Product(db.Model):
     price = db.Column(db.Float)
     storage = db.Column(db.Integer)
     product_name = db.Column(db.String(150))
+    image_src = db.Column(db.String(200))
+    description = db.Column(db.String(500))
 
-    # Relationships
     comments = db.relationship("Comment", backref="product")
     purchases = db.relationship("Purchase", backref="product")
 
@@ -64,5 +63,8 @@ class Purchase(db.Model):
     purchase_id = db.Column(db.Integer, primary_key=True)
     product_id = db.Column(db.Integer, db.ForeignKey("products.product_id"))
     buyer_phone = db.Column(db.String(15), db.ForeignKey("buyers.phone"))
+    # DateTime类型, 举例: 2111-11-11 11:11:11
+    purchase_time = db.Column(db.DateTime)
+    image_src_at_time_of_purchase = db.Column(db.String(200))
     purchase_number = db.Column(db.Integer)
     purchase_price = db.Column(db.Float)
