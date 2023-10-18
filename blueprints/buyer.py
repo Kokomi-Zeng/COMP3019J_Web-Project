@@ -56,7 +56,7 @@ def charge():
     try:
         charge_num = float(request.args.get('charge_num'))
     except (TypeError, ValueError):
-        return jsonify({"error": "Invalid charge amount."}), 400
+        return jsonify({"error": "Invalid charge amount."})
     password = request.args.get('password')
 
     # 查询用户
@@ -64,16 +64,21 @@ def charge():
 
     # 如果没有找到用户或密码不正确
     if not user or not check_password_hash(user.password, password):
-        return jsonify({"success": False}), 400
+        return jsonify({"success": False, "message": "Can't find user or password incorrect"})
 
     # 给用户充值
     buyer = Buyer.query.filter_by(phone=phone).first()
     if not buyer:
-        return jsonify({"success": False}), 400
+        return jsonify({"success": False, "message": "The user is not buyer"})
+
+    # 如果充值金额为负数
+    if charge_num < 10:
+        return jsonify({"success": False, "message": "The minimum charge number is 10"})
+
     buyer.balance += charge_num
     db.session.commit()
 
-    return jsonify({"success": True}), 200
+    return jsonify({"success": True, "message": "Charge successfully"})
 
 @buyer_bp.route('/buyerItem', methods=['GET'])
 def get_buyer_items():
@@ -95,7 +100,7 @@ def get_buyer_items():
             'purchase_quantity': purchase.purchase_number
         })
 
-    return jsonify(purchased_items), 200
+    return jsonify(purchased_items)
 
 
 @buyer_bp.route('/buyItem', methods=['GET'])
@@ -105,7 +110,7 @@ def buy_item():
         product_id = int(request.args.get('product_id'))
         quantity = int(request.args.get('quantity', 1)) # 获取商品数量，如果未指定，默认为1
     except (TypeError, ValueError):
-        return jsonify({"error": "Invalid product ID or quantity."}), 400
+        return jsonify({"error": "Invalid product ID or quantity."})
 
     phone = request.args.get('phone')
 
@@ -114,17 +119,17 @@ def buy_item():
 
     # 判断买家和商品是否存在
     if not buyer or not product:
-        return jsonify({"error": "Buyer or product not found"}), 404
+        return jsonify({"error": "Buyer or product not found"})
 
     # 判断商品库存是否足够
     if product.storage < quantity:
-        return jsonify({"success": False, "error": "Not enough stock"}), 400
+        return jsonify({"success": False, "error": "Not enough stock"})
 
     total_price = product.price * quantity
 
     # 判断买家账户的钱是否足够
     if buyer.balance < total_price:
-        return jsonify({"success": False, "error": "Insufficient funds"}), 400
+        return jsonify({"success": False, "error": "Insufficient funds"})
 
     # balance减少，storage减少，新的purchase添加到数据库中
     buyer.balance -= total_price
@@ -143,7 +148,7 @@ def buy_item():
     db.session.commit()
 
     # logging.debug("buyItem finished.")
-    return jsonify({"success": True}), 200
+    return jsonify({"success": True})
 
 @buyer_bp.route('/getMoney', methods=['GET'])
 def get_money():
@@ -151,16 +156,16 @@ def get_money():
 
     # 验证 phone 是否存在
     if not phone:
-        return jsonify({"error": "手机号不能为空"}), 400
+        return jsonify({"error": "手机号不能为空"})
 
     buyer = Buyer.query.filter_by(phone=phone).first()
 
     # 判断买家是否存在
     if not buyer:
-        return jsonify({"error": "买家不存在"}), 404
+        return jsonify({"error": "买家不存在"})
 
     # 返回买家的余额
-    return jsonify({"phone": phone, "money": buyer.balance}), 200
+    return jsonify({"phone": phone, "money": buyer.balance})
 
 
 
@@ -173,11 +178,11 @@ def modify_buyer_info():
 
     # 验证 phone 是否存在
     if not phone:
-        return jsonify({"error": "Phone number is required"}), 400
+        return jsonify({"error": "Phone number is required"})
 
     buyer = Buyer.query.filter_by(phone=phone).first()
     if not buyer:
-        return jsonify({"error": "Buyer not found"}), 404
+        return jsonify({"error": "Buyer not found"})
 
     # 更新信息
     if name:
@@ -190,7 +195,7 @@ def modify_buyer_info():
         buyer.user.password = hashed_password
 
     db.session.commit()
-    return jsonify({"message": "Buyer information updated successfully"}), 200
+    return jsonify({"message": "Buyer information updated successfully"})
 
 def get_user_info():
     phone = session.get('phone')

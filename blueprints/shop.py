@@ -92,7 +92,7 @@ def search_item_by_name():
             "product_id": product.product_id
         })
 
-    return jsonify(product_list), 200
+    return jsonify(product_list)
 
 @shop_bp.route('/isItemMatchSeller', methods=['GET'])
 def is_item_match_seller():

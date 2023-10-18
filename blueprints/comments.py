@@ -17,12 +17,15 @@ def create_comment():
         rating = int(request.args.get('rating'))
         product_id = int(request.args.get('product_id'))
     except (TypeError, ValueError):
-        return jsonify({"error": "Invalid input. Rating and Product ID should be integers."}), 400
+        return jsonify({"error": "Invalid input. Rating and Product ID should be integers."})
 
     # 验证买家是否存在
     buyer = Buyer.query.filter_by(phone=buyer_phone).first()
     if not buyer:
-        return jsonify({"message": "Buyer not found!"}), 400
+        return jsonify({"success": False, "message": "Buyer not found!"})
+
+    if not (rating == 1 or rating == 2 or rating == 3 or rating == 4 or rating == 5):
+        return jsonify({"success": False, "message": "Rating must be 1 or 2 or 3 or 4 or 5"})
 
     # 创建新的评论 (用这种方法来是comment插入数据库中)
     comment = Comment(
@@ -37,7 +40,7 @@ def create_comment():
     db.session.commit()
 
     # 状态码201表示创建成功
-    return jsonify({"message": "Comment added successfully!"}), 201
+    return jsonify({"success": True, "message": "Comment added successfully!"})
 
 
 @comment_bp.route('/commentBasicInfoById', methods=['GET'])
@@ -74,7 +77,7 @@ def comment_basic_info_by_id():
             "rating": comment.rating
         })
 
-    return jsonify(comments_data), 200
+    return jsonify(comments_data)
 
 
 @comment_bp.route('/commentInfoById', methods=['GET'])
@@ -104,7 +107,7 @@ def comment_info_by_id():
         "rating": comment.rating
     }
 
-    return jsonify(comment_data), 200
+    return jsonify(comment_data)
 
 
 
