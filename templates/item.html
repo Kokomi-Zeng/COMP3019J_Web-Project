@@ -197,7 +197,7 @@
             }
         })
     }
-    window.onload = function () {
+    $(document).on("sessionLoaded", function() {
 
         render_item_data();
         {#基础comment#}
@@ -223,7 +223,7 @@
         if (type === "1"){
             render_self_comment();
         }
-    }
+    });
     </script>
 {% endblock %}
 
