@@ -36,7 +36,6 @@ def search_item_by_name():
     # 找到用户
     user = User.query.filter_by(phone=phone).first()
 
-
     query = Product.query
 
     # 如果keyword不为空
@@ -94,6 +93,31 @@ def search_item_by_name():
         })
 
     return jsonify(product_list), 200
+
+@shop_bp.route('/isItemMatchSeller', methods=['GET'])
+def is_item_match_seller():
+    phone = request.args.get('phone')
+
+    # 如果商品ID类型错误
+    try:
+        product_id = int(request.args.get('product_id'))
+    except(TypeError, ValueError):
+        return jsonify([])
+
+    product = Product.query.get(product_id)
+
+    # 如果商品不存在
+    if not product:
+        return jsonify([])
+
+    if product.seller_phone == phone:
+        return jsonify({"belong":True, "product_id":product_id})
+        # return jsonify({
+        #     "belong": True,
+        #     "product_id": product_id,
+        # })
+    else:
+        return jsonify({"belong":False, "product_id":product_id})
 
 
 @shop_bp.route('/hasNextPage', methods=['GET'])

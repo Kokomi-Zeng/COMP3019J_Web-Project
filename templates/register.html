@@ -8,18 +8,25 @@ register
 
 {% block script %}
     <script>
+    var user_type;
+
     function register(){
         $.ajax({
-            url:"/register",
+            url:"/authorize/register",
             type:"post",
-            data:{
+            contentType: "application/json",
+            dataType: "json",
+            data:JSON.stringify({
                 phone:$("#phone").val(),
                 password:$("#password").val(),
-                type:$(".user-type").val(),
-            },
+                user_type: user_type,
+            }),
             success:function (data){
-                alert(data);
-                window.location.replace("login.html");
+                if(data.success){
+                window.location.replace("/");
+            } else {
+                alert(data.message);
+            }
             }
         })
     }
@@ -27,13 +34,16 @@ register
 
     <script>
     window.onload = function (){
+        $("#buyer").click(function (){
+            console.log(this.value);
+            user_type = this.value;
+        });
+        $("#seller").click(function (){
+            console.log(this.value);
+            user_type = this.value;
+        });
         $("#submit").click(function (){
             register();
-        });
-        $("input").keypress(function (even){
-            if (even.which==13){
-                login();
-            }
         });
     }
     </script>
@@ -42,11 +52,11 @@ register
 {% block right_box %}
 <div class="register-background-div">
     <div class="user-type">
-        <label>
-        <input type="radio" name="type" class="user-type" value="buyer">
+        <label>buyer
+        <input type="radio" name="type" class="user-type" value="1" id="buyer">
         </label>
-        <label>
-        <input type="radio" name="type" class="user-type" value="seller">
+        <label>seller
+        <input type="radio" name="type" class="user-type" value="0" id="seller">
             </label>
     </div>
 

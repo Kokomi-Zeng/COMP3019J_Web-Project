@@ -16,9 +16,35 @@ type:当前用户类型，1为买家，0为卖家
     <script src="https://code.jquery.com/jquery-3.0.0.min.js"></script>
 {#const#}
     <script>
-        var phone;
-        var type;
-        var name;
+        let phone;
+        let type;
+        let name;
+        $.ajax({
+                url:"/getSession",
+                type:"get",
+                contentType: "application/json",
+                dataType: "json",
+                success:function (data){
+                    phone = data.phone;
+                    type = data.type;
+                    name = data.name;
+                    const user_box = $(".user-box");
+                    const a = document.createElement("a");
+                    if (type==="0"){
+                        a.setAttribute("href", "/sellerInfo");
+                        a.innerText = name;
+                    }else if(type==="1") {
+                        a.setAttribute("href", "/buyerInfo");
+                        a.innerText = name;
+                    }else{
+                        a.setAttribute("href", "/");
+                        a.innerText = "Login";
+                    }
+                    user_box.append(a)
+
+                    $(document).trigger("sessionLoaded");
+                }
+            })
     </script>
      {% block script %}{% endblock %}
 </head>
@@ -34,17 +60,6 @@ type:当前用户类型，1为买家，0为卖家
     </div>
 {#用户info#}
     <div class="user-box">
-        {% if username %}
-            <div class="username">
-                {% if type==0 %}
-                    <a href="seller.html">{{ username }}</a>
-                {% elif type==1 %}
-                    <a href="buyer.html">{{ username }}</a>
-                {% endif %} 
-            </div>
-        {% else %}
-            <a href="Login.html">Login</a>
-        {% endif %}
     </div>
 {#主体#}
 </div>
