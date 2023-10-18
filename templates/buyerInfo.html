@@ -156,7 +156,7 @@ name:当前用户name
                 phone:phone,
             },
             success:function (data){
-                const current = data
+                const current = data.money;
                 const current_div = document.createElement("div");
                 const current_span = document.createElement("span");
 
@@ -164,22 +164,32 @@ name:当前用户name
                 current_div.setAttribute("id", "current-div");
 
                 current_span.innerText = "Current: "+current;
+                current_div.append(current_span);
                 $(".container").append(current_div);
 
                 const pay_div = document.createElement("div");
+                const pay_input = document.createElement("input");
+
                 pay_div.setAttribute("class", "charge-div");
                 pay_div.setAttribute("id", "pay-div");
-                const pay_input = document.createElement("input");
+
                 pay_input.setAttribute("id", "pay");
+                pay_input.setAttribute("type", "text");
+                pay_input.setAttribute("placeHolder", "pay number");
+
                 pay_div.append(pay_input);
                 $(".container").append(pay_div);
 
                 const password_div = document.createElement("div");
                 const password_input = document.createElement("input");
+
                 password_div.setAttribute("class", "charge-div");
                 password_div.setAttribute("id", "password-div");
+
                 password_input.setAttribute("type", "password");
                 password_input.setAttribute("id", "password");
+                password_input.setAttribute("placeHolder", "password");
+
                 password_div.append(password_input);
                 $(".container").append(password_div);
 
@@ -216,7 +226,7 @@ name:当前用户name
                 phone:phone,
             },
             success:function (data){
-            {#    遍历生成Item#}
+
             }
         })
     }
