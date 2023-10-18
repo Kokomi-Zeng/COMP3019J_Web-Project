@@ -16,11 +16,10 @@ type:当前用户类型，1为买家，0为卖家
     <script src="https://code.jquery.com/jquery-3.0.0.min.js"></script>
 {#const#}
     <script>
-        var phone;
-        var type;
-        var name;
+        let phone;
+        let type;
+        let name;
         $.ajax({
-                async:false,
                 url:"/getSession",
                 type:"get",
                 contentType: "application/json",
@@ -41,8 +40,10 @@ type:当前用户类型，1为买家，0为卖家
                         a.setAttribute("href", "/");
                         a.innerText = "Login";
                     }
-
+                    console.log(a)
                     user_box.append(a)
+
+                    $(document).trigger("sessionLoaded");
                 }
             })
     </script>
