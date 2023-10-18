@@ -36,7 +36,6 @@ def search_item_by_name():
     # 找到用户
     user = User.query.filter_by(phone=phone).first()
 
-
     query = Product.query
 
     # 如果keyword不为空
@@ -112,13 +111,13 @@ def is_item_match_seller():
         return jsonify([])
 
     if product.seller_phone == phone:
-        return render_template("item.html", belong=True, product_id=product_id)
+        return jsonify({"belong":True, "product_id":product_id})
         # return jsonify({
         #     "belong": True,
         #     "product_id": product_id,
         # })
     else:
-        return render_template("item.html", belong=False, product_id=product_id)
+        return jsonify({"belong":False, "product_id":product_id})
 
 
 @shop_bp.route('/hasNextPage', methods=['GET'])

@@ -1,16 +1,16 @@
 {% extends "base.html" %}
 
 {% block title %}
-{{ id }}
+{{ product_id }}
 {% endblock %}
 
 {% block script %}
     <script>
-    window.onload = function (){
+    window.onload = function () {
         $.ajax({
-            url:"/getSession",
-            type:"get",
-            success:function (data){
+            url: "/getSession",
+            type: "get",
+            success: function (data) {
                 phone = data.phone;
                 name = data.name;
                 type = data.type;
@@ -18,46 +18,79 @@
         })
 
         $.ajax({
-            url:"/itemInfoById",
-            type:"get",
-            data:{
-                id:"{{ id }}"
+            url: "/itemInfoById",
+            type: "get",
+            data: {
+                product_id: "{{ product_id }}"
             },
-            success: function (data){
-                const img = document.createElement("img");
-                img.setAttribute("src", data.src);
-                $(".img-box").append(img);
+            success: function (data) {
+                let img;
+                let name;
+                let star;
+                let price;
+                let storage
+                if ("{{ belong }}"==="false"){
+                    img = document.createElement("img");
+                    name = document.createElement("span");
+                    star = document.createElement("span");
+                    price = document.createElement("span");
+                    storage = document.createElement("span");
 
-                const name = document.createElement("input");
-                name.setAttribute("type", "text")
-                name.value = data.name;
-                $(".item-name-box").append(name);
+                    img.setAttribute("src", data.src);
+                    $(".img-box").append(img);
 
-                const star = document.createElement("input");
-                star.setAttribute("type", "text")
-                star.value = data.star;
-                $(".item-star-box").append(star);
+                    name.innerText = data.name;
+                    $(".item-name-box").append(name);
 
-                const price = document.createElement("input");
-                price.setAttribute("type", "text")
-                price.value = data.price;
-                $(".item-price-box").append(price);
+                    star.innerText = data.star;
+                    $(".item-star-box").append(star);
 
-                const storage = document.createElement("input");
-                storage.setAttribute("type", "text")
-                storage.value = data.storage;
-                $(".item-storage-box").append(storage);
+                    price.innerText = data.price;
+                    $(".item-price-box").append(price);
+
+                    storage.innerText = data.storage;
+                    $(".item-storage-box").append(storage);
+                }else {
+                    img = document.createElement("img");
+                    name = document.createElement("input");
+                    star = document.createElement("input");
+                    price = document.createElement("input");
+                    storage = document.createElement("input");
+
+                    img.setAttribute("src", data.src);
+                    $(".img-box").append(img);name.setAttribute("type", "text")
+                    name.value = data.name;
+                    $(".item-name-box").append(name);
+
+                    star.setAttribute("type", "text")
+                    star.value = data.star;
+                    $(".item-star-box").append(star);
+
+                    price.setAttribute("type", "text")
+                    price.value = data.price;
+                    $(".item-price-box").append(price);
+
+                    storage.setAttribute("type", "text")
+                    storage.value = data.storage;
+                    $(".item-storage-box").append(storage);
+                }
+
+                const name_div = document.createElement("div");
+                const star_div = document.createElement("div");
+                const price_div = document.createElement("div");
+                const storage_div = document.createElement("div");
+
             }
         })
 
         $.ajax({
-            url:"commentBasicInfoById",
-            type:"get",
-            data:{
-                id:"{{ id }}"
+            url: "commentBasicInfoById",
+            type: "get",
+            data: {
+                product_id: "{{ product_id }}"
             },
-            success:function (data){
-                for (let i = 0; i<data.length; i++) {
+            success: function (data) {
+                for (let i = 0; i < data.length; i++) {
                     const comment = data[i];
                     const comment_div = document.createElement("div");
                     comment_div.setAttribute("class", "comment");
@@ -80,23 +113,36 @@
             }
         })
 
-        {% if type.equals %}
-        $("#buy-button").click(function (){
-            $.ajax({
-                url:"/buyItem",
-                type:"post",
-                data:{
-                    id:"{{ id }}",
-                    phone: phone,
-                    num:$("#buy-num").val(),
-                },
-                success:function (data){
-                    alert(data)
-                }
-            })
-        })
-        {% endif %}
+        {% if belong==false %}
 
+                const buy_num = document.createElement("input");
+                buy_num.setAttribute("type", "num");
+                buy_num.setAttribute("placeHolder", "1");
+                buy_num.setAttribute("id", "buy-num");
+
+                const buy_button = document.createElement("button");
+                buy_button.setAttribute("id", "buy-button");
+                buy_button.innerText = "BUY!";
+                buy_button.onclick = function () {
+                    $.ajax({
+                        url: "/buyer/buyItem",
+                        type: "get",
+                        contentType: "application/json",
+                        dataType: "json",
+                        data: {
+                            product_id: "{{ product_id }}",
+                            phone: phone,
+                            num: buy_num.value,
+                        },
+                        success: function (data) {
+                            alert(data)
+                        }
+                    })
+                };
+                const buy_box = $(".buy-box");
+                buy_box.append(buy_num);
+                buy_box.append(buy_button);
+        {% endif %}
     }
     </script>
 {% endblock %}
@@ -112,16 +158,12 @@
     </div>
     <div class="operation-box">
         <div class="buy-operation">
-            <div class="buy-num-box">
-                <input type="number" id="buy-num">
-            </div>
             <div class="buy-box">
-                <button id="buy-button">BUY!</button>
             </div>
         </div>
         <div>
             <div class="look-more-comment">
-                <button id="comment-button"></button>
+                <button id="comment-button">COMMENT</button>
             </div>
         </div>
     </div>

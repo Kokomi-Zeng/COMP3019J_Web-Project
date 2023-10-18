@@ -9,19 +9,6 @@
     <script>
         var page_num;
 
-        $.ajax({
-            url:"/getSession",
-            type:"get",
-            contentType: "application/json",
-            dataType: "json",
-            success:function (data){
-                phone = data.phone;
-                type = data.type;
-                name = data.name;
-                {#console.log(phone);#}
-            }
-        })
-
         function generate(){
 
             $(".item-box").empty();
@@ -39,7 +26,6 @@
                         page_num: page_num,
                     },
                     success: function (data) {
-                        console.log(data)
                         for (let i=0; i<data.length; i++){
                             const item = data[i];
 
@@ -56,7 +42,9 @@
                                         product_id:item.product_id,
                                         phone: phone
                                     },
-                                    success:function (){}
+                                    success:function (data){
+                                        window.location.replace("/item?product_id="+data.product_id+"&belong="+data.belong)
+                                    }
                                 })
                             }
                             $(".item-box").append(item_box);
@@ -94,6 +82,7 @@
                     }
                 })
 
+            console.log(phone)
             $.ajax({
                 url:"/shop/hasNextPage",
                 type:"get",

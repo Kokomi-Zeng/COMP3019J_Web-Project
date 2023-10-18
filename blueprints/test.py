@@ -29,6 +29,11 @@ def getBuyerInfoPage():
     user_info = get_user_info()
     return render_template('buyerInfo.html', **user_info)
 
+@test_bp.route('/item')
+def getItemPage():
+    product_info = is_item_match_seller()
+    return render_template("item.html", **product_info)
+
 def get_user_info():
     phone = session.get('phone')
 
@@ -82,3 +87,27 @@ def get_user_info():
             'name': name,
             'type': user.user_type
         }
+
+def is_item_match_seller():
+    phone = request.args.get('phone')
+
+    # 如果商品ID类型错误
+    try:
+        product_id = int(request.args.get('product_id'))
+    except(TypeError, ValueError):
+        return jsonify([])
+
+    product = Product.query.get(product_id)
+
+    # 如果商品不存在
+    if not product:
+        return jsonify([])
+
+    if product.seller_phone == phone:
+        return {"belong":True, "product_id":product_id}
+        # return jsonify({
+        #     "belong": True,
+        #     "product_id": product_id,
+        # })
+    else:
+        return {"belong":False, "product_id":product_id}
