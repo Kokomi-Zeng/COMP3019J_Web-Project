@@ -74,21 +74,20 @@
             success: function (data) {
                 for (let i = 0; i < data.length; i++) {
                     const comment = data[i];
-                    console.log(comment)
                     const comment_div = document.createElement("div");
                     comment_div.setAttribute("class", "comment");
 
                     const comment_rating_div = document.createElement("div");
                     comment_rating_div.setAttribute("class", "comment-rating");
                     const comment_rating = document.createElement("span");
-                    comment_rating.innerText = data.rating;
+                    comment_rating.innerText = comment.rating;
                     comment_rating_div.append(comment_rating);
                     comment_div.append(comment_rating_div);
 
                     const comment_content_div = document.createElement("div");
                     comment_content_div.setAttribute("class", "comment-text");
                     const comment_content = document.createElement("span");
-                    comment_content.innerText = data.content;
+                    comment_content.innerText = comment.content;
                     comment_content_div.append(comment_content);
                     comment_div.append(comment_content_div);
 
