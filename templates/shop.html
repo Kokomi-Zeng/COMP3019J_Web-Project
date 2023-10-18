@@ -8,17 +8,6 @@
 {% block script %}
     <script>
         var page_num;
-        $.ajax({
-                url:"/getSession",
-                type:"get",
-                contentType: "application/json",
-                dataType: "json",
-                success:function (data){
-                    phone = data.phone;
-                    type = data.type;
-                    name = data.name;
-                }
-            })
 
         function generate(){
 
@@ -37,7 +26,6 @@
                         page_num: page_num,
                     },
                     success: function (data) {
-                        console.log(phone)
                         for (let i=0; i<data.length; i++){
                             const item = data[i];
 
@@ -94,6 +82,7 @@
                     }
                 })
 
+            console.log(phone)
             $.ajax({
                 url:"/shop/hasNextPage",
                 type:"get",
