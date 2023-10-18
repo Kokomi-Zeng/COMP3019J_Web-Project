@@ -6,7 +6,7 @@ test_bp = Blueprint('test', __name__, url_prefix='/')
 @test_bp.route('/')
 def getLoginPage():
     user_info = get_user_info()
-    return render_template('login.html', **user_info)
+    return render_template('shop.html', **user_info)
 
 @test_bp.route('/sellerInfo')
 def getSellerInfo():

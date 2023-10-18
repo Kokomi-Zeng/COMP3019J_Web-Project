@@ -47,12 +47,12 @@ def modify_seller_info():
 
     # 验证 phone 是否存在
     if not phone:
-        return jsonify({"error": "Phone number is required"}), 400
+        return jsonify({"success": False, "error": "Phone number is required"})
 
     seller = Seller.query.filter_by(phone=phone).first()
     # 判断卖家是否存在
     if not seller:
-        return jsonify({"error": "Seller not found"}), 404
+        return jsonify({"success": False, "error": "Seller not found"})
 
     # 更新卖家信息
     if name:
@@ -67,7 +67,7 @@ def modify_seller_info():
 
     db.session.commit()
 
-    return jsonify({"message": "Seller information updated successfully"}), 200
+    return jsonify({"success": True, "message": "Seller information updated successfully"})
 
 
 def get_user_info():

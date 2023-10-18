@@ -19,16 +19,16 @@ def modify_item():
         price = float(request.args.get('price'))
         storage = int(request.args.get('storage'))
     except (TypeError, ValueError):
-        return jsonify({"error": "Invalid input. Please ensure valid types for product_id, price, and storage."}), 400
+        return jsonify({"error": "Invalid input. Please ensure valid types for product_id, price, and storage."})
 
     # 验证商品是否存在
     product = Product.query.get(product_id)
     if not product:
-        return jsonify({"message": "Product not found"}), 404
+        return jsonify({"message": "Product not found"})
 
     # 检查商品是否属于该卖家
     if product.seller_phone != seller_phone:
-        return jsonify({"message": "Unauthorized"}), 403
+        return jsonify({"message": "Unauthorized"})
 
     # 更改商品信息
     product.price = price
@@ -41,7 +41,7 @@ def modify_item():
     db.session.commit()
 
     # 状态码200表示服务器已成功处理了请求
-    return jsonify({"message": "Product updated successfully"}), 200
+    return jsonify({"message": "Product updated successfully"})
 
 @products_bp.route('/addItem', methods=['GET'])
 def add_item():
@@ -54,7 +54,7 @@ def add_item():
         price = float(request.args.get('price'))
         storage = int(request.args.get('storage'))
     except (TypeError, ValueError):
-        return jsonify({"error": "Invalid input. Please ensure valid types for price and storage."}), 400
+        return jsonify({"error": "Invalid input. Please ensure valid types for price and storage."})
 
     # 创建新的商品
     product = Product(
@@ -71,7 +71,7 @@ def add_item():
     db.session.commit()
 
     # 状态码201表示请求成功并且服务器创建了新的资源
-    return jsonify({"message": "Product added successfully"}), 201
+    return jsonify({"message": "Product added successfully"})
 
 
 @products_bp.route('/deleteItem', methods=['GET'])
@@ -81,23 +81,23 @@ def delete_item():
     try:
         product_id = int(request.args.get('product_id'))
     except (TypeError, ValueError):
-        return jsonify({"error": "Invalid Product ID. Please provide a valid integer."}), 400
+        return jsonify({"error": "Invalid Product ID. Please provide a valid integer."})
 
     # 验证商品是否存在
     product = Product.query.get(product_id)
     if not product:
-        return jsonify({"message": "Product not found"}), 404
+        return jsonify({"success": False, "message": "Product not found"})
 
     # 检查商品是否属于该卖家
     if product.seller_phone != seller_phone:
-        return jsonify({"message": "Unauthorized"}), 403
+        return jsonify({"success": False, "message": "Unauthorized"})
 
     # 删除商品
     db.session.delete(product)
     db.session.commit()
 
     # 状态码200表示服务器已成功处理了请求
-    return jsonify({"message": "Product deleted successfully"}), 200
+    return jsonify({"success": True, "message": "Product deleted successfully"})
 
 
 @products_bp.route('/itemInfoById', methods=['GET'])
@@ -123,7 +123,7 @@ def item_info_by_id():
         "price": product.price,
         "average_rating": avg_rating,
         "storage": product.storage
-    }), 200
+    })
 
 
 # 辅助函数来计算商品的平均rating
