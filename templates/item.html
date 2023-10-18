@@ -106,6 +106,8 @@
     }
 
     function render_self_comment() {
+        const comment_box = $(".self-comment-box");
+        comment_box.empty();
 
         const self_rating_div = document.createElement("div");
         const self_rating = document.createElement("input");
@@ -142,11 +144,16 @@
                     content: self_content.value,
                     rating: self_rating.value,
                     product_id: "{{ product_id }}"
+                },
+                success:function (data){
+                    if (data.success){
+                        render_self_comment();
+                    }else {
+                        alert(data.message)
+                    }
                 }
             })
         }
-        const comment_box = $(".self-comment-box");
-
         self_content_div.append(self_content);
         self_rating_div.append(self_rating);
         comment_box.append(self_rating_div);
@@ -164,41 +171,23 @@
             },
             success: function (data) {
                 for (let i = 0; i < data.length; i++) {
-
                     const comment = data[i];
                     const comment_div = document.createElement("div");
                     comment_div.setAttribute("class", "comment");
 
-
-                    const comment_owner_div = document.createElement("div");
-                    const comment_owner_span = document.createElement("span");
-
-                    comment_owner_div.setAttribute("class", "comment-rating");
-                    comment_owner_span.innerText = comment.user_name;
-
-                    comment_owner_div.append(comment_owner_span);
-                    comment_div.append(comment_owner_div);
-
-
                     const comment_rating_div = document.createElement("div");
-                    const comment_rating = document.createElement("span");
-
                     comment_rating_div.setAttribute("class", "comment-rating");
+                    const comment_rating = document.createElement("span");
                     comment_rating.innerText = comment.rating;
-
                     comment_rating_div.append(comment_rating);
                     comment_div.append(comment_rating_div);
 
-
                     const comment_content_div = document.createElement("div");
-                    const comment_content = document.createElement("span");
-
                     comment_content_div.setAttribute("class", "comment-text");
+                    const comment_content = document.createElement("span");
                     comment_content.innerText = comment.content;
-
                     comment_content_div.append(comment_content);
                     comment_div.append(comment_content_div);
-
 
                     const comment_text = document.createComment("div");
                     comment_text.innerText = comment.text;
@@ -208,8 +197,7 @@
             }
         })
     }
-
-    $(document).on("sessionLoaded", function() {
+    window.onload = function () {
 
         render_item_data();
         {#基础comment#}
@@ -233,11 +221,9 @@
         {#buyer#}
 {#    评论悬浮框#}
         if (type === "1"){
-            console.log("ok")
             render_self_comment();
         }
-        });
-
+    }
     </script>
 {% endblock %}
 
