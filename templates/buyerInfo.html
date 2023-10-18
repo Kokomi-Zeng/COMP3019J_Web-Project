@@ -194,9 +194,12 @@ name:当前用户name
                 $(".container").append(password_div);
 
                 const submit_div = document.createElement("div");
-                submit_div.onclick = function (){
+                const submit_button = document.createElement("button");
+
+                submit_button.innerText = "Purchased!"
+                submit_button.onclick = function (){
                     $.ajax({
-                        url:'/modifyBuyerInfo',
+                        url:'/buyer/charge',
                         type:'get',
                         contentType: "application/json",
                         dataType: "json",
@@ -206,10 +209,12 @@ name:当前用户name
                             charge_num:$("#pay").val(),
                         },
                         success:function (data){
-                            charge()
+                            charge();
                         }
                     })
                 }
+                submit_div.append(submit_button);
+                $(".container").append(submit_div);
             }
         })
     }
