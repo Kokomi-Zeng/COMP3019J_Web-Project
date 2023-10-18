@@ -209,7 +209,11 @@ name:当前用户name
                             charge_num:$("#pay").val(),
                         },
                         success:function (data){
-                            charge();
+                            if (data.success==="success"){
+                                charge();
+                            }else {
+                                alert(data.message)
+                            }
                         }
                     })
                 }
