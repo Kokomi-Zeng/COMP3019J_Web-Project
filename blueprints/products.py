@@ -119,6 +119,7 @@ def item_info_by_id():
 
     return jsonify({
         "image_src": product.image_src,
+        "name": product.product_name,
         "price": product.price,
         "average_rating": avg_rating,
         "storage": product.storage
