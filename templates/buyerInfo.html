@@ -19,16 +19,10 @@ name:当前用户name
 
 {% block script %}
     <script>
-{#    session deal#}
-    $.ajax({
-        url:"/getSession",
-        type:"get",
-        success:function (data){
-            phone = data.phone;
-            type = data.type;
-            name = data.name;
-        }
-    })
+
+    $(document).on("sessionLoaded", function() {
+        info();
+    });
 
     window.onload = function (){
         $("#info").click(function (){
@@ -40,79 +34,110 @@ name:当前用户name
         $("#purchased").click(function (){
             purchased();
         })
-        info();
     }
-    </script>
-
-    <script>
     function info(){
         {#清除dom#}
-        $(".body").innerText='';
+        $(".container").empty();
 
         $.ajax({
-            url:"/buyerInfo",
+            url:"/buyer/buyerInfo",
             type:"get",
-            data:"{{ phone }}",
+            contentType: "application/json",
+            dataType: "json",
+            data: {phone:phone},
             success:function (data){
-                {#var container = document.createElement("div")#}
-                var name = "";
-                var password = "";
-                var introduction = "";
 
-                var name_div = document.createElement("div");
-                var name_input = document.createElement("input");
+                console.log(111)
+
+                const name_div = document.createElement("div");
+                const name_label = document.createElement("label")
+                const name_input = document.createElement("input");
+
                 name_div.setAttribute("class", "info-div");
                 name_div.setAttribute("id", "name-div");
-                name_input.setAttribute("type", "text");
-                name_input.setAttribute("value", name);
-                name_input.setAttribute("id", "name");
-                name_div.append(name_input);
-                $(".body").append(name_div);
 
-                var phone_div = document.createElement("div");
-                var phone_input = document.createElement("input");
+                name_label.innerText = "Name: "
+
+                name_input.setAttribute("type", "text");
+                name_input.setAttribute("value", data.name);
+                name_input.setAttribute("id", "name");
+
+                name_div.append(name_label);
+                name_label.append(name_input)
+                $(".container").append(name_div);
+
+                console.log(222)
+
+                const phone_div = document.createElement("div");
+                const phone_label = document.createElement("label")
+                const phone_input = document.createElement("input");
+
                 phone_div.setAttribute("class", "info-div");
                 phone_div.setAttribute("id", "phone-div");
-                phone_input.setAttribute("type", "text");
-                phone_input.setAttribute("value", "{{ phone }}");
-                phone_input.setAttribute("id", "phone");
-                phone_div.append(phone_input);
-                $(".body").append(phone_div);
 
-                var introduction_div = document.createElement("div");
-                var introduction_input = document.createElement("input");
+                phone_label.innerText = "Phone: ";
+
+                phone_input.setAttribute("type", "text");
+                phone_input.setAttribute("value", data.phone);
+                phone_input.setAttribute("id", "phone");
+
+                phone_div.append(phone_label);
+                phone_label.append(phone_input)
+                $(".container").append(phone_div);
+
+                const introduction_div = document.createElement("div");
+                const introduction_label = document.createElement("label")
+                const introduction_input = document.createElement("input");
+
                 introduction_div.setAttribute("class", "info-div");
                 introduction_div.setAttribute("id", "introduction-div");
-                introduction_input.setAttribute("type", "text");
-                introduction_input.setAttribute("value", introduction);
-                introduction_input.setAttribute("id", "introduction");
-                introduction_div.append(introduction_input);
-                $(".body").append(introduction_div);
 
-                var password_div = document.createElement("div");
-                var password_input = document.createElement("input");
+                introduction_label.innerText = "Introduction: ";
+
+                introduction_input.setAttribute("type", "text");
+                introduction_input.setAttribute("value", data.introduction);
+                introduction_input.setAttribute("id", "introduction");
+
+                introduction_div.append(introduction_label);
+                introduction_label.append(introduction_input);
+                $(".container").append(introduction_div);
+
+
+                const password_div = document.createElement("div");
+                const password_label = document.createElement("label")
+                const password_input = document.createElement("input");
+
                 password_div.setAttribute("class", "info-div");
                 password_div.setAttribute("id", "password-div");
-                password_input.setAttribute("type", "text");
-                password_input.setAttribute("value", password);
-                password_input.setAttribute("id", "password");
-                password_div.append(password_input);
-                $(".body").append(password_div);
 
-                var submit_div = document.createElement("div");
-                submit_div.click(function (){
+                password_label.innerText = "Password: ";
+
+                password_input.setAttribute("type", "text");
+                password_input.setAttribute("id", "password");
+
+                password_div.append(password_label);
+                password_label.append(password_input);
+                $(".container").append(password_div);
+
+                const submit_div = document.createElement("div");
+                submit_div.onclick = function (){
                     $.ajax({
                         url:'/modifyBuyerInfo',
                         type:'get',
+                        contentType: "application/json",
+                        dataType: "json",
                         data:{
-                            phone:"{{ phone }}",
+                            phone:phone,
                             name:$("#name").val(),
                             password:$("#password").val(),
                             introduction:$("#introduction").val(),
                         },
-                        success:info()
+                        success:function (data){
+                            info()
+                        }
                     })
-                })
+                }
+                $(".container").append(submit_div);
             }
         })
 
@@ -120,69 +145,99 @@ name:当前用户name
     }
     function charge(){
         {#清除dom#}
-        $(".body").innerText='';
+        $(".container").empty();
 
         $.ajax({
-            url:"/getMoney",
+            url:"/buyer/getMoney",
             type:"get",
+            contentType: "application/json",
+            dataType: "json",
             data:{
-                phone:"{{ phone }}",
+                phone:phone,
             },
             success:function (data){
-                var current = ""
-                var current_div = document.createElement("div");
+                const current = data.money;
+                const current_div = document.createElement("div");
+                const current_span = document.createElement("span");
+
                 current_div.setAttribute("class", "charge-div");
                 current_div.setAttribute("id", "current-div");
-                current_div.innerText = "Current:"+current;
-                $(".body").append(current_div);
 
-                var pay_div = document.createElement("div");
+                current_span.innerText = "Current: "+current;
+                current_div.append(current_span);
+                $(".container").append(current_div);
+
+                const pay_div = document.createElement("div");
+                const pay_input = document.createElement("input");
+
                 pay_div.setAttribute("class", "charge-div");
                 pay_div.setAttribute("id", "pay-div");
-                var pay_input = document.createElement("input");
-                pay_input.setAttribute("id", "pay");
-                pay_div.append(pay_input);
-                $(".body").append(pay_div);
 
-                var password_div = document.createElement("div");
-                var password_input = document.createElement("input");
+                pay_input.setAttribute("id", "pay");
+                pay_input.setAttribute("type", "text");
+                pay_input.setAttribute("placeHolder", "pay number");
+
+                pay_div.append(pay_input);
+                $(".container").append(pay_div);
+
+                const password_div = document.createElement("div");
+                const password_input = document.createElement("input");
+
                 password_div.setAttribute("class", "charge-div");
                 password_div.setAttribute("id", "password-div");
+
                 password_input.setAttribute("type", "password");
                 password_input.setAttribute("id", "password");
-                password_div.append(password_input);
-                $(".body").append(password_div);
+                password_input.setAttribute("placeHolder", "password");
 
-                var submit_div = document.createElement("div");
-                submit_div.click(function (){
+                password_div.append(password_input);
+                $(".container").append(password_div);
+
+                const submit_div = document.createElement("div");
+                const submit_button = document.createElement("button");
+
+                submit_button.innerText = "Purchased!"
+                submit_button.onclick = function (){
                     $.ajax({
-                        url:'/modifyBuyerInfo',
+                        url:'/buyer/charge',
                         type:'get',
+                        contentType: "application/json",
+                        dataType: "json",
                         data:{
-                            phone:"{{ phone }}",
+                            phone:phone,
                             password:$("#password").val(),
                             charge_num:$("#pay").val(),
                         },
-                        success:charge()
+                        success:function (data){
+                            charge();
+                        }
                     })
-                })
+                }
+                submit_div.append(submit_button);
+                $(".container").append(submit_div);
             }
         })
     }
     function purchased(){
         {#清除dom#}
-        $(".body").innerText='';
+        $(".container").empty();
 
         $.ajax({
-            url:"/buyerItem",
+            url:"/buyer/buyerItem",
             type:"get",
+            contentType: "application/json",
+            dataType: "json",
             data:{
-                phone:"{{ phone }}",
+                phone:phone,
             },
             success:function (data){
-            {#    遍历生成Item#}
+
             }
         })
     }
     </script>
+{% endblock %}
+
+{% block body %}
+<div class="container"></div>
 {% endblock %}
