@@ -7,6 +7,12 @@
 {% block script %}
     <script>
     function render_item_data(){
+
+        $(".img-box").empty();
+        $(".item-name").empty();
+        $(".item-rating").empty();
+        $(".item-price").empty();
+        $(".item-storage").empty();
         $.ajax({
             url: "/products/itemInfoById",
             type: "get",
@@ -55,10 +61,10 @@
                 {% endif %}
 
                 $(".img-box").append(img);name.setAttribute("type", "text")
-                $(".item-name-box").append(name);
-                $(".item-rating-box").append(rating);
-                $(".item-price-box").append(price);
-                $(".item-storage-box").append(storage);
+                $(".item-name").append(name);
+                $(".item-rating").append(rating);
+                $(".item-price").append(price);
+                $(".item-storage").append(storage);
 
             }
         })
@@ -67,7 +73,7 @@
     function render_buyer_box() {
         const buy_num = document.createElement("input");
         buy_num.setAttribute("type", "num");
-        buy_num.setAttribute("placeHolder", "1");
+        buy_num.setAttribute("placeHolder", "buy number");
         buy_num.setAttribute("id", "buy-num");
 
         const buy_button = document.createElement("button");
@@ -82,7 +88,7 @@
                 data: {
                     product_id: "{{ product_id }}",
                     phone: phone,
-                    num: buy_num.value,
+                    quantity: buy_num.value,
                 },
                 success: function (data) {
                     if (data.success) {
@@ -90,7 +96,6 @@
                     } else {
                         alert(data.error)
                     }
-                    $(".message-box").empty()
                     render_item_data()
                 }
             })
@@ -212,15 +217,19 @@
     <div class="message-box">
         <div class="item-name-box">
             <span>Name:</span>
+            <div class="item-name"></div>
         </div>
         <div class="item-rating-box">
             <span>rating:</span>
+            <div class="item-rating"></div>
         </div>
         <div class="item-price-box">
             <span>price:</span>
+            <div class="item-price"></div>
         </div>
         <div class="item-storage-box">
             <span>storage:</span>
+            <div class="item-storage"></div>
         </div>
 
     </div>
