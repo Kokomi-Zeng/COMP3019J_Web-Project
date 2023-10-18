@@ -17,7 +17,7 @@
             success: function (data) {
                 let img;
                 let name;
-                let star;
+                let rating;
                 let price;
                 let storage
                 {#buyer/visiter#}
@@ -25,58 +25,46 @@
 
                     img = document.createElement("img");
                     name = document.createElement("span");
-                    star = document.createElement("span");
+                    rating = document.createElement("span");
                     price = document.createElement("span");
                     storage = document.createElement("span");
 
                     img.setAttribute("src", data.src);
-                    $(".img-box").append(img);
-
                     name.innerText = data.name;
-                    $(".item-name-box").append(name);
-
-                    star.innerText = data.average_rating;
-                    $(".item-star-box").append(star);
-
+                    rating.innerText = data.average_rating;
                     price.innerText = data.price;
-                    $(".item-price-box").append(price);
-
                     storage.innerText = data.storage;
-                    $(".item-storage-box").append(storage);
                 {% else %}
                     img = document.createElement("img");
                     name = document.createElement("input");
-                    star = document.createElement("input");
+                    rating = document.createElement("input");
                     price = document.createElement("input");
                     storage = document.createElement("input");
 
                     img.setAttribute("src", data.src);
-                    $(".img-box").append(img);name.setAttribute("type", "text")
                     name.value = data.name;
-                    $(".item-name-box").append(name);
 
-                    star.setAttribute("type", "text")
-                    star.value = data.average_rating;
-                    $(".item-star-box").append(star);
+                    rating.setAttribute("type", "text")
+                    rating.value = data.average_rating;
 
                     price.setAttribute("type", "text")
                     price.value = data.price;
-                    $(".item-price-box").append(price);
 
                     storage.setAttribute("type", "text")
                     storage.value = data.storage;
-                    $(".item-storage-box").append(storage);
 
                 {% endif %}
 
-                const name_div = document.createElement("div");
-                const star_div = document.createElement("div");
-                const price_div = document.createElement("div");
-                const storage_div = document.createElement("div");
+                $(".img-box").append(img);name.setAttribute("type", "text")
+                $(".item-name-box").append(name);
+                $(".item-rating-box").append(rating);
+                $(".item-price-box").append(price);
+                $(".item-storage-box").append(storage);
 
             }
         })
 
+        {#基础comment#}
         $.ajax({
             url: "/comment/commentBasicInfoById",
             type: "get",
@@ -86,20 +74,25 @@
             success: function (data) {
                 for (let i = 0; i < data.length; i++) {
                     const comment = data[i];
+                    console.log(comment)
                     const comment_div = document.createElement("div");
                     comment_div.setAttribute("class", "comment");
 
-                    const comment_star_div = document.createElement("div");
-                    comment_star_div.setAttribute("class", "comment-star");
-                    comment_div.append(comment_star_div);
+                    const comment_rating_div = document.createElement("div");
+                    comment_rating_div.setAttribute("class", "comment-rating");
+                    const comment_rating = document.createElement("span");
+                    comment_rating.innerText = data.rating;
+                    comment_rating_div.append(comment_rating);
+                    comment_div.append(comment_rating_div);
 
-                    {#create dom and insert data of star#}
+                    const comment_content_div = document.createElement("div");
+                    comment_content_div.setAttribute("class", "comment-text");
+                    const comment_content = document.createElement("span");
+                    comment_content.innerText = data.content;
+                    comment_content_div.append(comment_content);
+                    comment_div.append(comment_content_div);
 
-                    const comment_text_div = document.createElement("div");
-                    comment_text_div.setAttribute("class", "comment-text");
-                    comment_div.append(comment_text_div);
-
-                    const comment_text = document.createComment("p");
+                    const comment_text = document.createComment("div");
                     comment_text.innerText = comment.text;
 
                     $(".item-comment-box").append(comment_div);
@@ -107,6 +100,7 @@
             }
         })
 
+        {#buyer 购买#}
         {% if belong==false %}
 
                 const buy_num = document.createElement("input");
@@ -138,12 +132,56 @@
                 buy_box.append(buy_button);
         {% endif %}
 
-        if (phone!==null){
-            $(".item-comment-box").scroll(function (){
-                if ($(this).scrollTop()+$(this).height()===$(document).height()){
+{#    鼠标下拉并展示更多comment#}
+        if (phone!==null) {
+            $(".item-comment-box").scroll(function () {
+                if ($(this).scrollTop() + $(this).height() === $(document).height()) {
                     console.log(1)
                 }
             })
+
+        }
+
+        {#buyer#}
+{#    评论悬浮框#}
+        if (type === "1"){
+            const self_rating_div = document.createElement("div");
+            self_rating_div.setAttribute("class", "self-rating-box");
+            const self_rating = document.createElement("input");
+            self_rating.setAttribute("class", "self-rating");
+            self_rating.setAttribute("placeHolder", "rating");
+            self_rating.setAttribute("type", "number");
+            const self_content_div = document.createElement("div");
+            self_content_div.setAttribute("class", "self-content-box");
+            const self_content = document.createElement("input");
+            self_content.setAttribute("class", "self-content");
+            self_content.setAttribute("placeHolder", "content");
+            self_rating.setAttribute("type", "text");
+            const self_content_button = document.createElement("button");
+            self_content_button.setAttribute("id", "self-content-button");
+            self_content_button.innerText = "Submit->"
+            self_content_button.onclick = function (){
+                console.log(self_rating.value)
+                console.log(self_content.value)
+                $.ajax({
+                    url:"/comment/createComment",
+                    type: "get",
+                    contentType: "application/json",
+                    dataType: "json",
+                    data:{
+                        buyer_phone:phone,
+                        comment:self_content.value,
+                        rating:self_rating.value,
+                        product_id:"{{ product_id }}"
+                    }
+                })
+            }
+            const comment_box = $(".self-comment-box");
+            self_content_div.append(self_content);
+            self_rating_div.append(self_rating);
+            comment_box.append(self_rating_div);
+            comment_box.append(self_content_div);
+            comment_box.append(self_content_button);
 
         }
     }
@@ -157,8 +195,8 @@
         <div class="item-name-box">
             <span>Name:</span>
         </div>
-        <div class="item-star-box">
-            <span>star:</span>
+        <div class="item-rating-box">
+            <span>rating:</span>
         </div>
         <div class="item-price-box">
             <span>price:</span>
