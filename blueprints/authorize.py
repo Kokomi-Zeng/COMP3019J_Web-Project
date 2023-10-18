@@ -6,7 +6,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from exts import db
 #. 表示当前目录
 from .forms import RegisterForm
-from models import User
+from models import User, Seller, Buyer
 
 # 创建蓝图对象,第一个：蓝图名字，第二个；__name__表示代表当前的模块，第三个：url_prefix表示前缀，所有的在这里面的路由都会加上这里的前缀
 bp = Blueprint("authorize", __name__, url_prefix="/authorize")
@@ -54,6 +54,15 @@ def register():
 
     user = User(phone=phone, password=generate_password_hash(password), user_type=user_type)
     db.session.add(user)
+
+    if user_type == '0':
+        seller = Seller(phone=phone, name="seller")
+        db.session.add(seller)
+
+    if user_type == '1':
+        buyer = Buyer(phone=phone, name="buyer")
+        db.session.add(buyer)
+
     db.session.commit()
     return jsonify(success=True, message="Registration successful")
 

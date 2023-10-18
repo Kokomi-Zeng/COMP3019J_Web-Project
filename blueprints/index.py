@@ -18,13 +18,14 @@ def getSession():
     user = User.query.get(phone)
     if user:
         if user.user_type == '0':
-            name = user.seller.name
+            # name = user.seller.name
+            return {'phone': phone, 'name': user.seller.name, 'type': user.user_type}
         if user.user_type == '1':
-            name = user.buyer.name
-        return {'phone': phone, 'name': name}
+            # name = user.buyer.name
+            return {'phone': phone, 'name': user.buyer.name, 'type': user.user_type}
     else:
         # return {'phone': None, 'name': None}
-        return {'phone': "", 'name': ""}
+        return {'phone': "", 'name': "", 'type':""}
 
 
 def get_user_info():
