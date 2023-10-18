@@ -56,11 +56,11 @@ def register():
     db.session.add(user)
 
     if user_type == '0':
-        seller = Seller(phone=phone, name="seller")
+        seller = Seller(phone=phone, name="new seller", description="")
         db.session.add(seller)
 
     if user_type == '1':
-        buyer = Buyer(phone=phone, name="buyer")
+        buyer = Buyer(phone=phone, name="new buyer", description="")
         db.session.add(buyer)
 
     db.session.commit()
