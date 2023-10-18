@@ -22,7 +22,7 @@ register
                 user_type: user_type,
             }),
             success:function (data){
-                if(data.success){
+                if(data.success==="success"){
                 window.location.replace("/");
             } else {
                 alert(data.message);
