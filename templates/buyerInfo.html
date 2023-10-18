@@ -20,6 +20,7 @@ name:当前用户name
 {% block script %}
     <script>
 
+    const body = $(".body");
     window.onload = function (){
         $("#info").click(function (){
             info();
@@ -37,16 +38,16 @@ name:当前用户name
     <script>
     function info(){
         {#清除dom#}
-        $(".body").empty();
+        body.empty();
 
         $.ajax({
-            url:"/buyerInfo",
+            url:"/buyer/buyerInfo",
             type:"get",
-            data:"{{ phone }}",
+            data: {phone:phone},
             success:function (data){
-                const name = "";
-                const password = "";
-                const introduction = "";
+
+                const name = name;
+                const introduction = introduction;
 
                 const name_div = document.createElement("div");
                 const name_input = document.createElement("input");
@@ -56,17 +57,17 @@ name:当前用户name
                 name_input.setAttribute("value", name);
                 name_input.setAttribute("id", "name");
                 name_div.append(name_input);
-                $(".body").append(name_div);
+                body.append(name_div);
 
                 const phone_div = document.createElement("div");
                 const phone_input = document.createElement("input");
                 phone_div.setAttribute("class", "info-div");
                 phone_div.setAttribute("id", "phone-div");
                 phone_input.setAttribute("type", "text");
-                phone_input.setAttribute("value", "{{ phone }}");
+                phone_input.setAttribute("value", phone);
                 phone_input.setAttribute("id", "phone");
                 phone_div.append(phone_input);
-                $(".body").append(phone_div);
+                body.append(phone_div);
 
                 const introduction_div = document.createElement("div");
                 const introduction_input = document.createElement("input");
@@ -76,17 +77,16 @@ name:当前用户name
                 introduction_input.setAttribute("value", introduction);
                 introduction_input.setAttribute("id", "introduction");
                 introduction_div.append(introduction_input);
-                $(".body").append(introduction_div);
+                body.append(introduction_div);
 
                 const password_div = document.createElement("div");
                 const password_input = document.createElement("input");
                 password_div.setAttribute("class", "info-div");
                 password_div.setAttribute("id", "password-div");
                 password_input.setAttribute("type", "text");
-                password_input.setAttribute("value", password);
                 password_input.setAttribute("id", "password");
                 password_div.append(password_input);
-                $(".body").append(password_div);
+                body.append(password_div);
 
                 const submit_div = document.createElement("div");
                 submit_div.click(function (){
@@ -109,7 +109,7 @@ name:当前用户name
     }
     function charge(){
         {#清除dom#}
-        $(".body").innerText='';
+        body.empty();
 
         $.ajax({
             url:"/getMoney",
@@ -123,7 +123,7 @@ name:当前用户name
                 current_div.setAttribute("class", "charge-div");
                 current_div.setAttribute("id", "current-div");
                 current_div.innerText = "Current:"+current;
-                $(".body").append(current_div);
+                body.append(current_div);
 
                 const pay_div = document.createElement("div");
                 pay_div.setAttribute("class", "charge-div");
@@ -131,7 +131,7 @@ name:当前用户name
                 const pay_input = document.createElement("input");
                 pay_input.setAttribute("id", "pay");
                 pay_div.append(pay_input);
-                $(".body").append(pay_div);
+                body.append(pay_div);
 
                 const password_div = document.createElement("div");
                 const password_input = document.createElement("input");
@@ -140,7 +140,7 @@ name:当前用户name
                 password_input.setAttribute("type", "password");
                 password_input.setAttribute("id", "password");
                 password_div.append(password_input);
-                $(".body").append(password_div);
+                body.append(password_div);
 
                 const submit_div = document.createElement("div");
                 submit_div.click(function (){
@@ -160,7 +160,7 @@ name:当前用户name
     }
     function purchased(){
         {#清除dom#}
-        $(".body").innerText='';
+        body.empty();
 
         $.ajax({
             url:"/buyerItem",
