@@ -7,18 +7,9 @@
 {% block script %}
     <script>
     window.onload = function () {
-        $.ajax({
-            url: "/getSession",
-            type: "get",
-            success: function (data) {
-                phone = data.phone;
-                name = data.name;
-                type = data.type;
-            }
-        })
 
         $.ajax({
-            url: "/itemInfoById",
+            url: "/products/itemInfoById",
             type: "get",
             data: {
                 product_id: "{{ product_id }}"
@@ -29,7 +20,9 @@
                 let star;
                 let price;
                 let storage
-                if ("{{ belong }}"==="false"){
+                {#buyer/visiter#}
+                {% if belong==false %}
+
                     img = document.createElement("img");
                     name = document.createElement("span");
                     star = document.createElement("span");
@@ -42,7 +35,7 @@
                     name.innerText = data.name;
                     $(".item-name-box").append(name);
 
-                    star.innerText = data.star;
+                    star.innerText = data.average_rating;
                     $(".item-star-box").append(star);
 
                     price.innerText = data.price;
@@ -50,7 +43,7 @@
 
                     storage.innerText = data.storage;
                     $(".item-storage-box").append(storage);
-                }else {
+                {% else %}
                     img = document.createElement("img");
                     name = document.createElement("input");
                     star = document.createElement("input");
@@ -63,7 +56,7 @@
                     $(".item-name-box").append(name);
 
                     star.setAttribute("type", "text")
-                    star.value = data.star;
+                    star.value = data.average_rating;
                     $(".item-star-box").append(star);
 
                     price.setAttribute("type", "text")
@@ -73,7 +66,8 @@
                     storage.setAttribute("type", "text")
                     storage.value = data.storage;
                     $(".item-storage-box").append(storage);
-                }
+
+                {% endif %}
 
                 const name_div = document.createElement("div");
                 const star_div = document.createElement("div");
@@ -84,7 +78,7 @@
         })
 
         $.ajax({
-            url: "commentBasicInfoById",
+            url: "/comment/commentBasicInfoById",
             type: "get",
             data: {
                 product_id: "{{ product_id }}"
@@ -143,6 +137,15 @@
                 buy_box.append(buy_num);
                 buy_box.append(buy_button);
         {% endif %}
+
+        if (phone!==null){
+            $(".item-comment-box").scroll(function (){
+                if ($(this).scrollTop()+$(this).height()===$(document).height()){
+                    console.log(1)
+                }
+            })
+
+        }
     }
     </script>
 {% endblock %}
@@ -151,10 +154,19 @@
 <div class="left-box">
     <div class="img-box"></div>
     <div class="message-box">
-        <div class="item-name-box"></div>
-        <div class="item-star-box"></div>
-        <div class="item-price-box"></div>
-        <div class="item-storage-box"></div>
+        <div class="item-name-box">
+            <span>Name:</span>
+        </div>
+        <div class="item-star-box">
+            <span>star:</span>
+        </div>
+        <div class="item-price-box">
+            <span>price:</span>
+        </div>
+        <div class="item-storage-box">
+            <span>storage:</span>
+        </div>
+
     </div>
     <div class="operation-box">
         <div class="buy-operation">
@@ -163,7 +175,6 @@
         </div>
         <div>
             <div class="look-more-comment">
-                <button id="comment-button">COMMENT</button>
             </div>
         </div>
     </div>
