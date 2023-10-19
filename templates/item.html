@@ -6,6 +6,25 @@
 
 {% block script %}
     <script>
+
+    let belong;
+
+    function is_item_match_seller(){
+        $.ajax({
+            url:"/shop/isItemMatchSeller",
+            type: "get",
+            contentType: "application/json",
+            dataType: "json",
+            data:{
+                product_id:"{{ product_id }}",
+                phone: phone
+            },
+            success:function (data){
+                belong = data.belong;
+            }
+        })
+    }
+
     function render_item_data(){
 
         $(".img-box").empty();
@@ -16,6 +35,8 @@
         $.ajax({
             url: "/products/itemInfoById",
             type: "get",
+            contentType: "application/json",
+            dataType: "json",
             data: {
                 product_id: "{{ product_id }}"
             },
@@ -167,6 +188,8 @@
         $.ajax({
             url: "/comment/commentBasicInfoById",
             type: "get",
+            contentType: "application/json",
+            dataType: "json",
             data: {
                 product_id: "{{ product_id }}"
             },
@@ -199,6 +222,8 @@
         })
     }
     $(document).on("sessionLoaded", function() {
+
+        is_item_match_seller()
 
         render_item_data();
         {#基础comment#}
