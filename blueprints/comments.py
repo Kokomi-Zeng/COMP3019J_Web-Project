@@ -1,5 +1,5 @@
 from flask import Blueprint, jsonify, request, render_template
-from models import Comment, Buyer, db, Product
+from models import Comment, Buyer, db, Product, User
 
 comment_bp = Blueprint('comment', __name__, url_prefix='/comment')
 
@@ -17,7 +17,7 @@ def create_comment():
         rating = int(request.args.get('rating'))
         product_id = int(request.args.get('product_id'))
     except (TypeError, ValueError):
-        return jsonify({"error": "Invalid input. Rating and Product ID should be integers."})
+        return jsonify({"success": False, "message": "Invalid input. Rating and Product ID should be integers."})
 
     # 验证买家是否存在
     buyer = Buyer.query.filter_by(phone=buyer_phone).first()
@@ -26,6 +26,9 @@ def create_comment():
 
     if not (rating == 1 or rating == 2 or rating == 3 or rating == 4 or rating == 5):
         return jsonify({"success": False, "message": "Rating must be 1 or 2 or 3 or 4 or 5"})
+
+    if content is None or content == "":
+        return jsonify({"success": False, "message": "Comment can't be empty"})
 
     # 创建新的评论 (用这种方法来是comment插入数据库中)
     comment = Comment(
@@ -83,24 +86,31 @@ def comment_basic_info_by_id():
 @comment_bp.route('/commentInfoById', methods=['GET'])
 def comment_info_by_id():
     product_id_data = request.args.get('product_id')
-    buyer_phone_data = request.args.get('buyer_phone')
+    phone_data = request.args.get('phone')
 
-    # 检查product_id和buyer_phone是否存在
+    # 检查product_id是否正确
     try:
         product_id = int(product_id_data)
     except (TypeError, ValueError):
         # return jsonify({"error": "Invalid Product ID. Please provide a valid integer."}), 400
         return jsonify([])
-    # 检查买家是否存在
-    buyer = Buyer.query.filter_by(phone=buyer_phone_data).first()
-    if not buyer:
+
+    user = User.query.filter_by(phone=phone_data).first()
+
+    if not user:
         # return jsonify({"error": "Buyer not found"}), 404
         return jsonify([])
-    # 查询与该商品和买家相关的评论
-    comment = Comment.query.filter_by(product_id=product_id, buyer_phone=buyer.phone).first()
+
+    # 查询评论
+    comment = Comment.query.filter_by(product_id=product_id).first()
+
     if not comment:
         # return jsonify({"error": "Comment not found"}), 404
         return jsonify([])
+
+
+    # 查询这个商品对应的买家
+    buyer = Buyer.query.filter_by(phone=comment.buyer_phone).first()
     comment_data = {
         "user_name": buyer.name,
         "content": comment.content,
@@ -109,6 +119,7 @@ def comment_info_by_id():
 
     return jsonify(comment_data)
 
+# 辅助函数来计算商品的平均rating
 
 
 
