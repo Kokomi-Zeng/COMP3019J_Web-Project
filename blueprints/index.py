@@ -27,6 +27,12 @@ def getSession():
         # return {'phone': None, 'name': None}
         return {'phone': "", 'name': "", 'type':""}
 
+# 清除session (clear session)
+@bp.route('/clearSession')
+def clearSession():
+    session.clear()
+    return {'success': True}
+
 
 def get_user_info():
     phone = session.get('phone')
