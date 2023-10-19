@@ -47,8 +47,6 @@ name:当前用户name
             data: {phone:phone},
             success:function (data){
 
-                console.log(111)
-
                 const name_div = document.createElement("div");
                 const name_label = document.createElement("label")
                 const name_input = document.createElement("input");
@@ -65,8 +63,6 @@ name:当前用户name
                 name_div.append(name_label);
                 name_label.append(name_input)
                 $(".container").append(name_div);
-
-                console.log(222)
 
                 const phone_div = document.createElement("div");
                 const phone_label = document.createElement("label")
