@@ -9,7 +9,7 @@ bp = Blueprint('index', __name__, url_prefix='/')
 def index():
     user_info = get_user_info()
     # **user_info相当于phone=user_info['phone'], name=user_info['name'], type=user_info['type']
-    return render_template('login.html', **user_info)
+    return render_template('shop.html', **user_info)
 
 
 @bp.route('/getSession')
