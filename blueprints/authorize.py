@@ -58,7 +58,7 @@ def register():
     db.session.add(user)
 
     if user_type == '0':
-        seller = Seller(phone=phone, name="new seller", description="", balance=0)
+        seller = Seller(phone=phone, name="new seller", description="")
         db.session.add(seller)
 
     if user_type == '1':

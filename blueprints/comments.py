@@ -54,13 +54,11 @@ def comment_basic_info_by_id():
     try:
         product_id = int(product_id_data)
     except (TypeError, ValueError):
-        # return jsonify({"error": "Invalid Product ID. Please provide a valid integer."}), 400
-        return jsonify([])
+        return jsonify({"success": False, "message": "Invalid Product ID. Please provide a valid integer."})
 
     product = Product.query.filter_by(product_id=product_id).first()
     if not product:
-        # return jsonify({"error": "Product not found"}), 404
-        return jsonify([])
+        return jsonify({"success": False, "message": "Product not found"})
 
     # 获取最高的5个评论
     top_comments = Comment.query.filter_by(product_id=product_id).order_by(Comment.rating.desc()).limit(5).all()
@@ -70,6 +68,9 @@ def comment_basic_info_by_id():
 
     # 使用集合运算去除重复评论
     combined_comments = list(set(top_comments + bottom_comments))
+
+    # 将评论从评分高到低排序
+    combined_comments.sort(key=lambda x: x.rating, reverse=True)
 
     comments_data = []
     for comment in combined_comments:
@@ -92,34 +93,30 @@ def comment_info_by_id():
     try:
         product_id = int(product_id_data)
     except (TypeError, ValueError):
-        # return jsonify({"error": "Invalid Product ID. Please provide a valid integer."}), 400
-        return jsonify([])
+        return jsonify({"success": False, "message": "Invalid Product ID. Please provide a valid integer."})
 
     user = User.query.filter_by(phone=phone_data).first()
 
     if not user:
-        # return jsonify({"error": "Buyer not found"}), 404
-        return jsonify([])
+        return jsonify({"success": False, "message": "Buyer or seller not found"})
 
-    # 查询评论
-    comment = Comment.query.filter_by(product_id=product_id).first()
+    # 查询评论,并按照评分从高到低排序
+    comments = Comment.query.filter_by(product_id=product_id).order_by(Comment.rating.desc()).all()
 
-    if not comment:
+    if not comments:
         # return jsonify({"error": "Comment not found"}), 404
-        return jsonify([])
+        return jsonify({"success": False, "message": "Comment not found"})
 
+    comments_data = []
+    for comment in comments:
+        buyer = Buyer.query.filter_by(phone=comment.buyer_phone).first()
+        comments_data.append({
+            "user_name": buyer.name,
+            "content": comment.content,
+            "rating": comment.rating
+        })
 
-    # 查询这个商品对应的买家
-    buyer = Buyer.query.filter_by(phone=comment.buyer_phone).first()
-    comment_data = {
-        "user_name": buyer.name,
-        "content": comment.content,
-        "rating": comment.rating
-    }
-
-    return jsonify(comment_data)
-
-# 辅助函数来计算商品的平均rating
+    return jsonify(comments_data)
 
 
 

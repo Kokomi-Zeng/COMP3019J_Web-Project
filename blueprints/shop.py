@@ -102,23 +102,22 @@ def is_item_match_seller():
     try:
         product_id = int(request.args.get('product_id'))
     except(TypeError, ValueError):
-        return jsonify([])
+        return jsonify({"success": False, "message": "Invalid Product ID. Please provide a valid integer."})
 
     product = Product.query.get(product_id)
 
     # 如果商品不存在
     if not product:
-        return jsonify([])
+        return jsonify({"success": False, "message": "Product not found."})
 
     if product.seller_phone == phone:
-        return jsonify({"belong":True, "product_id":product_id})
+        return jsonify({"success": True, "belong":True, "product_id":product_id})
         # return jsonify({
         #     "belong": True,
         #     "product_id": product_id,
         # })
     else:
-        return jsonify({"belong":False, "product_id":product_id})
-
+        return jsonify({"success": True, "belong":False, "product_id":product_id})
 
 @shop_bp.route('/hasNextPage', methods=['GET'])
 def has_next_page():

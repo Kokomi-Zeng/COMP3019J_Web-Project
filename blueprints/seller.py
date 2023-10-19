@@ -21,14 +21,12 @@ def seller_info():
 
     # 假如没有传入phone，返回服务器200状态码，表示请求成功，但是没有数据
     if not phone:
-        # return jsonify({"data": None}), 200
-        return jsonify([])
+        return jsonify({"success": False, "message": "Phone number is required"})
 
     seller = Seller.query.filter_by(phone=phone).first()
     # 假如用户不存在，返回服务器200状态码，表示请求成功，但是没有数据
     if not seller:
-        # return jsonify({"data": None}), 200
-        return jsonify([])
+        return jsonify({"success": False, "message": "Seller not found"})
 
     return jsonify({
         "phone": seller.phone,
@@ -47,12 +45,12 @@ def modify_seller_info():
 
     # 验证 phone 是否存在
     if not phone:
-        return jsonify({"success": False, "error": "Phone number is required"})
+        return jsonify({"success": False, "message": "Phone number is required"})
 
     seller = Seller.query.filter_by(phone=phone).first()
     # 判断卖家是否存在
     if not seller:
-        return jsonify({"success": False, "error": "Seller not found"})
+        return jsonify({"success": False, "message": "Seller not found"})
 
     # 更新卖家信息
     if name:
