@@ -8,6 +8,20 @@ login
 
 {% block script %}
     <script>
+    window.onload = function (){
+
+        $(".back-button-box").empty()
+        
+        $("#submit").click(function (){
+            login();
+        });
+        $("#password").keypress(function (event){
+            if (event.which == 13){
+                login();
+            }
+        });
+    }
+
     function login(){
         $.ajax({
             url:"/authorize/login",
@@ -26,21 +40,6 @@ login
                 }
             }
         });
-    }
-
-    {#================================================================================================================#}
-    window.onload = function (){
-
-        $(".back-button-box").empty()
-        $("#submit").click(function (){
-            login();
-        });
-        $("#password").keypress(function (event){
-            if (event.which == 13){
-                login();
-            }
-        });
-
     }
     </script>
 {% endblock %}
