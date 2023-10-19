@@ -119,6 +119,7 @@ def is_item_match_seller():
     else:
         return jsonify({"success": True, "belong":False, "product_id":product_id})
 
+
 @shop_bp.route('/hasNextPage', methods=['GET'])
 def has_next_page():
     phone = request.args.get('phone')
