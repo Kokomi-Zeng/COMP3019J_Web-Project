@@ -147,6 +147,7 @@
                 },
                 success:function (data){
                     if (data.success){
+                        alert(data.message)
                         render_self_comment();
                     }else {
                         alert(data.message)
