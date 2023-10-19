@@ -18,86 +18,102 @@ name:当前用户name
 
 {% block script %}
     <script>
-    window.onload = function (){
+
+    const body = $(".body")
+    $(document).on("sessionLoaded", function() {
+        
+        info();
+        
         $("#info").click(function (){
             info();
         })
         $("#add-item").click(function (){
             add();
         })
-        info();
-    }
-    </script>
-
-    <script>
+    });
     function info(){
         {#清除dom#}
-        $(".body").innerText='';
+        body.innerText='';
 
         $.ajax({
-            url:"/sellerInfo",
+            url:"/seller/sellerInfo",
             type:"get",
-            data:"{{ phone }}",
+            contentType: "application/json",
+            dataType: "json",
+            data:phone,
             success:function (data){
-                {#var container = document.createElement("div")#}
-                var name = "";
-                var password = "";
-                var introduction = "";
+                const name = "";
+                const password = "";
+                const introduction = "";
 
-                var name_div = document.createElement("div");
-                var name_input = document.createElement("input");
+                const name_div = document.createElement("div");
+                const name_input = document.createElement("input");
+                
                 name_div.setAttribute("class", "info-div");
                 name_div.setAttribute("id", "name-div");
                 name_input.setAttribute("type", "text");
                 name_input.setAttribute("value", name);
                 name_input.setAttribute("id", "name");
+                
                 name_div.append(name_input);
-                $(".body").append(name_div);
+                body.append(name_div);
 
-                var phone_div = document.createElement("div");
-                var phone_input = document.createElement("input");
+                const phone_div = document.createElement("div");
+                const phone_input = document.createElement("input");
+                
                 phone_div.setAttribute("class", "info-div");
                 phone_div.setAttribute("id", "phone-div");
                 phone_input.setAttribute("type", "text");
-                phone_input.setAttribute("value", "{{ phone }}");
+                phone_input.setAttribute("value", phone);
                 phone_input.setAttribute("id", "phone");
+                
                 phone_div.append(phone_input);
-                $(".body").append(phone_div);
+                body.append(phone_div);
 
-                var introduction_div = document.createElement("div");
-                var introduction_input = document.createElement("input");
+                const introduction_div = document.createElement("div");
+                const introduction_input = document.createElement("input");
+                
                 introduction_div.setAttribute("class", "info-div");
                 introduction_div.setAttribute("id", "introduction-div");
                 introduction_input.setAttribute("type", "text");
                 introduction_input.setAttribute("value", introduction);
                 introduction_input.setAttribute("id", "introduction");
+                
                 introduction_div.append(introduction_input);
-                $(".body").append(introduction_div);
+                body.append(introduction_div);
 
-                var password_div = document.createElement("div");
-                var password_input = document.createElement("input");
+                const password_div = document.createElement("div");
+                const password_input = document.createElement("input");
+                
                 password_div.setAttribute("class", "info-div");
                 password_div.setAttribute("id", "password-div");
                 password_input.setAttribute("type", "text");
                 password_input.setAttribute("value", password);
                 password_input.setAttribute("id", "password");
+                
                 password_div.append(password_input);
-                $(".body").append(password_div);
-
-                var submit_div = document.createElement("div");
-                submit_div.click(function (){
+                body.append(password_div);
+                
+                const submit_div = document.createElement("div");
+                const submit_button = document.createElement("button");
+                submit_button.onclick = function (){
                     $.ajax({
                         url:'/modifySellerInfo',
                         type:'get',
                         data:{
-                            phone:"{{ phone }}",
+                            phone:phone,
                             name:$("#name").val(),
                             password:$("#password").val(),
                             introduction:$("#introduction").val(),
                         },
-                        success:info()
+                        success:function (data){
+                            info()
+                        }
                     })
-                })
+                }
+                
+                submit_div.append(submit_button);
+                body.append(submit_div);
             }
         })
 
@@ -105,57 +121,57 @@ name:当前用户name
     }
     function add(){
         {#清除dom#}
-        $(".body").innerText='';
+        body.innerText='';
 
-        var item_name = "";
-        var item_name_div = document.createElement("div");
+        const item_name = "";
+        const item_name_div = document.createElement("div");
         item_name_div.setAttribute("class", "add-div");
         item_name_div.setAttribute("id", "item_name-div");
-        var item_name_input = document.createElement("input");
+        const item_name_input = document.createElement("input");
         item_name_input.setAttribute("id", "item_name");
         item_name_div.append(item_name_input);
-        $(".body").append(item_name_div);
+        body.append(item_name_div);
 
-        var src_div = document.createElement("div");
+        const src_div = document.createElement("div");
         src_div.setAttribute("class", "add-div");
         src_div.setAttribute("id", "src-div");
-        var src_input = document.createElement("input");
+        const src_input = document.createElement("input");
         src_input.setAttribute("id", "src");
         src_div.append(src_input);
-        $(".body").append(src_div);
+        body.append(src_div);
 
-        var storage_div = document.createElement("div");
+        const storage_div = document.createElement("div");
         storage_div.setAttribute("class", "add-div");
         storage_div.setAttribute("id", "storage-div");
-        var storage_input = document.createElement("input");
+        const storage_input = document.createElement("input");
         storage_input.setAttribute("id", "storage");
         storage_div.append(storage_input);
-        $(".body").append(storage_div);
+        body.append(storage_div);
 
-        var introduction_div = document.createElement("div");
+        const introduction_div = document.createElement("div");
         introduction_div.setAttribute("class", "add-div");
         introduction_div.setAttribute("id", "introduction-div");
-        var introduction_input = document.createElement("input");
+        const introduction_input = document.createElement("input");
         introduction_input.setAttribute("id", "introduction");
         introduction_div.append(introduction_input);
-        $(".body").append(introduction_div);
+        body.append(introduction_div);
 
-        var price_div = document.createElement("div");
-        var price_input = document.createElement("input");
+        const price_div = document.createElement("div");
+        const price_input = document.createElement("input");
         price_div.setAttribute("class", "add-div");
         price_div.setAttribute("id", "price-div");
         price_input.setAttribute("type", "price");
         price_input.setAttribute("id", "price");
         price_div.append(price_input);
-        $(".body").append(price_div);
+        body.append(price_div);
 
-        var submit_div = document.createElement("div");
-        submit_div.click(function (){
+        const submit_div = document.createElement("div");
+        submit_div.onclick = function (){
             $.ajax({
                 url:'/addItem',
                 type:'get',
                 data:{
-                    phone:"{{ phone }}",
+                    phone:phone,
                     price:$("#price").val(),
                     storage:$("#storage").val(),
                     item_name:$("#item_name").val(),
@@ -166,7 +182,7 @@ name:当前用户name
                     alert(data);
                 }
             })
-        })
+        }
     }
     </script>
 {% endblock %}
