@@ -54,7 +54,7 @@ def add_item():
         price = float(request.args.get('price'))
         storage = int(request.args.get('storage'))
     except (TypeError, ValueError):
-        return jsonify({"error": "Invalid input. Please ensure valid types for price and storage."})
+        return jsonify({"success": False, "message": "Invalid input. Please ensure valid types for price and storage."})
 
     # 创建新的商品
     product = Product(
@@ -81,7 +81,7 @@ def delete_item():
     try:
         product_id = int(request.args.get('product_id'))
     except (TypeError, ValueError):
-        return jsonify({"error": "Invalid Product ID. Please provide a valid integer."})
+        return jsonify({"success": False, "message": "Invalid Product ID. Please provide a valid integer."})
 
     # 验证商品是否存在
     product = Product.query.get(product_id)
@@ -106,15 +106,13 @@ def item_info_by_id():
     try:
         product_id = int(request.args.get('product_id'))
     except (TypeError, ValueError):
-        # return jsonify({"error": "Invalid Product ID. Please provide a valid integer."}), 400
-        return jsonify([])
+        return jsonify({"success": False, "message": "Invalid Product ID. Please provide a valid integer."}), 400
 
     product = Product.query.filter_by(product_id=product_id).first()
 
     # 根据product_id查询到的商品是否存在
     if not product:
-        # return jsonify({"error": "Product not found"}), 404
-        return jsonify([])
+        return jsonify({"success": False, "message": "Product not found."}), 400
     avg_rating = calculate_average_rating(product_id)
 
     return jsonify({
