@@ -15,11 +15,13 @@ name:当前用户name
     <button class="nav-button" id="info">info</button>
     <button class="nav-button" id="charge">charge</button>
     <button class="nav-button" id="purchased">purchased</button>
+    <button class="nav-button" id="log_out">log out</button>
 {% endblock %}
 
 {% block script %}
     <script>
 
+    let container = $(".container");
     $(document).on("sessionLoaded", function() {
         info();
     });
@@ -34,10 +36,13 @@ name:当前用户name
         $("#purchased").click(function (){
             purchased();
         })
+        $("#log_out").click(function (){
+            log_out();
+        })
     }
     function info(){
         {#清除dom#}
-        $(".container").empty();
+        container.empty();
 
         $.ajax({
             url:"/buyer/buyerInfo",
@@ -46,8 +51,6 @@ name:当前用户name
             dataType: "json",
             data: {phone:phone},
             success:function (data){
-
-                console.log(111)
 
                 const name_div = document.createElement("div");
                 const name_label = document.createElement("label")
@@ -64,9 +67,7 @@ name:当前用户name
 
                 name_div.append(name_label);
                 name_label.append(name_input)
-                $(".container").append(name_div);
-
-                console.log(222)
+                container.append(name_div);
 
                 const phone_div = document.createElement("div");
                 const phone_label = document.createElement("label")
@@ -83,7 +84,7 @@ name:当前用户name
 
                 phone_div.append(phone_label);
                 phone_label.append(phone_input)
-                $(".container").append(phone_div);
+                container.append(phone_div);
 
                 const introduction_div = document.createElement("div");
                 const introduction_label = document.createElement("label")
@@ -100,7 +101,7 @@ name:当前用户name
 
                 introduction_div.append(introduction_label);
                 introduction_label.append(introduction_input);
-                $(".container").append(introduction_div);
+                container.append(introduction_div);
 
 
                 const password_div = document.createElement("div");
@@ -117,7 +118,7 @@ name:当前用户name
 
                 password_div.append(password_label);
                 password_label.append(password_input);
-                $(".container").append(password_div);
+                container.append(password_div);
 
                 const submit_div = document.createElement("div");
                 submit_div.onclick = function (){
@@ -137,7 +138,7 @@ name:当前用户name
                         }
                     })
                 }
-                $(".container").append(submit_div);
+                container.append(submit_div);
             }
         })
 
@@ -145,7 +146,7 @@ name:当前用户name
     }
     function charge(){
         {#清除dom#}
-        $(".container").empty();
+        container.empty();
 
         $.ajax({
             url:"/buyer/getMoney",
@@ -165,7 +166,7 @@ name:当前用户name
 
                 current_span.innerText = "Current: "+current;
                 current_div.append(current_span);
-                $(".container").append(current_div);
+                container.append(current_div);
 
                 const pay_div = document.createElement("div");
                 const pay_input = document.createElement("input");
@@ -178,7 +179,7 @@ name:当前用户name
                 pay_input.setAttribute("placeHolder", "pay number");
 
                 pay_div.append(pay_input);
-                $(".container").append(pay_div);
+                container.append(pay_div);
 
                 const password_div = document.createElement("div");
                 const password_input = document.createElement("input");
@@ -191,7 +192,7 @@ name:当前用户name
                 password_input.setAttribute("placeHolder", "password");
 
                 password_div.append(password_input);
-                $(".container").append(password_div);
+                container.append(password_div);
 
                 const submit_div = document.createElement("div");
                 const submit_button = document.createElement("button");
@@ -218,13 +219,13 @@ name:当前用户name
                     })
                 }
                 submit_div.append(submit_button);
-                $(".container").append(submit_div);
+                container.append(submit_div);
             }
         })
     }
     function purchased(){
         {#清除dom#}
-        $(".container").empty();
+        container.empty();
 
         $.ajax({
             url:"/buyer/buyerItem",
@@ -240,7 +241,7 @@ name:当前用户name
 
                     const item_div = document.createElement("div");
                     item_div.setAttribute("class", "item-box");
-                    $(".container").append(item_div);
+                    container.append(item_div);
 
                     const item_img_div = document.createElement("div");
                     const item_img = document.createElement("img");
@@ -288,6 +289,18 @@ name:当前用户name
                     item_div.append(item_price_div);
                 }
 
+            }
+        })
+    }
+
+    function log_out(){
+        $.ajax({
+            url:"/clearSession",
+            type:"get",
+            contentType: "application/json",
+            dataType: "json",
+            success:function (data){
+                window.location.replace("/");
             }
         })
     }
