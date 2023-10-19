@@ -120,22 +120,6 @@
                 $(".prev").append(button);
             }
         }
-
-{#============================================================================================================================#}
-        $(document).on("sessionLoaded", function() {
-            generate();
-        });
-
-        window.onload = function () {
-            page_num = 1;
-            {#generate();#}
-
-            $("#search-box").keyup(function (){
-                generate();
-            })
-
-
-        }
     </script>
 {% endblock %}
 
