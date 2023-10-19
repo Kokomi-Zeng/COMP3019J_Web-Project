@@ -2,8 +2,29 @@
 
 {% block main %}
     <link rel="stylesheet" href="/static/css/base_personInfo.css">
+    <script>
+    window.onload = function (){
+        $("#log_out").click(function (){
+            log_out();
+        })
+    }
+
+    function log_out(){
+        $.ajax({
+            url:"/clearSession",
+            type:"get",
+            contentType: "application/json",
+            dataType: "json",
+            success:function (data){
+                window.location.replace("/");
+            }
+        })
+    }
+    </script>
     <div class="nav-bar">
         {% block nav_bar %}{% endblock %}
+
+    <button class="nav-button" id="log_out">log_out</button>
     </div>
     <div class="body">
         {% block body %}{% endblock %}
