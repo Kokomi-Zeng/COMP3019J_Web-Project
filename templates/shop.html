@@ -33,19 +33,7 @@
                             const item_button = document.createElement("button");
                             item_box.setAttribute("class", "item");
                             item_button.onclick = function (){
-                                $.ajax({
-                                    url:"/shop/isItemMatchSeller",
-                                    type: "get",
-                                    contentType: "application/json",
-                                    dataType: "json",
-                                    data:{
-                                        product_id:item.product_id,
-                                        phone: phone
-                                    },
-                                    success:function (data){
-                                        window.location.replace("/item?product_id="+data.product_id+"&belong="+data.belong)
-                                    }
-                                })
+                                window.location.href="/item?product_id="+ item.product_id;
                             }
                             $(".item-box").append(item_box);
                             item_box.append(item_button);
