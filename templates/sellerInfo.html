@@ -19,7 +19,6 @@ name:当前用户name
 {% block script %}
     <script>
 
-    const container = $(".container")
     $(document).on("sessionLoaded", function() {
         
         info();
@@ -33,73 +32,90 @@ name:当前用户name
     });
     function info(){
         {#清除dom#}
-        container.innerText='';
+        $(".container").innerText='';
 
         $.ajax({
             url:"/seller/sellerInfo",
             type:"get",
             contentType: "application/json",
             dataType: "json",
-            data:phone,
+            data:{phone:phone},
             success:function (data){
-                const name = "";
-                const password = "";
-                const introduction = "";
-
                 const name_div = document.createElement("div");
+                const name_label = document.createElement("label")
                 const name_input = document.createElement("input");
-                
+
                 name_div.setAttribute("class", "info-div");
                 name_div.setAttribute("id", "name-div");
+
+                name_label.innerText = "Name: "
+
                 name_input.setAttribute("type", "text");
-                name_input.setAttribute("value", name);
+                name_input.setAttribute("value", data.name);
                 name_input.setAttribute("id", "name");
-                
-                name_div.append(name_input);
-                container.append(name_div);
+
+                name_div.append(name_label);
+                name_label.append(name_input)
+                $(".container").append(name_div);
 
                 const phone_div = document.createElement("div");
+                const phone_label = document.createElement("label")
                 const phone_input = document.createElement("input");
-                
+
                 phone_div.setAttribute("class", "info-div");
                 phone_div.setAttribute("id", "phone-div");
+
+                phone_label.innerText = "Phone: ";
+
                 phone_input.setAttribute("type", "text");
-                phone_input.setAttribute("value", phone);
+                phone_input.setAttribute("value", data.phone);
                 phone_input.setAttribute("id", "phone");
-                
-                phone_div.append(phone_input);
-                container.append(phone_div);
+
+                phone_div.append(phone_label);
+                phone_label.append(phone_input)
+                $(".container").append(phone_div);
 
                 const introduction_div = document.createElement("div");
+                const introduction_label = document.createElement("label")
                 const introduction_input = document.createElement("input");
-                
+
                 introduction_div.setAttribute("class", "info-div");
                 introduction_div.setAttribute("id", "introduction-div");
+
+                introduction_label.innerText = "Introduction: ";
+
                 introduction_input.setAttribute("type", "text");
-                introduction_input.setAttribute("value", introduction);
+                introduction_input.setAttribute("value", data.introduction);
                 introduction_input.setAttribute("id", "introduction");
-                
-                introduction_div.append(introduction_input);
-                container.append(introduction_div);
+
+                introduction_div.append(introduction_label);
+                introduction_label.append(introduction_input);
+                $(".container").append(introduction_div);
+
 
                 const password_div = document.createElement("div");
+                const password_label = document.createElement("label")
                 const password_input = document.createElement("input");
-                
+
                 password_div.setAttribute("class", "info-div");
                 password_div.setAttribute("id", "password-div");
+
+                password_label.innerText = "Password: ";
+
                 password_input.setAttribute("type", "text");
-                password_input.setAttribute("value", password);
                 password_input.setAttribute("id", "password");
-                
-                password_div.append(password_input);
-                container.append(password_div);
-                
+
+                password_div.append(password_label);
+                password_label.append(password_input);
+                $(".container").append(password_div);
+
                 const submit_div = document.createElement("div");
-                const submit_button = document.createElement("button");
-                submit_button.onclick = function (){
+                submit_div.onclick = function (){
                     $.ajax({
                         url:'/modifySellerInfo',
                         type:'get',
+                        contentType: "application/json",
+                        dataType: "json",
                         data:{
                             phone:phone,
                             name:$("#name").val(),
@@ -111,9 +127,7 @@ name:当前用户name
                         }
                     })
                 }
-                
-                submit_div.append(submit_button);
-                container.append(submit_div);
+                $(".container").append(submit_div);
             }
         })
 
@@ -121,7 +135,7 @@ name:当前用户name
     }
     function add(){
         {#清除dom#}
-        container.innerText='';
+        $(".container").innerText='';
 
         const item_name = "";
         const item_name_div = document.createElement("div");
@@ -132,7 +146,7 @@ name:当前用户name
         item_name_input.setAttribute("id", "item_name");
         
         item_name_div.append(item_name_input);
-        container.append(item_name_div);
+        $(".container").append(item_name_div);
 
         const src_div = document.createElement("div");
         const src_input = document.createElement("input");
@@ -142,7 +156,7 @@ name:当前用户name
         src_input.setAttribute("id", "src");
         
         src_div.append(src_input);
-        container.append(src_div);
+        $(".container").append(src_div);
 
         const storage_div = document.createElement("div");
         const storage_input = document.createElement("input");
@@ -152,7 +166,7 @@ name:当前用户name
         storage_input.setAttribute("id", "storage");
         
         storage_div.append(storage_input);
-        container.append(storage_div);
+        $(".container").append(storage_div);
 
         const introduction_div = document.createElement("div");
         const introduction_input = document.createElement("input");
@@ -162,7 +176,7 @@ name:当前用户name
         introduction_input.setAttribute("id", "introduction");
         
         introduction_div.append(introduction_input);
-        container.append(introduction_div);
+        $(".container").append(introduction_div);
 
         const price_div = document.createElement("div");
         const price_input = document.createElement("input");
@@ -173,7 +187,7 @@ name:当前用户name
         price_input.setAttribute("id", "price");
         
         price_div.append(price_input);
-        container.append(price_div);
+        $(".container").append(price_div);
 
         const submit_div = document.createElement("div");
         submit_div.onclick = function (){
