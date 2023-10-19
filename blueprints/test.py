@@ -31,7 +31,7 @@ def getBuyerInfoPage():
 
 @test_bp.route('/item')
 def getItemPage():
-    product_info = is_item_match_seller()
+    product_info = get_product_id()
     return render_template("item.html", **product_info)
 
 def get_user_info():
