@@ -9,28 +9,29 @@ login
 {% block script %}
     <script>
     function login(){
-    $.ajax({
-        url:"/authorize/login",
-        type:"post",
-        data: JSON.stringify({
-            phone:$("#phone").val(),
-            password:$("#password").val(),
-        }),
-        contentType: "application/json",
-        dataType: "json",
-        success:function (response){
-            if(response.success){
-                window.location.replace("/shop");
-            } else {
-                alert(response.message);
+        $.ajax({
+            url:"/authorize/login",
+            type:"post",
+            data: JSON.stringify({
+                phone:$("#phone").val(),
+                password:$("#password").val(),
+            }),
+            contentType: "application/json",
+            dataType: "json",
+            success:function (response){
+                if(response.success){
+                    window.location.replace("/shop");
+                } else {
+                    alert(response.message);
+                }
             }
-        }
-    });
-}
-    </script>
+        });
+    }
 
-    <script>
+    {#================================================================================================================#}
     window.onload = function (){
+
+        $(".back-button-box").empty()
         $("#submit").click(function (){
             login();
         });
