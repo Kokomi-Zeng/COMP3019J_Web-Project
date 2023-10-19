@@ -7,7 +7,22 @@
 #}
 {% block script %}
     <script>
-        var page_num;
+
+        let page_num;
+
+        $(document).on("sessionLoaded", function() {
+            generate();
+        });
+
+        window.onload = function () {
+
+            $(".back-button-box").empty()
+            page_num = 1;
+
+            $("#search-box").keyup(function (){
+                generate();
+            })
+        }
 
         function generate(){
 
@@ -106,6 +121,7 @@
             }
         }
 
+{#============================================================================================================================#}
         $(document).on("sessionLoaded", function() {
             generate();
         });
