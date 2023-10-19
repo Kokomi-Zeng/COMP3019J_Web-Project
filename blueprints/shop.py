@@ -111,13 +111,13 @@ def is_item_match_seller():
         return jsonify({"success": False, "message": "Product not found."})
 
     if product.seller_phone == phone:
-        return jsonify({"success": True, "belong":True, "product_id":product_id})
+        return jsonify({"success": True, "belong":True})
         # return jsonify({
         #     "belong": True,
         #     "product_id": product_id,
         # })
     else:
-        return jsonify({"success": True, "belong":False, "product_id":product_id})
+        return jsonify({"success": True, "belong":False})
 
 
 @shop_bp.route('/hasNextPage', methods=['GET'])
