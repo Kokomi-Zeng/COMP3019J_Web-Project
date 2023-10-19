@@ -88,26 +88,11 @@ def get_user_info():
             'type': user.user_type
         }
 
-def is_item_match_seller():
-    phone = request.args.get('phone')
-
+def get_product_id():
     # 如果商品ID类型错误
     try:
         product_id = int(request.args.get('product_id'))
     except(TypeError, ValueError):
-        return jsonify([])
+        return {"success": False, "message": "Wrong product ID type"}
 
-    product = Product.query.get(product_id)
-
-    # 如果商品不存在
-    if not product:
-        return jsonify([])
-
-    if product.seller_phone == phone:
-        return {"belong":True, "product_id":product_id}
-        # return jsonify({
-        #     "belong": True,
-        #     "product_id": product_id,
-        # })
-    else:
-        return {"belong":False, "product_id":product_id}
+    return {"success": True, "product_id": product_id}
