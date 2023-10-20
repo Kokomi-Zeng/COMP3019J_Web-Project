@@ -1,11 +1,9 @@
 from flask import Blueprint, render_template, request,redirect,jsonify
-from .forms import LoginForm
 from flask import session, flash
 from werkzeug.security import generate_password_hash, check_password_hash
 
 from exts import db
 #. 表示当前目录
-from .forms import RegisterForm
 from models import User, Seller, Buyer
 
 # 创建蓝图对象,第一个：蓝图名字，第二个；__name__表示代表当前的模块，第三个：url_prefix表示前缀，所有的在这里面的路由都会加上这里的前缀
