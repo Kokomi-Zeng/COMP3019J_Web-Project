@@ -10,7 +10,7 @@ image_bp = Blueprint('image', __name__, url_prefix='/images')
 API_ENDPOINT = 'https://pinoss.com/kokomi/api/upload/'
 API_TOKEN = '1986648502b84b6b7114'
 
-@image_bp.route('/upload-to-pinoss', methods=['POST'])
+@image_bp.route('/upload_image', methods=['POST'])
 def upload_image():
     uploaded_file = request.files['image']
     product_id = request.form.get('product_id')  # 获取表单中的product_id
