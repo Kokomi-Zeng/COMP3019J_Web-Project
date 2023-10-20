@@ -10,7 +10,7 @@ def comment():
 
 @comment_bp.route('/createComment', methods=['GET'])
 def create_comment():
-    buyer_phone = request.args.get('buyer_phone')
+    commenter_phone = request.args.get('commenter_phone')
     content = request.args.get('content')
 
     try:
@@ -20,9 +20,9 @@ def create_comment():
         return jsonify({"success": False, "message": "Invalid input. Rating and Product ID should be integers."})
 
     # 验证买家是否存在
-    buyer = Buyer.query.filter_by(phone=buyer_phone).first()
+    buyer = Buyer.query.filter_by(phone=commenter_phone).first()
     if not buyer:
-        return jsonify({"success": False, "message": "Buyer not found!"})
+        return jsonify({"success": False, "message": "Buyer(Commenter) not found!"})
 
     if not (rating == 1 or rating == 2 or rating == 3 or rating == 4 or rating == 5):
         return jsonify({"success": False, "message": "Rating must be 1 or 2 or 3 or 4 or 5"})
@@ -35,7 +35,7 @@ def create_comment():
         content=content,
         rating=rating,
         product_id=product_id,
-        buyer_phone=buyer_phone
+        commenter_phone=commenter_phone
     )
 
     # 将评论添加到数据库
@@ -74,9 +74,10 @@ def comment_basic_info_by_id():
 
     comments_data = []
     for comment in combined_comments:
-        buyer = Buyer.query.filter_by(phone=comment.buyer_phone).first()
+        # 评论人名字
+        buyer = Buyer.query.filter_by(phone=comment.commenter_phone).first()
         comments_data.append({
-            "user_name": buyer.name,
+            "commenter_name": buyer.name,
             "user_image": "",
             "content": comment.content,
             "rating": comment.rating,
@@ -119,7 +120,7 @@ def comment_info_by_id():
 
     comments_data = []
     for comment in comments:
-        buyer = Buyer.query.filter_by(phone=comment.buyer_phone).first()
+        buyer = Buyer.query.filter_by(phone=comment.commenter_phone).first()
         comments_data.append({
             "user_name": buyer.name,
             "content": comment.content,
@@ -158,4 +159,26 @@ def has_next_comment():
     else:
         return jsonify({"success": False, "message": "No next comment"})
 
+@comment_bp.route('/getIntroductionByCommentID', methods=['GET'])
+def get_introduction_by_comment_id():
+    comment_id_data = request.args.get('comment_id')
 
+    # 检查comment_id是否正确
+    try:
+        comment_id = int(comment_id_data)
+    except (TypeError, ValueError):
+        return jsonify({"success": False, "message": "Invalid Comment ID. Please provide a valid integer."})
+
+    comment = Comment.query.filter_by(comment_id=comment_id).first()
+    if not comment:
+        return jsonify({"success": False, "message": "Comment not found"})
+
+    buyer = Buyer.query.filter_by(phone=comment.commenter_phone).first()
+    if not buyer:
+        return jsonify({"success": False, "message": "Buyer not found"})
+
+    return jsonify({
+        "head": "",
+        "name": buyer.name,
+        "introduction": buyer.description
+    })
