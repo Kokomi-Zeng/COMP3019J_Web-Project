@@ -7,42 +7,46 @@ import logging
 from exts import db
 from models import Product, Comment, Buyer, User, Purchase
 
+"""
+The following code is used to store the routes related to buyer,
+such as buyerInfo, charge, buyItem, buyerItem, modifyBuyerInfo.
+"""
+
 buyer_bp = Blueprint('buyer', __name__, url_prefix='/buyer')
 
 
+# Provide get buyerInfo method for the front end buyerInfo page
 @buyer_bp.route('/buyerInfo', methods=['GET'])
 def buyer_info():
     phone = request.args.get('phone')
 
-    # 假如没有传入phone，返回服务器200状态码，表示请求成功，但是没有数据
+    # If phone is not passed in, return an empty string for phone
     if not phone:
-        # return jsonify({"data": None}), 200
         phone = ""
 
     buyer = Buyer.query.filter_by(phone=phone).first()
-    # 假如用户不存在，返回服务器200状态码，表示请求成功，但是没有数据
+
+    # If buyer is not found, return an empty string for phone
     if not buyer:
-        # return jsonify({"data": None}), 200
         phone = ""
 
+    # If phone is empty, return an empty string for name and introduction
     if phone == "":
         return jsonify({
             "phone": "",
             "name": "",
             "introduction": "",
         })
+    # If phone is not empty, return the buyer's name, introduction and phone
     else:
         return jsonify({
             "phone": buyer.phone,
-
-            # 事实上，这里不能返回密码，因为密码是加密的，除非不让加密，但这不合理，建议直接不显示得了
-            # "password": buyer.user.password,
-
             "name": buyer.name,
             "introduction": buyer.description,
-            # "balance": buyer.balance
         })
 
+
+# Provide charge method for a buyer to charge money
 @buyer_bp.route('/charge', methods=['GET'])
 def charge():
     phone = request.args.get('phone')
@@ -52,34 +56,36 @@ def charge():
         return jsonify({"error": "Invalid charge amount."})
     password = request.args.get('password')
 
-    # 查询用户
+    #  find the user
     user = User.query.filter_by(phone=phone).first()
 
-    # 如果没有找到用户或密码不正确
+    # If the user is not found or the password is incorrect
     if not user or not check_password_hash(user.password, password):
         return jsonify({"success": False, "message": "Can't find user or password incorrect"})
 
-    # 给用户充值
+    # If the user is not a buyer
     buyer = Buyer.query.filter_by(phone=phone).first()
     if not buyer:
         return jsonify({"success": False, "message": "The user is not buyer"})
 
-    # 如果充值金额为负数
+    # If the charge amount is less than 10
     if charge_num < 10:
-        return jsonify({"success": False, "message": "The minimum charge number is 10"})
+        return jsonify({"success": False, "message": "The minimum charge amount is 10"})
 
     buyer.balance += charge_num
     db.session.commit()
 
     return jsonify({"success": True, "message": "Charge successfully"})
 
+
+# Provide a method for what a buyer has bought
 @buyer_bp.route('/buyerItem', methods=['GET'])
 def get_buyer_items():
     phone = request.args.get('phone')
     buyer = Buyer.query.filter_by(phone=phone).first()
 
+    # If the buyer is not found, return an empty list
     if not buyer:
-        # return jsonify({"error": "Buyer not found"}), 404
         return jsonify([])
 
     purchased_items = []
@@ -88,7 +94,7 @@ def get_buyer_items():
             'product_name': purchase.product.product_name,
             'total_price': purchase.purchase_price,
             'image_src': purchase.image_src_at_time_of_purchase,
-            # 将datetime对象转换为字符串
+            # convert datetime object to string
             'purchase_time': purchase.purchase_time.strftime('%Y-%m-%d %H:%M:%S'),
             'purchase_quantity': purchase.purchase_number
         })
@@ -96,35 +102,36 @@ def get_buyer_items():
     return jsonify(purchased_items)
 
 
+# Provide a method for a buyer to buy an item
 @buyer_bp.route('/buyItem', methods=['GET'])
 def buy_item():
-    # logging.debug("buyItem called.")
     try:
         product_id = int(request.args.get('product_id'))
-        quantity = int(request.args.get('quantity', 1)) # 获取商品数量，如果未指定，默认为1
+        # get the quantity of the product, if not specified, default to 1
+        quantity = int(request.args.get('quantity', 1))
+    # If the product_id or quantity is not an integer
     except (TypeError, ValueError):
-        return jsonify({"error": "Invalid product ID or quantity."})
+        return jsonify({"success": False, "message": "Invalid product ID or quantity."})
 
     phone = request.args.get('phone')
-
     buyer = Buyer.query.filter_by(phone=phone).first()
     product = Product.query.filter_by(product_id=product_id).first()
 
-    # 判断买家和商品是否存在
+    # Judge whether the buyer or product exists
     if not buyer or not product:
-        return jsonify({"error": "Buyer or product not found"})
+        return jsonify({"success": False, "message": "Buyer or product not found"})
 
-    # 判断商品库存是否足够
+    # Judge whether the product is in stock
     if product.storage < quantity:
-        return jsonify({"success": False, "error": "Not enough stock"})
+        return jsonify({"success": False, "message": "Not enough stock"})
 
     total_price = product.price * quantity
 
-    # 判断买家账户的钱是否足够
+    # Judge whether the buyer has enough money
     if buyer.balance < total_price:
-        return jsonify({"success": False, "error": "Insufficient funds"})
+        return jsonify({"success": False, "message": "Insufficient funds"})
 
-    # balance减少，storage减少，新的purchase添加到数据库中
+    # balance decrease, storage decrease, new purchase added to the database
     buyer.balance -= total_price
     product.storage -= quantity
 
@@ -140,28 +147,28 @@ def buy_item():
     db.session.add(new_purchase)
     db.session.commit()
 
-    # logging.debug("buyItem finished.")
     return jsonify({"success": True})
 
+
+# Provide a method for a buyer to know his/her balance
 @buyer_bp.route('/getMoney', methods=['GET'])
 def get_money():
     phone = request.args.get('phone')
 
-    # 验证 phone 是否存在
+    # validate whether phone exists
     if not phone:
-        return jsonify({"error": "手机号不能为空"})
+        return jsonify({"success": False, "message": "手机号不能为空"})
 
     buyer = Buyer.query.filter_by(phone=phone).first()
 
-    # 判断买家是否存在
+    # validate whether buyer exists
     if not buyer:
-        return jsonify({"error": "买家不存在"})
+        return jsonify({"success": False, "message": "买家不存在"})
 
-    # 返回买家的余额
-    return jsonify({"phone": phone, "money": buyer.balance})
-
+    return jsonify({"success": True, "phone": phone, "money": buyer.balance})
 
 
+# Provide a method for a buyer to modify his/her information
 @buyer_bp.route('/modifyBuyerInfo', methods=['POST'])
 def modify_buyer_info():
     phone = request.json.get('phone')
@@ -169,23 +176,23 @@ def modify_buyer_info():
     introduction = request.json.get('introduction')
     password = request.json.get('password')
 
-    # 验证 phone 是否存在
+    # validate whether phone exists
     if not phone:
-        return jsonify({"error": "Phone number is required"})
+        return jsonify({"success": False, "message": "Phone number is required"})
 
     buyer = Buyer.query.filter_by(phone=phone).first()
     if not buyer:
-        return jsonify({"error": "Buyer not found"})
+        return jsonify({"success": False, "message": "Buyer not found"})
 
-    # 更新信息
+    # update information
     if name:
         buyer.name = name
     if introduction:
         buyer.description = introduction
     if password:
-        # 加密
+        # encrypt password
         hashed_password = generate_password_hash(password)
         buyer.user.password = hashed_password
 
     db.session.commit()
-    return jsonify({"message": "Buyer information updated successfully"})
+    return jsonify({"success": True, "message": "Buyer information updated successfully"})

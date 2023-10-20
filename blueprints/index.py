@@ -1,6 +1,11 @@
 from flask import Blueprint, render_template, session, jsonify, request
 from models import User
 
+"""
+The following code is used to store the routes related to index,
+such as getAuthorizePage, getLoginPage, getSellerInfo, getShopPage, getRegisterPage, getBuyerInfoPage, getItemPage, getSession, clearSession.
+"""
+
 bp = Blueprint('index', __name__, url_prefix='/')
 
 
@@ -46,6 +51,7 @@ def getItemPage():
     return render_template("item.html", **product_info)
 
 
+# This route is used to get the session
 @bp.route('/getSession')
 def getSession():
     phone = session.get('phone')
@@ -59,18 +65,18 @@ def getSession():
         return {'phone': "", 'name': "", 'type': ""}
 
 
-# 清除session (clear session)
+# This route is used to clear the session
 @bp.route('/clearSession')
 def clearSession():
     session.clear()
     return {'success': True}
 
 
-
+# This route is used to get the user info
 def get_user_info():
     phone = session.get('phone')
 
-    # 先判断session中是否有phone，如果没有，返回None
+    # first to determine if there is a phone in the session, if not, return None
     if not phone:
         return {
             'phone': "",
@@ -78,7 +84,7 @@ def get_user_info():
             'type': ""
         }
 
-    # 如果有phone，但是数据库中没有该用户，返回None
+    # If there is a phone, but the user is not in the database, return None
     user = User.query.get(phone)
     if not user:
         return {
@@ -87,13 +93,14 @@ def get_user_info():
             'type': ""
         }
 
-    # 根据用户类型获取姓名, 里面的if判断是为了防止数据库中没有该用户的信息，导致程序报错
-    if user.user_type == '0':  # 卖家
+    # Get the name according to the user type, the "if judgment" inside is to prevent the program from
+    # reporting an error due to the lack of information of the user in the database
+    if user.user_type == '0':  # seller
         if user.seller:
             name = user.seller.name
         else:
             name = ""
-    elif user.user_type == '1':  # 买家
+    elif user.user_type == '1':  # buyer
         if user.buyer:
             name = user.buyer.name
         else:
@@ -101,7 +108,7 @@ def get_user_info():
     else:
         name = ""
 
-    # 判断name是否为空字符串(是个游客)
+    # Determine whether the name is an empty string (a non-registered user)
     if name == "":
         return {
             'phone': "",
@@ -116,8 +123,9 @@ def get_user_info():
         }
 
 
+# This route is used to get the product ID
 def get_product_id():
-    # 如果商品ID类型错误
+    # If the product ID type is wrong
     try:
         product_id = int(request.args.get('product_id'))
     except(TypeError, ValueError):
