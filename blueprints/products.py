@@ -22,16 +22,16 @@ def modify_item():
         price = float(request.args.get('price'))
         storage = int(request.args.get('storage'))
     except (TypeError, ValueError):
-        return jsonify({"error": "Invalid input. Please ensure valid types for product_id, price, and storage."})
+        return jsonify({"success": False, "message": "Invalid input. Please ensure valid types for product_id, price, and storage."})
 
     # Verify if the product exists
     product = Product.query.get(product_id)
     if not product:
-        return jsonify({"message": "Product not found"})
+        return jsonify({"success": False, "message": "Product not found"})
 
     # Check if the product belongs to the seller
     if product.seller_phone != seller_phone:
-        return jsonify({"message": "The product does not belong to this seller."})
+        return jsonify({"success": False, "message": "The product does not belong to this seller."})
 
     # Update product information
     product.price = price
@@ -41,7 +41,7 @@ def modify_item():
     product.description = description
 
     db.session.commit()
-    return jsonify({"message": "Product updated successfully"})
+    return jsonify({"success": True, "message": "Product updated successfully"})
 
 
 # Provide add item method for a seller to add a product
@@ -107,13 +107,13 @@ def item_info_by_id():
     try:
         product_id = int(request.args.get('product_id'))
     except (TypeError, ValueError):
-        return jsonify({"success": False, "message": "Invalid Product ID. Please provide a valid integer."}), 400
+        return jsonify({"success": False, "message": "Invalid Product ID. Please provide a valid integer."})
 
     product = Product.query.filter_by(product_id=product_id).first()
 
     # According to the product_id, check if the product exists
     if not product:
-        return jsonify({"success": False, "message": "Product not found."}), 400
+        return jsonify({"success": False, "message": "Product not found."})
 
     # Calculate the average rating of the product
     avg_rating = calculate_average_rating(product_id)
