@@ -27,7 +27,7 @@ def create_comment():
     if not (rating == 1 or rating == 2 or rating == 3 or rating == 4 or rating == 5):
         return jsonify({"success": False, "message": "Rating must be 1 or 2 or 3 or 4 or 5"})
 
-    if content is None or content == "":
+    if content is None or content == "" or content == "None":
         return jsonify({"success": False, "message": "Comment can't be empty"})
 
     # 创建新的评论 (用这种方法来是comment插入数据库中)
