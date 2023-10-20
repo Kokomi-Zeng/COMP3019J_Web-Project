@@ -15,13 +15,13 @@ from flask_migrate import Migrate
 
 app = Flask(__name__)
 
-# 从config.py中加载配置（绑定配置文件）
+# Load the configuration from config.py (bind the configuration file)
 app.config.from_object(config)
 
-# 作用在于：可以不要在创建的时候跟app绑定，可以先创建，然后绑定
+# The effect is that: you can not bind with app when creating, you can create first, and then bind
 db.init_app(app)
 
-# 使蓝图生效，产生关联
+# Register the blueprint
 app.register_blueprint(authorize_bp)
 app.register_blueprint(buyer_bp)
 app.register_blueprint(comment_bp)
@@ -31,7 +31,7 @@ app.register_blueprint(seller_bp)
 app.register_blueprint(shop_bp)
 app.register_blueprint(image_bp)
 
-# 使迁移生效
+# Make migration effective
 migrate = Migrate(app, db)
 
 if __name__ == '__main__':
