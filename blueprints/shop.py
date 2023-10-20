@@ -5,15 +5,6 @@ from exts import db
 
 shop_bp = Blueprint('shop', __name__, url_prefix='/shop')
 
-
-@shop_bp.route('/')
-def shop():
-    user_info = get_user_info()
-
-    # **user_info相当于phone=user_info['phone'], name=user_info['name'], type=user_info['type']
-    return render_template('shop.html', **user_info)
-
-
 @shop_bp.route('/searchItemByName', methods=['GET'])
 def search_item_by_name():
     phone = request.args.get('phone')

@@ -3,14 +3,9 @@ from models import Comment, Buyer, db, Product, User
 
 comment_bp = Blueprint('comment', __name__, url_prefix='/comment')
 
-@comment_bp.route('/')
-def comment():
-    return render_template('comment.html')
-
-
 @comment_bp.route('/createComment', methods=['GET'])
 def create_comment():
-    commenter_phone = request.args.get('commenter_phone')
+    commenter_phone = request.args.get('buyer_phone')
     content = request.args.get('content')
 
     try:
@@ -28,7 +23,7 @@ def create_comment():
         return jsonify({"success": False, "message": "Rating must be 1 or 2 or 3 or 4 or 5"})
 
     if content is None or content == "" or content == "None":
-        return jsonify({"success": False, "message": "Comment can't be empty"})
+        return jsonify({"success": False, "message": "Comment can't be empty or None"})
 
     # 创建新的评论 (用这种方法来是comment插入数据库中)
     comment = Comment(
