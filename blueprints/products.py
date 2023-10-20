@@ -3,10 +3,6 @@ from models import Product, db, Comment
 
 products_bp = Blueprint('products', __name__, url_prefix='/products')
 
-@products_bp.route('/')
-def products():
-    return render_template('products.html')
-
 @products_bp.route('/modifyItem', methods=['GET'])
 def modify_item():
     seller_phone = request.args.get('seller_phone')

@@ -1,15 +1,49 @@
-from flask import Blueprint, render_template, session, jsonify
+from flask import Blueprint, render_template, session, jsonify, request
 from models import User
 
 bp = Blueprint('index', __name__, url_prefix='/')
-# 这个是给base.html用的，我假设index.html是base.html的子模板
 
 
-@bp.route('/')
-def index():
+@bp.route('/authorize')
+def getAuthorizePage():
+    return render_template('authorize.html')
+
+
+@bp.route('/login')
+def getLoginPage():
     user_info = get_user_info()
-    # **user_info相当于phone=user_info['phone'], name=user_info['name'], type=user_info['type']
+    return render_template('login.html', **user_info)
+
+
+@bp.route('/sellerInfo')
+def getSellerInfo():
+    user_info = get_user_info()
+    return render_template('sellerInfo.html', **user_info)
+
+
+@bp.route('/shop')
+@bp.route('/')
+def getShopPage():
+    user_info = get_user_info()
     return render_template('shop.html', **user_info)
+
+
+@bp.route('/register')
+def getRegisterPage():
+    user_info = get_user_info()
+    return render_template('register.html', **user_info)
+
+
+@bp.route('/buyerInfo')
+def getBuyerInfoPage():
+    user_info = get_user_info()
+    return render_template('buyerInfo.html', **user_info)
+
+
+@bp.route('/item')
+def getItemPage():
+    product_info = get_product_id()
+    return render_template("item.html", **product_info)
 
 
 @bp.route('/getSession')
@@ -18,14 +52,12 @@ def getSession():
     user = User.query.get(phone)
     if user:
         if user.user_type == '0':
-            # name = user.seller.name
             return {'phone': phone, 'name': user.seller.name, 'type': user.user_type}
         if user.user_type == '1':
-            # name = user.buyer.name
             return {'phone': phone, 'name': user.buyer.name, 'type': user.user_type}
     else:
-        # return {'phone': None, 'name': None}
-        return {'phone': "", 'name': "", 'type':""}
+        return {'phone': "", 'name': "", 'type': ""}
+
 
 # 清除session (clear session)
 @bp.route('/clearSession')
@@ -34,15 +66,13 @@ def clearSession():
     return {'success': True}
 
 
+
 def get_user_info():
     phone = session.get('phone')
 
     # 先判断session中是否有phone，如果没有，返回None
     if not phone:
         return {
-            # 'phone': None,
-            # 'name': None,
-            # 'type': None
             'phone': "",
             'name': "",
             'type': ""
@@ -52,9 +82,6 @@ def get_user_info():
     user = User.query.get(phone)
     if not user:
         return {
-            # 'phone': None,
-            # 'name': None,
-            # 'type': None
             'phone': "",
             'name': "",
             'type': ""
@@ -87,3 +114,13 @@ def get_user_info():
             'name': name,
             'type': user.user_type
         }
+
+
+def get_product_id():
+    # 如果商品ID类型错误
+    try:
+        product_id = int(request.args.get('product_id'))
+    except(TypeError, ValueError):
+        return {"success": False, "message": "Wrong product ID type"}
+
+    return {"success": True, "product_id": product_id}

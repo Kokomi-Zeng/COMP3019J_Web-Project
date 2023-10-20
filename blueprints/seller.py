@@ -7,14 +7,6 @@ seller_bp = Blueprint('seller', __name__, url_prefix='/seller')
 
 from models import Product, Comment, Buyer, User, Seller
 
-@seller_bp.route('/')
-def seller():
-    user_info = get_user_info()
-
-    # **user_info相当于phone=user_info['phone'], name=user_info['name'], type=user_info['type']
-    return render_template('seller.html', **user_info)
-
-
 @seller_bp.route('/sellerInfo', methods=['GET'])
 def seller_info():
     phone = request.args.get('phone')
