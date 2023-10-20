@@ -36,9 +36,9 @@ def seller_info():
         "introduction": seller.description,
     })
 
-@seller_bp.route('/getSellerByItemID', methods=['POST'])
+@seller_bp.route('/getSellerByItemID', methods=['GET'])
 def get_seller_by_item_id():
-    product_id = request.json.get('product_id')
+    product_id = request.args.get('product_id')
 
     # 验证 product_id 是否存在,而且是int类型
     try:
@@ -61,6 +61,24 @@ def get_seller_by_item_id():
         "name": seller.name,
         "introduction": seller.description,
     })
+
+
+@seller_bp.route('/getIntroductionByCommentID', methods=['GET'])
+def get_introduction_by_comment_id():
+    comment_id = request.args.get('comment_id')
+
+    # 验证 comment_id 是否存在,而且是int类型
+    try:
+        comment_id = int(comment_id)
+    except (TypeError, ValueError):
+        return jsonify({"success": False, "message": "Invalid Comment ID. Please provide a valid integer."})
+
+    comment = Comment.query.filter_by(comment_id=comment_id).first()
+    # 判断评论是否存在
+    if not comment:
+        return jsonify({"success": False, "message": "Comment not found"})
+
+
 
 @seller_bp.route('/modifySellerInfo', methods=['POST'])
 def modify_seller_info():
