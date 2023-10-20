@@ -3,73 +3,60 @@ from models import User, Product, Comment, Purchase
 from sqlalchemy import func
 from exts import db
 
+"""
+The following code is used to store the routes related to shop,
+such as searchItemByName, isItemMatchSeller, hasNextPage.
+"""
+
 shop_bp = Blueprint('shop', __name__, url_prefix='/shop')
 
+
+# Provide a method for search item by name
 @shop_bp.route('/searchItemByName', methods=['GET'])
 def search_item_by_name():
     phone = request.args.get('phone')
-    # 没输keyword，等于输了空格
+
+    # If keyword is not passed in, return an empty string for keyword
     keyword = request.args.get('keyword', '')
 
     try:
         page_num = int(request.args.get('page_num', 1))
-        # 判断页码是否小于等于0
+        # check if page_num is less than or equal to 0
         if page_num <= 0:
             page_num = 1
     except (TypeError, ValueError):
-        # return jsonify({"error": "Invalid page number"}), 400
+        # If there is an error, set page_num to 1
         page_num = 1
 
     per_page = 10
-    # offset是从第几个开始，limit是取多少个
+
+    # offset means from which one to start, limit means how many to take
     offset = (page_num - 1) * per_page
 
-    # 找到用户
+    # find the user
     user = User.query.filter_by(phone=phone).first()
 
     query = Product.query
 
-    # 如果keyword不为空
+    # if keyword is not empty, filter by keyword
     if keyword:
-        # 这实际上是买家和游客的搜索结果
+        # this is actually the search result for buyer and non-login user
         query = query.filter(Product.product_name.like(f"%{keyword}%"))
 
-    # 如果是买家或卖家(user存在)
+    # if user is buyer or seller
     if user:
-        # 如果是卖家
+        # if user is seller, only search his/her own products
         if user.user_type == "0":
-            # 只能搜索自己的商品
             query = query.filter_by(seller_phone=phone)
-    # 如果是游客，限制你翻页
+    # if the user is non-login user, limit the page_num to 1
     else:
         if page_num > 1:
-            # return jsonify({"error": "Unauthorized access"}), 401
             return jsonify([])
-    # 某一页的全部商品
+
+    # All products on a certain page
     products = query.limit(per_page).offset(offset).all()
 
-
-
-    # # 如果用户是买家
-    # if user and user.user_type == "1":
-    #     purchases = Purchase.query.filter_by(buyer_phone=phone).all()
-    #     products = [purchase.product for purchase in purchases if purchase.product is not None]
-    # else:
-    #     query = Product.query
-    #
-    #     if keyword:
-    #         query = query.filter(Product.product_name.like(f"%{keyword}%"))
-    #
-    #     if user and user.user_type == "0":  # 如果用户是卖家
-    #         query = query.filter_by(seller_phone=phone)
-    #     else:  # 如果用户是游客
-    #         if page_num > 1:
-    #             return jsonify([])
-    #
-    #     products = query.limit(per_page).offset(offset).all()
-
-
-    # 按照平均rating从高到低排序
+    # ranking from high to low according to average rating
     sorted_products = sorted(products, key=lambda product: calculate_average_rating(product.product_id), reverse=True)
 
     product_list = []
@@ -85,11 +72,13 @@ def search_item_by_name():
 
     return jsonify(product_list)
 
+
+# Provide a method to determine whether the item matches the seller
 @shop_bp.route('/isItemMatchSeller', methods=['GET'])
 def is_item_match_seller():
     phone = request.args.get('phone')
 
-    # 如果商品ID类型错误
+    # Verify that the product ID exists and is an int type
     try:
         product_id = int(request.args.get('product_id'))
     except(TypeError, ValueError):
@@ -97,20 +86,17 @@ def is_item_match_seller():
 
     product = Product.query.get(product_id)
 
-    # 如果商品不存在
+    # Verify that the product exists
     if not product:
         return jsonify({"success": False, "message": "Product not found."})
 
     if product.seller_phone == phone:
         return jsonify({"success": True, "belong":True})
-        # return jsonify({
-        #     "belong": True,
-        #     "product_id": product_id,
-        # })
     else:
         return jsonify({"success": True, "belong":False})
 
 
+# Provide a method to check whether there is a next page
 @shop_bp.route('/hasNextPage', methods=['GET'])
 def has_next_page():
     phone = request.args.get('phone')
@@ -118,22 +104,22 @@ def has_next_page():
 
     try:
         page_num = int(request.args.get('page_num', 1))
-        # 判断页码是否小于等于0
+        # check if page_num is less than or equal to 0
         if page_num <= 0:
             page_num = 1
     except ValueError:
-        # return jsonify({"error": "Invalid page number"}), 400
         return jsonify({"has_next": False})
 
     per_page = 10
 
-    # 当前页之后的下一页还有多少个商品
+    # This offset is different from the offset in searchItemByName,
+    # It means how many products are there after the current page
     offset = page_num * per_page
 
-    # 找到用户
+    # find the user
     user = User.query.filter_by(phone=phone).first()
 
-    # 如果没有输入phone或输入后在数据库中找不到该用户
+    # If phone is not passed in or the user cannot be found in the database after input
     if not phone or not user:
         return jsonify({"has_next": False})
 
@@ -145,22 +131,23 @@ def has_next_page():
     if user:
         if user.user_type == "0":
             query = query.filter_by(seller_phone=phone)
-    # 如果是游客，限制你翻页
+    # if the user is non-login user, limit the page_num to 1
     else:
         if page_num > 1:
-            # return jsonify({"error": "Unauthorized access"}), 401
+
             return jsonify({"has_next": False})
 
-    # offset: 从第几个开始，limit: 取多少个, count: 一共有多少个
+    # offset: from which one to start, limit: how many to take, count: how many in total
     next_page_products_count = (query.limit(per_page).offset(offset)).count()
     boolean = next_page_products_count > 0
     return jsonify({"has_next": boolean})
 
 
-# 辅助函数来计算商品的平均rating
+# Helper function to calculate the average rating of the product
 def calculate_average_rating(product_id):
     comments = Comment.query.filter_by(product_id=product_id).all()
-    # 如果没有评论，直接0.0分
+
+    # If there is no comment, return 0.0
     if not comments:
         return 0.0
 
@@ -171,60 +158,6 @@ def calculate_average_rating(product_id):
     average_rating = total_rating / len(comments)
     return average_rating
 
-
-def get_user_info():
-    phone = session.get('phone')
-
-    # 先判断session中是否有phone，如果没有，返回None
-    if not phone:
-        return {
-            # 'phone': None,
-            # 'name': None,
-            # 'type': None
-            'phone': "",
-            'name': "",
-            'type': ""
-        }
-
-    # 如果有phone，但是数据库中没有该用户，返回None
-    user = User.query.get(phone)
-    if not user:
-        return {
-            # 'phone': None,
-            # 'name': None,
-            # 'type': None
-            'phone': "",
-            'name': "",
-            'type': ""
-        }
-
-    # 根据用户类型获取姓名, 里面的if判断是为了防止数据库中没有该用户的信息，导致程序报错
-    if user.user_type == '0':  # 卖家
-        if user.seller:
-            name = user.seller.name
-        else:
-            name = ""
-    elif user.user_type == '1':  # 买家
-        if user.buyer:
-            name = user.buyer.name
-        else:
-            name = ""
-    else:
-        name = ""
-
-    # 判断name是否为空字符串(是个游客)
-    if name == "":
-        return {
-            'phone': "",
-            'name': "",
-            'type': ""
-        }
-    else:
-        return {
-            'phone': phone,
-            'name': name,
-            'type': user.user_type
-        }
 
 
 
