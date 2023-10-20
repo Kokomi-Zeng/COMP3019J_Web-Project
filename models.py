@@ -6,6 +6,7 @@ class User(db.Model):
     phone = db.Column(db.String(15), primary_key=True)
     password = db.Column(db.String(128))
     user_type = db.Column(db.String(10))
+    image_src = db.Column(db.String(200))
 
     # 这里这么做是为了方便查询，使得可以反向查询，即通过buyer或者seller查询到user
     buyer = db.relationship("Buyer", backref="user", uselist=False)
@@ -53,7 +54,7 @@ class Comment(db.Model):
 
     comment_id = db.Column(db.Integer, primary_key=True)
     product_id = db.Column(db.Integer, db.ForeignKey("products.product_id"))
-    buyer_phone = db.Column(db.String(15), db.ForeignKey("buyers.phone"))
+    commenter_phone = db.Column(db.String(15), db.ForeignKey("buyers.phone"))
     content = db.Column(db.Text)
     rating = db.Column(db.Integer)
 
