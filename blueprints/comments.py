@@ -77,8 +77,10 @@ def comment_basic_info_by_id():
         buyer = Buyer.query.filter_by(phone=comment.buyer_phone).first()
         comments_data.append({
             "user_name": buyer.name,
+            "user_image": "",
             "content": comment.content,
-            "rating": comment.rating
+            "rating": comment.rating,
+            "comment_id": comment.comment_id,
         })
 
     return jsonify(comments_data)
@@ -92,19 +94,27 @@ def comment_info_by_id():
     # 检查product_id是否正确
     try:
         product_id = int(product_id_data)
+        page_num_data = request.args.get('page_num', default=1, type=int)
     except (TypeError, ValueError):
-        return jsonify({"success": False, "message": "Invalid Product ID. Please provide a valid integer."})
+        return jsonify({"success": False, "message": "Invalid Product ID or Page Number. Please provide a valid integer."})
+
+    if page_num_data < 1:
+        return jsonify({"success": False, "message": "Page Number must be greater than 0"})
 
     user = User.query.filter_by(phone=phone_data).first()
 
     if not user:
         return jsonify({"success": False, "message": "Buyer or seller not found"})
 
+    # 设置每页的评论数量
+    per_page = 10
+    start_idx = (page_num_data - 1) * per_page
+    end_idx = start_idx + per_page
+
     # 查询评论,并按照评分从高到低排序
-    comments = Comment.query.filter_by(product_id=product_id).order_by(Comment.rating.desc()).all()
+    comments = Comment.query.filter_by(product_id=product_id).order_by(Comment.rating.desc()).slice(start_idx, end_idx).all()
 
     if not comments:
-        # return jsonify({"error": "Comment not found"}), 404
         return jsonify({"success": False, "message": "Comment not found"})
 
     comments_data = []
@@ -118,5 +128,34 @@ def comment_info_by_id():
 
     return jsonify(comments_data)
 
+# comment是否有下一页
+@comment_bp.route('/hasNextComment', methods=['GET'])
+def has_next_comment():
+    product_id_data = request.args.get('product_id')
+    phone_data = request.args.get('phone')
+
+    # 检查product_id是否正确
+    try:
+        product_id = int(product_id_data)
+        page_num_data = request.args.get('page_num', default=1, type=int)
+    except (TypeError, ValueError):
+        return jsonify({"success": False, "message": "Invalid Product ID or Page Number. Please provide a valid integer."})
+
+    if page_num_data < 1:
+        return jsonify({"success": False, "message": "Page Number must be greater than 0"})
+
+    user = User.query.filter_by(phone=phone_data).first()
+
+    if not user:
+        return jsonify({"success": False, "message": "Buyer or seller not found"})
+
+    # 查询评论的总数
+    total_comments = Comment.query.filter_by(product_id=product_id).count()
+
+    # 查看是否还有下一页
+    if total_comments > page_num_data * 10:
+        return jsonify({"success": True, "message": "Has next comment"})
+    else:
+        return jsonify({"success": False, "message": "No next comment"})
 
 
