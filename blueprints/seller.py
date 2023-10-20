@@ -36,6 +36,32 @@ def seller_info():
         "introduction": seller.description,
     })
 
+@seller_bp.route('/getSellerByItemID', methods=['POST'])
+def get_seller_by_item_id():
+    product_id = request.json.get('product_id')
+
+    # 验证 product_id 是否存在,而且是int类型
+    try:
+        product_id = int(product_id)
+    except (TypeError, ValueError):
+        return jsonify({"success": False, "message": "Invalid Product ID. Please provide a valid integer."})
+
+    product = Product.query.filter_by(product_id=product_id).first()
+    # 判断产品是否存在
+    if not product:
+        return jsonify({"success": False, "message": "Product not found"})
+
+    seller = product.seller
+    # 判断卖家是否存在
+    if not seller:
+        return jsonify({"success": False, "message": "Seller not found"})
+
+    return jsonify({
+        "head": "",
+        "name": seller.name,
+        "introduction": seller.description,
+    })
+
 @seller_bp.route('/modifySellerInfo', methods=['POST'])
 def modify_seller_info():
     phone = request.json.get('phone')
