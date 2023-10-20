@@ -1,8 +1,15 @@
 from flask import Blueprint, jsonify, request, render_template
 from models import Product, db, Comment
 
+"""
+The following code is used to store the routes related to product,
+such as modifyItem, addItem, deleteItem, itemInfoById.
+"""
+
 products_bp = Blueprint('products', __name__, url_prefix='/products')
 
+
+# Provide modify item method for a seller to modify a product
 @products_bp.route('/modifyItem', methods=['GET'])
 def modify_item():
     seller_phone = request.args.get('seller_phone')
@@ -17,28 +24,27 @@ def modify_item():
     except (TypeError, ValueError):
         return jsonify({"error": "Invalid input. Please ensure valid types for product_id, price, and storage."})
 
-    # 验证商品是否存在
+    # Verify if the product exists
     product = Product.query.get(product_id)
     if not product:
         return jsonify({"message": "Product not found"})
 
-    # 检查商品是否属于该卖家
+    # Check if the product belongs to the seller
     if product.seller_phone != seller_phone:
-        return jsonify({"message": "Unauthorized"})
+        return jsonify({"message": "The product does not belong to this seller."})
 
-    # 更改商品信息
+    # Update product information
     product.price = price
     product.image_src = image_src
     product.storage = storage
     product.product_name = product_name
     product.description = description
 
-    # 弄到数据库中
     db.session.commit()
-
-    # 状态码200表示服务器已成功处理了请求
     return jsonify({"message": "Product updated successfully"})
 
+
+# Provide add item method for a seller to add a product
 @products_bp.route('/addItem', methods=['GET'])
 def add_item():
     seller_phone = request.args.get('seller_phone')
@@ -52,7 +58,7 @@ def add_item():
     except (TypeError, ValueError):
         return jsonify({"success": False, "message": "Invalid input. Please ensure valid types for price and storage."})
 
-    # 创建新的商品
+    # Create a new product
     product = Product(
         price=price,
         image_src=image_src,
@@ -62,14 +68,13 @@ def add_item():
         seller_phone=seller_phone
     )
 
-    # 将商品添加到数据库
     db.session.add(product)
     db.session.commit()
 
-    # 状态码201表示请求成功并且服务器创建了新的资源
     return jsonify({"message": "Product added successfully"})
 
 
+# Provide delete item method for a seller to delete a product
 @products_bp.route('/deleteItem', methods=['GET'])
 def delete_item():
     seller_phone = request.args.get('seller_phone')
@@ -79,26 +84,26 @@ def delete_item():
     except (TypeError, ValueError):
         return jsonify({"success": False, "message": "Invalid Product ID. Please provide a valid integer."})
 
-    # 验证商品是否存在
+    # Verify if the product exists
     product = Product.query.get(product_id)
     if not product:
         return jsonify({"success": False, "message": "Product not found"})
 
-    # 检查商品是否属于该卖家
+    # Check if the product belongs to the seller
     if product.seller_phone != seller_phone:
         return jsonify({"success": False, "message": "Unauthorized"})
 
-    # 删除商品
+    # Delete the product
     db.session.delete(product)
     db.session.commit()
 
-    # 状态码200表示服务器已成功处理了请求
     return jsonify({"success": True, "message": "Product deleted successfully"})
 
 
+# Provide a method to get item info by product id
 @products_bp.route('/itemInfoById', methods=['GET'])
 def item_info_by_id():
-    # product_id是否为int类型
+    # Check if product_id is an integer
     try:
         product_id = int(request.args.get('product_id'))
     except (TypeError, ValueError):
@@ -106,9 +111,11 @@ def item_info_by_id():
 
     product = Product.query.filter_by(product_id=product_id).first()
 
-    # 根据product_id查询到的商品是否存在
+    # According to the product_id, check if the product exists
     if not product:
         return jsonify({"success": False, "message": "Product not found."}), 400
+
+    # Calculate the average rating of the product
     avg_rating = calculate_average_rating(product_id)
 
     return jsonify({
@@ -120,10 +127,10 @@ def item_info_by_id():
     })
 
 
-# 辅助函数来计算商品的平均rating
+# Helper function to calculate the average rating of a product
 def calculate_average_rating(product_id):
     comments = Comment.query.filter_by(product_id=product_id).all()
-    # 如果没有评论，直接0.0分
+    # If there is no comment, return 0.0
     if not comments:
         return 0.0
 
@@ -133,7 +140,7 @@ def calculate_average_rating(product_id):
 
     average_rating = total_rating / len(comments)
 
-    # 四舍五入到整数
+    # Round to the nearest integer
     average_rating = round(average_rating)
     return average_rating
 
