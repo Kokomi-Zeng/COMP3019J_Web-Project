@@ -1,4 +1,5 @@
 import config
+from blueprints.image import image_bp
 from blueprints.test import test_bp
 from flask import Flask, render_template
 
@@ -33,6 +34,7 @@ app.register_blueprint(products_bp)
 app.register_blueprint(seller_bp)
 app.register_blueprint(shop_bp)
 app.register_blueprint(test_bp)
+app.register_blueprint(image_bp)
 
 # 使迁移生效
 migrate = Migrate(app, db)
