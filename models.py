@@ -8,19 +8,17 @@ class User(db.Model):
     user_type = db.Column(db.String(10))
     image_src = db.Column(db.String(200))
 
-    # 这里这么做是为了方便查询，使得可以反向查询，即通过buyer或者seller查询到user
+    # The reason why we do this is to make it easier to query, so that we can query the user through buyer or seller
     buyer = db.relationship("Buyer", backref="user", uselist=False)
     seller = db.relationship("Seller", backref="user", uselist=False)
 
 class Buyer(db.Model):
     __tablename__ = "buyers"
 
-    # 表示将users表中的phone设置为这个表的外键
+    # It means that the phone in the users table is set as the foreign key of this table
     phone = db.Column(db.String(15), db.ForeignKey("users.phone"), primary_key=True)
     name = db.Column(db.String(100))
     description = db.Column(db.Text)
-
-    # 余额
     balance = db.Column(db.Float)
 
     comments = db.relationship("Comment", backref="buyer")
@@ -64,7 +62,8 @@ class Purchase(db.Model):
     purchase_id = db.Column(db.Integer, primary_key=True)
     product_id = db.Column(db.Integer, db.ForeignKey("products.product_id"))
     buyer_phone = db.Column(db.String(15), db.ForeignKey("buyers.phone"))
-    # DateTime类型, 举例: 2111-11-11 11:11:11
+
+    # DateTime type, example: 2111-11-11 11:11:11
     purchase_time = db.Column(db.DateTime)
     image_src_at_time_of_purchase = db.Column(db.String(200))
     purchase_number = db.Column(db.Integer)
