@@ -7,12 +7,12 @@ import logging
 from exts import db
 from models import Product, Comment, Buyer, User, Purchase
 
-buyer_bp = Blueprint('buyer', __name__, url_prefix='/buyer')
-
 """
 The following code is used to store the routes related to buyer,
 such as buyerInfo, charge, buyItem, buyerItem, modifyBuyerInfo.
 """
+
+buyer_bp = Blueprint('buyer', __name__, url_prefix='/buyer')
 
 
 # Provide get buyerInfo method for the front end buyerInfo page
