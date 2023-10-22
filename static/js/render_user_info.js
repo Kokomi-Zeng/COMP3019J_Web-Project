@@ -1,5 +1,6 @@
 function render_user_info(container) {
-    
+
+    const data = get_user_info();
     // name
     const name_div = document.createElement("div");
     const name_label = document.createElement("label")
@@ -74,22 +75,39 @@ function render_user_info(container) {
 
 function modify_user_info(name, password, introduction){
     $.ajax({
-            url: '/modifySellerInfo',
-            type: 'get',
-            contentType: "application/json",
-            dataType: "json",
-            data: {
-                phone: phone,
-                name: name,
-                password: password,
-                introduction: introduction,
-            },
-            success: function (data) {
-                if (data.success) {
-                    render_user_info();
-                }else {
-                    alert(data.message);
-                }
+        url: '/modifySellerInfo',
+        type: 'get',
+        contentType: "application/json",
+        dataType: "json",
+        data: {
+            phone: phone,
+            name: name,
+            password: password,
+            introduction: introduction,
+        },
+        success: function (data) {
+            if (data.success) {
+                render_user_info();
+            }else {
+                alert(data.message);
             }
-        })
+        }
+    })
+}
+
+function get_user_info(){
+    let data;
+    $.ajax({
+        url:"/buyer/buyerInfo",
+        type: 'get',
+        contentType: "application/json",
+        dataType: "json",
+        data:{
+            phone: phone
+        },
+        success:function (response){
+            data = response;
+        }
+    })
+    return data
 }
