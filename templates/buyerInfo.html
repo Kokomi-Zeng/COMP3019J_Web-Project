@@ -45,12 +45,12 @@ name:当前用户name
                 phone: phone,
             },
             success: function (data) {
-                render_money();
+                render_money(data);
             }
         })
     }
     
-    function render_money(){
+    function render_money(data){
         
         const current = data.money;
         const current_div = document.createElement("div");
