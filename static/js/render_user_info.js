@@ -12,11 +12,17 @@ function render_user_info(data) {
     img_div.setAttribute("id", "name-div");
     img_show.setAttribute("id", "show-img");
     img_input.setAttribute("type", "file");
-    img_input.setAttribute("id", "img");
+    img_input.setAttribute("id", "file");
+    img_input.onchange = function (){
+        upload_user_img(img_show);
+    }
 
-    name_div.append(name_label);
-    name_label.append(name_input)
-    container.append(name_div);
+    img_div.append(img_show);
+    img_div.append(img_input)
+    container.append(img_div);
+
+    // get user img
+    get_user_img(img_show)
 
     // name
     const name_div = document.createElement("div");
