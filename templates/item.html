@@ -6,6 +6,7 @@
 
 {% block script %}
     <script src="/static/js/render_comment.js"></script>
+    <script src="/static/js/render_self_comment_box.js"></script>
     <script>
 
     let belong;
@@ -17,13 +18,17 @@
 {#        判断belong关系#}
             is_item_match_seller()
 
-            render_item_data();
+            get_item_data();
 
-            render_comment();
+            get_comment();
 
-            {#buyer 购买#}
+            {#buyer#}
             if (!belong) {
                 render_buyer_box();
+
+                render_self_comment_box()
+
+                render_comment();
             }
 
             {#buyer#}
@@ -76,7 +81,7 @@
         let price;
         let storage
         {#buyer/visiter#}
-        {% if belong==false %}
+        if (!belong) {
 
             img = document.createElement("img");
             name = document.createElement("span");
@@ -89,8 +94,8 @@
             rating.innerText = data.average_rating;
             price.innerText = data.price;
             storage.innerText = data.storage;
-        {% else %}
-{#            seller#}
+        }else {
+            {#seller#}
             img = document.createElement("img");
             name = document.createElement("input");
             rating = document.createElement("input");
@@ -109,7 +114,7 @@
             storage.setAttribute("type", "text")
             storage.value = data.storage;
 
-        {% endif %}
+        }
 
         $(".img-box").append(img);name.setAttribute("type", "text")
         $(".item-name").append(name);
@@ -159,7 +164,7 @@
 
         self_comment_form.setAttribute("id", "self-comment")
 
-        comment_box.append(self_comment_form)
+        $(".comment-box").append(self_comment_form)
 
         const self_rating_div = document.createElement("div");
         const self_rating = document.createElement("input");
@@ -198,7 +203,7 @@
 
     }
 
-    function render_comment(){
+    function get_comment(){
         $.ajax({
             url: "/comment/commentBasicInfoById",
             type: "get",
@@ -265,7 +270,7 @@
 </div>
 <div class="right-box">
     <div class="comment-box"></div>
-    <div class="commenter_window"></div>
+    <div class="self-comment-box"></div>
 </div>
 
 <div class="back-button-box">
