@@ -13,13 +13,11 @@ name:当前用户name
 
 {% block nav_bar %}
     <button class="nav-button" id="info" onclick="get_user_info(container)">info</button>
-    <button class="nav-button" id="charge" onclick="get_money(container)">charge</button>
-    <button class="nav-button" id="purchased" onclick="get_purchased(container)">purchased</button>
+    <button class="nav-button" id="charge" onclick="get_money()">charge</button>
+    <button class="nav-button" id="purchased" onclick="get_purchased()">purchased</button>
 {% endblock %}
 
 {% block script %}
-
-    <script src="/static/js/render_user_info.js"></script>
 
     <script>
     let container;
@@ -33,8 +31,6 @@ name:当前用户name
     }
 
     function get_money() {
-        {#清除dom#}
-        container.empty();
 
         $.ajax({
             url: "/buyer/getMoney",
@@ -51,6 +47,9 @@ name:当前用户name
     }
     
     function render_money(data){
+
+        {#清除dom#}
+        container.empty();
         
         const current = data.money;
         const current_div = document.createElement("div");
@@ -111,7 +110,7 @@ name:当前用户name
             },
             success:function (data){
                 if (data.success==="success"){
-                    charge();
+                    get_money();
                     alert(data.message)
                 }else {
                     alert(data.message)
@@ -119,9 +118,7 @@ name:当前用户name
             }
         })
     }
-    function get_purchased(container){
-        {#清除dom#}
-        container.empty();
+    function get_purchased(){
 
         $.ajax({
             url:"/buyer/buyerItem",
@@ -138,6 +135,9 @@ name:当前用户name
     }
 
     function render_buyer_purchased(data){
+        {#清除dom#}
+        container.empty();
+
         for (let i = 0; i<data.length; i++) {
             const item = data[i];
 
