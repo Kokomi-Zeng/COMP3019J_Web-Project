@@ -12,29 +12,19 @@ name:当前用户name
 {% endblock %}
 
 {% block nav_bar %}
-    <button class="nav-button" id="info">info</button>
-    <button class="nav-button" id="charge">charge</button>
-    <button class="nav-button" id="purchased">purchased</button>
+    <button class="nav-button" id="info" onclick="info()">info</button>
+    <button class="nav-button" id="charge" onclick="charge()">charge</button>
+    <button class="nav-button" id="purchased" onclick="purchased()">purchased</button>
 {% endblock %}
 
 {% block script %}
     <script>
 
-    $(document).on("sessionLoaded", function() {
-        info()
-        $("#info").click(function (){
+    window.onload = function () {
+        $(document).on("sessionLoaded", function () {
             info();
-        })
-        $("#charge").click(function (){
-            charge();
-        })
-        $("#purchased").click(function (){
-            purchased();
-        })
-        $("#log_out").click(function (){
-            log_out();
-        })
-    });
+        });
+    }
     function info(){
         {#清除dom#}
         $(".container").empty();
