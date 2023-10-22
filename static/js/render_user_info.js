@@ -112,7 +112,7 @@ function modify_user_info(name, password, introduction){
     })
 }
 
-function get_user_img(){
+function get_user_img(show_img){
     $.ajax({
         url:"/images/get_image_user",
         type: 'get',
@@ -122,7 +122,7 @@ function get_user_img(){
             phone:phone,
         },
         success:function (data){
-
+            show_img.setAttribute("src", data.url);
         }
     })
 }
