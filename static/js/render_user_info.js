@@ -3,6 +3,21 @@ function render_user_info(data) {
     const container = $(".container");
     container.empty();
 
+    // input img
+    const img_div = document.createElement("div");
+    const img_show = document.createElement("img");
+    const img_input = document.createElement("input");
+
+    img_div.setAttribute("class", "info-div");
+    img_div.setAttribute("id", "name-div");
+    img_show.setAttribute("id", "show-img");
+    img_input.setAttribute("type", "file");
+    img_input.setAttribute("id", "img");
+
+    name_div.append(name_label);
+    name_label.append(name_input)
+    container.append(name_div);
+
     // name
     const name_div = document.createElement("div");
     const name_label = document.createElement("label")
@@ -93,6 +108,38 @@ function modify_user_info(name, password, introduction){
             }else {
                 alert(data.message);
             }
+        }
+    })
+}
+
+function get_user_img(){
+    $.ajax({
+        url:"/images/get_image_user",
+        type: 'get',
+        contentType: "application/json",
+        dataType: "json",
+        data:{
+            phone:phone,
+        },
+        success:function (data){
+
+        }
+    })
+}
+
+function upload_user_img(show_img){
+    $.ajax({
+        url:"/images/upload_image_user",
+        type:"post",
+        data:{
+            file:$("#file")[0].files[0],
+            phone:"{{ product_id }}",
+        },
+        dataType:"text",
+        processData:false,
+        contentType:false,
+        success:function (data){
+            show_img.setAttribute("src", data.src)
         }
     })
 }
