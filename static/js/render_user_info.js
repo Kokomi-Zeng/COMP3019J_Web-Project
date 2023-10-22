@@ -1,22 +1,7 @@
-function get_user_info(){
-    let data;
-    $.ajax({
-        url:"/buyer/buyerInfo",
-        type: 'get',
-        contentType: "application/json",
-        dataType: "json",
-        data:{
-            phone: phone
-        },
-        success:function (data){
-            render_user_info(data)
-        }
-    })
-}
-
 function render_user_info(data) {
 
     const container = $(".container");
+    container.empty();
 
     // name
     const name_div = document.createElement("div");
