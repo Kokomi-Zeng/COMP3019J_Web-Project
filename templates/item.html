@@ -225,7 +225,7 @@
         more_comment_button.innerText = "More Comment";
         more_comment_button.onclick = function (){
             if (type==="1" || type==="0") {
-                window.location.href = "/comment";
+                window.location.href = "/comment?product_id="+"{{ product_id }}";
             }else {
                 window.location.href = "/login";
             }
