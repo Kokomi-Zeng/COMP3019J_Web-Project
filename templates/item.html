@@ -26,8 +26,6 @@
             if (!belong) {
                 render_buyer_box();
 
-                render_self_comment_box()
-
                 render_comment();
             }
 
@@ -226,7 +224,11 @@
         more_comment_button_div.setAttribute("class", "comment-text");
         more_comment_button.innerText = "More Comment";
         more_comment_button.onclick = function (){
-            window.location.href = "/comment";
+            if (type==="1" || type==="0") {
+                window.location.href = "/comment";
+            }else {
+                window.location.href = "/login";
+            }
         }
 
         more_comment_button_div.append(more_comment_button);
