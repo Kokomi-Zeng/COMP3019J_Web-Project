@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block css %}
+/static/css/comment.css
+{% endblock %}
+
+{% block script %}
+    <script src="/static/js/render_comment.js"></script>
+    <script>
+        window.location = function (){
+            $(document).on("sessionLoaded", function() {
+                get_comment();
+            })
+        }
+
+        function get_comment(){
+            $.ajax({
+                url:"/commentInfoById",
+                type:"get",
+                contentType: "application/json",
+                dataType: "json",
+                data:{
+                    product_id:"{{ product_id }}",
+                    phone:phone,
+                },
+                success:function(){
+                    render_comment();
+                }
+            })
+        }
+    </script>
+{% endblock %}
+
+{% block search_box %}
+
+{% endblock %}
+
+{% block main %}
+    <div class="comment-box"></div>
+    <div class="prev"></div>
+    <div class="next"></div>
+{% endblock %}
