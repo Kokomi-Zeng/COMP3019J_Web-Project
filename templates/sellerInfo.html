@@ -12,31 +12,23 @@ name:当前用户name
 {% endblock %}
 
 {% block nav_bar %}
-    <button class="nav-button" id="info">info</button>
-    <button class="nav-button" id="add-item">add</button>
+    <button class="nav-button" id="info" onclick="get_user_info()">info</button>
+    <button class="nav-button" id="add-item" onclick="render_add()">add</button>
 {% endblock %}
 
 {% block script %}
     <script>
+    let container;
 
-    {#session load—————————————————————————————————————————————————————————————————————————————————————————#}
-    $(document).on("sessionLoaded", function() {
-        
-        info();
-        
-        $("#info").click(function (){
-            info();
+    window.onload = function () {
+        container = $(".container");
+
+        $(document).on("sessionLoaded", function () {
+            get_user_info();
         })
-        $("#add-item").click(function (){
-            add();
-        })
-    });
-
-    {#卖家信息方法————————————————————————————————————————————————————————————————————————————————————————————#}
-    function info(){
-        {#清除dom#}
-        $(".container").empty();
-
+    }
+    
+    function get_user_info(){
         $.ajax({
             url:"/seller/sellerInfo",
             type:"get",
@@ -44,196 +36,127 @@ name:当前用户name
             dataType: "json",
             data:{phone:phone},
             success:function (data){
-                {#卖家名称———————————————————————————————————————————————————————————————————————————————————#}
-                const name_div = document.createElement("div");
-                const name_label = document.createElement("label")
-                const name_input = document.createElement("input");
-
-                name_div.setAttribute("class", "info-div");
-                name_div.setAttribute("id", "name-div");
-                name_label.innerText = "Name: "
-                name_input.setAttribute("type", "text");
-                name_input.setAttribute("value", data.name);
-                name_input.setAttribute("id", "name");
-
-                name_div.append(name_label);
-                name_label.append(name_input)
-                $(".container").append(name_div);
-
-                {#卖家电话———————————————————————————————————————————————————————————————————————————————————#}
-                const phone_div = document.createElement("div");
-                const phone_span = document.createElement("label")
-
-                phone_div.setAttribute("class", "info-div");
-                phone_div.setAttribute("id", "phone-div");
-                phone_span.innerText = "Phone: "+phone;
-
-                phone_div.append(phone_span);
-                $(".container").append(phone_div);
-
-                {#卖家介绍———————————————————————————————————————————————————————————————————————————————————#}
-                const introduction_div = document.createElement("div");
-                const introduction_label = document.createElement("label")
-                const introduction_input = document.createElement("input");
-
-                introduction_div.setAttribute("class", "info-div");
-                introduction_div.setAttribute("id", "introduction-div");
-                introduction_label.innerText = "Introduction: ";
-                introduction_input.setAttribute("type", "text");
-                introduction_input.setAttribute("value", data.introduction);
-                introduction_input.setAttribute("id", "introduction");
-
-                introduction_div.append(introduction_label);
-                introduction_label.append(introduction_input);
-                $(".container").append(introduction_div);
-
-                {#卖家密码———————————————————————————————————————————————————————————————————————————————————#}
-                const password_div = document.createElement("div");
-                const password_label = document.createElement("label")
-                const password_input = document.createElement("input");
-
-                password_div.setAttribute("class", "info-div");
-                password_div.setAttribute("id", "password-div");
-                password_label.innerText = "Password: ";
-                password_input.setAttribute("type", "text");
-                password_input.setAttribute("id", "password");
-
-                password_div.append(password_label);
-                password_label.append(password_input);
-                $(".container").append(password_div);
-
-                {#卖家提交按钮———————————————————————————————————————————————————————————————————————————————————#}
-                const submit_div = document.createElement("div");
-                const submit_button = document.createElement("button");
-
-                submit_button.innerText = "Confirm";
-                submit_button.onclick = function (){
-                    $.ajax({
-                        url:'/modifySellerInfo',
-                        type:'get',
-                        contentType: "application/json",
-                        dataType: "json",
-                        data:{
-                            phone:phone,
-                            name:$("#name").val(),
-                            password:$("#password").val(),
-                            introduction:$("#introduction").val(),
-                        },
-                        success:function (data){
-                            info()
-                        }
-                    })
-                }
-                submit_div.append(submit_button);
-                $(".container").append(submit_div);
+                render_user_info(data);
             }
+            
         })
-
-
-    {#添加商品方法————————————————————————————————————————————————————————————————————————————————————————————#}
     }
-    function add(){
-        {#清除dom#}
-        $(".container").empty();
 
-        {#添加新物品——————图片————————————————————————————————————————————————————————————————————————————————#}
+    function render_add(){
+
+        {#清除dom#}
+        container.empty();
+
+        const show_img_div = document.createElement("div");
+        const show_img = document.createElement("img");
+
+        show_img_div.setAttribute("class", "show-img-div");
+
+        show_img_div.append(show_img);
+        container.append(show_img_div);
+
         const img_div = document.createElement("div");
         const img_input = document.createElement("input");
 
-        img_div.setAttribute("class", "add-div");
-        img_div.setAttribute("id", "img-div");
+        img_div.setAttribute("class", "img-div");
         img_input.setAttribute("id", "file");
         img_input.setAttribute("type", "file");
         img_input.onchange = function (){
-            upload()
+            upload(show_img)
         };
 
         img_div.append(img_input);
-        $(".container").append(img_div);
+        container.append(img_div);
 
-        {#添加新物品——————名称————————————————————————————————————————————————————————————————————————————————#}
         const item_name_div = document.createElement("div");
         const item_name_input = document.createElement("input");
         
-        item_name_div.setAttribute("class", "add-div");
-        item_name_div.setAttribute("id", "item_name-div");
+        item_name_div.setAttribute("class", "item_name-div");
         item_name_input.setAttribute("id", "item_name");
         item_name_input.setAttribute("placeHolder", "name");
         
         item_name_div.append(item_name_input);
-        $(".container").append(item_name_div);
+        container.append(item_name_div);
 
 
         {#添加新物品——————库存————————————————————————————————————————————————————————————————————————————————#}
         const storage_div = document.createElement("div");
         const storage_input = document.createElement("input");
         
-        storage_div.setAttribute("class", "add-div");
-        storage_div.setAttribute("id", "storage-div");
+        storage_div.setAttribute("class", "storage-div");
         storage_input.setAttribute("id", "storage");
         storage_input.setAttribute("placeHolder", "storage");
         
         storage_div.append(storage_input);
-        $(".container").append(storage_div);
+        container.append(storage_div);
 
 
         {#添加新物品——————介绍————————————————————————————————————————————————————————————————————————————————#}
         const introduction_div = document.createElement("div");
         const introduction_input = document.createElement("input");
         
-        introduction_div.setAttribute("class", "add-div");
-        introduction_div.setAttribute("id", "introduction-div");
+        introduction_div.setAttribute("class", "introduction-div");
         introduction_input.setAttribute("id", "introduction");
         introduction_input.setAttribute("placeHolder", "introduction");
         
         introduction_div.append(introduction_input);
-        $(".container").append(introduction_div);
+        container.append(introduction_div);
 
 
         {#添加新物品——————价格————————————————————————————————————————————————————————————————————————————————#}
         const price_div = document.createElement("div");
         const price_input = document.createElement("input");
         
-        price_div.setAttribute("class", "add-div");
-        price_div.setAttribute("id", "price-div");
+        price_div.setAttribute("class", "price-div");
         price_input.setAttribute("type", "price");
         price_input.setAttribute("id", "price");
         price_input.setAttribute("placeHolder", "price");
         
         price_div.append(price_input);
-        $(".container").append(price_div);
+        container.append(price_div);
 
 
         {#添加新物品——————提交按钮——————————————————————————————————————————————————————————————————————————————#}
         const submit_div = document.createElement("div");
         const submit_button = document.createElement("button");
 
+        submit_div.setAttribute("class", "submit-div");
+        submit_button.setAttribute("class", "submit-button");
+
         submit_button.innerText = "Confirm";
         submit_button.onclick = function (){
-            $.ajax({
-                url:'/seller/addItem',
-                type:'get',
-                data:{
-                    phone:phone,
-                    price:$("#price").val(),
-                    storage:$("#storage").val(),
-                    item_name:$("#item_name").val(),
-                    src:$("#img").val(),
-                    introduction:$("#introduction").val(),
-                },
-                success:function (data){
-                    alert(data);
-                }
-            })
+            add_item(price_input.value, storage_input.value, item_name_input.value, introduction_input.value)
         }
         submit_div.append(submit_button);
-        $(".container").append(submit_div);
+        container.append(submit_div);
+    }
+
+    function add_item(price, storage, name, introduction){
+        $.ajax({
+            url:'/seller/addItem',
+            type:'get',
+            data:{
+                phone:phone,
+                price:price,
+                storage:storage,
+                item_name:name,
+                introduction:introduction,
+            },
+            success:function (data){
+                if (data.success){
+                    render_add();
+                    alert(data.message);
+                }else {
+                    alert(data.message);
+                }
+            }
+        })
     }
 
     {#上传图片方法————————————————————————————————————————————————————————————————————————————————————————————#}
-    function upload(){
+    function upload(show_img){
         $.ajax({
-            url:"/images/upload_image",
+            url:"/images/upload_image_user",
             type:"post",
             data:{
                 file:$("#file")[0].files[0],
@@ -243,7 +166,7 @@ name:当前用户name
             processData:false,
             contentType:false,
             success:function (data){
-                {#$("#show-img").attr("src", data.image_src)#}
+                show_img.setAttribute("src", "data.image_src");
             }
         })
     }
