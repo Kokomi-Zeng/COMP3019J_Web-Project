@@ -12,30 +12,40 @@ name:当前用户name
 {% endblock %}
 
 {% block nav_bar %}
-    <button class="nav-button" id="info">info</button>
+    <button class="nav-button" id="info" onclick="get_user_info()">info</button>
     <button class="nav-button" id="add-item">add</button>
 {% endblock %}
 
 {% block script %}
     <script>
+    let container;
 
-    {#session load—————————————————————————————————————————————————————————————————————————————————————————#}
-    $(document).on("sessionLoaded", function() {
-        
-        info();
-        
-        $("#info").click(function (){
-            info();
+    window.onload = function () {
+        container = $(".container");
+
+        $(document).on("sessionLoaded", function () {
+            get_user_info();
         })
-        $("#add-item").click(function (){
-            add();
+    }
+    
+    function get_user_info(){
+        $.ajax({
+            url:"/seller/sellerInfo",
+            type:"get",
+            contentType: "application/json",
+            dataType: "json",
+            data:{phone:phone},
+            success:function (data){
+                render_user_info(data);
+            }
+            
         })
-    });
+    }
 
     {#卖家信息方法————————————————————————————————————————————————————————————————————————————————————————————#}
     function info(){
         {#清除dom#}
-        $(".container").empty();
+        container.empty();
 
         $.ajax({
             url:"/seller/sellerInfo",
@@ -58,7 +68,7 @@ name:当前用户name
 
                 name_div.append(name_label);
                 name_label.append(name_input)
-                $(".container").append(name_div);
+                container.append(name_div);
 
                 {#卖家电话———————————————————————————————————————————————————————————————————————————————————#}
                 const phone_div = document.createElement("div");
@@ -69,7 +79,7 @@ name:当前用户name
                 phone_span.innerText = "Phone: "+phone;
 
                 phone_div.append(phone_span);
-                $(".container").append(phone_div);
+                container.append(phone_div);
 
                 {#卖家介绍———————————————————————————————————————————————————————————————————————————————————#}
                 const introduction_div = document.createElement("div");
@@ -85,7 +95,7 @@ name:当前用户name
 
                 introduction_div.append(introduction_label);
                 introduction_label.append(introduction_input);
-                $(".container").append(introduction_div);
+                container.append(introduction_div);
 
                 {#卖家密码———————————————————————————————————————————————————————————————————————————————————#}
                 const password_div = document.createElement("div");
@@ -100,7 +110,7 @@ name:当前用户name
 
                 password_div.append(password_label);
                 password_label.append(password_input);
-                $(".container").append(password_div);
+                container.append(password_div);
 
                 {#卖家提交按钮———————————————————————————————————————————————————————————————————————————————————#}
                 const submit_div = document.createElement("div");
@@ -125,7 +135,7 @@ name:当前用户name
                     })
                 }
                 submit_div.append(submit_button);
-                $(".container").append(submit_div);
+                container.append(submit_div);
             }
         })
 
@@ -134,7 +144,7 @@ name:当前用户name
     }
     function add(){
         {#清除dom#}
-        $(".container").empty();
+        container.empty();
 
         {#添加新物品——————图片————————————————————————————————————————————————————————————————————————————————#}
         const img_div = document.createElement("div");
@@ -149,7 +159,7 @@ name:当前用户name
         };
 
         img_div.append(img_input);
-        $(".container").append(img_div);
+        container.append(img_div);
 
         {#添加新物品——————名称————————————————————————————————————————————————————————————————————————————————#}
         const item_name_div = document.createElement("div");
@@ -161,7 +171,7 @@ name:当前用户name
         item_name_input.setAttribute("placeHolder", "name");
         
         item_name_div.append(item_name_input);
-        $(".container").append(item_name_div);
+        container.append(item_name_div);
 
 
         {#添加新物品——————库存————————————————————————————————————————————————————————————————————————————————#}
@@ -174,7 +184,7 @@ name:当前用户name
         storage_input.setAttribute("placeHolder", "storage");
         
         storage_div.append(storage_input);
-        $(".container").append(storage_div);
+        container.append(storage_div);
 
 
         {#添加新物品——————介绍————————————————————————————————————————————————————————————————————————————————#}
@@ -187,7 +197,7 @@ name:当前用户name
         introduction_input.setAttribute("placeHolder", "introduction");
         
         introduction_div.append(introduction_input);
-        $(".container").append(introduction_div);
+        container.append(introduction_div);
 
 
         {#添加新物品——————价格————————————————————————————————————————————————————————————————————————————————#}
@@ -201,7 +211,7 @@ name:当前用户name
         price_input.setAttribute("placeHolder", "price");
         
         price_div.append(price_input);
-        $(".container").append(price_div);
+        container.append(price_div);
 
 
         {#添加新物品——————提交按钮——————————————————————————————————————————————————————————————————————————————#}
@@ -227,7 +237,7 @@ name:当前用户name
             })
         }
         submit_div.append(submit_button);
-        $(".container").append(submit_div);
+        container.append(submit_div);
     }
 
     {#上传图片方法————————————————————————————————————————————————————————————————————————————————————————————#}
