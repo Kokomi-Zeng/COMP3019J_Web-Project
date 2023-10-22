@@ -77,7 +77,7 @@ function render_user_info(data) {
 
 function modify_user_info(name, password, introduction){
     $.ajax({
-        url: '/modifySellerInfo',
+        url: type==="1"?"/buyer/modifyBuyerInfo":'/seller/modifySellerInfo',
         type: 'get',
         contentType: "application/json",
         dataType: "json",
