@@ -1,102 +1,98 @@
-function render_self_comment() {
-    function render_self_comment() {
-    const comment_box = $(".self-comment-box");
-    comment_box.empty();
-
-    const self_comment_form = document.createElement("form");
-
-    self_comment_form.setAttribute("id", "self-comment")
-
-    comment_box.append(self_comment_form)
-
-    const self_rating_div = document.createElement("div");
-    const self_rating = document.createElement("input");
-
-    self_rating_div.setAttribute("class", "self-rating-box");
-    self_rating.setAttribute("class", "self-rating");
-    self_rating.setAttribute("placeHolder", "rating");
-    self_rating.setAttribute("type", "number");
-
-    self_comment_form.append(self_rating_div);
-    self_rating_div.append(self_rating);
-
-    const self_content_div = document.createElement("div");
-    const self_content = document.createElement("input");
-
-    self_content_div.setAttribute("class", "self-content-box");
-    self_content.setAttribute("class", "self-content");
-    self_content.setAttribute("placeHolder", "content");
-    self_rating.setAttribute("type", "text");
-
-    self_comment_form.append(self_content_div);
-    self_content_div.append(self_content);
-
-    const self_content_button = document.createElement("button");
-
-    self_content_button.setAttribute("id", "self-content-button");
-    self_content_button.innerText = "Submit->"
-    self_content_button.onclick = function () {
-        create_comment(new FormData(self_comment_form))
-    }
-
-    comment_box.append(self_content_button);
-
-}
-
 function render_comment(data){
     for (let i = 0; i < data.length; i++) {
         const comment = data[i];
 
         const comment_div = document.createElement("div");
+
         comment_div.setAttribute("class", "comment");
-        comment_div.onmouseover = function (){
-            comment_div.style.display = "block";
-        }
-        comment_div.onmouseout = function (){
-            comment_div.style.display = "none";
-        }
 
-        const comment_rating_div = document.createElement("div");
-        const comment_rating = document.createElement("span");
+        $(".comment-box").append(comment_div);
 
-        comment_rating_div.setAttribute("class", "comment-rating");
-        comment_rating.innerText = comment.rating;
+        // const commenter_window = render_commenter_window(comment_div, comment)
+        //
+        // comment_div.onmouseover = function (){
+        //     commenter_window.style.display = "block";
+        // }
+        // comment_div.onmouseout = function (){
+        //     commenter_window.style.display = "none";
+        // }
+        
+        const commenter_img_div = document.createElement("div");
+        const commenter_img = document.createElement("img");
 
-        comment_rating_div.append(comment_rating);
-        comment_div.append(comment_rating_div);
+        commenter_img_div.setAttribute("class", "commenter-name");
+        commenter_img.setAttribute("src", comment.user_image);
+
+        commenter_img_div.append(commenter_img);
+        comment_div.append(commenter_img_div);
+
+        const commenter_name_div = document.createElement("div");
+        const commenter_name = document.createElement("span");
+
+        commenter_name_div.setAttribute("class", "commenter-name");
+        commenter_name.innerText = "name: " + comment.commenter_name;
+
+        commenter_name_div.append(commenter_name);
+        comment_div.append(commenter_name_div);
 
         const comment_content_div = document.createElement("div");
         const comment_content = document.createElement("span");
 
         comment_content_div.setAttribute("class", "comment-text");
-        comment_content.innerText = comment.content;
+        comment_content.innerText = "content: " + comment.content;
 
         comment_content_div.append(comment_content);
         comment_div.append(comment_content_div);
-
-        const comment_text = document.createComment("div");
-        comment_text.innerText = comment.text;
-
-        $(".self-comment-box").append(comment_div);
     }
 }
 
-function create_comment(formdata){
+
+function render_commenter_window(comment_div, comment) {
+    const commenter_window = document.createElement("div");
+
+    commenter_window.setAttribute("class", "commenter-window");
+
+    const commenter_img_div = document.createElement("div");
+    const commenter_img = document.createElement("img");
+
+    commenter_img_div.setAttribute("class", "commenter-img-window");
+    commenter_img.setAttribute("src", comment.user_image);
+
+    commenter_img_div.append(commenter_img);
+    comment_div.append(commenter_img_div);
+
+    const commenter_name_div = document.createElement("div");
+    const commenter_name = document.createElement("span");
+
+    commenter_name_div.setAttribute("class", "commenter-name-window");
+    commenter_name.innerText = "name: " + comment.commenter_name;
+
+    commenter_name_div.append(commenter_name);
+    comment_div.append(commenter_name_div);
+
+    const commenter_introduction_div = document.createElement("div");
+    const commenter_introduction = document.createElement("span");
+
+    commenter_introduction_div.setAttribute("class", "commenter-name");
+    commenter_introduction.innerText = "introduction: " +  get_introduction(comment.comment_id);
+
+    commenter_introduction_div.append(commenter_introduction);
+    comment_div.append(commenter_introduction_div);
+
+    return commenter_window;
+}
+
+function get_introduction(comment_id){
+    let introduction = ""
     $.ajax({
-        url: "/comment/createComment",
+        url:"/comment/getIntroductionByCommentID",
         type: "get",
         contentType: "application/json",
         dataType: "json",
-        data: formdata,
+        data: {comment_id:comment_id},
         success:function (data){
-            if (data.success){
-                alert(data.message)
-                render_comment();
-            }else {
-                alert(data.message)
-            }
-        }
+            introduction = data.introduction;
+        },
     })
+    return introduction;
 }
-
-
