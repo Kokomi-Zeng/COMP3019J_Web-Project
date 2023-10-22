@@ -60,6 +60,9 @@ def getCommentPage():
 @bp.route('/getSession')
 def getSession():
     phone = session.get('phone')
+    # If there is no "phone" on the session
+    if not phone:
+        return {'phone': "", 'name': "", 'type': ""}
     user = User.query.get(phone)
     if user:
         if user.user_type == '0':
