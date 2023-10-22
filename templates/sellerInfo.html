@@ -62,7 +62,7 @@ name:当前用户name
         img_input.setAttribute("id", "file");
         img_input.setAttribute("type", "file");
         img_input.onchange = function (){
-            upload(show_img)
+            upload_item_img(show_img)
         };
 
         img_div.append(img_input);
@@ -154,9 +154,9 @@ name:当前用户name
     }
 
     {#上传图片方法————————————————————————————————————————————————————————————————————————————————————————————#}
-    function upload(show_img){
+    function upload_item_img(show_img){
         $.ajax({
-            url:"/images/upload_image_user",
+            url:"/images/upload_image_product",
             type:"post",
             data:{
                 file:$("#file")[0].files[0],
