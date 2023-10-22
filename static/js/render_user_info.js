@@ -1,6 +1,23 @@
-function render_user_info(container) {
+function get_user_info(){
+    let data;
+    $.ajax({
+        url:"/buyer/buyerInfo",
+        type: 'get',
+        contentType: "application/json",
+        dataType: "json",
+        data:{
+            phone: phone
+        },
+        success:function (data){
+            render_user_info(data)
+        }
+    })
+}
 
-    const data = get_user_info();
+function render_user_info(data) {
+
+    const container = $(".container");
+
     // name
     const name_div = document.createElement("div");
     const name_label = document.createElement("label")
@@ -93,21 +110,4 @@ function modify_user_info(name, password, introduction){
             }
         }
     })
-}
-
-function get_user_info(){
-    let data;
-    $.ajax({
-        url:"/buyer/buyerInfo",
-        type: 'get',
-        contentType: "application/json",
-        dataType: "json",
-        data:{
-            phone: phone
-        },
-        success:function (response){
-            data = response;
-        }
-    })
-    return data
 }
