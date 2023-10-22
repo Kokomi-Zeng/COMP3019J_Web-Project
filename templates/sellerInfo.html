@@ -166,7 +166,7 @@ name:当前用户name
             processData:false,
             contentType:false,
             success:function (data){
-                show_img.setAttribute("src", "data.image_src");
+                show_img.setAttribute("src", data.image_src);
             }
         })
     }
