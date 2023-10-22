@@ -6,28 +6,79 @@
 
 {% block script %}
     <script src="/static/js/render_comment.js"></script>
+    <script src="/static/js/render_self_comment_box.js.js"></script>
     <script>
-        window.location = function (){
-            $(document).on("sessionLoaded", function() {
-                get_comment();
-            })
-        }
+    window.location = function (){
+        $(document).on("sessionLoaded", function() {
+            get_comment();
+            get_prev_page();
+            get_next_page();
+        })
+    }
 
-        function get_comment(){
-            $.ajax({
-                url:"/commentInfoById",
-                type:"get",
-                contentType: "application/json",
-                dataType: "json",
-                data:{
-                    product_id:"{{ product_id }}",
-                    phone:phone,
-                },
-                success:function(){
-                    render_comment();
-                }
-            })
+    function get_comment(){
+        $.ajax({
+            url:"/commentInfoById",
+            type:"get",
+            contentType: "application/json",
+            dataType: "json",
+            data:{
+                product_id:"{{ product_id }}",
+                phone:phone,
+            },
+            success:function(){
+                render_comment();
+            }
+        })
+    }
+
+    function render_next_page_button() {
+        const button = document.createElement("button");
+        button.setAttribute("class", "page-button");
+        button.innerText = "next";
+        button.onclick = function () {
+            page_num++;
+            generate()
         }
+        $(".next").append(button);
+    }
+
+    function get_next_page(){
+        $.ajax({
+            url:"/shop/hasNextPage",
+            type:"get",
+            contentType: "application/json",
+            dataType: "json",
+            data: {
+                phone: phone,
+                keyword: $("#search-box").val(),
+                page_num: page_num,
+            },
+            success: function (data) {
+                if (data.has_next) {
+                    render_next_page_button(data)
+                }
+            }
+        })
+    }
+
+    function render_prev_page_button(){
+        const button = document.createElement("button");
+        button.setAttribute("class", "page-button");
+        button.innerText = "prev";
+        button.onclick = function () {
+            page_num--;
+            get_item();
+        }
+        $(".prev").append(button);
+    }
+
+    function get_prev_page(){
+        if (page_num>1){
+            render_prev_page_button()
+        }
+    }
+
     </script>
 {% endblock %}
 
