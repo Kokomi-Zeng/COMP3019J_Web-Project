@@ -207,23 +207,6 @@ name:当前用户name
         }
     }
 
-    function upload(show_img){
-        $.ajax({
-            url:"/images/upload_image_user",
-            type:"post",
-            data:{
-                file:$("#file")[0].files[0],
-                product_id:"{{ product_id }}",
-            },
-            dataType:"text",
-            processData:false,
-            contentType:false,
-            success:function (data){
-                show_img.setAttribute("src", data.image_src);
-            }
-        })
-    }
-
     </script>
 {% endblock %}
 
