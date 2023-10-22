@@ -4,11 +4,6 @@
     <link rel="stylesheet" href="/static/css/base_personInfo.css">
     <script src="/static/js/render_user_info.js"></script>
     <script>
-    window.onload = function (){
-        $("#log_out").click(function (){
-            log_out();
-        })
-    }
 
     function log_out(){
         $.ajax({
@@ -25,7 +20,7 @@
     <div class="nav-bar">
         {% block nav_bar %}{% endblock %}
 
-    <button class="nav-button" id="log_out">log_out</button>
+    <button class="nav-button" id="log_out" onclick="log_out()">log_out</button>
     </div>
     <div class="body">
         {% block body %}{% endblock %}
