@@ -17,6 +17,7 @@ function get_user_info(){
 function render_user_info(data) {
 
     const container = $(".container");
+    container.empty();
 
     // name
     const name_div = document.createElement("div");
