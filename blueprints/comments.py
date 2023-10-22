@@ -130,6 +130,7 @@ def comment_info_by_id():
     for comment in comments:
         buyer = Buyer.query.filter_by(phone=comment.commenter_phone).first()
         comments_data.append({
+            "comment_id": comment.comment_id,
             "user_name": buyer.name,
             "content": comment.content,
             "rating": comment.rating
