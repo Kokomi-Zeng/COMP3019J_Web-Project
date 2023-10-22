@@ -12,7 +12,7 @@ name:当前用户name
 {% endblock %}
 
 {% block nav_bar %}
-    <button class="nav-button" id="info" onclick="get_user_info(container)">info</button>
+    <button class="nav-button" id="info" onclick="get_user_info()">info</button>
     <button class="nav-button" id="charge" onclick="get_money()">charge</button>
     <button class="nav-button" id="purchased" onclick="get_purchased()">purchased</button>
 {% endblock %}
@@ -26,7 +26,7 @@ name:当前用户name
         container = $(".container");
         
         $(document).on("sessionLoaded", function () {
-            get_user_info(container);
+            get_user_info();
         });
     }
 
