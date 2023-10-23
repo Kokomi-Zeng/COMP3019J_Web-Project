@@ -132,10 +132,11 @@ function upload_user_img(formdata, show_img){
         processData:false,
         contentType:false,
         success:function (data){
-            // if (data.success) {
+            if (data.success) {
                 show_img.setAttribute("src", data.url)
-            // }else {
-            // }
+            }else {
+                alert(data.message)
+            }
         }
     })
 }
