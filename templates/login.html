@@ -8,19 +8,14 @@ login
 
 {% block script %}
     <script>
-    window.onload = function (){
-
+    
+    $(document).on("sessionLoaded", function() {
         $(".back-button-box").empty()
-        
+
         $("#submit").click(function (){
             login();
         });
-        $("#password").keypress(function (event){
-            if (event.which == 13){
-                login();
-            }
-        });
-    }
+    });
 
     function login(){
         $.ajax({
