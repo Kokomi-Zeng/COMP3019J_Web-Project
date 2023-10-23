@@ -52,6 +52,9 @@ def add_item():
     product_name = request.args.get('product_name')
     description = request.args.get('description')
 
+    if not image_src:
+        image_src = "https://pinoss.com/kokomi/i/2023/10/20/Product_Not_Found.png"
+
     try:
         price = float(request.args.get('price'))
         storage = int(request.args.get('storage'))
