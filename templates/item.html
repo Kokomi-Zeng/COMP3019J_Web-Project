@@ -6,33 +6,25 @@
 
 {% block script %}
     <script src="/static/js/render_comment.js"></script>
-    <script src="/static/js/render_self_comment_box.js"></script>
     <script>
 
     let belong;
 
-    window.onload = function () {
-        $(document).on("sessionLoaded", function () {
-
-            {#页面渲染开始——————————————————————————————————————————————————————————————————————————————————————————#}
+    $(document).on("sessionLoaded", function () {
 {#        判断belong关系#}
-            is_item_match_seller()
+        is_item_match_seller()
 
-            get_item_data();
+        get_item_data();
 
-            get_comment();
+        get_comment();
 
-            {#buyer#}
-            if (!belong) {
-                render_buyer_box();
+        {#buyer#}
+        if (type==="1") {
+            render_buyer_box();
+        }
 
-                render_comment();
-            }
-
-            {#buyer#}
-        {#    页面渲染结束——————————————————————————————————————————————————————————————————————————————————————————#}
-        });
-    }
+        render_comment();
+    });
 
     function is_item_match_seller(){
         $.ajax({
