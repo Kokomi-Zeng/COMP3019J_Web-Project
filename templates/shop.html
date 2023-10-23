@@ -9,21 +9,17 @@
     <script>
 
     let page_num;
+    
+    $(document).on("sessionLoaded", function() {
 
-
-
-    window.onload = function () {
-
+        console.log(111)
         page_num = 1;
+        
+        get_item();
+        get_next_page();
+        get_prev_page();
 
-        $(document).on("sessionLoaded", function() {
-
-            get_item();
-            get_next_page();
-            get_prev_page();
-
-        });
-    }
+    });
     
     function get_item(){
         $.ajax({
@@ -65,7 +61,7 @@
         button.innerText = "next";
         button.onclick = function () {
             page_num++;
-            generate()
+            get_item();
         }
         $(".next").append(button);
     }
