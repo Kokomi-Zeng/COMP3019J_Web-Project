@@ -11,8 +11,10 @@
     let page_num;
     
     $(document).on("sessionLoaded", function() {
+
         console.log(111)
         page_num = 1;
+        
         get_item();
         get_next_page();
         get_prev_page();
