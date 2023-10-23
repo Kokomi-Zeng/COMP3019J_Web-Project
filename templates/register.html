@@ -10,29 +10,6 @@ register
     <script>
     let user_type;
 
-    function register(){
-        $.ajax({
-            url:"/authorize/register",
-            type:"post",
-            contentType: "application/json",
-            dataType: "json",
-            data:JSON.stringify({
-                phone:$("#phone").val(),
-                password:$("#password").val(),
-                user_type: user_type,
-            }),
-            success:function (data){
-                if(data.success){
-                    window.location.replace("/");
-                } else {
-                    alert(data.message);
-                }
-            }
-        })
-    }
-    </script>
-
-    <script>
     $(document).on("sessionLoaded", function() {
 
         $("#buyer").click(function (){
@@ -47,6 +24,27 @@ register
             register();
         })
     })
+
+    function register(){
+        $.ajax({
+            url:"/authorize/register",
+            type:"post",
+            contentType: "application/json",
+            dataType: "json",
+            data:JSON.stringify({
+                phone:$("#phone").val(),
+                password:$("#password").val(),
+                user_type: user_type,
+            }),
+            success:function (data){
+                if(data.success){
+                    window.location.replace("/login");
+                } else {
+                    alert(data.message);
+                }
+            }
+        })
+    }
     </script>
 {% endblock %}
 

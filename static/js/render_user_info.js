@@ -3,26 +3,31 @@ function render_user_info(data) {
     const container = $(".container");
     container.empty();
 
+    // form for input img
+    const img_form = document.createElement("form");
+    img_form.setAttribute("class", "img-form");
     // input img
     const img_div = document.createElement("div");
     const img_show = document.createElement("img");
     const img_input = document.createElement("input");
 
     img_div.setAttribute("class", "info-div");
-    img_div.setAttribute("id", "name-div");
+    img_div.setAttribute("id", "img-div");
     img_show.setAttribute("id", "show-img");
     img_input.setAttribute("type", "file");
     img_input.setAttribute("id", "file");
+    img_input.setAttribute("name", "image");
+    img_input.setAttribute("accept", "image/*");
     img_input.onchange = function (){
-        upload_user_img(img_show);
+        const formdata = new FormData(img_form);
+        formdata.append("phone", phone);
+        upload_user_img(formdata, img_show);
     }
 
     img_div.append(img_show);
     img_div.append(img_input)
-    container.append(img_div);
-
-    // get user img
-    get_user_img(img_show)
+    img_form.append(img_div);
+    container.append(img_form);
 
     // name
     const name_div = document.createElement("div");
@@ -118,34 +123,20 @@ function modify_user_info(name, password, introduction){
     })
 }
 
-function get_user_img(show_img){
-    $.ajax({
-        url:"/images/get_image_user",
-        type: 'get',
-        contentType: "application/json",
-        dataType: "json",
-        data:{
-            phone:phone,
-        },
-        success:function (data){
-            show_img.setAttribute("src", data.url);
-        }
-    })
-}
-
-function upload_user_img(show_img){
+function upload_user_img(formdata, show_img){
     $.ajax({
         url:"/images/upload_image_user",
         type:"post",
-        data:{
-            file:$("#file")[0].files[0],
-            phone:"{{ product_id }}",
-        },
-        dataType:"text",
+        data:formdata,
+        dataType:"json",
         processData:false,
         contentType:false,
         success:function (data){
-            show_img.setAttribute("src", data.src)
+            if (data.success) {
+                show_img.setAttribute("src", data.url)
+            }else {
+                alert(data.message)
+            }
         }
     })
 }

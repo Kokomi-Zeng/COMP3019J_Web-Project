@@ -46,23 +46,27 @@ name:当前用户name
         {#清除dom#}
         container.empty();
 
-        const show_img_div = document.createElement("div");
-        const show_img = document.createElement("img");
+        {#form for input img#}
+        const img_form = document.createElement("form");
+        img_form.setAttribute("class", "img-form");
 
-        show_img_div.setAttribute("class", "show-img-div");
-
-        show_img_div.append(show_img);
-        container.append(show_img_div);
-
+        {#input img#}
         const img_div = document.createElement("div");
+        const img_show = document.createElement("img");
         const img_input = document.createElement("input");
 
-        img_div.setAttribute("class", "img-div");
-        img_input.setAttribute("id", "file");
+        img_div.setAttribute("class", "info-div");
+        img_div.setAttribute("id", "img-div");
+        img_show.setAttribute("id", "show-img");
         img_input.setAttribute("type", "file");
+        img_input.setAttribute("id", "file");
+        img_input.setAttribute("name", "image");
+        img_input.setAttribute("accept", "image/*");
         img_input.onchange = function (){
-            upload_item_img(show_img)
-        };
+            const formdata = new FormData(img_form);
+            {#formdata.append("product_id", product_id);#}
+            upload_item_img(formdata, img_show);
+        }
 
         img_div.append(img_input);
         container.append(img_div);
@@ -153,19 +157,19 @@ name:当前用户name
     }
 
     {#上传图片方法————————————————————————————————————————————————————————————————————————————————————————————#}
-    function upload_item_img(show_img){
+    function upload_item_img(formdata, show_img){
         $.ajax({
             url:"/images/upload_image_product",
             type:"post",
-            data:{
-                file:$("#file")[0].files[0],
-                product_id:"{{ product_id }}",
-            },
-            dataType:"text",
+            data:formdata,
+            dataType:"json",
             processData:false,
             contentType:false,
-            success:function (data){
-                show_img.setAttribute("src", data.image_src);
+            success:function (data){if (data.success) {
+                show_img.setAttribute("src", data.image_src)
+            }else {
+                alert(data.message)
+            }
             }
         })
     }
