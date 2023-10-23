@@ -27,7 +27,7 @@ def upload_image_for_product():
     # verify if the product exists
     product = Product.query.filter_by(product_id=product_id).first()
     if not product:
-        return jsonify({"success": False, "message": "Product not found"})
+        return jsonify({"success": False, "message": "Product not found", "url": "https://pinoss.com/kokomi/i/2023/10/20/Product_Not_Found.png"})
 
     # upload the image to the image upload service use the requests library
     files = {
@@ -48,7 +48,7 @@ def upload_image_for_product():
         db.session.commit()
         return jsonify({"success": True, "message": "Image uploaded and saved successfully!", "url": response['url']})
     else:
-        return jsonify({"success": False, "message": "Error during image upload"})
+        return jsonify({"success": False, "message": "Error during image upload", "url": "https://pinoss.com/kokomi/i/2023/10/20/Product_Not_Found.png"})
 
 
 # Provide upload image for user method for a user to upload image for himself/herself
@@ -60,7 +60,7 @@ def upload_image_for_user():
     # verify if the user exists
     user = User.query.filter_by(phone=phone).first()
     if not user:
-        return jsonify({"success": False, "message": "User not found"})
+        return jsonify({"success": False, "message": "User not found", "url": "https://pinoss.com/kokomi/i/2023/10/20/default_image.jpg"})
 
     files = {
         'uploadedFile': (uploaded_file.filename, uploaded_file.stream, uploaded_file.mimetype)
@@ -78,7 +78,7 @@ def upload_image_for_user():
         db.session.commit()
         return jsonify({"success": True, "message": "Image uploaded and saved successfully!", "url": response['url']})
     else:
-        return jsonify({"success": False, "message": "Error during image upload"})
+        return jsonify({"success": False, "message": "Error during image upload", "url": "https://pinoss.com/kokomi/i/2023/10/20/default_image.jpg"})
 
 
 # Provide get image from product method for a user to get the image of a product
