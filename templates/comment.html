@@ -7,18 +7,14 @@
 {% block script %}
     <script src="/static/js/render_comment.js"></script>
     <script>
-    let page_num;
+    let page_num = 1;
 
-    window.onload = function (){
-
-        page_num = 1;
-        $(document).on("sessionLoaded", function() {
-            get_comment();
-            render_self_comment_box();
-            get_prev_page();
-            get_next_page();
-        })
-    }
+    $(document).on("sessionLoaded", function() {
+        get_comment();
+        render_self_comment_box();
+        get_prev_page();
+        get_next_page();
+    })
 
     function get_comment(){
         $.ajax({
