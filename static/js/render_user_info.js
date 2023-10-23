@@ -3,6 +3,9 @@ function render_user_info(data) {
     const container = $(".container");
     container.empty();
 
+    // form for input img
+    const img_form = document.createElement("form");
+    img_form.setAttribute("class", "img-form");
     // input img
     const img_div = document.createElement("div");
     const img_show = document.createElement("img");
@@ -13,16 +16,19 @@ function render_user_info(data) {
     img_show.setAttribute("id", "show-img");
     img_input.setAttribute("type", "file");
     img_input.setAttribute("id", "file");
+    img_input.setAttribute("name", "image");
+    img_input.setAttribute("accept", "image/*");
     img_input.onchange = function (){
-        upload_user_img(img_show);
+        upload_user_img(new FormData(img_form), img_show);
+
+        // get user img
+        get_user_img(img_show)
     }
 
     img_div.append(img_show);
     img_div.append(img_input)
-    container.append(img_div);
-
-    // get user img
-    get_user_img(img_show)
+    img_form.append(img_div);
+    container.append(img_form);
 
     // name
     const name_div = document.createElement("div");
@@ -133,14 +139,11 @@ function get_user_img(show_img){
     })
 }
 
-function upload_user_img(show_img){
+function upload_user_img(formdata, show_img){
     $.ajax({
-        url:"/images/upload_image_user",
+        url:"/images/upload_image_user?phone="+phone,
         type:"post",
-        data:{
-            file:$("#file")[0].files[0],
-            phone:"{{ product_id }}",
-        },
+        data:formdata,
         dataType:"text",
         processData:false,
         contentType:false,
