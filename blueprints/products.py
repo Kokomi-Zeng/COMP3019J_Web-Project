@@ -48,12 +48,8 @@ def modify_item():
 @products_bp.route('/addItem', methods=['GET'])
 def add_item():
     seller_phone = request.args.get('seller_phone')
-    image_src = request.args.get('image_src')
     product_name = request.args.get('product_name')
     description = request.args.get('description')
-
-    if not image_src:
-        image_src = "https://pinoss.com/kokomi/i/2023/10/20/Product_Not_Found.png"
 
     try:
         price = float(request.args.get('price'))
@@ -64,7 +60,6 @@ def add_item():
     # Create a new product
     product = Product(
         price=price,
-        image_src=image_src,
         storage=storage,
         product_name=product_name,
         description=description,
