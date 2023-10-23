@@ -21,14 +21,11 @@ name:当前用户name
 
     <script>
     let container;
-
-    window.onload = function () {
-        container = $(".container");
         
-        $(document).on("sessionLoaded", function () {
-            get_user_info();
-        });
-    }
+    $(document).on("sessionLoaded", function () {
+        container = $(".container");
+        get_user_info();
+    });
 
     function get_user_info(){
         $.ajax({
