@@ -87,19 +87,19 @@ def get_image_from_product():
     product_id = request.args.get('product_id')
 
     if not product_id:
-        return jsonify({"success": False, "message": "Product ID is required", "url": ""})
+        return jsonify({"success": False, "message": "Product ID is required", "url": "https://pinoss.com/kokomi/i/2023/10/20/Product_Not_Found.png"})
 
     # verify if the product_id is an integer
     try:
         product_id = int(product_id)
     except ValueError:
-        return jsonify({"success": False, "message": "Product ID must be an integer", "url": ""})
+        return jsonify({"success": False, "message": "Product ID must be an integer", "url": "https://pinoss.com/kokomi/i/2023/10/20/Product_Not_Found.png"})
 
     product = Product.query.filter_by(product_id=product_id).first()
     if not product:
-        return jsonify({"success": False, "message": "Product not found", "url": ""})
+        return jsonify({"success": False, "message": "Product not found", "url": "https://pinoss.com/kokomi/i/2023/10/20/Product_Not_Found.png"})
     if not product.image_src:
-        return jsonify({"success": False, "message": "Image not found for the specified product", "url": ""})
+        return jsonify({"success": False, "message": "Image not found for the specified product", "url": "https://pinoss.com/kokomi/i/2023/10/20/Product_Not_Found.png"})
     return jsonify({"success": True, "message": "Image retrieved successfully", "url": product.image_src})
 
 
@@ -110,14 +110,14 @@ def get_image_from_user():
 
     # verify if the phone is provided
     if not phone:
-        return jsonify({"success": False, "message": "Phone number is required", "url": ""})
+        return jsonify({"success": False, "message": "Phone number is required", "url": "https://pinoss.com/kokomi/i/2023/10/20/default_image.jpg"})
 
     # find the user by phone
     user = User.query.filter_by(phone=phone).first()
     if not user:
-        return jsonify({"success": False, "message": "User not found", "url": ""})
+        return jsonify({"success": False, "message": "User not found", "url": "https://pinoss.com/kokomi/i/2023/10/20/default_image.jpg"})
     if not user.image_src:
-        return jsonify({"success": False, "message": "Image not found for the specified user", "url": ""})
+        return jsonify({"success": False, "message": "Image not found for the specified user", "url": "https://pinoss.com/kokomi/i/2023/10/20/default_image.jpg"})
     return jsonify({"success": True, "message": "Image retrieved successfully", "url": user.image_src})
 
 
