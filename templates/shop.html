@@ -12,13 +12,9 @@
     
     $(document).on("sessionLoaded", function() {
 
-        console.log(111)
         page_num = 1;
         
         get_item();
-        get_next_page();
-        get_prev_page();
-
     });
     
     function get_item(){
@@ -50,6 +46,7 @@
     }
 
     function get_prev_page(){
+        $(".prev").empty();
         if (page_num>1){
             render_prev_page_button()
         }
@@ -67,6 +64,8 @@
     }
 
     function get_next_page(){
+        console.log(page_num)
+        $(".next").empty();
         $.ajax({
             url:"/shop/hasNextPage",
             type:"get",
@@ -87,9 +86,10 @@
 
     function render_item(data){
 
+        get_next_page();
+        get_prev_page();
+
         $(".item-box").empty();
-        $(".prev").empty();
-        $(".next").empty();
 
         for (let i=0; i<data.length; i++){
             const item = data[i];
@@ -150,7 +150,7 @@
 {% endblock %}
 
 {% block search_box %}
-    <input type="search" id="search-box" placeholder="输入商品" onkeyup="generate()">
+    <input type="search" id="search-box" placeholder="输入商品" onkeyup="get_item()">
 {% endblock %}
 
 {% block main %}
