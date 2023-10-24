@@ -1,0 +1,86 @@
+/*
+每个商品的框框
+ */
+.item-box {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+.item {
+    flex-basis: calc(45%);
+    margin-bottom: 20px;
+    border: 5px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+    text-align: center;
+}
+.item button {
+    border: none;
+    background: transparent;
+    cursor: pointer;
+}
+.item div{
+    border: black 2px solid;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    background-color: lightgrey;
+    font-size: 20px;
+}
+.item div:first-child{
+    border: none;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    background-color: white;
+}
+.item div:hover{
+    background-color: darkgrey;
+}
+.item div:first-child:hover{
+    background-color: white;
+}
+.item img {
+    width: 400px;
+    height: 400px;
+    border: 5px;
+}
+
+
+/*
+查看下一页商品
+ */
+.next button{
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    padding: 15px 30px;
+    cursor: pointer;
+    font-size: 20px;
+    text-align: center;
+}
+.next button:hover{
+    background-color: white;
+    color: #007bff;
+    font-style: italic;
+}
+
+/*
+查看上一页商品
+ */
+.prev button{
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    padding: 15px 30px;
+    cursor: pointer;
+    font-size: 20px;
+    text-align: center;
+}
+.prev button:hover{
+    background-color: white;
+    color: #007bff;
+    font-style: italic;
+}

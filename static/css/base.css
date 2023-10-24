@@ -1,0 +1,200 @@
+/* 基本样式 */
+body {
+    font-family: Arial, sans-serif;
+    background-color: white;
+}
+
+/*
+顶部导航
+ */
+.top-box {
+    height: 120px;
+    background-color: #007bff;
+    color: #fff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    border-radius: 20px;
+}
+
+/*
+logo
+ */
+.logo-box img{
+    height: 110px;
+    width: 180px; /* 调整 LOGO 图像的大小 */
+    margin-right: 100px;
+    margin-left: 100px;
+    border: #9C1A1C 2px solid;
+}
+
+/*
+搜索栏
+ */
+.search-box {
+    height: 40px;
+    width: 400px;
+    flex: 1;
+    padding: 0 10px;
+}
+#search-box {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    font-size: 16px;
+    border: black 2px solid;
+}
+
+/*
+用户栏
+ */
+.user-box {
+    margin-left: 100px;
+    margin-right: 100px;
+    display: flex;
+    align-items: center;
+    font-size: 20px;
+}
+.user-box img {
+    height: 100px;
+    width: 100px;
+    border: black 2px solid;
+    margin-right: 10px;
+}
+.user-box .user-name a{
+    font-style: normal;
+    color: white;
+}
+.user-box .user-name a:hover{
+    font-style: italic;
+    color: orangered;
+}
+
+
+
+/*
+主体
+ */
+.main {
+    padding: 40px;
+    border-radius: 0 0 20px 20px;
+}
+
+
+
+
+/*
+返回按钮
+ */
+.back-button-box button{
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    padding: 15px 30px;
+    cursor: pointer;
+    font-size: 20px;
+    text-align: center;
+    margin-top: 800px;
+    position: fixed;
+    left: 10px;
+    bottom: 10px;
+}
+.back-button-box button:hover{
+    background-color: white;
+    color: #007bff;
+    font-style: italic;
+}
+
+/*
+个体商品左边信息 包括图片和购买信息
+ */
+.left-box{
+    margin-left: 250px;
+    float: left;
+    border: black 2px solid;
+    display: flex;
+    flex-direction: column;
+}
+.left-box .img-box img{
+    height: 400px;
+    width: 400px;
+    border: black 2px solid;
+    margin: 10px;
+}
+.left-box .item-name-box, .item-rating-box, .item-price-box, .item-storage-box{
+    font-size: 20px;
+    margin-left: 10px;
+    background-color: lightgrey;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+.left-box button{
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    padding: 15px 30px;
+    cursor: pointer;
+    font-size: 20px;
+    text-align: center;
+}
+.left-box button:hover{
+    background-color: white;
+    color: #007bff;
+    font-style: italic;
+}
+.left-box input{
+    width: 200px;
+    height: 40px;
+    font-size: 20px;
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-bottom: 20px;
+}
+/*
+右侧评论栏
+ */
+.right-box{
+    width: 400px;
+    float: right;
+    margin-right: 250px;
+    border: black 2px solid;
+}
+.right-box .comment-box{
+    margin: 10px;
+}
+.right-box .comment-box div{
+    border: 2px solid blue;
+    margin: 5px;
+    font-size: 20px;
+}
+.right-box .comment-box div:last-child{
+    border: none;
+    margin: 5px;
+    font-size: 20px;
+}
+.right-box .comment-box div div{
+    background-color: lightgrey;
+    border: 2px solid black;
+    margin: 5px;
+}
+.right-box .comment-box button{
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    padding: 15px 30px;
+    cursor: pointer;
+    font-size: 20px;
+    text-align: center;
+    margin-left: 80px;
+}
+.right-box .comment-box button:hover{
+    background-color: white;
+    color: #007bff;
+    font-style: italic;
+}

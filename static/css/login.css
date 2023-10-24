@@ -1,0 +1,79 @@
+/*
+登录界面
+ */
+.login-background-div .phone{
+    margin-top: 50px;
+}
+.login-background-div input{
+    margin : 10px;
+    height: 40px;
+    width: 250px;
+    font-size: 20px;
+}
+.login-background-div .register a{
+    margin-top: 10px;
+    margin-bottom: 20px;
+    margin-left: 10px;
+    font-size: 20px;
+}
+.login-background-div .submit button{
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    padding: 15px 30px;
+    cursor: pointer;
+    font-size: 20px;
+    text-align: center;
+    margin-left: 10px;
+    margin-top: 20px;
+}
+.login-background-div .submit button:hover{
+    background-color: white;
+    color: #007bff;
+    font-style: italic;
+}
+
+/*
+注册页面
+ */
+.register-background-div label{
+    font-size: 20px;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+.user-type{
+    margin-top: 30px;
+    margin-bottom: 10px;
+}
+.phone input{
+    height: 30px;
+    width: 180px;
+    font-size: 20px;
+    margin-bottom: 20px;
+}
+.password input{
+    height: 30px;
+    width: 180px;
+    font-size: 20px;
+    margin-bottom: 20px;
+}
+.register-background-div .submit button{
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    padding: 15px 30px;
+    cursor: pointer;
+    font-size: 18px;
+    text-align: center;
+    margin-left: 20px;
+    margin-top: 20px;
+}
+.register-background-div .submit button:hover{
+    background-color: white;
+    color: #007bff;
+    font-style: italic;
+}
+
+
