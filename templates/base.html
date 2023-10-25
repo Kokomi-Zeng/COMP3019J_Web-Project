@@ -13,7 +13,8 @@ type:当前用户类型，1为买家，0为卖家
     <link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}">
 {#独有css#}
     <link rel="stylesheet" href="{% block css %}{% endblock %}">
-    <script src="https://code.jquery.com/jquery-3.0.0.min.js"></script>
+    <script src="https://code.jquery.com/jquery-latest.js"></script>
+    <script src="/static/js/get_user_image.js"></script>
 {#const#}
     <script>
     let phone;
@@ -22,25 +23,6 @@ type:当前用户类型，1为买家，0为卖家
 
     window.onload = function (){
         get_session();
-    }
-    function get_user_image(){
-        $.ajax({
-            url: "/images/get_image_user",
-            type: "get",
-            contentType: "application/json",
-            dataType: "json",
-            data:{
-                phone: phone,
-            },
-            success: function (data) {
-                const user_img = document.createElement("img");
-
-                user_img.setAttribute("class", "user-img");
-                user_img.setAttribute("src", data.url);
-
-                $(".user-img").append(user_img);
-            }
-        })
     }
 
     function get_session(){
@@ -91,7 +73,9 @@ type:当前用户类型，1为买家，0为卖家
     </div>
 {#用户info#}
     <div class="user-box">
-        <div class="user-img"></div>
+        <div class="user-img">
+            <img class="user-img">
+        </div>
         <div class="user-name"></div>
     </div>
 {#主体#}
