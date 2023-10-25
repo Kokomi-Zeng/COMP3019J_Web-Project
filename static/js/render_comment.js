@@ -8,20 +8,20 @@ function render_comment(data){
 
         $(".comment-box").append(comment_div);
 
-        // const commenter_window = render_commenter_window(comment_div, comment)
-        //
-        // comment_div.onmouseover = function (){
-        //     commenter_window.style.display = "block";
-        // }
-        // comment_div.onmouseout = function (){
-        //     commenter_window.style.display = "none";
-        // }
+        const commenter_window = render_commenter_window(comment_div, comment)
+
+        comment_div.onmouseover = function (){
+            commenter_window.style.display = "block";
+        }
+        comment_div.onmouseout = function (){
+            commenter_window.style.display = "none";
+        }
         
         const commenter_img_div = document.createElement("div");
         const commenter_img = document.createElement("img");
 
         commenter_img_div.setAttribute("class", "commenter-name");
-        commenter_img.setAttribute("src", comment.user_image);
+        commenter_img.setAttribute("src", comment.user_image)
 
         commenter_img_div.append(commenter_img);
         comment_div.append(commenter_img_div);
@@ -30,7 +30,7 @@ function render_comment(data){
         const commenter_name = document.createElement("span");
 
         commenter_name_div.setAttribute("class", "commenter-name");
-        commenter_name.innerText = "name: " + comment.commenter_name;
+        commenter_name.innerText = "name: " + comment.user_name;
 
         commenter_name_div.append(commenter_name);
         comment_div.append(commenter_name_div);
@@ -56,7 +56,7 @@ function render_commenter_window(comment_div, comment) {
     const commenter_img = document.createElement("img");
 
     commenter_img_div.setAttribute("class", "commenter-img-window");
-    commenter_img.setAttribute("src", comment.user_image);
+    commenter_img.setAttribute("src", comment.user_image)
 
     commenter_img_div.append(commenter_img);
     comment_div.append(commenter_img_div);
@@ -65,7 +65,7 @@ function render_commenter_window(comment_div, comment) {
     const commenter_name = document.createElement("span");
 
     commenter_name_div.setAttribute("class", "commenter-name-window");
-    commenter_name.innerText = "name: " + comment.commenter_name;
+    commenter_name.innerText = "name: " + comment.user_name;
 
     commenter_name_div.append(commenter_name);
     comment_div.append(commenter_name_div);

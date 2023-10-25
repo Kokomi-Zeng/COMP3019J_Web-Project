@@ -38,7 +38,7 @@
         button.innerText = "next";
         button.onclick = function () {
             page_num++;
-            generate()
+            get_comment();
         }
         $(".next").append(button);
     }
@@ -68,7 +68,7 @@
         button.innerText = "prev";
         button.onclick = function () {
             page_num--;
-            get_item();
+            get_comment();
         }
         $(".prev").append(button);
     }
@@ -143,12 +143,12 @@
     </script>
 {% endblock %}
 
-{% block search_box %}
-
-{% endblock %}
-
 {% block main %}
-    <div class="comment-box"></div>
+    <div class="comment-box">
+    <div class="comment-top-box">
+        <span>Comments:</span>
+    </div>
+    </div>
     <div class="self-comment-box"></div>
     <div class="prev"></div>
     <div class="next"></div>

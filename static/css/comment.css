@@ -1,0 +1,49 @@
+.comment-box{
+    width: 400px;
+    border: 2px black solid;
+    margin-left: 300px;
+    float: left;
+}
+.comment-box img{
+    width: 50px;
+    height: 50px;
+}
+.comment-box div{
+    margin-top: 10px;
+    margin-left: 20px;
+    margin-bottom: 10px;
+
+}
+.comment-box span{
+    background-color: white;
+    font-size: 20px;
+}
+.self-comment-box{
+    border: 2px black solid;
+    margin-right: 300px;
+    margin-top: 50px;
+    width: 400px;
+    float: right;
+}
+.self-comment-box input{
+    width: 300px;
+    font-size: 18px;
+    height: 40px;
+    margin: 15px;
+}
+.self-comment-box button{
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    padding: 15px 30px;
+    cursor: pointer;
+    font-size: 20px;
+    text-align: center;
+    margin-left: 10px;
+}
+.self-comment-box button:hover{
+    background-color: white;
+    color: #007bff;
+    font-style: italic;
+}

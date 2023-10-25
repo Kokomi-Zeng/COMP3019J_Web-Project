@@ -121,12 +121,10 @@ name:当前用户name
                 charge_num:pay,
             },
             success:function (data){
-                if (data.success==="success"){
+                if (data.success) {
                     get_money();
-                    alert(data.message)
-                }else {
-                    alert(data.message)
                 }
+                alert(data.message)
             }
         })
     }
