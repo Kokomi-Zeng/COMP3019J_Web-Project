@@ -38,7 +38,8 @@ register
             }),
             success:function (data){
                 if(data.success){
-                    window.location.replace("/login");
+                    alert(data.message);
+                    history.back();
                 } else {
                     alert(data.message);
                 }
