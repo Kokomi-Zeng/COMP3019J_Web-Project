@@ -8,7 +8,7 @@ function get_user_image(img){
             phone: phone,
         },
         success: function (data) {
-            img.setAttribute("src", data.url)
+            img.attr("src", data.url)
         }
     })
 }

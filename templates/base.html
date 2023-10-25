@@ -13,7 +13,9 @@ type:当前用户类型，1为买家，0为卖家
     <link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}">
 {#独有css#}
     <link rel="stylesheet" href="{% block css %}{% endblock %}">
+    <link rel="stylesheet" href="/static/css/alert.css">
     <script src="https://code.jquery.com/jquery-latest.js"></script>
+    <script src="/static/js/alert.js"></script>
     <script src="/static/js/get_user_image.js"></script>
 {#const#}
     <script>
@@ -23,6 +25,7 @@ type:当前用户类型，1为买家，0为卖家
     let user_image;
 
     window.onload = function (){
+        {#alert_message("test")#}
 
         user_image = $("#user-image")[0];
         get_session();
@@ -52,11 +55,11 @@ type:当前用户类型，1为买家，0为卖家
                 }
                 user_box.append(a)
                 $(document).trigger("sessionLoaded");
-                get_user_image($("#user-image")[0]);
+                get_user_image($(".user-image"));
             },
             error:function (){
                 $(document).trigger("sessionLoaded");
-                get_user_image($("#user-image")[0]);
+                get_user_image($(".user-image"));
             }
         })
     }
@@ -76,7 +79,7 @@ type:当前用户类型，1为买家，0为卖家
 {#用户info#}
     <div class="user-box">
         <div class="user-img">
-            <img src="" alt="" id="user-image">
+            <img src="" alt="" class="user-image">
         </div>
         <div class="user-name"></div>
     </div>
@@ -84,6 +87,9 @@ type:当前用户类型，1为买家，0为卖家
 </div>
 <div class="main">
     {% block main %}{% endblock %}
+</div>
+<div class="alert">
+    <span id="alert-message"></span>
 </div>
 </body>
 </html>

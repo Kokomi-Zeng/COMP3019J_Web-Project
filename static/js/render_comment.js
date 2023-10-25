@@ -30,7 +30,7 @@ function render_comment(data){
         const commenter_name = document.createElement("span");
 
         commenter_name_div.setAttribute("class", "commenter-name");
-        commenter_name.innerText = "name: " + comment.user_name;
+        commenter_name.innerText = "name: " + comment.commenter_name;
 
         commenter_name_div.append(commenter_name);
         comment_div.append(commenter_name_div);
