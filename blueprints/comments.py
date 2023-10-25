@@ -79,9 +79,11 @@ def comment_basic_info_by_id():
     for comment in combined_comments:
         # 评论人名字
         buyer = Buyer.query.filter_by(phone=comment.commenter_phone).first()
+        user_commenter = User.query.filter_by(phone=comment.commenter_phone).first()
+
         comments_data.append({
             "commenter_name": buyer.name,
-            "user_image": "",
+            "user_image": user_commenter.image_src,
             "content": comment.content,
             "rating": comment.rating,
             "comment_id": comment.comment_id,
@@ -129,11 +131,13 @@ def comment_info_by_id():
     comments_data = []
     for comment in comments:
         buyer = Buyer.query.filter_by(phone=comment.commenter_phone).first()
+        user_commenter = User.query.filter_by(phone=comment.commenter_phone).first()
         comments_data.append({
             "comment_id": comment.comment_id,
             "user_name": buyer.name,
             "content": comment.content,
-            "rating": comment.rating
+            "rating": comment.rating,
+            "user_image": user_commenter.image_src,
         })
 
     return jsonify(comments_data)
