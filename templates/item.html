@@ -79,7 +79,7 @@
             price = document.createElement("span");
             storage = document.createElement("span");
 
-            img.setAttribute("src", data.src);
+            img.setAttribute("src", data.image_src);
             name.innerText = data.name;
             rating.innerText = data.average_rating;
             price.innerText = data.price;
@@ -92,7 +92,9 @@
             price = document.createElement("input");
             storage = document.createElement("input");
 
-            img.setAttribute("src", data.src);
+            img.setAttribute("src", data.image_src);
+
+            name.setAttribute("type", "text")
             name.value = data.name;
 
             rating.setAttribute("type", "text")
@@ -106,7 +108,7 @@
 
         }
 
-        $(".img-box").append(img);name.setAttribute("type", "text")
+        $(".img-box").append(img);
         $(".item-name").append(name);
         $(".item-rating").append(rating);
         $(".item-price").append(price);
