@@ -147,7 +147,7 @@ def buy_item():
     db.session.add(new_purchase)
     db.session.commit()
 
-    return jsonify({"success": True})
+    return jsonify({"success": True, "message": "You buy successful!!!"})
 
 
 # Provide a method for a buyer to know his/her balance

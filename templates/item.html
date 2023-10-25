@@ -22,8 +22,6 @@
         if (type==="1") {
             render_buyer_box();
         }
-
-        render_comment();
     });
 
     function is_item_match_seller(){
@@ -136,12 +134,10 @@
                     quantity: buy_num.value,
                 },
                 success: function (data) {
+                    alert(data.message);
                     if (data.success) {
-                        alert("success")
-                    } else {
-                        alert(data.error)
+                        render_item_data();
                     }
-                    render_item_data()
                 }
             })
         };
