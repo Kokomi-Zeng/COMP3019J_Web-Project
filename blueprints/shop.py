@@ -156,6 +156,7 @@ def calculate_average_rating(product_id):
         total_rating += comment.rating
 
     average_rating = total_rating / len(comments)
+    average_rating = round(average_rating)
     return average_rating
 
 
