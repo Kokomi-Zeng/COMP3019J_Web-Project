@@ -8,14 +8,14 @@ function render_comment(data){
 
         $(".comment-box").append(comment_div);
 
-        // const commenter_window = render_commenter_window(comment_div, comment)
-        //
-        // comment_div.onmouseover = function (){
-        //     commenter_window.style.display = "block";
-        // }
-        // comment_div.onmouseout = function (){
-        //     commenter_window.style.display = "none";
-        // }
+        const commenter_window = render_commenter_window(comment_div, comment)
+
+        comment_div.onmouseover = function (){
+            commenter_window.style.display = "block";
+        }
+        comment_div.onmouseout = function (){
+            commenter_window.style.display = "none";
+        }
         
         const commenter_img_div = document.createElement("div");
         const commenter_img = document.createElement("img");
