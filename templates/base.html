@@ -20,8 +20,11 @@ type:当前用户类型，1为买家，0为卖家
     let phone;
     let type;
     let name;
+    let user_image;
 
     window.onload = function (){
+
+        user_image = $("#user-image")[0];
         get_session();
     }
 
@@ -49,11 +52,11 @@ type:当前用户类型，1为买家，0为卖家
                 }
                 user_box.append(a)
                 $(document).trigger("sessionLoaded");
-                get_user_image(document.getElementById("user-image"));
+                get_user_image($("#user-image")[0]);
             },
             error:function (){
                 $(document).trigger("sessionLoaded");
-                get_user_image(document.getElementById("user-image"));
+                get_user_image($("#user-image")[0]);
             }
         })
     }

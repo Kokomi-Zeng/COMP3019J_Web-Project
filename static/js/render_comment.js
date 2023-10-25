@@ -21,7 +21,7 @@ function render_comment(data){
         const commenter_img = document.createElement("img");
 
         commenter_img_div.setAttribute("class", "commenter-name");
-        get_user_image(commenter_img);
+        commenter_img.setAttribute("src", comment.user_image)
 
         commenter_img_div.append(commenter_img);
         comment_div.append(commenter_img_div);
@@ -56,7 +56,7 @@ function render_commenter_window(comment_div, comment) {
     const commenter_img = document.createElement("img");
 
     commenter_img_div.setAttribute("class", "commenter-img-window");
-    get_user_image(commenter_img)
+    commenter_img.setAttribute("src", comment.user_image)
 
     commenter_img_div.append(commenter_img);
     comment_div.append(commenter_img_div);
