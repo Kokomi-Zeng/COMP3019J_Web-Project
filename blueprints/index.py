@@ -25,7 +25,7 @@ def getSellerInfo():
     user_info = get_user_info()
     return render_template('sellerInfo.html', **user_info)
 
-
+@bp.route('/shop/')
 @bp.route('/shop')
 @bp.route('/')
 def getShopPage():

@@ -82,7 +82,7 @@ def comment_basic_info_by_id():
         user_commenter = User.query.filter_by(phone=comment.commenter_phone).first()
 
         comments_data.append({
-            "commenter_name": buyer.name,
+            "user_name": buyer.name,
             "user_image": user_commenter.image_src,
             "content": comment.content,
             "rating": comment.rating,
