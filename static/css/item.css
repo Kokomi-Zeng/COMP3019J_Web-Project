@@ -1,4 +1,6 @@
-/* 公共样式 */
+/*
+    The following code is the CSS for the item page (item.html).
+ */
 .comment-box,
 .left-box {
     border: 2px solid black;
@@ -11,34 +13,37 @@
     height: 500px;
 }
 
-/* 用户自评论容器 */
 .left-box {
-    flex: 3; /* 与.comment-box的比例为3:7 */
+    flex: 3;
     display: flex;
     flex-direction: column;
-    justify-content: center; /* 垂直居中 */
+    /* set the element inside the box align to center */
+    justify-content: center;
 }
 
 .buy-box{
     display: flex;
     flex-direction: column;
-    justify-content: center; /* 垂直居中 */
+    /* set the element inside the box align to center */
+    justify-content: center;
 }
 
-/* 评论容器 */
 .comment-box {
-    flex: 7; /* 与.self-comment-box的比例为7:3 */
+    /* The comment box takes up 7/10 of the space */
+    flex: 7;
     position: relative;
-    overflow-y: auto; /* 超出部分y方向滚动 */
+    /* Scrollable in the y direction when the content is too long */
+    overflow-y: auto;
 }
 
 .comment-text{
     display: flex;
     flex-direction: column;
-    justify-content: center; /* 垂直居中 */
+    /* set the element inside the box align to center */
+    justify-content: center;
 }
 
-/* 评论窗口（默认隐藏） */
+/* The comment window (default hidden) */
 .commenter-window {
     display: none;
     position: absolute;
@@ -49,15 +54,16 @@
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
-/* 评论和用户评论中的图片样式 */
+/* The image in the comment box and self-common box */
 .comment-box img,
 .left-box img {
     width: 50px;
     height: 50px;
-    border-radius: 50%; /* 圆形图片 */
+    /* set as circle image */
+    border-radius: 50%;
 }
 
-/* 评论和用户评论中的div容器样式 */
+/* The pattern of the div of the comment box and self-comment box is the same */
 .comment-box div,
 .left-box div {
     margin: 0.5rem 1rem;
@@ -66,7 +72,7 @@
     border-radius: 8px;
 }
 
-/* 评论和用户评论中的span标签样式 */
+/* The pattern of the span of the comment box and self-comment box is the same */
 .comment-box span,
 .left-box span {
     display: block;
@@ -75,19 +81,20 @@
     padding: 0.5rem;
     border-radius: 5px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    word-wrap: break-word; /* 自动换行 */
+    /* automatically wrap the text */
+    word-wrap: break-word;
     overflow-wrap: break-word;
 }
 
-/* 用户评论中的输入框和文本区域样式 */
+/* The input box and text area style in the user comment */
 .left-box .img-box,
 .left-box .message-box
 .left-box .buy-box{
     display: flex;
     justify-content: center;
-    align-items: center; /* 使内容水平和垂直居中 */
+    /* center the content on the main axis */
+    align-items: center;
 }
-
 
 .left-box input {
     font-size: 1.125rem;
@@ -96,7 +103,7 @@
     height: 2rem;
 }
 
-/* 用户评论中的按钮样式 */
+/* The button style in the user comment and left-box */
 .left-box button,
 .comment-box button
 {
@@ -105,13 +112,15 @@
     border: none;
     border-radius: 10px;
     padding: 0.75rem 1.5rem;
-    cursor: pointer; /* 手型指针 */
+    /* set the cursor to pointer */
+    cursor: pointer;
     font-size: 1.25rem;
     text-align: center;
-    transition: background-color 0.3s, color 0.3s; /* 过渡效果 */
+    /* set transition effect */
+    transition: background-color 0.3s, color 0.3s;
 }
 
-/* 用户评论中的按钮鼠标悬停效果 */
+/* Set the hover effect of the button in the user comment */
 .left-box button:hover,
 .comment-box button:hover
 {
