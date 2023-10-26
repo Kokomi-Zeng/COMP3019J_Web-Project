@@ -1,13 +1,17 @@
+/*
+    This file contains the basic style of the personInfo page of the website
+ */
 .nav-bar {
     display: flex;
-    /*justify-content: center;*/
     align-items: center;
-    flex-direction: row;  /* 使元素在nav-bar中垂直排列 */
+    /* make each element in side nav-bar take up the same space */
+    flex-direction: row;
     /* Added transition for smooth changes */
     transition: all 0.3s ease-in-out;
 }
 
 .main{
+    /* set the display mode to flex */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -18,13 +22,12 @@
     background-color: #007bff;
     color: #fff;
     border: none;
-    /* Increased border radius for a smoother look */
-    border-radius: 15px; /* Modified */
-    padding: 1rem 2rem; /* Modified to relative units */
+    border-radius: 15px;
+    padding: 1rem 2rem;
     cursor: pointer;
-    font-size: 1.1rem; /* Modified to relative units */
+    font-size: 1.1rem;
     text-align: center;
-    margin: 1rem 1rem 2rem; /* Modified to relative units */
+    margin: 1rem 1rem 2rem;
     /* Added transition for smooth hover effect */
     transition: all 0.3s ease-in-out;
 }
@@ -37,13 +40,13 @@
 
 .back-button-box button {
     margin-top: 20px;
-    /* Increased border radius for a smoother look */
-    border-radius: 15px; /* Added */
+    /* set round corner for the button */
+    border-radius: 15px;
 }
 
 .container div {
-    font-size: 1.1rem; /* Modified to relative units */
-    margin: 1rem 0; /* Modified to relative units */
+    font-size: 1.1rem;
+    margin: 1rem 0;
 }
 
 .container input {
@@ -59,10 +62,12 @@
     border: none;
     border-radius: 10px;
     padding: 0.75rem 1.5rem;
-    cursor: pointer; /* 手型指针 */
+    /* set the cursor to pointer */
+    cursor: pointer;
     font-size: 1.25rem;
     text-align: center;
-    transition: background-color 0.3s, color 0.3s; /* 过渡效果 */
+    /* set transition effect */
+    transition: background-color 0.3s, color 0.3s;
 }
 
 .container button:hover {
