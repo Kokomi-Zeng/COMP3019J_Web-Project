@@ -147,8 +147,7 @@ name:当前用户name
         submit_button.innerText = "Confirm";
         submit_button.onclick = function (){
             const formdata = new FormData(img_form);
-            console.log(formdata_img)
-            {#add_item(name_input.value, price_input.value, storage_input.value, description_input.value, formdata_img)#}
+            add_item(name_input.value, price_input.value, storage_input.value, description_input.value, formdata)
         }
         submit_div.append(submit_button);
         msg_form.append(submit_div);
@@ -169,9 +168,9 @@ name:当前用户name
             },
             success:function (data){
                 if (data.success){
-                    upload_item_img(formdata, data.product_id)
-                    render_add();
+                    upload_item_img(formdata, data.product_id);
                     alert(data.message);
+                    render_add();
                 }else {
                     alert(data.message);
                 }
