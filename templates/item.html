@@ -10,41 +10,28 @@
 
 {% block script %}
     <script src="/static/js/render_comment.js"></script>
+    <script src="/static/js/is_item_match_seller.js"></script>
     <script>
 
     let belong;
 
     $(document).on("sessionLoaded", function () {
-{#        判断belong关系#}
-        is_item_match_seller()
 
-        get_item_data();
+        is_item_match_seller("{{ product_id }}")
+        $(document).on("belongLoaded", function () {
 
-        get_comment();
+            get_item_data();
 
-        {#buyer#}
-        if (type==="1") {
-            render_buyer_box();
-        }else if (type==="0"){
-            render_modify_button();
-        }
-    });
+            get_comment();
 
-    function is_item_match_seller(){
-        $.ajax({
-            url:"/shop/isItemMatchSeller",
-            type: "get",
-            contentType: "application/json",
-            dataType: "json",
-            data:{
-                product_id:"{{ product_id }}",
-                phone: phone
-            },
-            success:function (data){
-                belong = data.belong;
+            {#buyer#}
+            if (type === "1") {
+                render_buyer_box();
+            } else if (type === "0") {
+                render_modify_button();
             }
         })
-    }
+    });
 
     function get_item_data(){
 
@@ -171,16 +158,16 @@
         })
     }
 
-    function render_more_comment_button(){
+    function render_more_comment_button() {
         const more_comment_button_div = document.createElement("div");
         const more_comment_button = document.createElement("button");
 
         more_comment_button_div.setAttribute("class", "comment-text");
         more_comment_button.innerText = "More Comment";
-        more_comment_button.onclick = function (){
-            if (type==="1" || type==="0") {
-                window.location.href = "/comment?product_id="+"{{ product_id }}";
-            }else {
+        more_comment_button.onclick = function () {
+            if (type === "1" || type === "0") {
+                window.location.href = "/comment?product_id=" + "{{ product_id }}";
+            } else {
                 window.location.href = "/login";
             }
         }

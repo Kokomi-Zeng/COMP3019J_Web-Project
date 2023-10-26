@@ -6,14 +6,23 @@
 
 {% block script %}
     <script src="/static/js/render_comment.js"></script>
+    <script src="/static/js/is_item_match_seller.js"></script>
     <script>
     let page_num = 1;
+    let belong;
 
     $(document).on("sessionLoaded", function() {
-        get_comment();
-        render_self_comment_box();
-        get_prev_page();
-        get_next_page();
+        is_item_match_seller("{{ product_id }}")
+        $(document).on("belongLoaded", function () {
+            get_comment();
+            get_prev_page();
+            get_next_page();
+
+            console.log(belong)
+            if (!belong) {
+                render_self_comment_box();
+            }
+        })
     })
 
     function get_comment(){
@@ -80,8 +89,10 @@
     }
 
     function render_self_comment_box() {
-        const self_comment_box = $(".self-comment-box");
-        self_comment_box.empty();
+        const self_comment_box = document.createElement("div");
+        self_comment_box.setAttribute("class", "self-comment-box")
+
+        $(".main").append(self_comment_box);
 
         const self_rating_div = document.createElement("div");
         const self_rating = document.createElement("input");
@@ -145,11 +156,7 @@
 
 {% block main %}
     <div class="comment-box">
-    <div class="comment-top-box">
-        <span>Comments:</span>
     </div>
-    </div>
-    <div class="self-comment-box"></div>
     <div class="prev"></div>
     <div class="next"></div>
 {% endblock %}
