@@ -110,8 +110,12 @@
     }
 
     function render_buyer_box() {
+        console.log(333)
         const buy_box = document.createElement("div");
+
         buy_box.setAttribute("class", "buy-box")
+
+        $(".left-box").append(buy_box);
         
         const buy_num = document.createElement("input");
         buy_num.setAttribute("type", "num");
