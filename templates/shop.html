@@ -98,6 +98,7 @@
             const item_button = document.createElement("button");
 
             item_box.setAttribute("class", "item");
+            item_button.setAttribute("class", "item-button")
             item_button.onclick = function (){
                 window.location.href = "/item?product_id="+ item.product_id;
             }
@@ -119,7 +120,7 @@
             img_box.setAttribute("class", "price-box");
             price.innerText = item.price;
 
-            item_button.append(price_box);
+            item_box.append(price_box);
             price_box.append(price);
 
             const name_box = document.createElement("div");
@@ -128,7 +129,7 @@
             img_box.setAttribute("class", "name-box");
             name.innerText = item.product_name;
 
-            item_button.append(name_box);
+            item_box.append(name_box);
             name_box.append(name);
 
             const rating_box = document.createElement("div");
@@ -137,7 +138,7 @@
             img_box.setAttribute("class", "rating-box");
             rating.innerText = item.rating;
 
-            item_button.append(rating_box);
+            item_box.append(rating_box);
             rating_box.append(rating);
 
         }
