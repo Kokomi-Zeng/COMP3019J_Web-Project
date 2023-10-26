@@ -1,43 +1,44 @@
-/*main {*/
-/*    display: flex;*/
-/*    flex-direction: column;*/
-/*    align-items: center;*/
-/*    justify-content: center;*/
-/*    margin-top: 2rem;*/
-/*}*/
-
 /* 公共样式 */
-.left-box,
-.right-box {
+.comment-box,
+.left-box {
     border: 2px solid black;
     border-radius: 10px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     background-color: #f2f2f2;
     padding: 1rem;
-    margin-left: 5%;
-    margin-right: 5%;
-    height: 700px;
-    /*height: auto;*/
+    margin-left: 3%;
+    margin-right: 3%;
+    height: 500px;
 }
 
-
+/* 用户自评论容器 */
 .left-box {
-    flex: 5; /* 与.comment-box的比例为3:7 */
+    flex: 3; /* 与.comment-box的比例为3:7 */
     display: flex;
     flex-direction: column;
-    align-items: center; /* 水平居中 */
     justify-content: center; /* 垂直居中 */
-
 }
 
+.buy-box{
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* 垂直居中 */
+}
 
-.right-box {
-    flex: 5; /* 与.self-comment-box的比例为7:3 */
+/* 评论容器 */
+.comment-box {
+    flex: 7; /* 与.self-comment-box的比例为7:3 */
     position: relative;
     overflow-y: auto; /* 超出部分y方向滚动 */
 }
 
+.comment-text{
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* 垂直居中 */
+}
 
+/* 评论窗口（默认隐藏） */
 .commenter-window {
     display: none;
     position: absolute;
@@ -48,71 +49,56 @@
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
-
-
-.right-box img {
+/* 评论和用户评论中的图片样式 */
+.comment-box img,
+.left-box img {
     width: 50px;
     height: 50px;
     border-radius: 50%; /* 圆形图片 */
 }
 
-.left-box img{
-
-    width: 120px;
-    height: 120px;
-    border-radius: 50%; /* 圆形图片 */
-}
-
-.img-box,
-.message-box,
-.operation-box {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    width: 200px;
-}
-
-/*??????*/
-.comment-box {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-}
-
-
-.left-box div,
-.right-box div {
+/* 评论和用户评论中的div容器样式 */
+.comment-box div,
+.left-box div {
     margin: 0.5rem 1rem;
     background-color: #e6e6e6;
     padding: 0.5rem;
     border-radius: 8px;
 }
 
-
-.left-box span,
-.right-box span {
+/* 评论和用户评论中的span标签样式 */
+.comment-box span,
+.left-box span {
     display: block;
     background-color: white;
     font-size: 1.25rem;
     padding: 0.5rem;
     border-radius: 5px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    word-wrap: break-word; /* 自动换行 */
+    overflow-wrap: break-word;
+}
+
+/* 用户评论中的输入框和文本区域样式 */
+.left-box .img-box,
+.left-box .message-box
+.left-box .buy-box{
+    display: flex;
+    justify-content: center;
+    align-items: center; /* 使内容水平和垂直居中 */
 }
 
 
 .left-box input {
-    width: 90%;
     font-size: 1.125rem;
     margin: 1rem 0;
     border-radius: 5px;
     height: 2rem;
 }
 
-
+/* 用户评论中的按钮样式 */
 .left-box button,
-.right-box button
+.comment-box button
 {
     background-color: #007bff;
     color: #fff;
@@ -125,9 +111,10 @@
     transition: background-color 0.3s, color 0.3s; /* 过渡效果 */
 }
 
-
+/* 用户评论中的按钮鼠标悬停效果 */
 .left-box button:hover,
-.right-box button:hover{
+.comment-box button:hover
+{
     background-color: white;
     color: #007bff;
     font-style: italic;

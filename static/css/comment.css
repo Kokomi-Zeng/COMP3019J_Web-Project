@@ -23,7 +23,7 @@
 .comment-box {
     flex: 7; /* 与.self-comment-box的比例为7:3 */
     position: relative;
-    height: 500px;
+    height: 450px;
     overflow-y: auto; /* 超出部分y方向滚动 */
 }
 
