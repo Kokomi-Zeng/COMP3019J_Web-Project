@@ -1,9 +1,14 @@
-/* 登录界面 */
+/*
+    The following CSS code is the style of the login page.
+ */
+
+/* set the background div pattern of the login page */
 .login-background-div {
     margin: 0 auto;
-    display: flex;           /* 设置为flex容器 */
-    align-items: center;     /* 垂直居中 */
-    flex-direction: column;  /* 子元素垂直排列 */
+    display: flex;
+    /* vertical arrange the element inside the box */
+    align-items: center;
+    flex-direction: column;
 }
 
 .login-background-div .phone {
@@ -16,8 +21,9 @@
     width: 250px;
     font-size: 20px;
     border-radius: 10px;
+    /* set the background color of the input box */
     background: linear-gradient(to right, #f2f2f2, #e6e6e6);
-    border: black 2px solid; /* 统一黑色边框 */
+    border: black 2px solid;
 }
 
 .login-background-div .register a {
@@ -26,6 +32,7 @@
     margin-left: 10px;
     font-size: 20px;
     color: #007bff;
+    /* set the transition effect of the color */
     transition: color 0.3s ease;
 }
 
@@ -44,7 +51,10 @@
     text-align: center;
     margin-left: 10px;
     margin-top: 20px;
+    /* set the background color of the button */
     background: linear-gradient(to right, #007bff, #0056b3);
+
+    /* set the transition effect of the color */
     transition: background-color 0.3s ease, color 0.3s ease;
 }
 

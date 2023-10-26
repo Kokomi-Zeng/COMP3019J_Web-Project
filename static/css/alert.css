@@ -1,7 +1,12 @@
+/*
+    This file contains the css for the alert message
+*/
 .alert{
     display: none;
     width: 600px;
     height: 200px;
+
+    /* set the position to fixed so that the alert message will not be affected by the scrolling */
     position: fixed;
     background: white;
     margin: auto;

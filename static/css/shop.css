@@ -1,15 +1,21 @@
 /*
-每个商品的框框
+    The following CSS code is the style of the shop page.
+ */
+
+
+/*
+    The frame of each item (product).
  */
 .item-box {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
 }
+
 .item {
+    /* set the width of each item */
     flex-basis: calc(45%);
     margin-bottom: 20px;
-    /*border: 5px solid #ccc;*/
     border-radius: 10px;
     padding: 10px;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
@@ -22,14 +28,16 @@
     cursor: pointer;
 }
 .item div{
-    /*border: black 2px solid;*/
     margin-top: 20px;
     margin-bottom: 20px;
     border-radius: 10px;
-    background: linear-gradient(to right, #f2f2f2, #e6e6e6);
+    background-color: lightgrey;
     font-size: 20px;
 }
 
+/*
+    set the first child of the item div (a image ) as the background of the item div
+ */
 .item div:first-child{
     border: none;
     margin-top: 20px;
@@ -44,9 +52,8 @@
     border: 5px;
 }
 
-
 /*
-查看下一页商品
+    view next page button
  */
 .next button{
     background-color: #007bff;
@@ -61,6 +68,7 @@
     position: fixed;
     left: 10px;
     bottom: 10px;
+    /* set transition effect */
     transition: background-color 0.3s ease, color 0.3s ease;
 }
 .next button:hover{
@@ -70,7 +78,7 @@
 }
 
 /*
-查看上一页商品
+    view previous page button
  */
 .prev button{
     background-color: #007bff;
@@ -85,6 +93,7 @@
     position: fixed;
     right: 10px;
     bottom: 10px;
+    /* set transition effect */
     transition: background-color 0.3s ease, color 0.3s ease;
 }
 .prev button:hover{

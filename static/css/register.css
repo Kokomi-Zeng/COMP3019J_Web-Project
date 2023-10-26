@@ -1,25 +1,27 @@
-/* 注册页面 */
+/*
+    The following CSS code is the style of the register page.
+ */
 .register-background-div {
     margin: 0 auto;
     display: flex;
-    flex-direction: column; /* 垂直排列子元素 */
-    align-items: center;    /* 水平居中子元素 */
+    /* vertical arrange the element inside the box */
+    flex-direction: column;
+    align-items: center;
 }
 
-/* 设置所有子div（如user-type、phone、password、submit）为flex容器 */
+/* set all sub-divs (such as user-type, phone, password, submit) as flex containers */
 .register-background-div > div {
     display: flex;
-    flex-direction: row;    /* 横向排列子元素 */
-    align-items: center;    /* 垂直居中子元素 */
-    width: 100%;            /* 设置为最大宽度 */
-    justify-content: center; /* 水平居中内容 */
-    margin-bottom: 20px;    /* 统一设置间距 */
+    /* horizontal arrange the element inside the box */
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+    justify-content: center;
+    /* uniform margin */
+    margin-bottom: 20px;
 }
 
-
-
-
-/* 设置标签、输入框和按钮的统一宽度 */
+/* set the uniform width of label, input and button */
 .register-background-div label,
 .register-background-div input,
 .register-background-div button {
@@ -28,7 +30,7 @@
     margin-right: 10px;
 }
 
-/* input和button的不同的样式 */
+/* set the same style of input and button */
 .phone input,
 .password input {
     margin: 10px;
@@ -50,6 +52,7 @@
     text-align: center;
     margin-left: 10px;
     margin-top: 20px;
+    /* set the background color of the button */
     background: linear-gradient(to right, #007bff, #0056b3);
     transition: background-color 0.3s ease, color 0.3s ease;
 }
