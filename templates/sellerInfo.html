@@ -58,16 +58,16 @@ name:当前用户name
         img_div.setAttribute("class", "info-div");
         img_div.setAttribute("id", "img-div");
         img_show.setAttribute("id", "show-img");
+        img_show.onchange = function (){
+            let reader = new FileReader();
+            reader.onload = function (ev){
+                img_show.setAttribute("src", ev.target.result);
+            }
+        }
         img_input.setAttribute("type", "file");
         img_input.setAttribute("id", "file");
         img_input.setAttribute("name", "image");
         img_input.setAttribute("accept", "image/*");
-        img_input.onchange = function (){
-            const formdata = new FormData(img_form);
-            {#formdata.append("product_id", product_id);#}
-            upload_item_img(formdata, img_show);
-        }
-
         img_div.append(img_input);
         container.append(img_div);
 
@@ -128,25 +128,27 @@ name:当前用户name
 
         submit_button.innerText = "Confirm";
         submit_button.onclick = function (){
-            add_item(price_input.value, storage_input.value, item_name_input.value, introduction_input.value)
+            const formdata = new FormData();
+            const formdata_img = new FormData(img_form)
+            formdata.append("phone", phone);
+            formdata.append("price", price_input.value);
+            formdata.append("storage", storage_input.value);
+            formdata.append("introduction", introduction_input.value);
+            formdata.append("name", item_name_input.value);
+            add_item(formdata, formdata_img, img_show)
         }
         submit_div.append(submit_button);
         container.append(submit_div);
     }
 
-    function add_item(price, storage, name, introduction){
+    function add_item(formdata, formdata_img, show_img){
         $.ajax({
-            url:'/seller/addItem',
+            url:'/products/addItem',
             type:'get',
-            data:{
-                phone:phone,
-                price:price,
-                storage:storage,
-                item_name:name,
-                introduction:introduction,
-            },
+            data:formdata,
             success:function (data){
                 if (data.success){
+                    upload_item_img(formdata_img, show_img)
                     render_add();
                     alert(data.message);
                 }else {
@@ -165,11 +167,13 @@ name:当前用户name
             dataType:"json",
             processData:false,
             contentType:false,
-            success:function (data){if (data.success) {
-                show_img.setAttribute("src", data.image_src)
-            }else {
-                alert(data.message)
-            }
+            success:function (data){
+                if (data.success) {
+
+                    alert(data.message)
+                }else {
+                    alert(data.message)
+                }
             }
         })
     }
