@@ -1,3 +1,9 @@
+{#
+    This HTML file is page for user to login.
+    It has such funtions:
+    1. login
+#}
+
 {% extends "base_begin.html" %}
 
 {% block title %}
@@ -8,15 +14,11 @@ login
 
 {% block script %}
     <script>
-    
-    $(document).on("sessionLoaded", function() {
-        $(".back-button-box").empty()
 
-        $("#submit").click(function (){
-            login();
-        });
-    });
-
+    {#
+    check for login
+    execute this function when user attmpt to login
+    #}
     function login(){
         $.ajax({
             url:"/authorize/login",
@@ -29,8 +31,12 @@ login
             dataType: "json",
             success:function (response){
                 if(response.success){
+
+                    {#success login: render previous page#}
                     window.location.href = document.referrer
                 } else {
+
+                    {#fail to login: alert error message#}
                     alert(response.message);
                 }
             }
@@ -53,7 +59,7 @@ login
         <a href="/register">Click here to register</a>
     </div>
 
-    <div class="submit">
+    <div class="submit" onclick="login()">
         <button type="button" id="submit">LOGIN</button>
 
     </div>
