@@ -82,7 +82,7 @@ def comment_basic_info_by_id():
         user_commenter = User.query.filter_by(phone=comment.commenter_phone).first()
 
         comments_data.append({
-            "user_name": buyer.name,
+            "commenter_name": buyer.name,
             "user_image": user_commenter.image_src,
             "content": comment.content,
             "rating": comment.rating,
@@ -134,7 +134,7 @@ def comment_info_by_id():
         user_commenter = User.query.filter_by(phone=comment.commenter_phone).first()
         comments_data.append({
             "comment_id": comment.comment_id,
-            "user_name": buyer.name,
+            "commenter_name": buyer.name,
             "content": comment.content,
             "rating": comment.rating,
             "user_image": user_commenter.image_src,

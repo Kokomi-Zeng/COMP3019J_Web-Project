@@ -51,12 +51,20 @@ function render_comment(data){
 
 
         comment_div.append(commenter_img_div);
+        const commenter_rating_div = document.createElement("div");
+        const commenter_rating = document.createElement("span");
+
+        commenter_rating_div.setAttribute("class", "commenter-name");
+        commenter_rating.innerText = "name: " + comment.rating;
+
+        commenter_rating_div.append(commenter_rating);
+        comment_div.append(commenter_rating_div);
 
         const commenter_name_div = document.createElement("div");
         const commenter_name = document.createElement("span");
 
         commenter_name_div.setAttribute("class", "commenter-name");
-        commenter_name.innerText = "name: " + comment.user_name;
+        commenter_name.innerText = "name: " + comment.commenter_name;
 
         commenter_name_div.append(commenter_name);
         comment_div.append(commenter_name_div);
