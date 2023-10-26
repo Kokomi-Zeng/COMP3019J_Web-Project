@@ -1,11 +1,50 @@
-.left-box{
-    width: 600px;
-    height: 600px;
+.left-box {
+    flex: 2; /* left-box比right-box宽 */
+    height: 70vh; /* 使用视口高度单位，保证响应性 */
     border: 2px black solid;
+    position: relative;
+    background: linear-gradient(to bottom, #FFFFFF, #E0E0E0);
+    border-radius: 10px;
+    box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.1);
+    box-sizing: border-box;
+    overflow: hidden;
 }
-.right-box{
-    width: 300px;
-    height: 500px;
+
+.left-box img {
+    width: 100%; /* 图片宽度与父元素left-box相同 */
+    height: 100%; /* 图片高度与父元素left-box相同 */
+    object-fit: cover; /* 图片将尽可能大，同时保持其宽高比，并将多余部分裁剪掉 */
+    position: absolute; /* 绝对定位使图片充满整个left-box */
+    top: 0;
+    left: 0;
+}
+
+.right-box {
+    flex: 1; /* right-box宽度是left-box的一半 */
+    height: 70vh; /* 使用视口高度单位，保证响应性 */
     border: 2px black solid;
-    background-color: lightgrey;
+    background: linear-gradient(to bottom, #E0E0E0, #B0B0B0);
+    border-radius: 10px;
+    box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.2);
+    box-sizing: border-box;
+    overflow: hidden;
+    padding: 2%;
+
+    display: flex;           /* 设置为flex容器 */
+    justify-content: center; /* 水平居中 */
+    align-items: center;     /* 垂直居中 */
+    flex-direction: column;  /* 子元素垂直排列 */
+}
+
+.back-button-box .back-button {
+    background: linear-gradient(to bottom, #007BFF, #0056B3);
+    border-radius: 10px;
+    padding: 10px 20px; /* 按钮的padding */
+    transition: transform 0.2s, box-shadow 0.2s, background-color 0.2s; /* 增加背景颜色的过渡 */
+}
+
+.back-button-box .back-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+    background-color: #0056B3; /* 深蓝色作为hover效果 */
 }

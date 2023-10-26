@@ -1,5 +1,6 @@
 function render_comment(data){
     for (let i = 0; i < data.length; i++) {
+        let timeoutId;
         const comment = data[i];
 
         const comment_div = document.createElement("div");
@@ -10,27 +11,52 @@ function render_comment(data){
 
         const commenter_window = render_commenter_window(comment_div, comment)
 
-        comment_div.onmouseover = function (){
-            commenter_window.style.display = "block";
-        }
-        comment_div.onmouseout = function (){
-            commenter_window.style.display = "none";
-        }
+        // commenter_img_div.onmouseover = function (){
+        //      commenter_window.style.display = "block";
+        // }
+        // commenter_img_div.onmouseout = function (){
+        //      commenter_window.style.display = "none";
+        // }
+
+        comment_div.append(commenter_window);
         
         const commenter_img_div = document.createElement("div");
         const commenter_img = document.createElement("img");
 
-        commenter_img_div.setAttribute("class", "commenter-name");
+        commenter_img_div.setAttribute("class", "commenter-img");
         commenter_img.setAttribute("src", comment.user_image)
 
         commenter_img_div.append(commenter_img);
+
+        commenter_img.onmouseover = function() {
+            clearTimeout(timeoutId);  // 清除之前的延时
+            commenter_window.style.display = "block";
+        }
+
+        commenter_img.onmouseout = function() {
+            timeoutId = setTimeout(function() {
+                commenter_window.style.display = "none";
+            }, 100);  // 延时500毫秒后隐藏
+        }
+
+        commenter_window.onmouseover = function() {
+            clearTimeout(timeoutId);  // 如果鼠标移到悬浮窗上，就清除隐藏的延时
+        }
+
+        commenter_window.onmouseout = function() {
+            timeoutId = setTimeout(function() {
+                commenter_window.style.display = "none";
+            }, 100);  // 延时500毫秒后隐藏
+        }
+
+
         comment_div.append(commenter_img_div);
 
         const commenter_name_div = document.createElement("div");
         const commenter_name = document.createElement("span");
 
         commenter_name_div.setAttribute("class", "commenter-name");
-        commenter_name.innerText = "name: " + comment.commenter_name;
+        commenter_name.innerText = "name: " + comment.user_name;
 
         commenter_name_div.append(commenter_name);
         comment_div.append(commenter_name_div);
@@ -59,7 +85,7 @@ function render_commenter_window(comment_div, comment) {
     commenter_img.setAttribute("src", comment.user_image)
 
     commenter_img_div.append(commenter_img);
-    comment_div.append(commenter_img_div);
+    commenter_window.append(commenter_img_div);
 
     const commenter_name_div = document.createElement("div");
     const commenter_name = document.createElement("span");
@@ -68,16 +94,19 @@ function render_commenter_window(comment_div, comment) {
     commenter_name.innerText = "name: " + comment.user_name;
 
     commenter_name_div.append(commenter_name);
-    comment_div.append(commenter_name_div);
+    commenter_window.append(commenter_name_div);
 
     const commenter_introduction_div = document.createElement("div");
     const commenter_introduction = document.createElement("span");
 
-    commenter_introduction_div.setAttribute("class", "commenter-name");
+    commenter_introduction_div.setAttribute("class", "commenter-introduction-window");
     commenter_introduction.innerText = "introduction: " +  get_introduction(comment.comment_id);
 
     commenter_introduction_div.append(commenter_introduction);
-    comment_div.append(commenter_introduction_div);
+    commenter_window.append(commenter_introduction_div);
+
+
+
 
     return commenter_window;
 }

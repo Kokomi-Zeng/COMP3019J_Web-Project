@@ -59,6 +59,11 @@
     cursor: pointer;
     font-size: 20px;
     text-align: center;
+    margin-top: 800px;
+    position: fixed;
+    left: 10px;
+    bottom: 10px;
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 .next button:hover{
     background-color: white;
@@ -78,6 +83,11 @@
     cursor: pointer;
     font-size: 20px;
     text-align: center;
+    margin-top: 800px;
+    position: fixed;
+    right: 10px;
+    bottom: 10px;
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 .prev button:hover{
     background-color: white;
