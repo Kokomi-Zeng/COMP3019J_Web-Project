@@ -34,12 +34,8 @@
     margin-bottom: 20px;
     background-color: white;
 }
-.item div:hover{
-    background-color: darkgrey;
-}
-.item div:first-child:hover{
-    background-color: white;
-}
+
+
 .item img {
     width: 400px;
     height: 400px;

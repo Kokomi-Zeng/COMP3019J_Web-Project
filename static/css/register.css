@@ -1,6 +1,6 @@
 /* 注册页面 */
 .register-background-div {
-    /* 使用Flexbox进行布局 */
+    margin: 0 auto;
     display: flex;
     flex-direction: column; /* 垂直排列子元素 */
     align-items: center;    /* 水平居中子元素 */
@@ -16,11 +16,13 @@
     margin-bottom: 20px;    /* 统一设置间距 */
 }
 
+
+
+
 /* 设置标签、输入框和按钮的统一宽度 */
 .register-background-div label,
 .register-background-div input,
 .register-background-div button {
-    width: 180px;
     font-size: 20px;
     margin-left: 10px;
     margin-right: 10px;
@@ -29,8 +31,13 @@
 /* input和button的不同的样式 */
 .phone input,
 .password input {
-    height: 30px;
-    margin-bottom: 20px;
+    margin: 10px;
+    height: 40px;
+    width: 250px;
+    font-size: 20px;
+    border-radius: 10px;
+    background: linear-gradient(to right, #f2f2f2, #e6e6e6);
+    border: black 2px solid;
 }
 
 .register-background-div .submit button {

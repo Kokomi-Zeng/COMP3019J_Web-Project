@@ -23,7 +23,10 @@
     flex: 1; /* right-box宽度是left-box的一半 */
     height: 70vh; /* 使用视口高度单位，保证响应性 */
     border: 2px black solid;
-    background: linear-gradient(to bottom, #E0E0E0, #B0B0B0);
+
+    background-color: #e0ffff;
+    background-image: linear-gradient(90deg, #e0ffff 0%, #ffffff 100%);
+
     border-radius: 10px;
     box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.2);
     box-sizing: border-box;
