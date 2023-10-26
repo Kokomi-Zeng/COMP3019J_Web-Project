@@ -10,21 +10,6 @@ register
     <script>
     let user_type;
 
-    $(document).on("sessionLoaded", function() {
-
-        $("#buyer").click(function (){
-            console.log(this.value);
-            user_type = this.value;
-        });
-        $("#seller").click(function (){
-            console.log(this.value);
-            user_type = this.value;
-        });
-        $("#submit").click(function () {
-            register();
-        })
-    })
-
     function register(){
         $.ajax({
             url:"/authorize/register",
@@ -53,10 +38,10 @@ register
 <div class="register-background-div">
     <div class="user-type">
         <label>buyer
-        <input type="radio" name="type" class="user-type" value="1" id="buyer">
+        <input type="radio" name="type" class="user-type" value="1" id="buyer" onclick="user_type='1'">
         </label>
         <label>seller
-        <input type="radio" name="type" class="user-type" value="0" id="seller">
+        <input type="radio" name="type" class="user-type" value="0" id="seller" onclick="user_type='0'">
             </label>
     </div>
 
@@ -71,7 +56,7 @@ register
     </div>
 
     <div class="submit">
-        <button id="submit">REGISTER</button>
+        <button id="submit" onclick="register()">REGISTER</button>
     </div>
 
 </div>
