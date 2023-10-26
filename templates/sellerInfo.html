@@ -57,7 +57,7 @@ name:当前用户name
 
         img_div.setAttribute("class", "info-div");
         img_div.setAttribute("id", "img-div");
-        img_show.setAttribute("id", "show-img");
+        img_show.setAttribute("class", "show-img");
         img_show.onchange = function (){
             let reader = new FileReader();
             reader.onload = function (ev){
@@ -129,26 +129,26 @@ name:当前用户name
         submit_button.innerText = "Confirm";
         submit_button.onclick = function (){
             const formdata = new FormData();
-            const formdata_img = new FormData(img_form)
+            const formdata_img = new FormData(img_form);
             formdata.append("phone", phone);
             formdata.append("price", price_input.value);
             formdata.append("storage", storage_input.value);
             formdata.append("introduction", introduction_input.value);
             formdata.append("name", item_name_input.value);
-            add_item(formdata, formdata_img, img_show)
+            add_item(formdata, formdata_img)
         }
         submit_div.append(submit_button);
         container.append(submit_div);
     }
 
-    function add_item(formdata, formdata_img, show_img){
+    function add_item(formdata, formdata_img){
         $.ajax({
             url:'/products/addItem',
             type:'get',
             data:formdata,
             success:function (data){
                 if (data.success){
-                    upload_item_img(formdata_img, show_img)
+                    upload_item_img(formdata_img)
                     render_add();
                     alert(data.message);
                 }else {
@@ -159,7 +159,7 @@ name:当前用户name
     }
 
     {#上传图片方法————————————————————————————————————————————————————————————————————————————————————————————#}
-    function upload_item_img(formdata, show_img){
+    function upload_item_img(formdata){
         $.ajax({
             url:"/images/upload_image_product",
             type:"post",
@@ -169,10 +169,10 @@ name:当前用户name
             contentType:false,
             success:function (data){
                 if (data.success) {
-
-                    alert(data.message)
+                    $(".show-image").attr("src", data.url);
+                    alert(data.message);
                 }else {
-                    alert(data.message)
+                    alert(data.message);
                 }
             }
         })

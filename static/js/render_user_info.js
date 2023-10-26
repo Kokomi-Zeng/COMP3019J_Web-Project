@@ -13,7 +13,7 @@ function render_user_info(data) {
 
     img_div.setAttribute("class", "info-div");
     img_div.setAttribute("id", "img-div");
-    img_show.setAttribute("class", "user-image");
+    img_show.setAttribute("class", "show-image");
     // img_show.setAttribute("width", "300px")
     // img_show.setAttribute("height", "300px")
 
@@ -24,7 +24,7 @@ function render_user_info(data) {
     img_input.onchange = function (){
         const formdata = new FormData(img_form);
         formdata.append("phone", phone);
-        upload_user_img(formdata, img_show);
+        upload_user_img(formdata);
     }
 
     img_div.append(img_show);
@@ -127,7 +127,7 @@ function modify_user_info(name, password, introduction){
     })
 }
 
-function upload_user_img(formdata, show_img){
+function upload_user_img(formdata){
     $.ajax({
         url:"/images/upload_image_user",
         type:"post",
@@ -137,7 +137,7 @@ function upload_user_img(formdata, show_img){
         contentType:false,
         success:function (data){
             if (data.success) {
-                get_user_image($(".user-image"));
+                get_user_image($(".show-image"));
             }else {
                 alert(data.message);
             }
