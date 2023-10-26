@@ -1,15 +1,19 @@
-{% extends "base_personInfo.html" %}
-
 {#
-页面需要参数：
-phone:当前用户phone（String）
-name:当前用户name
+    This HTML file is page for seller to check its.
+    It has such funtions:
+    1. get_user_info
+    2. render_add
+    3. add_item
+    4. upload_item_img
+
+    Using js:
+    1. render_user_info.js
+
+    JS functions:
+    render_user_info
 #}
 
-{#title应放入base中#}
-{% block title %}
-{{ name }}的个人界面
-{% endblock %}
+{% extends "base_personInfo.html" %}
 
 {% block nav_bar %}
     <button class="nav-button" id="info" onclick="get_user_info()">info</button>
