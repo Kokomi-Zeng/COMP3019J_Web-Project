@@ -1,44 +1,54 @@
+/* 注册页面 */
+.register-background-div {
+    /* 使用Flexbox进行布局 */
+    display: flex;
+    flex-direction: column; /* 垂直排列子元素 */
+    align-items: center;    /* 水平居中子元素 */
+}
 
-/*
-注册页面
- */
-.register-background-div label{
+/* 设置所有子div（如user-type、phone、password、submit）为flex容器 */
+.register-background-div > div {
+    display: flex;
+    flex-direction: row;    /* 横向排列子元素 */
+    align-items: center;    /* 垂直居中子元素 */
+    width: 100%;            /* 设置为最大宽度 */
+    justify-content: center; /* 水平居中内容 */
+    margin-bottom: 20px;    /* 统一设置间距 */
+}
+
+/* 设置标签、输入框和按钮的统一宽度 */
+.register-background-div label,
+.register-background-div input,
+.register-background-div button {
+    width: 180px;
     font-size: 20px;
     margin-left: 10px;
     margin-right: 10px;
 }
-.user-type{
-    margin-top: 30px;
-    margin-bottom: 10px;
-}
-.phone input{
+
+/* input和button的不同的样式 */
+.phone input,
+.password input {
     height: 30px;
-    width: 180px;
-    font-size: 20px;
     margin-bottom: 20px;
 }
-.password input{
-    height: 30px;
-    width: 180px;
-    font-size: 20px;
-    margin-bottom: 20px;
-}
-.register-background-div .submit button{
+
+.register-background-div .submit button {
     background-color: #007bff;
     color: #fff;
     border: none;
     border-radius: 10px;
     padding: 15px 30px;
     cursor: pointer;
-    font-size: 18px;
     text-align: center;
-    margin-left: 20px;
+    margin-left: 10px;
     margin-top: 20px;
+    background: linear-gradient(to right, #007bff, #0056b3);
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
-.register-background-div .submit button:hover{
+
+.register-background-div .submit button:hover {
     background-color: white;
     color: #007bff;
     font-style: italic;
 }
-
-
