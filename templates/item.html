@@ -25,6 +25,8 @@
         {#buyer#}
         if (type==="1") {
             render_buyer_box();
+        }else if (type==="0"){
+            render_modify_button();
         }
     });
 
@@ -115,6 +117,9 @@
         $(".item-rating-box").append(rating);
         $(".item-price-box").append(price);
         $(".item-storage-box").append(storage);
+    }
+    function render_modify_button(){
+
     }
 
     function render_buyer_box() {

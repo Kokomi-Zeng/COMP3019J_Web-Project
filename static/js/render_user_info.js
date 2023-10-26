@@ -28,10 +28,10 @@ function render_user_info(data) {
         upload_user_img(formdata);
     }
 
-    img_div.append(img_show);
-    img_div.append(img_input)
-    img_form.append(img_div);
-    container.append(img_form);
+    img_form.append(img_show);
+    img_form.append(img_input)
+    img_div.append(img_form);
+    container.append(img_div);
 
     // name
     const name_div = document.createElement("div");
@@ -94,9 +94,10 @@ function render_user_info(data) {
     container.append(password_div);
 
     // submit
-    const submit_div = document.createElement("div");
+    const submit_div = document.createElement("div")
     const submit_button = document.createElement("button");
 
+    submit_div.setAttribute("class", "submit-box");
     submit_button.innerText = "Confirm";
     submit_button.onclick = function () {
         modify_user_info(name_input.value, password_input.value, introduction_input.value)
