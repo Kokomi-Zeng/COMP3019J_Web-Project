@@ -92,4 +92,4 @@ def modify_seller_info():
         seller.user.password = hashed_password
 
     db.session.commit()
-    return jsonify({"success": True, "message": "Seller information updated successfully"})
+    return jsonify({"success": True, "message": "Seller information updated successfully", "phone": seller.phone, "name": seller.name, "introduction": seller.description})
