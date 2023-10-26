@@ -1,12 +1,8 @@
-/* 基本样式 */
-body {
-    /*font-family: Arial, sans-serif;*/
-    /*background-color: white;*/
-    /*margin: 0;*/
-    /*overflow-x: hidden; !* 防止横向滚动 *!*/
-}
+/*
+    This file contains the css for base.html
+*/
 
-/* 顶部导航 */
+/* The top navigation bar */
 .top-box {
     height: 120px;
     background-color: #007bff;
@@ -16,41 +12,47 @@ body {
     align-items: center;
     padding: 10px 5%;
     border-radius: 20px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 添加阴影效果 */
+    /* Add shadow effect */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-/* logo */
+/* logo img */
 .logo-box img{
     height: 110px;
-    width: auto; /* 保持图片宽高比 */
-    margin-right: 50px; /* 减少间隔以适应不同的屏幕大小 */
+    /* keep the aspect ratio of the image */
+    width: auto;
+    margin-right: 50px;
     margin-left: 50px;
     border: #9C1A1C 2px solid;
-    border-radius: 10px; /* 添加圆角 */
+    border-radius: 10px;
 }
 
-/* 搜索栏 */
+/* search bar */
 .search-box {
     height: 40px;
-    width: 30%; /* 使用百分比以适应不同屏幕大小 */
+    width: 30%;
     flex: 1;
     padding: 0 10px;
-    position: relative; /* 为可能的搜索按钮等设置位置 */
+    position: relative;
 }
+
+/* search bar input */
 #search-box {
     width: 100%;
     padding: 10px;
     margin-bottom: 20px;
-    border: 1px solid #ccc;
     border-radius: 10px;
     border: black 2px solid;
-    transition: border-color 0.3s ease; /* 添加过渡效果 */
-}
-#search-box:focus {
-    border-color: #007bff; /* 当聚焦时更改边框颜色 */
+    /* Add transition effect */
+    transition: border-color 0.3s ease;
 }
 
-/* 用户栏 */
+/* When the input field gets focus, change its border color to blue */
+#search-box:focus {
+    border-color: #007bff;
+}
+
+/* user-box */
 .user-box {
     margin-left: 50px;
     margin-right: 50px;
@@ -58,35 +60,47 @@ body {
     align-items: center;
     font-size: 20px;
 }
+
+/* user-box img */
 .user-box img {
     height: 100px;
     width: 100px;
     border: black 2px solid;
     margin-right: 10px;
-    border-radius: 50%; /* 圆形图片 */
+    /* set the border radius to 50% to make the image a circle */
+    border-radius: 50%;
 }
+
+/* user-box user-name */
 .user-box .user-name a {
     font-style: normal;
     color: white;
-    text-decoration: none; /* 去掉链接下划线 */
-    transition: color 0.3s ease; /* 添加过渡效果 */
+    /* remove the underline of the link */
+    text-decoration: none;
+    /* Add transition effect */
+    transition: color 0.3s ease;
 }
+
+/* set the color of the link to orangered when the mouse is over it */
 .user-box .user-name a:hover {
     font-style: italic;
     color: orangered;
 }
 
-/* 主体 */
+/* main */
 .main {
     padding: 40px;
     border-radius: 0 0 20px 20px;
-    background-color: #f5f5f5; /* 背景色更改为淡灰色以突出内容区 */
-    margin-top: 20px; /* 与顶部导航之间增加一些间隔 */
-    display: flex; /* 将 main 设为 flex 容器 */
-    justify-content: space-between; /* 保证子元素之间和容器边缘之间的空间分布 */
+    /* set background color to light grey to highlight the content area */
+    background-color: #f5f5f5;
+    /* add some gap between the top navigation bar and the main content */
+    margin-top: 20px;
+    /* set main to flex container */
+    display: flex;
+    justify-content: space-between;
 }
 
-/* 添加圆角和过渡效果 */
+/* set round corner and transition effect for the buttons */
 .back-button-box button {
     background-color: #007bff;
     color: #fff;
@@ -102,135 +116,10 @@ body {
     bottom: 10px;
     transition: background-color 0.3s ease, color 0.3s ease;
 }
+
+/* set the color of the button to white when the mouse is over it */
 .back-button-box button:hover {
     background-color: white;
     color: #007bff;
     font-style: italic;
 }
-
-/*!* 个体商品左边信息 包括图片和购买信息 *!*/
-/*.left-box {*/
-/*    margin-left: 50px;*/
-/*    border: black 2px solid;*/
-/*    border-radius: 10px; !* Added to make the edges round *!*/
-/*    display: flex;*/
-/*    flex-direction: column;*/
-/*    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2); !* Added a subtle shadow for a more refined look *!*/
-/*    flex: 1;*/
-/*}*/
-
-/*.left-box .img-box img {*/
-/*    height: 400px;*/
-/*    width: 400px;*/
-/*    border: black 2px solid;*/
-/*    margin: 10px;*/
-/*    border-radius: 10px; !* Added to make the image corners round *!*/
-/*}*/
-
-/*.left-box .item-name-box,*/
-/*.left-box .item-rating-box,*/
-/*.left-box .item-price-box,*/
-/*.left-box .item-storage-box {*/
-/*    font-size: 20px;*/
-/*    margin-left: 10px;*/
-/*    background-color: lightgrey;*/
-/*    margin-top: 5px;*/
-/*    margin-bottom: 5px;*/
-/*    border-radius: 5px; !* Added for rounded corners *!*/
-/*    transition: background-color 0.3s; !* Smooth transition for hover effects *!*/
-/*}*/
-
-/*.left-box .item-name-box:hover,*/
-/*.left-box .item-rating-box:hover,*/
-/*.left-box .item-price-box:hover,*/
-/*.left-box .item-storage-box:hover {*/
-/*    background-color: #e5e5e5; !* Slightly lighter shade on hover *!*/
-/*}*/
-
-/*.left-box button {*/
-/*    background-color: #007bff;*/
-/*    color: #fff;*/
-/*    border: none;*/
-/*    border-radius: 10px;*/
-/*    padding: 15px 30px;*/
-/*    cursor: pointer;*/
-/*    font-size: 20px;*/
-/*    text-align: center;*/
-/*    transition: all 0.3s; !* Smooth transition for hover effects *!*/
-/*}*/
-
-/*.left-box button:hover {*/
-/*    background-color: white;*/
-/*    color: #007bff;*/
-/*    font-style: italic;*/
-/*    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2); !* Added a subtle shadow on hover *!*/
-/*}*/
-
-/*.left-box input {*/
-/*    width: 200px;*/
-/*    height: 40px;*/
-/*    font-size: 20px;*/
-/*    margin-left: 10px;*/
-/*    margin-right: 10px;*/
-/*    margin-bottom: 20px;*/
-/*    border-radius: 10px; !* Added for rounded corners *!*/
-/*}*/
-
-/*!* 右侧评论栏 *!*/
-/*.right-box {*/
-/*    width: 400px;*/
-/*    margin-right: 50px;*/
-/*    border: black 2px solid;*/
-/*    border-radius: 10px; !* Added to make the edges round *!*/
-/*    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2); !* Added a subtle shadow for a more refined look *!*/
-/*}*/
-
-/*.right-box .comment-box {*/
-/*    margin: 10px;*/
-/*}*/
-
-/*.right-box .comment-box div {*/
-/*    border: 2px solid blue;*/
-/*    margin: 5px;*/
-/*    font-size: 20px;*/
-/*    border-radius: 5px; !* Added for rounded corners *!*/
-/*    transition: background-color 0.3s; !* Smooth transition for hover effects *!*/
-/*}*/
-
-/*.right-box .comment-box div:hover {*/
-/*    background-color: #e5e5e5; !* Slightly lighter shade on hover *!*/
-/*}*/
-
-/*.right-box .comment-box div:last-child {*/
-/*    border: none;*/
-/*    margin: 5px;*/
-/*    font-size: 20px;*/
-/*}*/
-
-/*.right-box .comment-box div div {*/
-/*    background-color: lightgrey;*/
-/*    border: 2px solid black;*/
-/*    margin: 5px;*/
-/*    border-radius: 5px; !* Added for rounded corners *!*/
-/*}*/
-
-/*.right-box .comment-box button {*/
-/*    background-color: #007bff;*/
-/*    color: #fff;*/
-/*    border: none;*/
-/*    border-radius: 10px;*/
-/*    padding: 15px 30px;*/
-/*    cursor: pointer;*/
-/*    font-size: 20px;*/
-/*    text-align: center;*/
-/*    margin-left: 80px;*/
-/*    transition: all 0.3s; !* Smooth transition for hover effects *!*/
-/*}*/
-
-/*.right-box .comment-box button:hover {*/
-/*    background-color: white;*/
-/*    color: #007bff;*/
-/*    font-style: italic;*/
-/*    transition: all 0.3s;*/
-/*    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2); !* Added a subtle shadow on hover *!*/
-/*}*/
