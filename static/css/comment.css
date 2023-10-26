@@ -1,4 +1,6 @@
-/* 公共样式 */
+/*
+    The following code is the CSS for the comment section (comment.html).
+ */
 .comment-box,
 .self-comment-box {
     border: 2px solid black;
@@ -10,24 +12,26 @@
     margin-right: 5%;
 }
 
-/* 用户自评论容器 */
+/* user self comment box */
 .self-comment-box {
-    flex: 3; /* 与.comment-box的比例为3:7 */
+    flex: 3;
     display: flex;
     flex-direction: column;
-    align-items: center; /* 水平居中 */
-    justify-content: center; /* 垂直居中 */
+    /* set the element inside the box align to center */
+    align-items: center;
+    justify-content: center;
 }
 
-/* 评论容器 */
+/* comment box */
 .comment-box {
-    flex: 7; /* 与.self-comment-box的比例为7:3 */
+    flex: 7;
     position: relative;
     height: 450px;
-    overflow-y: auto; /* 超出部分y方向滚动 */
+    /* set the element over the y axis scrollable */
+    overflow-y: auto;
 }
 
-/* 评论窗口（默认隐藏） */
+/* comment window (default hidden) */
 .commenter-window {
     display: none;
     position: absolute;
@@ -38,15 +42,17 @@
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
-/* 评论和用户评论中的图片样式 */
+
+/* The image in the comment box and self-common box */
 .comment-box img,
 .self-comment-box img {
     width: 50px;
     height: 50px;
-    border-radius: 50%; /* 圆形图片 */
+    /* circle image */
+    border-radius: 50%;
 }
 
-/* 评论和用户评论中的div容器样式 */
+/* The pattern of the pan of the comment box and self-comment box is the same */
 .comment-box div,
 .self-comment-box div {
     margin: 0.5rem 1rem;
@@ -55,7 +61,7 @@
     border-radius: 8px;
 }
 
-/* 评论和用户评论中的span标签样式 */
+/* The pattern of the span of the comment box and self-comment box is the same */
 .comment-box span,
 .self-comment-box span {
     display: block;
@@ -64,17 +70,19 @@
     padding: 0.5rem;
     border-radius: 5px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    word-wrap: break-word; /* 自动换行 */
+    /* automatically wrap the text */
+    word-wrap: break-word;
     overflow-wrap: break-word;
 }
 
-/* 用户评论中的输入框和文本区域样式 */
+/* The pattern of the input and textarea of the comment box and self-comment box is the same */
 .self-comment-box input,textarea {
     width: 90%;
     font-size: 1.125rem;
     margin: 1rem 0;
     border-radius: 5px;
-    resize: vertical; /* 允许垂直调整大小，禁止水平调整 */
+    /* allow vertical resize, but not horizontal resize */
+    resize: vertical;
     word-wrap: break-word;
     overflow-wrap: break-word;
 }
@@ -87,21 +95,23 @@
     height: 5rem;
 }
 
-/* 用户评论中的按钮样式 */
+/* The pattern of the button of the comment box */
 .self-comment-box button {
     background-color: #007bff;
     color: #fff;
     border: none;
     border-radius: 10px;
     padding: 0.75rem 1.5rem;
-    cursor: pointer; /* 手型指针 */
+    /* set the cursor to pointer */
+    cursor: pointer;
     font-size: 1.25rem;
     text-align: center;
     margin-left: 1rem;
-    transition: background-color 0.3s, color 0.3s; /* 过渡效果 */
+    /* set transition effect */
+    transition: background-color 0.3s, color 0.3s;
 }
 
-/* 用户评论中的按钮鼠标悬停效果 */
+/* Set the hover effect of the button in the user comment */
 .self-comment-box button:hover {
     background-color: white;
     color: #007bff;
