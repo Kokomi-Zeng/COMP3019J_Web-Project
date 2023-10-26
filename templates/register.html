@@ -1,3 +1,8 @@
+{#
+    This HTML file is page for user to register.
+    It has such funtions:
+    1. register
+#}
 {% extends "base_begin.html" %}
 
 {% block title %}
@@ -10,6 +15,10 @@ register
     <script>
     let user_type;
 
+    {#
+    update for register
+    execute this function when user attmpt to register
+    #}
     function register(){
         $.ajax({
             url:"/authorize/register",
@@ -17,15 +26,21 @@ register
             contentType: "application/json",
             dataType: "json",
             data:JSON.stringify({
-                phone:$("#phone").val(),
-                password:$("#password").val(),
+                phone:$("#phone").value,
+                password:$("#password").value,
                 user_type: user_type,
             }),
             success:function (data){
                 if(data.success){
+
+                    {#success register#}
                     alert(data.message);
+
+                    {#go back#}
                     history.back();
                 } else {
+
+                    {#fail to register: alert error message#}
                     alert(data.message);
                 }
             }
