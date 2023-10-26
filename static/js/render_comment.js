@@ -19,7 +19,8 @@ function render_comment(data){
         // }
 
         comment_div.append(commenter_window);
-        
+
+        // commenter image
         const commenter_img_div = document.createElement("div");
         const commenter_img = document.createElement("img");
 
@@ -28,6 +29,8 @@ function render_comment(data){
 
         commenter_img_div.append(commenter_img);
 
+        // commenter window
+        // when mouse move on the image, destroy time out
         commenter_img.onmouseover = function() {
             clearTimeout(timeoutId);  // 清除之前的延时
             commenter_window.style.display = "block";
@@ -36,31 +39,45 @@ function render_comment(data){
         commenter_img.onmouseout = function() {
             timeoutId = setTimeout(function() {
                 commenter_window.style.display = "none";
-            }, 100);  // 延时500毫秒后隐藏
+            }, 100);
         }
 
+        // when mouse move on the window, destroy time out
         commenter_window.onmouseover = function() {
-            clearTimeout(timeoutId);  // 如果鼠标移到悬浮窗上，就清除隐藏的延时
+            clearTimeout(timeoutId);
+            commenter_window.style.display = "block";
         }
 
         commenter_window.onmouseout = function() {
             timeoutId = setTimeout(function() {
                 commenter_window.style.display = "none";
-            }, 100);  // 延时500毫秒后隐藏
+            }, 100);
         }
 
 
         comment_div.append(commenter_img_div);
 
+        // commenter name
         const commenter_name_div = document.createElement("div");
         const commenter_name = document.createElement("span");
 
         commenter_name_div.setAttribute("class", "commenter-name");
-        commenter_name.innerText = "name: " + comment.user_name;
+        commenter_name.innerText = "name: " + comment.commenter_name;
 
         commenter_name_div.append(commenter_name);
         comment_div.append(commenter_name_div);
 
+        // comment rating
+        const commenter_rating_div = document.createElement("div");
+        const commenter_rating = document.createElement("span");
+
+        commenter_rating_div.setAttribute("class", "commenter-name");
+        commenter_rating.innerText = "Rating: " + comment.rating;
+
+        commenter_rating_div.append(commenter_rating);
+        comment_div.append(commenter_rating_div);
+
+        // comment text
         const comment_content_div = document.createElement("div");
         const comment_content = document.createElement("span");
 

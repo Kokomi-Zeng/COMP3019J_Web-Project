@@ -145,7 +145,8 @@
                 }
             })
         };
-        const buy_box = $(".buy-box");
+        const buy_box = document.createElement("div");
+        $(".left-box").append(buy_box);
         buy_box.append(buy_num);
         buy_box.append(buy_button);
     }
@@ -200,16 +201,9 @@
         </div>
 
     </div>
-    <div class="operation-box">
-        <div class="buy-operation">
-            <div class="buy-box">
-            </div>
-        </div>
-    </div>
+    <div class="buy-box"></div>
 </div>
-<div class="right-box">
-    <div class="comment-box"></div>
-</div>
+<div class="comment-box"></div>
 
 <div class="back-button-box">
     <button class="back-button" onclick="history.back()">Back</button>

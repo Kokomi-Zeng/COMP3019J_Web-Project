@@ -107,18 +107,19 @@ function render_user_info(data) {
 function modify_user_info(name, password, introduction){
     $.ajax({
         url: type==="1"?"/buyer/modifyBuyerInfo":'/seller/modifySellerInfo',
-        type: 'get',
+        type: 'post',
         contentType: "application/json",
         dataType: "json",
-        data: {
+        data: JSON.stringify({
             phone: phone,
             name: name,
             password: password,
             introduction: introduction,
-        },
+        }),
         success: function (data) {
             if (data.success) {
-                render_user_info();
+                alert(data.message);
+                render_user_info(data)
             }else {
                 alert(data.message);
             }
