@@ -69,7 +69,7 @@ def add_item():
     db.session.add(product)
     db.session.commit()
 
-    return jsonify({"message": "Product added successfully"})
+    return jsonify({"success": True, "message": "Product added successfully", "product_id": product.product_id})
 
 
 # Provide delete item method for a seller to delete a product

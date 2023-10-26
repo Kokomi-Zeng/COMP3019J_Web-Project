@@ -50,6 +50,8 @@ name:当前用户name
         const img_form = document.createElement("form");
         img_form.setAttribute("class", "img-form");
 
+        container.append(img_form);
+
         {#input img#}
         const img_div = document.createElement("div");
         const img_show = document.createElement("img");
@@ -58,28 +60,39 @@ name:当前用户name
         img_div.setAttribute("class", "info-div");
         img_div.setAttribute("id", "img-div");
         img_show.setAttribute("class", "show-img");
-        img_show.onchange = function (){
-            let reader = new FileReader();
-            reader.onload = function (ev){
-                img_show.setAttribute("src", ev.target.result);
-            }
-        }
         img_input.setAttribute("type", "file");
         img_input.setAttribute("id", "file");
         img_input.setAttribute("name", "image");
         img_input.setAttribute("accept", "image/*");
-        img_div.append(img_input);
-        container.append(img_div);
+        img_input.onchange = function (){
+            let reader = new FileReader();
+            reader.onload = function (ev){
+                img_show.setAttribute("src", ev.target.result);
+            }
+            reader.readAsDataURL(img_input.files[0])
+        }
 
-        const item_name_div = document.createElement("div");
-        const item_name_input = document.createElement("input");
+        img_div.append(img_input);
+        img_div.append(img_show);
+        img_form.append(img_div);
+
+
+        {#form input message#}
+        const msg_form = document.createElement("form");
+        msg_form.setAttribute("class", "msg-form");
+
+        container.append(msg_form);
+
+        const name_div = document.createElement("div");
+        const name_input = document.createElement("input");
         
-        item_name_div.setAttribute("class", "item_name-div");
-        item_name_input.setAttribute("id", "item_name");
-        item_name_input.setAttribute("placeHolder", "name");
+        name_div.setAttribute("class", "item_name-div");
+        name_input.setAttribute("id", "item_name");
+        name_input.setAttribute("name", "product_name");
+        name_input.setAttribute("placeHolder", "name");
         
-        item_name_div.append(item_name_input);
-        container.append(item_name_div);
+        name_div.append(name_input);
+        msg_form.append(name_div);
 
 
         {#添加新物品——————库存————————————————————————————————————————————————————————————————————————————————#}
@@ -88,22 +101,25 @@ name:当前用户name
         
         storage_div.setAttribute("class", "storage-div");
         storage_input.setAttribute("id", "storage");
+        storage_input.setAttribute("name", "storage");
+        storage_input.setAttribute("type", "number");
         storage_input.setAttribute("placeHolder", "storage");
         
         storage_div.append(storage_input);
-        container.append(storage_div);
+        msg_form.append(storage_div);
 
 
         {#添加新物品——————介绍————————————————————————————————————————————————————————————————————————————————#}
-        const introduction_div = document.createElement("div");
-        const introduction_input = document.createElement("input");
+        const description_div = document.createElement("div");
+        const description_input = document.createElement("input");
         
-        introduction_div.setAttribute("class", "introduction-div");
-        introduction_input.setAttribute("id", "introduction");
-        introduction_input.setAttribute("placeHolder", "introduction");
+        description_div.setAttribute("class", "description-div");
+        description_input.setAttribute("id", "description");
+        description_input.setAttribute("name", "description");
+        description_input.setAttribute("placeHolder", "description");
         
-        introduction_div.append(introduction_input);
-        container.append(introduction_div);
+        description_div.append(description_input);
+        msg_form.append(description_div);
 
 
         {#添加新物品——————价格————————————————————————————————————————————————————————————————————————————————#}
@@ -111,12 +127,13 @@ name:当前用户name
         const price_input = document.createElement("input");
         
         price_div.setAttribute("class", "price-div");
-        price_input.setAttribute("type", "price");
+        price_input.setAttribute("name", "price");
         price_input.setAttribute("id", "price");
+        price_input.setAttribute("type", "number");
         price_input.setAttribute("placeHolder", "price");
         
         price_div.append(price_input);
-        container.append(price_div);
+        msg_form.append(price_div);
 
 
         {#添加新物品——————提交按钮——————————————————————————————————————————————————————————————————————————————#}
@@ -125,30 +142,34 @@ name:当前用户name
 
         submit_div.setAttribute("class", "submit-div");
         submit_button.setAttribute("class", "submit-button");
+        submit_button.setAttribute("type", "button");
 
         submit_button.innerText = "Confirm";
         submit_button.onclick = function (){
-            const formdata = new FormData();
-            const formdata_img = new FormData(img_form);
-            formdata.append("phone", phone);
-            formdata.append("price", price_input.value);
-            formdata.append("storage", storage_input.value);
-            formdata.append("introduction", introduction_input.value);
-            formdata.append("name", item_name_input.value);
-            add_item(formdata, formdata_img)
+            const formdata = new FormData(img_form);
+            console.log(formdata_img)
+            {#add_item(name_input.value, price_input.value, storage_input.value, description_input.value, formdata_img)#}
         }
         submit_div.append(submit_button);
-        container.append(submit_div);
+        msg_form.append(submit_div);
     }
 
-    function add_item(formdata, formdata_img){
+    function add_item(name, price, storage, description, formdata){
         $.ajax({
             url:'/products/addItem',
             type:'get',
-            data:formdata,
+            contentType: "application/json",
+            dataType: "json",
+            data:{
+                seller_phone:phone,
+                description:description,
+                storage:storage,
+                price:price,
+                product_name:name
+            },
             success:function (data){
                 if (data.success){
-                    upload_item_img(formdata_img)
+                    upload_item_img(formdata, data.product_id)
                     render_add();
                     alert(data.message);
                 }else {
@@ -159,9 +180,9 @@ name:当前用户name
     }
 
     {#上传图片方法————————————————————————————————————————————————————————————————————————————————————————————#}
-    function upload_item_img(formdata){
+    function upload_item_img(formdata, product_id){
         $.ajax({
-            url:"/images/upload_image_product",
+            url:"/images/upload_image_product?product_id=" + product_id,
             type:"post",
             data:formdata,
             dataType:"json",

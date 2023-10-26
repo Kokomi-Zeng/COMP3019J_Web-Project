@@ -13,7 +13,7 @@ function render_user_info(data) {
 
     img_div.setAttribute("class", "info-div");
     img_div.setAttribute("id", "img-div");
-    img_show.setAttribute("class", "show-image");
+    img_show.setAttribute("class", "user-image");
     // img_show.setAttribute("width", "300px")
     // img_show.setAttribute("height", "300px")
 
@@ -24,6 +24,7 @@ function render_user_info(data) {
     img_input.onchange = function (){
         const formdata = new FormData(img_form);
         formdata.append("phone", phone);
+        console.log(formdata)
         upload_user_img(formdata);
     }
 
@@ -102,6 +103,8 @@ function render_user_info(data) {
     }
     submit_div.append(submit_button);
     container.append(submit_div);
+
+    get_user_image($(".user-image"));
 }
 
 function modify_user_info(name, password, introduction){
@@ -137,7 +140,7 @@ function upload_user_img(formdata){
         contentType:false,
         success:function (data){
             if (data.success) {
-                get_user_image($(".show-image"));
+                get_user_image($(".user-image"));
             }else {
                 alert(data.message);
             }
