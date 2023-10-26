@@ -22,7 +22,8 @@ API_TOKEN = '1986648502b84b6b7114'
 def upload_image_for_product():
     uploaded_file = request.files['image']
     # get the product_id from the form
-    product_id = request.form.get('product_id')
+    product_id = request.args.get('product_id')
+    print(product_id);
 
     # verify if the product exists
     product = Product.query.filter_by(product_id=product_id).first()

@@ -118,6 +118,9 @@
     }
 
     function render_buyer_box() {
+        const buy_box = document.createElement("div");
+        buy_box.setAttribute("class", "buy-box")
+        
         const buy_num = document.createElement("input");
         buy_num.setAttribute("type", "num");
         buy_num.setAttribute("placeHolder", "buy number");
@@ -145,7 +148,6 @@
                 }
             })
         };
-        const buy_box = $(".buy-box");
         buy_box.append(buy_num);
         buy_box.append(buy_button);
     }
@@ -198,9 +200,7 @@
         </div>
         <div class="item-storage-box">
         </div>
-
     </div>
-    <div class="buy-box"></div>
 </div>
 <div class="comment-box"></div>
 
