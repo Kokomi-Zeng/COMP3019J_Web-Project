@@ -1,3 +1,7 @@
+/**
+ * This method is to render user info depend on the ajax response.
+ * @param data is the ajax response.
+ */
 function render_user_info(data) {
 
     const container = $(".container");
@@ -109,7 +113,13 @@ function render_user_info(data) {
     get_user_image($(".user-image"));
 }
 
-function modify_user_info(name, password, introduction){
+/**
+ * This method is to modify user information.
+ * @param name is the user name after modified.
+ * @param introduction is the introduction after modified.
+ * @param password is password that promise the security of this modification.
+ */
+function modify_user_info(name, introduction, password){
     $.ajax({
         url: type==="1"?"/buyer/modifyBuyerInfo":'/seller/modifySellerInfo',
         type: 'post',
@@ -132,6 +142,10 @@ function modify_user_info(name, password, introduction){
     })
 }
 
+/**
+ * This method is to upload user image.
+ * @param formdata is the Formdata object that contains information of user image.
+ */
 function upload_user_img(formdata){
     $.ajax({
         url:"/images/upload_image_user",
