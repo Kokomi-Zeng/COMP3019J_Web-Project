@@ -33,8 +33,10 @@
 
     {#when session is loaded#}
     $(document).on("sessionLoaded", function () {
-
         container = $(".container");
+
+        {#set title#}
+        $("title").innerText = name;
 
         {#Get and render seller information automatically#}
         get_and_render_seller_info();

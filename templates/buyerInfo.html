@@ -36,13 +36,10 @@
 
     {#when session is loaded#}
     $(document).on("sessionLoaded", function () {
-
         container = $(".container");
 
         {#set title#}
-        {% block title %}
-        name + "'s account"
-        {% endblock %}
+        $("title").innerText = name;
 
         {#default to get and render buyer information#}
         get_and_render_buyer_info();
