@@ -1,7 +1,20 @@
 # COMP3019J_Web-Project
 
-## Product Ranking Website
-The website allows registered sellers to upload a catalogue of products, complete with descriptions, images, and prices. It also permits registered buyers to view products, leave both positive and negative feedback, rate the products via a visual indicator such as stars, and provide textual comments. Furthermore, unregistered users can view top-rated products and observe feedback from the top-5 positive comments as well as the lowest-5 negative comments.
+## Team Member
+
+- Zhang Ziyi    21207272
+- Zeng Lingyue    21207269
+- Yuan Shiyang    21207285
+
+## Product Ranking Website Description
+
+The website is a product ranking website using Flask, Mysql, Ajax, Html, Css, Javascript.
+
+- For registered sellers, the seller can change his/her personal information, view his/her own products, view product information, search for his/her own products, modify product information, view ratings of his/her own products, and upload a catalogue of products, including full descriptions, pictures and prices.
+
+- For registered buyers, the buyer can change his/her personal information, view the products he/she has purchased, view all product information, search for all products, view all ratings for the product, rate a product (including star rating and text), purchase products, fund his/her account, and view the balance of his/her account.
+
+- For unregistered users, he/she can login, register, view the top 10 rated products, observe feedback from the top 5 positive and bottom 5 negative reviews.
 
 ## Additional Configuration
 
