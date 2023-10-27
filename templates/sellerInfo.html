@@ -23,7 +23,7 @@
 {% extends "base_personInfo.html" %}
 
 {% block nav_bar %}
-    <button class="nav-button" id="info" onclick="get_user_info()">info</button>
+    <button class="nav-button" id="info" onclick="get_and_render_seller_info()">info</button>
     <button class="nav-button" id="add-item" onclick="render_add()">add</button>
 {% endblock %}
 
@@ -35,10 +35,10 @@
 
         container = $(".container");
 
-        get_user_info();
+        get_and_render_seller_info();
     })
     
-    function get_user_info(){
+    function get_and_render_seller_info(){
         $.ajax({
             url:"/seller/sellerInfo",
             type:"get",

@@ -17,11 +17,12 @@
 <head>
     <meta charset="UTF-8">
     <title>{% block title %}{% endblock %}</title>
-{#通用css#}
+
     <link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}">
-{#独有css#}
-    <link rel="stylesheet" href="{% block css %}{% endblock %}">
     <link rel="stylesheet" href="/static/css/alert.css">
+
+    {% block css %}{% endblock %}
+
     <script src="https://code.jquery.com/jquery-latest.js"></script>
     <script src="/static/js/alert.js"></script>
     <script src="/static/js/get_user_image.js"></script>
@@ -30,15 +31,14 @@
     let phone;
     let type;
     let name;
-    let user_image;
 
     window.onload = function (){
         {#alert_message("test")#}
 
-        user_image = $("#user-image")[0];
         get_session();
     }
 
+    {#this method is to get and load session#}
     function get_session(){
         $.ajax({
             url:"/getSession",
@@ -46,10 +46,12 @@
             contentType: "application/json",
             dataType: "json",
             success:function (data){
+                {#session exist, load session#}
                 phone = data.phone;
                 type = data.type;
                 name = data.name;
-                const user_box = $(".user-name");
+
+                {#generate tag#}
                 const a = document.createElement("a");
                 if (type==="0"){
                     a.setAttribute("href", "/sellerInfo");
@@ -61,12 +63,26 @@
                     a.setAttribute("href", "/login");
                     a.innerText = "Login";
                 }
-                user_box.append(a)
+                $(".user-name").append(a)
+
+                {#execue functions#}
                 $(document).trigger("sessionLoaded");
+
+                {#load user image#}
                 get_user_image($(".user-image"));
             },
             error:function (){
+
+                {#generate tag#}
+                const a = document.createElement("a");
+                a.innerText = "Login";
+                a.setAttribute("href", "/login")
+                $(".user-name").append(a)
+
+                {#session not exist, continue to execue functions#}
                 $(document).trigger("sessionLoaded");
+
+                {#load user image#}
                 get_user_image($(".user-image"));
             }
         })
