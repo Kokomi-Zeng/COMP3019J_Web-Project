@@ -4,13 +4,14 @@
  */
 function render_user_info(data) {
 
+    // clear DOM
     const container = $(".container");
     container.empty();
 
-    // form for input img
+    // Render FORM for img
     const img_form = document.createElement("form");
     img_form.setAttribute("class", "img-form");
-    // input img
+    // Render INPUT FILE img
     const img_div = document.createElement("div");
     const img_show = document.createElement("img");
     const img_input = document.createElement("input");
@@ -38,7 +39,7 @@ function render_user_info(data) {
     img_div.append(img_form);
     container.append(img_div);
 
-    // name
+    // Render INPUT TEXT name
     const name_div = document.createElement("div");
     const name_label = document.createElement("label")
     const name_input = document.createElement("input");
@@ -54,7 +55,7 @@ function render_user_info(data) {
     name_label.append(name_input)
     container.append(name_div);
 
-    // phone
+    // Render INPUT TEXT phone
     const phone_div = document.createElement("div");
     const phone_span = document.createElement("label")
 
@@ -65,7 +66,7 @@ function render_user_info(data) {
     phone_div.append(phone_span);
     container.append(phone_div);
 
-    // introduction
+    // Render INPUT TEXT introduction
 
     const introduction_div = document.createElement("div");
     const introduction_label = document.createElement("label")
@@ -82,8 +83,8 @@ function render_user_info(data) {
     introduction_label.append(introduction_input);
     container.append(introduction_div);
 
-    // password
 
+    // Render INPUT PASSWORD password
     const password_div = document.createElement("div");
     const password_label = document.createElement("label")
     const password_input = document.createElement("input");
@@ -98,7 +99,8 @@ function render_user_info(data) {
     password_label.append(password_input);
     container.append(password_div);
 
-    // submit
+
+    // Render BUTTON submit
     const submit_div = document.createElement("div")
     const submit_button = document.createElement("button");
 

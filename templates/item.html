@@ -32,18 +32,19 @@
 {% endblock %}
 
 {% block css %}
-/static/css/item.css
+    <link rel="stylesheet" href="/static/css/item.css">
 {% endblock %}
 
 {% block script %}
     <script src="/static/js/render_comment.js"></script>
     <script src="/static/js/is_item_match_seller.js"></script>
     <script>
-
     let belong;
 
+    {#when session is loaded#}
     $(document).on("sessionLoaded", function () {
 
+        {##}
         is_item_match_seller("{{ product_id }}")
         $(document).on("belongLoaded", function () {
 

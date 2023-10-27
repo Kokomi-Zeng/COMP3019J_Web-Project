@@ -47,6 +47,12 @@
 
     {#This function is to get and render items#}
     function get_and_render_item(){
+
+        {#clear DOM#}
+        $(".item-box").empty();
+        $(".prev").empty();
+        $(".next").empty();
+
         $.ajax({
             url: "/shop/searchItemByName",
             type: "get",
@@ -58,7 +64,11 @@
                 page_num: page_num,
             },
             success: function (data) {
-                render_item(data)
+                render_item(data);
+
+                {#Render BUTTON page button#}
+                get_and_render_next_button()
+                get_and_render_prev_button();
             }
         })
     }
@@ -116,21 +126,19 @@
 
     function render_item(data){
 
-        {#clear DOM#}
-        $(".item-box").empty();
-        $(".prev").empty();
-        $(".next").empty();
-        get_and_render_next_button()
-        get_and_render_prev_button();
-
-
         for (let i=0; i<data.length; i++){
+            {#get each item#}
             const item = data[i];
 
+
+            {#Render DIV container #}
             const item_box = document.createElement("div");
+            item_box.setAttribute("class", "item");
+
+
+            {#Render BUTTON item jump button#}
             const item_button = document.createElement("button");
 
-            item_box.setAttribute("class", "item");
             item_button.setAttribute("class", "item-button")
             item_button.onclick = function (){
                 window.location.href = "/item?product_id="+ item.product_id;
@@ -138,6 +146,8 @@
             $(".item-box").append(item_box);
             item_box.append(item_button);
 
+
+            {#Render IMG img#}
             const img_box = document.createElement("div");
             const img = document.createElement("img");
 
@@ -147,6 +157,8 @@
             item_button.append(img_box);
             img_box.append(img);
 
+
+            {#Rendder SPAN price#}
             const price_box = document.createElement("div");
             const price = document.createElement("span");
 
@@ -156,6 +168,8 @@
             item_box.append(price_box);
             price_box.append(price);
 
+
+            {#Render SPAN name#}
             const name_box = document.createElement("div");
             const name = document.createElement("span");
 
@@ -165,6 +179,8 @@
             item_box.append(name_box);
             name_box.append(name);
 
+
+            {#Render SPAN rating#}
             const rating_box = document.createElement("div");
             const rating = document.createElement("span");
 

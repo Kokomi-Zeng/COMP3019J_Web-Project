@@ -3,11 +3,11 @@
     Buyers can also upload their comments.
     It has such funtions:
     1. get_session (Extends)
-    2. get_comment
+    2. get_and_render_comment
     3. render_next_page_button
     4. render_prev_page_button
-    5. get_prev_page
-    6. get_next_page
+    5. get_and_render_prev_page
+    6. get_and_render_next_page
     7. render_self_comment_box
     8. create_comment
 
@@ -36,12 +36,14 @@
     let page_num = 1;
     let belong;
 
+    {#when session is loaded#}
     $(document).on("sessionLoaded", function() {
         is_item_match_seller("{{ product_id }}")
+
+        {#when belong is loaded#}
         $(document).on("belongLoaded", function () {
+
             get_comment();
-            get_prev_page();
-            get_next_page();
 
             console.log(belong)
             if (!belong) {
@@ -50,7 +52,8 @@
         })
     })
 
-    function get_comment(){
+    {#This function is to get and render comment#}
+    function get_and_render_comment(){
         $.ajax({
             url:"/comment/commentInfoById",
             type:"get",
@@ -62,10 +65,15 @@
             },
             success:function(data){
                 render_comment(data);
+
+                {#Render BUTTON page button#}
+                get_and_render_prev_page();
+                get_and_render_next_page();
             }
         })
     }
 
+    {#This function is to render next page button#}
     function render_next_page_button() {
         const button = document.createElement("button");
         button.setAttribute("class", "page-button");
@@ -77,7 +85,8 @@
         $(".next").append(button);
     }
 
-    function get_next_page(){
+    {#This function is to get and render next page button#}
+    function get_and_render_next_page(){
         $.ajax({
             url:"/comment/hasNextComment",
             type:"get",
@@ -96,6 +105,7 @@
         })
     }
 
+    {#This function is to render prev page button#}
     function render_prev_page_button(){
         const button = document.createElement("button");
         button.setAttribute("class", "page-button");
@@ -107,18 +117,23 @@
         $(".prev").append(button);
     }
 
-    function get_prev_page(){
+    {#This function is to get and render prev page button#}
+    function get_and_render_prev_page(){
         if (page_num>1){
             render_prev_page_button()
         }
     }
 
+    {#This function is to render self comment box#}
     function render_self_comment_box() {
+        {#Render DIV container#}
         const self_comment_box = document.createElement("div");
         self_comment_box.setAttribute("class", "self-comment-box")
 
         $(".main").append(self_comment_box);
 
+
+        {#Render INPUT NUMBER rating#}
         const self_rating_div = document.createElement("div");
         const self_rating = document.createElement("input");
 
@@ -130,6 +145,8 @@
         self_comment_box.append(self_rating_div);
         self_rating_div.append(self_rating);
 
+
+        {#Render TEXTAREA content#}
         const self_content_div = document.createElement("div");
         const self_content = document.createElement("textarea");
 
@@ -141,6 +158,7 @@
         self_comment_box.append(self_content_div);
         self_content_div.append(self_content);
 
+        {#Render BUTTON submit#}
         const self_content_button = document.createElement("button");
 
         self_content_button.setAttribute("id", "self-content-button");
@@ -153,6 +171,7 @@
 
     }
 
+    {#This function is to create comment#}
     function create_comment(rating, content){
         $.ajax({
             url: "/comment/createComment",
@@ -168,7 +187,8 @@
             success:function (data){
                 if (data.success){
                     alert(data.message)
-                    get_comment();
+                    {#reload comment#}
+                    get_and_render_comment();
                 }else {
                     alert(data.message)
                 }
