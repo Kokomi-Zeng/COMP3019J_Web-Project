@@ -43,6 +43,8 @@
 
         {#get and render item automatically#}
         get_and_render_item();
+        get_and_render_next_button();
+        get_and_render_prev_button();
     });
 
     {#This function is to get and render items#}
@@ -50,8 +52,6 @@
 
         {#clear DOM#}
         $(".item-box").empty();
-        $(".prev").empty();
-        $(".next").empty();
 
         $.ajax({
             url: "/shop/searchItemByName",
@@ -80,13 +80,17 @@
             button.innerText = "prev";
             button.onclick = function () {
                 page_num--;
-                render_next_page_button();
+                get_and_render_item();
             }
             $(".prev").append(button);
     }
 
     {#This function is to get and render BUTTON prev#}
     function get_and_render_prev_button(){
+
+        {#clear DOM#}
+        $(".prev").empty();
+
         if (page_num>1){
             render_prev_page_button()
         }
@@ -106,6 +110,10 @@
 
     {#This function is to get and render BUTTON next#}
     function get_and_render_next_button(){
+
+        {#clear DOM#}
+        $(".next").empty();
+
         $.ajax({
             url:"/shop/hasNextPage",
             type:"get",
