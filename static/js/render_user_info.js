@@ -13,9 +13,10 @@ function render_user_info(data) {
 
     img_div.setAttribute("class", "info-div");
     img_div.setAttribute("id", "img-div");
+    img_form.style.alignItems = "center";
     img_show.setAttribute("class", "user-image");
-    // img_show.setAttribute("width", "300px")
-    // img_show.setAttribute("height", "300px")
+    img_show.setAttribute("width", "300px")
+    img_show.setAttribute("height", "300px")
 
     img_input.setAttribute("type", "file");
     img_input.setAttribute("id", "file");
