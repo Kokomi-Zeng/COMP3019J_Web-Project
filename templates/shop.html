@@ -146,7 +146,7 @@
             const price = document.createElement("span");
 
             img_box.setAttribute("class", "price-box");
-            price.innerText = item.price;
+            price.innerText = "Price: " + item.price;
 
             item_box.append(price_box);
             price_box.append(price);
@@ -155,7 +155,7 @@
             const name = document.createElement("span");
 
             img_box.setAttribute("class", "name-box");
-            name.innerText = item.product_name;
+            name.innerText = "Name: " + item.product_name;
 
             item_box.append(name_box);
             name_box.append(name);
@@ -164,7 +164,7 @@
             const rating = document.createElement("span");
 
             img_box.setAttribute("class", "rating-box");
-            rating.innerText = item.rating;
+            rating.innerText = "Rating: " + item.rating;
 
             item_box.append(rating_box);
             rating_box.append(rating);
