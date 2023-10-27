@@ -1,3 +1,7 @@
+/**
+ * This method is to render the comment data depend on the response.
+ * @param data is the ajax response.
+ */
 function render_comment(data){
     for (let i = 0; i < data.length; i++) {
         let timeoutId;
@@ -9,14 +13,7 @@ function render_comment(data){
 
         $(".comment-box").append(comment_div);
 
-        const commenter_window = render_commenter_window(comment_div, comment)
-
-        // commenter_img_div.onmouseover = function (){
-        //      commenter_window.style.display = "block";
-        // }
-        // commenter_img_div.onmouseout = function (){
-        //      commenter_window.style.display = "none";
-        // }
+        const commenter_window = create_commenter_window(comment_div, comment)
 
         comment_div.append(commenter_window);
 
@@ -89,8 +86,12 @@ function render_comment(data){
     }
 }
 
-
-function render_commenter_window(comment_div, comment) {
+/**
+ * This method is to create a commenter window.
+ * @param comment is the certain comment data from ajax response.
+ * @returns {HTMLDivElement} is a commenter window.
+ */
+function create_commenter_window(comment) {
     const commenter_window = document.createElement("div");
 
     commenter_window.setAttribute("class", "commenter-window");
@@ -122,12 +123,14 @@ function render_commenter_window(comment_div, comment) {
     commenter_introduction_div.append(commenter_introduction);
     commenter_window.append(commenter_introduction_div);
 
-
-
-
     return commenter_window;
 }
 
+/**
+ * This method is to get introduction of the commenter by comment ID.
+ * @param comment_id is the comment ID.
+ * @returns {string} is the introduction of the certain commenter.
+ */
 function get_introduction(comment_id){
     let introduction = ""
     $.ajax({
