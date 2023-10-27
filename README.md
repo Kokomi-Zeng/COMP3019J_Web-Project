@@ -8,7 +8,7 @@
 
 ## Product Ranking Website Description
 
-The website is a product ranking website using Flask, Mysql, Ajax, Html, Css, Javascript.
+The website is a product ranking website using Python, Flask, Mysql, Ajax, HTML, CSS, JavaScript.
 
 - For registered sellers, the seller can change his/her personal information, view his/her own products, view product information, search for his/her own products, modify product information, view ratings of his/her own products, and upload a catalogue of products, including full descriptions, pictures and prices.
 
@@ -40,6 +40,7 @@ Open the project in PyCharm and follow the steps below:
    - pip install flask 
    - pip install pymysql 
    - pip install flask-sqlalchemy
+   - pip install flask-migrate
 
 3. **Database Configuration**:
 
