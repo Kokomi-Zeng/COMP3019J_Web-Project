@@ -1,3 +1,30 @@
+{#
+    This HTML file is page for users to inspect items in detail.
+    This page will also show the highest five comments and lowest five comments.
+    Buyers can buy the item in this page.
+    Sellers can modify their items in this page.
+    It has such funtions:
+    1. get_session (Extends)
+    2. get_item_data
+    3. render_item_data
+    4. render_prev_page_button
+    5. render_buyer_box
+    6. render_modify_button
+    7. get_comment
+    8. render_more_comment_button
+
+    Using js:
+    1. alert.js (Extends)
+    2. get_user_image.js (Extends)
+    3. render_comment.js
+    4. is_item_match_seller.js
+
+    JS functions:
+    1. get_user_image (Extends)
+    2. alert_message (Extends)
+    3. render_comment
+    4. is_item_match_seller
+#}
 {% extends "base.html" %}
 
 {% block title %}
@@ -105,9 +132,6 @@
         $(".item-price-box").append(price);
         $(".item-storage-box").append(storage);
     }
-    function render_modify_button(){
-
-    }
 
     function render_buyer_box() {
         console.log(333)
@@ -146,6 +170,10 @@
         };
         buy_box.append(buy_num);
         buy_box.append(buy_button);
+    }
+
+    function render_modify_button(){
+
     }
 
     function get_comment(){

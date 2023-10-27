@@ -1,14 +1,31 @@
+{#
+    This HTML file is page for buyer to check and modify their information.
+    User can also charge money and inspect purchased items in this page.
+    It has such funtions:
+    1. get_session (Extends)
+    1. log_out (Extends)
+    2. get_user_info
+    3. get_money
+    4. render_money
+    5. charge
+    6. get_purchased
+    7. render_buyer_purchased
+
+    Using js:
+    1. alert.js (Extends)
+    2. get_user_image.js (Extends)
+    3. render_user_info.js (Extends)
+
+    JS functions:
+    1. get_user_image (Extends)
+    2. alert_message (Extends)
+    3. render_user_info (Extends)
+#}
 {% extends "base_personInfo.html" %}
 
-{#
-页面需要参数：
-phone:当前用户phone（String）,<<<若未登录返回None></若未登录返回None></若未登录返回None></若未登录返回None>
-name:当前用户name
-#}
-
-{#title应放入base中#}
+{#set title#}
 {% block title %}
-{{ name }}的个人界面
+{{ name }}'s account
 {% endblock %}
 
 {% block nav_bar %}

@@ -1,10 +1,38 @@
-{% extends "base.html" %}
 {#
-需要参数：
-用户名username
-用户类型type
-用户phone
+    This HTML file is page for users to inspect items.
+    Users can also search items by items' name.
+    Seller can only inspect items they have.
+    Buyer can inspect all items.
+    None-login user can only inspect ten popular items.
+    It has such funtions:
+    1. get_session (Extends)
+    2. get_item
+    3. render_prev_page_button
+    4. render_next_page_button
+    5. get_prev_page
+    6. get_next_page
+    7. render_item
+
+    Using js:
+    1. alert.js (Extends)
+    2. get_user_image.js (Extends)
+
+    JS functions:
+    1. get_user_image (Extends)
+    2. alert_message (Extends)
 #}
+{% extends "base.html" %}
+
+{#set title#}
+{% block title %}
+    Shop
+{% endblock %}
+
+{#link css#}
+{% block css %}
+    /static/css/shop.css
+{% endblock %}
+
 {% block script %}
     <script>
 
@@ -144,10 +172,6 @@
         }
     }
     </script>
-{% endblock %}
-
-{% block css %}
-    /static/css/shop.css
 {% endblock %}
 
 {% block search_box %}
