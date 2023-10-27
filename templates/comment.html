@@ -54,6 +54,8 @@
 
     {#This function is to get and render comment#}
     function get_and_render_comment(){
+
+        $(".comment-box").empty();
         $.ajax({
             url:"/comment/commentInfoById",
             type:"get",
@@ -188,6 +190,7 @@
                 if (data.success){
                     alert(data.message)
                     {#reload comment#}
+
                     get_and_render_comment();
                 }else {
                     alert(data.message)

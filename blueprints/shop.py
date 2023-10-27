@@ -147,9 +147,9 @@ def has_next_page():
 def calculate_average_rating(product_id):
     comments = Comment.query.filter_by(product_id=product_id).all()
 
-    # If there is no comment, return 0.0
+    # If there is no comment, return 1
     if not comments:
-        return 0.0
+        return 1
 
     total_rating = 0
     for comment in comments:
