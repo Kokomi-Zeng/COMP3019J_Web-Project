@@ -6,11 +6,11 @@
     None-login user can only inspect ten popular items.
     It has such funtions:
     1. get_session (Extends)
-    2. get_item
+    2. get_and_render_item
     3. render_prev_page_button
     4. render_next_page_button
-    5. get_prev_page
-    6. get_next_page
+    5. get_and_render_prev_page
+    6. get_and_rende_next_page
     7. render_item
 
     Using js:
@@ -30,22 +30,23 @@
 
 {#link css#}
 {% block css %}
-    /static/css/shop.css
+    <link rel="stylesheet" href="/static/css/shop.css">
 {% endblock %}
 
 {% block script %}
     <script>
 
-    let page_num;
-    
+    let page_num = 1;
+
+    {#when session is loaded#}
     $(document).on("sessionLoaded", function() {
 
-        page_num = 1;
-        
-        get_item();
+        {#get and render item automatically#}
+        get_and_render_item();
     });
-    
-    function get_item(){
+
+    {#This function is to get and render items#}
+    function get_and_render_item(){
         $.ajax({
             url: "/shop/searchItemByName",
             type: "get",
@@ -62,38 +63,39 @@
         })
     }
 
+    {#This function is to render BUTTON prev#}
     function render_prev_page_button(){
             const button = document.createElement("button");
             button.setAttribute("class", "page-button");
             button.innerText = "prev";
             button.onclick = function () {
                 page_num--;
-                get_item();
+                render_next_page_button();
             }
             $(".prev").append(button);
     }
 
-    function get_prev_page(){
-        $(".prev").empty();
+    {#This function is to get and render BUTTON prev#}
+    function get_and_render_prev_button(){
         if (page_num>1){
             render_prev_page_button()
         }
     }
 
+    {#This function is to render BUTTON next#}
     function render_next_page_button() {
         const button = document.createElement("button");
         button.setAttribute("class", "page-button");
         button.innerText = "next";
         button.onclick = function () {
             page_num++;
-            get_item();
+            get_and_render_item();
         }
         $(".next").append(button);
     }
 
-    function get_next_page(){
-        console.log(page_num)
-        $(".next").empty();
+    {#This function is to get and render BUTTON next#}
+    function get_and_render_next_button(){
         $.ajax({
             url:"/shop/hasNextPage",
             type:"get",
@@ -114,10 +116,13 @@
 
     function render_item(data){
 
-        get_next_page();
-        get_prev_page();
-
+        {#clear DOM#}
         $(".item-box").empty();
+        $(".prev").empty();
+        $(".next").empty();
+        get_and_render_next_button()
+        get_and_render_prev_button();
+
 
         for (let i=0; i<data.length; i++){
             const item = data[i];
@@ -175,7 +180,7 @@
 {% endblock %}
 
 {% block search_box %}
-    <input type="search" id="search-box" placeholder="search item by name" onkeyup="get_item()">
+    <input type="search" id="search-box" placeholder="search item by name" onkeyup="get_and_render_item()">
 {% endblock %}
 
 {% block main %}
