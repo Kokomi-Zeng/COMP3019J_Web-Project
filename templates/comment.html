@@ -80,7 +80,7 @@
         button.innerText = "next";
         button.onclick = function () {
             page_num++;
-            get_comment();
+            get_and_render_comment();
         }
         $(".next").append(button);
     }
@@ -112,7 +112,7 @@
         button.innerText = "prev";
         button.onclick = function () {
             page_num--;
-            get_comment();
+            get_and_render_comment();
         }
         $(".prev").append(button);
     }
