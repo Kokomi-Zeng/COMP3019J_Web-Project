@@ -48,6 +48,10 @@
         is_item_match_seller("{{ product_id }}")
         $(document).on("belongLoaded", function () {
 
+            if (!belong && type === "0") {
+                window.location.href = "/shop";
+            }
+
             get_item_data();
 
             get_comment();

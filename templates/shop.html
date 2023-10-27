@@ -43,8 +43,13 @@
 
         {#get and render item automatically#}
         get_and_render_item();
-        get_and_render_next_button();
-        get_and_render_prev_button();
+
+        if (type==="1" || type === "0"){
+            render_search_box();
+
+            get_and_render_next_button();
+            get_and_render_prev_button();
+        }
     });
 
     {#This function is to get and render items#}
@@ -83,6 +88,19 @@
                 get_and_render_item();
             }
             $(".prev").append(button);
+    }
+
+    function render_search_box(){
+        const search_input = document.createElement("input");
+
+        search_input.setAttribute("id", "search-box");
+        search_input.setAttribute("type", "text");
+        search_input.setAttribute("placeholder", "Search");
+        search_input.onkeyup = function (){
+            get_and_render_item();
+        }
+
+        $(".search-box").append(search_input);
     }
 
     {#This function is to get and render BUTTON prev#}
@@ -201,10 +219,6 @@
         }
     }
     </script>
-{% endblock %}
-
-{% block search_box %}
-    <input type="search" id="search-box" placeholder="search item by name" onkeyup="get_and_render_item()">
 {% endblock %}
 
 {% block main %}

@@ -123,7 +123,7 @@ def comment_info_by_id():
 
     # query the comments and sort them from high to low
     comments = Comment.query.filter_by(product_id=product_id).order_by(Comment.rating.desc()).all()
-    comments = comments[start_idx:end_idx]
+    # comments = comments[start_idx:end_idx]
 
     if not comments:
         return jsonify({"success": False, "message": "Comment not found"})
