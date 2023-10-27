@@ -4,7 +4,7 @@
     It has such funtions:
     1. get_session (Extends)
     1. log_out (Extends)
-    2. get_user_info
+    2. get_and_render_seller_info
     3. render_add
     4. add_item
     5. upload_item_img
@@ -23,7 +23,7 @@
 {% extends "base_personInfo.html" %}
 
 {% block nav_bar %}
-    <button class="nav-button" id="info" onclick="get_user_info()">info</button>
+    <button class="nav-button" id="info" onclick="get_and_render_seller_info()">info</button>
     <button class="nav-button" id="add-item" onclick="render_add()">add</button>
 {% endblock %}
 
@@ -31,14 +31,17 @@
     <script>
     let container;
 
+    {#when session is loaded#}
     $(document).on("sessionLoaded", function () {
 
         container = $(".container");
 
-        get_user_info();
+        {#Get and render seller information automatically#}
+        get_and_render_seller_info();
     })
-    
-    function get_user_info(){
+
+    {#This function is to get and render seller information#}
+    function get_and_render_seller_info(){
         $.ajax({
             url:"/seller/sellerInfo",
             type:"get",
@@ -52,18 +55,19 @@
         })
     }
 
+    {#This function is to render "add" page#}
     function render_add(){
 
-        {#清除dom#}
+        {#clear DOM#}
         container.empty();
 
-        {#form for input img#}
+        {#Render FORM for input img#}
         const img_form = document.createElement("form");
         img_form.setAttribute("class", "img-form");
 
         container.append(img_form);
 
-        {#input img#}
+        {#Render INPUT img#}
         const img_div = document.createElement("div");
         const img_show = document.createElement("img");
         const img_input = document.createElement("input");
@@ -78,6 +82,8 @@
         img_input.setAttribute("id", "file");
         img_input.setAttribute("name", "image");
         img_input.setAttribute("accept", "image/*");
+
+        {#when user choice a different image, preview it#}
         img_input.onchange = function (){
             let reader = new FileReader();
             reader.onload = function (ev){
@@ -91,7 +97,7 @@
         img_form.append(img_div);
 
 
-        {#form input message#}
+        {#Render INPUT message#}
         const msg_form = document.createElement("form");
         msg_form.setAttribute("class", "msg-form");
 
@@ -109,7 +115,7 @@
         msg_form.append(name_div);
 
 
-        {#添加新物品——————库存————————————————————————————————————————————————————————————————————————————————#}
+        {#Render INPUT storage#}
         const storage_div = document.createElement("div");
         const storage_input = document.createElement("input");
         
@@ -123,7 +129,7 @@
         msg_form.append(storage_div);
 
 
-        {#添加新物品——————介绍————————————————————————————————————————————————————————————————————————————————#}
+        {#Render INPUT description#}
         const description_div = document.createElement("div");
         const description_input = document.createElement("input");
         
@@ -136,7 +142,7 @@
         msg_form.append(description_div);
 
 
-        {#添加新物品——————价格————————————————————————————————————————————————————————————————————————————————#}
+        {#Render INPUT price#}
         const price_div = document.createElement("div");
         const price_input = document.createElement("input");
         
@@ -150,7 +156,7 @@
         msg_form.append(price_div);
 
 
-        {#添加新物品——————提交按钮——————————————————————————————————————————————————————————————————————————————#}
+        {#Render BUTTON submit#}
         const submit_div = document.createElement("div");
         const submit_button = document.createElement("button");
 
@@ -161,13 +167,14 @@
         submit_button.innerText = "Confirm";
         submit_button.onclick = function (){
             const formdata = new FormData(img_form);
-            add_item(name_input.value, price_input.value, storage_input.value, description_input.value, formdata)
+            create_item(name_input.value, price_input.value, storage_input.value, description_input.value, formdata)
         }
         submit_div.append(submit_button);
         msg_form.append(submit_div);
     }
 
-    function add_item(name, price, storage, description, formdata){
+    {#This function is to create items#}
+    function create_item(name, price, storage, description, formdata){
         $.ajax({
             url:'/products/addItem',
             type:'get',
@@ -182,8 +189,12 @@
             },
             success:function (data){
                 if (data.success){
+
+                    {#Create item successfully: begin to upload item image#}
                     upload_item_img(formdata, data.product_id);
                     alert(data.message);
+
+                    {#reload page#}
                     render_add();
                 }else {
                     alert(data.message);
@@ -192,7 +203,7 @@
         })
     }
 
-    {#上传图片方法————————————————————————————————————————————————————————————————————————————————————————————#}
+    {#This function is to upload image depend on fromdata and product id#}
     function upload_item_img(formdata, product_id){
         $.ajax({
             url:"/images/upload_image_product?product_id=" + product_id,
@@ -202,10 +213,7 @@
             processData:false,
             contentType:false,
             success:function (data){
-                if (data.success) {
-                    $(".show-image").attr("src", data.url);
-                    alert(data.message);
-                }else {
+                if (!data.success) {
                     alert(data.message);
                 }
             }

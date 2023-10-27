@@ -13,7 +13,7 @@ function render_comment(data){
 
         $(".comment-box").append(comment_div);
 
-        const commenter_window = create_commenter_window(comment_div, comment)
+        const commenter_window = create_commenter_window(comment)
 
         comment_div.append(commenter_window);
 
@@ -22,6 +22,8 @@ function render_comment(data){
         const commenter_img = document.createElement("img");
 
         commenter_img_div.setAttribute("class", "commenter-img");
+        commenter_img.setAttribute("width", "300px")
+        commenter_img.setAttribute("height", "300px")
         commenter_img.setAttribute("src", comment.user_image)
 
         commenter_img_div.append(commenter_img);
@@ -68,7 +70,7 @@ function render_comment(data){
         const commenter_rating_div = document.createElement("div");
         const commenter_rating = document.createElement("span");
 
-        commenter_rating_div.setAttribute("class", "commenter-name");
+        commenter_rating_div.setAttribute("class", "commenter-rating");
         commenter_rating.innerText = "Rating: " + comment.rating;
 
         commenter_rating_div.append(commenter_rating);
@@ -100,6 +102,8 @@ function create_commenter_window(comment) {
     const commenter_img = document.createElement("img");
 
     commenter_img_div.setAttribute("class", "commenter-img-window");
+    commenter_img.setAttribute("width", "300px")
+    commenter_img.setAttribute("height", "300px")
     commenter_img.setAttribute("src", comment.user_image)
 
     commenter_img_div.append(commenter_img);
@@ -109,7 +113,7 @@ function create_commenter_window(comment) {
     const commenter_name = document.createElement("span");
 
     commenter_name_div.setAttribute("class", "commenter-name-window");
-    commenter_name.innerText = "name: " + comment.user_name;
+    commenter_name.innerText = "name: " + comment.commenter_name;
 
     commenter_name_div.append(commenter_name);
     commenter_window.append(commenter_name_div);

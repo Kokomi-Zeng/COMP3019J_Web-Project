@@ -22,6 +22,7 @@
     <script src="/static/js/render_user_info.js"></script>
     <script>
 
+{#    this method is to log out user#}
     function log_out(){
         $.ajax({
             url:"/clearSession",
@@ -29,7 +30,9 @@
             contentType: "application/json",
             dataType: "json",
             success:function (data){
-                window.location.replace("/");
+
+                {#jump to shop page#}
+                window.location.replace("/shop");
             }
         })
     }

@@ -4,12 +4,12 @@
     It has such funtions:
     1. get_session (Extends)
     1. log_out (Extends)
-    2. get_user_info
-    3. get_money
+    2. get_and_render_user_info
+    3. get_and_render_money
     4. render_money
     5. charge
-    6. get_purchased
-    7. render_buyer_purchased
+    6. get_and_render_purchased_items
+    7. render_purchased_items
 
     Using js:
     1. alert.js (Extends)
@@ -23,28 +23,33 @@
 #}
 {% extends "base_personInfo.html" %}
 
-{#set title#}
-{% block title %}
-{{ name }}'s account
-{% endblock %}
-
 {% block nav_bar %}
-    <button class="nav-button" id="info" onclick="get_user_info()">info</button>
-    <button class="nav-button" id="charge" onclick="get_money()">charge</button>
-    <button class="nav-button" id="purchased" onclick="get_purchased()">purchased</button>
+    <button class="nav-button" id="info" onclick="get_and_render_buyer_info()">info</button>
+    <button class="nav-button" id="charge" onclick="get_and_render_money()">charge</button>
+    <button class="nav-button" id="purchased" onclick="get_and_render_purchased_items()">purchased</button>
 {% endblock %}
 
 {% block script %}
 
     <script>
     let container;
-        
+
+    {#when session is loaded#}
     $(document).on("sessionLoaded", function () {
+
         container = $(".container");
-        get_user_info();
+
+        {#set title#}
+        {% block title %}
+        name + "'s account"
+        {% endblock %}
+
+        {#default to get and render buyer information#}
+        get_and_render_buyer_info();
     });
 
-    function get_user_info(){
+    {#This method is to get and render buyer information#}
+    function get_and_render_buyer_info(){
         $.ajax({
             url:"/buyer/buyerInfo",
             type: 'get',
@@ -59,8 +64,8 @@
         })
     }
 
-    function get_money() {
-
+    {#This method is to get and render buyer's money information#}
+    function get_and_render_money() {
         $.ajax({
             url: "/buyer/getMoney",
             type: "get",
@@ -74,12 +79,14 @@
             }
         })
     }
-    
+
+    {#This method is to render buyer's money information#}
     function render_money(data){
 
-        {#清除dom#}
+        {#clear DOM#}
         container.empty();
-        
+
+        {#Render SPAN current money#}
         const current = data.money;
         const current_div = document.createElement("div");
         const current_span = document.createElement("span");
@@ -90,19 +97,21 @@
 
         current_div.append(current_span);
         container.append(current_div);
-    
+
+        {#Render INPUT NUMBER current money#}
         const pay_div = document.createElement("div");
         const pay_input = document.createElement("input");
     
         pay_div.setAttribute("class", "charge-div");
         pay_div.setAttribute("id", "pay-div");
         pay_input.setAttribute("id", "pay");
-        pay_input.setAttribute("type", "text");
+        pay_input.setAttribute("type", "number");
         pay_input.setAttribute("placeHolder", "pay number");
     
         pay_div.append(pay_input);
         container.append(pay_div);
-    
+
+        {#Render INPUT PASSWORD password#}
         const password_div = document.createElement("div");
         const password_input = document.createElement("input");
     
@@ -114,11 +123,12 @@
     
         password_div.append(password_input);
         container.append(password_div);
-    
+
+        {#Render BUTTON purchase#}
         const submit_div = document.createElement("div");
         const submit_button = document.createElement("button");
     
-        submit_button.innerText = "Purchased!"
+        submit_button.innerText = "Purchase!"
         submit_button.onclick = function (){
             charge(password_input.value, pay_input.value);
         }
@@ -126,6 +136,7 @@
         container.append(submit_div);
     }
 
+    {#This method is to charge money#}
     function charge(password, pay){
         $.ajax({
             url:'/buyer/charge',
@@ -138,15 +149,18 @@
                 charge_num:pay,
             },
             success:function (data){
-                if (data.success) {
-                    get_money();
-                }
                 alert(data.message)
+                if (data.success) {
+
+                    {#Charge success, get and render money again#}
+                    get_and_render_money();
+                }
             }
         })
     }
-    function get_purchased(){
 
+    {#This function is to get and render purchased items#}
+    function get_and_render_purchased_items(){
         $.ajax({
             url:"/buyer/buyerItem",
             type:"get",
@@ -156,18 +170,22 @@
                 phone:phone,
             },
             success:function (data){
-                render_buyer_purchased(data)
+                render_purchased_items(data)
             }
         })
     }
 
-    function render_buyer_purchased(data){
-        {#清除dom#}
+    {#This function is to render purchased items with ajax response#}
+    function render_purchased_items(data){
+
+        {#clear DOM#}
         container.empty();
 
         for (let i = 0; i<data.length; i++) {
+            {#get each item#}
             const item = data[i];
 
+            {#Render DIV item container#}
             const item_div = document.createElement("div");
             item_div.setAttribute("class", "item-box");
             container.append(item_div);
@@ -181,6 +199,7 @@
             item_img_div.append(item_img);
             item_div.append(item_img_div);
 
+            {#Render SPAN item name#}
             const item_name_div = document.createElement("div");
             const item_name = document.createElement("span");
 
@@ -190,6 +209,7 @@
             item_name_div.append(item_name);
             item_div.append(item_name_div);
 
+            {#Render SPAN item quantity#}
             const item_quantity_div = document.createElement("div");
             const item_quantity = document.createElement("span");
 
@@ -199,6 +219,7 @@
             item_quantity_div.append(item_quantity);
             item_div.append(item_quantity_div);
 
+            {#Render SPAN purchased time#}
             const item_time_div = document.createElement("div");
             const item_time = document.createElement("span");
 
@@ -208,6 +229,7 @@
             item_time_div.append(item_time);
             item_div.append(item_time_div);
 
+            {#Render SPAN total price#}
             const item_price_div = document.createElement("div");
             const item_price = document.createElement("span");
 
