@@ -10,11 +10,11 @@
 
 The website is a product ranking website using Python, Flask, Mysql, Ajax, HTML, CSS, JavaScript.
 
-- For registered sellers, the seller can change his/her personal information, view his/her own products, view product information, search for his/her own products, modify product information, view ratings of his/her own products, and upload a catalogue of products, including full descriptions, pictures and prices.
+- For registered sellers, the seller can login, change his/her personal information, view his/her own products, view product information, search for his/her own products, modify product information, view ratings of his/her own products, and upload a catalogue of products, including full descriptions, pictures and prices.
 
-- For registered buyers, the buyer can change his/her personal information, view the products he/she has purchased, view all product information, search for all products, view all ratings for the product, rate a product (including star rating and text), purchase products, fund his/her account, and view the balance of his/her account.
+- For registered buyers, the buyer can login, change his/her personal information,view purchase information (including product name, price of the product at the time of purchase, time of purchase, and quantity of purchase), view all product information, search for all products, view all ratings for the product, rate a product (including score rating and text), purchase products, fund his/her account, and view the balance of his/her account.
 
-- For unregistered users, he/she can login, register, view the top 10 rated products, observe feedback from the top 5 positive and bottom 5 negative reviews.
+- For unregistered users, the user can register, view the top 10 rated products, observe feedback from the top 5 positive and bottom 5 negative reviews for a particular product.
 
 ## Additional Configuration
 
