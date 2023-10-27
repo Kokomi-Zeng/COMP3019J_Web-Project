@@ -1,12 +1,20 @@
+{#
+    This HTML file is page for other HTML files to extends.
+    It declare some basic style and constructure.
+    It has such funtions:
+    1. get_session
+
+    Using js:
+    1. alert.js
+    2. get_user_image.js
+
+    JS functions:
+    1. get_user_image
+    2. alert_message
+#}
 <!DOCTYPE html>
 <html lang="en">
 <head>
-{#
-页面需要参数：
-phone:当前用户phone（String）,<<<若未登录返回None></若未登录返回None></若未登录返回None></若未登录返回None>
-name:当前用户name
-type:当前用户类型，1为买家，0为卖家
-#}
     <meta charset="UTF-8">
     <title>{% block title %}{% endblock %}</title>
 {#通用css#}
