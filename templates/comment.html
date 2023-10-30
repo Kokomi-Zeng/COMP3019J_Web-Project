@@ -45,10 +45,12 @@
 
             get_and_render_comment();
 
-            console.log(belong)
-            if (!belong) {
+            if (type==="1"){
                 render_self_comment_box();
+            } else if (type==="0" && !belong) {
+                window.location.href = document.referrer;
             }
+            console.log(belong)
         })
     })
 

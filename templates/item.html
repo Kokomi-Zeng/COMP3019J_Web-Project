@@ -60,7 +60,13 @@
             if (type === "1") {
                 render_buyer_box();
             } else if (type === "0") {
-                render_modify_button();
+
+                {#seller#}
+                if (belong){
+                    window.location.href = "/shop"
+                }else {
+                    render_modify_button();
+                }
             }
         })
     });
