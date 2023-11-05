@@ -12,6 +12,9 @@
     5. get_and_render_prev_page
     6. get_and_rende_next_page
     7. render_item
+    8. render_add_button
+    9. render_buyer
+    10.render_seller
 
     Using js:
     1. alert.js (Extends)
@@ -49,6 +52,11 @@
 
             get_and_render_next_button();
             get_and_render_prev_button();
+            if (type==="0"){
+                render_buyer();
+            }else {
+                render_seller();
+            }
         }
     });
 
@@ -218,12 +226,42 @@
 
         }
     }
+
+    function render_add_button(){
+        const item_title_box = $(".item-title");
+
+        const item_add_button = document.createElement("button", {
+            class: "item-title-text",
+            type:"button",
+        })
+        item_add_button.onclick = function (){
+            window.location.href = "/sellerAdd"
+        }
+        item_add_button.innerText = "Product Management"
+        item_title_box.append(item_add_button);
+    }
+
+    function render_buyer(){
+
+    }
+
+    function render_seller(){
+        const item_title_box = $(".item-title");
+
+        const item_title_text = document.createElement("span", {
+            class: "item-title-text"
+        })
+        item_title_text.innerText = "Product Management"
+        item_title_box.append(item_title_text);
+
+        render_add_button();
+    }
     </script>
 {% endblock %}
 
 {% block main %}
-    <div class="item-box">
-    </div>
+    <div class="item-title"></div>
+    <div class="item-box"></div>
     <div class="prev"></div>
     <div class="next"></div>
 {% endblock %}
