@@ -5,13 +5,14 @@
     Sellers can modify their items in this page.
     It has such funtions:
     1. get_session (Extends)
-    2. get_item_data
+    2. get_and_render_item_data
     3. render_item_data
     4. render_prev_page_button
     5. render_buyer_box
     6. render_modify_button
-    7. get_comment
+    7. get_and_render_comment
     8. render_more_comment_button
+    9. get_and_render_rating
 
     Using js:
     1. alert.js (Extends)
@@ -52,9 +53,8 @@
                 window.location.href = "/shop";
             }
 
-            get_item_data();
-
-            get_comment();
+            get_and_render_item_data();
+            get_and_render_comment();
 
             {#buyer#}
             if (type === "1") {
@@ -71,11 +71,11 @@
         })
     });
 
-    function get_item_data(){
+    function get_and_render_item_data(){
 
         $(".img-box").empty();
-        $(".item-name").empty();
-        $(".item-rating").empty();
+        $(".item-name-box").empty();
+        $(".item-rating-box").empty();
         $(".item-price").empty();
         $(".item-storage").empty();
 
@@ -88,7 +88,8 @@
                 product_id: "{{ product_id }}"
             },
             success: function (data) {
-                render_item_data(data)
+                render_item_data(data);
+                render_rating(data.average_rating);
             }
         })
     }
@@ -96,7 +97,7 @@
     function render_item_data(data){
         let img;
         let name;
-        let rating;
+        let description;
         let price;
         let storage
         {#buyer/visiter#}
@@ -104,20 +105,20 @@
 
             img = document.createElement("img");
             name = document.createElement("span");
-            rating = document.createElement("span");
+            description = document.createElement("span");
             price = document.createElement("span");
             storage = document.createElement("span");
 
             img.setAttribute("src", data.image_src);
             name.innerText ="Name: " + data.name;
-            rating.innerText ="Rating: " + data.average_rating;
+            description.innerText ="description: " + data.description;
             price.innerText ="Price: " + data.price;
             storage.innerText ="Storage: " + data.storage;
         }else {
             {#seller#}
             img = document.createElement("img");
             name = document.createElement("input");
-            rating = document.createElement("input");
+            description = document.createElement("input");
             price = document.createElement("input");
             storage = document.createElement("input");
 
@@ -126,8 +127,8 @@
             name.setAttribute("type", "text")
             name.value ="Name: " + data.name;
 
-            rating.setAttribute("type", "text")
-            rating.value ="Rating: " + data.average_rating;
+            description.setAttribute("type", "text")
+            description.value ="description: " + data.description;
 
             price.setAttribute("type", "text")
             price.value ="Price: " + data.price;
@@ -139,7 +140,7 @@
 
         $(".img-box").append(img);
         $(".item-name-box").append(name);
-        $(".item-rating-box").append(rating);
+        $(".item-description-box").append(description);
         $(".item-price-box").append(price);
         $(".item-storage-box").append(storage);
     }
@@ -187,7 +188,7 @@
 
     }
 
-    function get_comment(){
+    function get_and_render_comment(){
         $.ajax({
             url: "/comment/commentBasicInfoById",
             type: "get",
@@ -220,6 +221,16 @@
         more_comment_button_div.append(more_comment_button);
         $(".comment-box").append(more_comment_button_div);
     }
+
+    function render_rating(){
+        const rating_box = $(".rating-box");
+        rating_box.empty();
+
+        const rating_text = document.createElement("span", {
+            class: "rating-text"
+        })
+        rating_box.append(rating_text);
+    }
     </script>
 {% endblock %}
 
@@ -229,7 +240,7 @@
     <div class="message-box">
         <div class="item-name-box">
         </div>
-        <div class="item-rating-box">
+        <div class="item-description-box">
         </div>
         <div class="item-price-box">
         </div>
@@ -237,6 +248,7 @@
         </div>
     </div>
 </div>
+<div class="rating-box"></div>
 <div class="comment-box"></div>
 
 <div class="back-button-box">
