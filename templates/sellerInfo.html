@@ -1,13 +1,11 @@
 {#
     This HTML file is page for seller to check and modify their information.
-    Seller can also add items in this page.
     It has such funtions:
     1. get_session (Extends)
     1. log_out (Extends)
     2. get_and_render_seller_info
-    3. render_add
-    4. add_item
-    5. upload_item_img
+    3. add_item
+    4. upload_item_img
 
     Using js:
     1. alert.js (Extends)
@@ -53,36 +51,6 @@
                 render_user_info(data);
             }
             
-        })
-    }
-
-    {#This function is to create items#}
-    function create_item(name, price, storage, description, formdata){
-        $.ajax({
-            url:'/products/addItem',
-            type:'get',
-            contentType: "application/json",
-            dataType: "json",
-            data:{
-                seller_phone:phone,
-                description:description,
-                storage:storage,
-                price:price,
-                product_name:name
-            },
-            success:function (data){
-                if (data.success){
-
-                    {#Create item successfully: begin to upload item image#}
-                    upload_item_img(formdata, data.product_id);
-                    alert(data.message);
-
-                    {#reload page#}
-                    render_add();
-                }else {
-                    alert(data.message);
-                }
-            }
         })
     }
 
