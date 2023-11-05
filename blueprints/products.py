@@ -121,6 +121,7 @@ def item_info_by_id():
         "name": product.product_name,
         "price": product.price,
         "average_rating": avg_rating,
+        "description": product.description,
         "storage": product.storage
     })
 
