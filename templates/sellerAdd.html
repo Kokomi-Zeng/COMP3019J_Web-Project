@@ -1,3 +1,22 @@
+{#
+    This HTML file is page for seller to add products.
+    It has such funtions:
+    1. get_session (Extends)
+    1. log_out (Extends)
+    2. render_add
+    3. create_item
+
+    Using js:
+    1. alert.js (Extends)
+    2. get_user_image.js (Extends)
+    3. render_user_info.js (Extends)
+
+    JS functions:
+    1. get_user_image (Extends)
+    2. alert_message (Extends)
+    3. render_user_info (Extends)
+#}
+
 {% extends "base_personInfo.html" %}
 
 {% block script %}
@@ -10,7 +29,9 @@
         }
     })
 
-    {#This function is to render "add" page#}
+    /**
+     * This function is to render page
+     */
     function render_add(){
 
         {#clear DOM#}
@@ -126,6 +147,43 @@
         }
         submit_div.append(submit_button);
         msg_form.append(submit_div);
+    }
+
+    /**
+     * This function is to create items
+     * @param name is product name
+     * @param price is product price
+     * @param storage is product storage
+     * @param description is product description
+     * @param formdata is FormData object that contains product image
+     */
+    function create_item(name, price, storage, description, formdata){
+        $.ajax({
+            url:'/products/addItem',
+            type:'get',
+            contentType: "application/json",
+            dataType: "json",
+            data:{
+                seller_phone:phone,
+                description:description,
+                storage:storage,
+                price:price,
+                product_name:name
+            },
+            success:function (data){
+                if (data.success){
+
+                    {#Create item successfully: begin to upload item image#}
+                    upload_item_img(formdata, data.product_id);
+                    alert(data.message);
+
+                    {#reload page#}
+                    render_add();
+                }else {
+                    alert(data.message);
+                }
+            }
+        })
     }
     </script>
 {% endblock %}
