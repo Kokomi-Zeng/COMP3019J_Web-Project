@@ -55,6 +55,10 @@ def getCommentPage():
     product_info = get_product_id()
     return render_template("comment.html", **product_info)
 
+@bp.route('/sellerAdd')
+def getSellerAddPage():
+    user_info = get_user_info()
+    return render_template('sellerAdd.html', **user_info)
 
 # This route is used to get the session
 @bp.route('/getSession')
