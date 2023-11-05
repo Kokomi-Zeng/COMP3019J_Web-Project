@@ -12,9 +12,8 @@
     5. get_and_render_prev_page
     6. get_and_rende_next_page
     7. render_item
-    8. render_add_button
-    9. render_buyer
-    10.render_seller
+    8. render_buyer
+    9. render_seller
 
     Using js:
     1. alert.js (Extends)
@@ -60,7 +59,9 @@
         }
     });
 
-    {#This function is to get and render items#}
+    /**
+     * This function is to get and render items
+     */
     function get_and_render_item(){
 
         {#clear DOM#}
@@ -86,7 +87,9 @@
         })
     }
 
-    {#This function is to render BUTTON prev#}
+    /**
+     * This function is to render BUTTON prev
+     */
     function render_prev_page_button(){
             const button = document.createElement("button");
             button.setAttribute("class", "page-button");
@@ -98,6 +101,9 @@
             $(".prev").append(button);
     }
 
+    /**
+     * This function is to render search box for buyer account
+     */
     function render_search_box(){
         const search_input = document.createElement("input");
 
@@ -111,7 +117,9 @@
         $(".search-box").append(search_input);
     }
 
-    {#This function is to get and render BUTTON prev#}
+    /**
+     * This function is to get and render BUTTON prev
+     */
     function get_and_render_prev_button(){
 
         {#clear DOM#}
@@ -122,7 +130,9 @@
         }
     }
 
-    {#This function is to render BUTTON next#}
+    /**
+     * This function is to render BUTTON next
+     */
     function render_next_page_button() {
         const button = document.createElement("button");
         button.setAttribute("class", "page-button");
@@ -134,7 +144,9 @@
         $(".next").append(button);
     }
 
-    {#This function is to get and render BUTTON next#}
+    /**
+     * This function is to get and render BUTTON next
+     */
     function get_and_render_next_button(){
 
         {#clear DOM#}
@@ -158,6 +170,10 @@
         })
     }
 
+    /**
+     * This method is to render Products depend on products data
+     * @param data is JSON that contains items info
+     */
     function render_item(data){
 
         for (let i=0; i<data.length; i++){
@@ -227,6 +243,9 @@
         }
     }
 
+    /**
+     * This function is to render "add" button for seller account
+     */
     function render_add_button(){
         const item_title_box = $(".item-title");
 
@@ -241,17 +260,29 @@
         item_title_box.append(item_add_button);
     }
 
+    /**
+     * This method is to render buyer components
+     */
     function render_buyer(){
+        const item_title_box = $(".item-title");
 
+        const item_title_text = document.createElement("span", {
+            class: "item-title-text"
+        })
+        item_title_text.innerText = "All Products:"
+        item_title_box.append(item_title_text);
     }
 
+    /**
+     * This method is to render seller components
+     */
     function render_seller(){
         const item_title_box = $(".item-title");
 
         const item_title_text = document.createElement("span", {
             class: "item-title-text"
         })
-        item_title_text.innerText = "Product Management"
+        item_title_text.innerText = "Product Management:"
         item_title_box.append(item_title_text);
 
         render_add_button();
