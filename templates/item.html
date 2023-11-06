@@ -45,10 +45,10 @@
     {#when session is loaded#}
     $(document).on("sessionLoaded", function () {
 
-        {##}
         is_item_match_seller("{{ product_id }}")
         $(document).on("belongLoaded", function () {
 
+            // invalid account
             if (!belong && type === "0") {
                 window.location.href = "/shop";
             }
@@ -73,12 +73,6 @@
 
     function get_and_render_item_data(){
 
-        $(".img-box").empty();
-        $(".item-name-box").empty();
-        $(".item-rating-box").empty();
-        $(".item-price").empty();
-        $(".item-storage").empty();
-
         $.ajax({
             url: "/products/itemInfoById",
             type: "get",
@@ -95,47 +89,84 @@
     }
 
     function render_item_data(data){
+
+        $(".img-box").empty();
+        $(".item-name-box").empty();
+        $(".item-description-box").empty();
+        $(".item-price-box").empty();
+        $(".item-storage-box").empty();
+
         let img;
         let name;
         let description;
         let price;
         let storage
+
+        img = document.createElement("img", {
+                src: data.image_src,
+                id: "item-image"
+            });
         {#buyer/visiter#}
         if (!belong) {
+            name = document.createElement("span", {
+                id:"item-name"
+            });
+            description = document.createElement("p", {
+                id:"item-description"
+            });
+            price = document.createElement("span", {
+                id:"item-price"
+            });
+            storage = document.createElement("span", {
+                id:"item-storage"
+            });
 
-            img = document.createElement("img");
-            name = document.createElement("span");
-            description = document.createElement("p");
-            price = document.createElement("span");
-            storage = document.createElement("span");
-
-            img.setAttribute("src", data.image_src);
             name.innerText ="Name: " + data.name;
             description.innerText ="description: " + data.description;
             price.innerText ="Price: " + data.price;
             storage.innerText ="Storage: " + data.storage;
         }else {
             {#seller#}
-            img = document.createElement("img");
-            name = document.createElement("input");
-            description = document.createElement("textarea");
-            price = document.createElement("input");
-            storage = document.createElement("input");
+            const img_form = document.createElement("form", {
+                class: "img-form"
+            })
+            const img_input = document.createElement("input", {
+                type:"file",
+                id:"img-input",
+                accept:"image/*"
+            })
+            img_input.onchange = function (){
+                update_item_image(new FormData(img_form));
+            }
+            img_form.append(img_input);
+            $(".img-box").append(img_form);
 
-            img.setAttribute("src", data.image_src);
+            name = document.createElement("input", {
+                type:"text",
+                value:"Name: " + data.name,
+                id:"item-name"
+            });
+            name.onblur = update_item_msg();
 
-            name.setAttribute("type", "text")
-            name.value ="Name: " + data.name;
+            description = document.createElement("textarea", {
+                id:"item-description",
+            });
+            description.innerText = "description: " + data.description;
+            description.onblur = update_item_msg();
 
-            description.setAttribute("type", "text")
-            description.value ="description: " + data.description;
+            price = document.createElement("input", {
+                type:"text",
+                value:"Price: " + data.price,
+                id:"item-price"
+            });
+            price.onblur = update_item_msg();
 
-            price.setAttribute("type", "text")
-            price.value ="Price: " + data.price;
-
-            storage.setAttribute("type", "text")
-            storage.value ="Storage: " + data.storage;
-
+            storage = document.createElement("input", {
+                type:"text",
+                value:"Storage: " + data.storage,
+                id:"item-storage"
+            });
+            storage.onblur = update_item_msg();
         }
 
         $(".img-box").append(img);
@@ -146,7 +177,7 @@
     }
 
     function render_buyer_box() {
-        console.log(333)
+
         const buy_box = document.createElement("div");
 
         buy_box.setAttribute("class", "buy-box")
@@ -230,6 +261,36 @@
             class: "rating-text"
         })
         rating_box.append(rating_text);
+    }
+
+    function update_item_image(formdata, product_id){
+        $.ajax({
+            url:"/images/upload_image_product?product_id=" + product_id,
+            type:"post",
+            data:formdata,
+            dataType:"json",
+            processData:false,
+            contentType:false,
+            success:function (data){
+                if (!data.success) {
+                    alert(data.message);
+                }else{
+                    get_and_render_item_data()
+                }
+            }
+        })
+    }
+
+    function update_item_msg(){
+        /**$.ajax({
+            url:"/products/modifyItem",
+            type:"get",
+            data:{
+                seller_phone: phone,
+
+            }
+        })
+         */
     }
     </script>
 {% endblock %}
