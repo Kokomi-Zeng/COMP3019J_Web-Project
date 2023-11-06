@@ -8,7 +8,7 @@
     2. get_and_render_item_data
     3. render_item_data
     4. render_prev_page_button
-    5. render_buyer_box
+    5. render_buyer
     6. render_modify_button
     7. get_and_render_comment
     8. render_more_comment_button
@@ -58,7 +58,7 @@
 
             {#buyer#}
             if (type === "1") {
-                render_buyer_box();
+                render_buyer();
             } else if (type === "0") {
 
                 {#seller#}
@@ -176,7 +176,7 @@
         $(".item-storage-box").append(storage);
     }
 
-    function render_buyer_box() {
+    function render_buyer() {
 
         const buy_box = document.createElement("div");
 
@@ -191,7 +191,7 @@
 
         const buy_button = document.createElement("button");
         buy_button.setAttribute("id", "buy-button");
-        buy_button.innerText = "BUY!";
+        buy_button.innerText = "BUY";
         buy_button.onclick = function () {
             $.ajax({
                 url: "/buyer/buyItem",
@@ -215,8 +215,20 @@
         buy_box.append(buy_button);
     }
 
-    function render_modify_button(){
-
+    function render_seller(){
+        //Delete BUTTON
+        const delete_button_div = document.createElement("button", {
+            class:"delete-button-box"
+        })
+        const delete_button = document.createElement("button", {
+            class:"delete_button",
+            type:"button"
+        })
+        delete_button.onclick = function (){
+            get_and_render_item_data()
+        }
+        delete_button_div.append(delete_button);
+        $(".message-box").append(delete_button_div)
     }
 
     function get_and_render_comment(){
