@@ -13,7 +13,6 @@ products_bp = Blueprint('products', __name__, url_prefix='/products')
 @products_bp.route('/modifyItem', methods=['GET'])
 def modify_item():
     seller_phone = request.args.get('seller_phone')
-    image_src = request.args.get('image_src')
     product_name = request.args.get('product_name')
     description = request.args.get('description')
 
@@ -35,13 +34,16 @@ def modify_item():
 
     # Update product information
     product.price = price
-    product.image_src = image_src
     product.storage = storage
     product.product_name = product_name
     product.description = description
 
     db.session.commit()
     return jsonify({"success": True, "message": "Product updated successfully"})
+
+# Provide modify item storage method for a seller to modify a product's storage
+def 
+
 
 
 # Provide add item method for a seller to add a product

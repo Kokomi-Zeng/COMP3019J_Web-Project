@@ -41,9 +41,12 @@ login
             dataType: "json",
             success:function (response){
                 if(response.success){
-
-                    {#success login: render previous page#}
-                    window.location.href = document.referrer
+                    if (response.isAdmin){
+                        window.location.replace("/admin")
+                    }else {
+                        {#success login: render previous page#}
+                        window.location.href = document.referrer
+                    }
                 } else {
 
                     {#fail to login: alert error message#}
