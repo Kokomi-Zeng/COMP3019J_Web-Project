@@ -103,7 +103,7 @@
         pay_div.setAttribute("id", "pay-div");
         pay_input.setAttribute("id", "pay");
         pay_input.setAttribute("type", "number");
-        pay_input.setAttribute("placeHolder", "pay number");
+        pay_input.setAttribute("placeHolder", "recharge amount");
     
         pay_div.append(pay_input);
         container.append(pay_div);
@@ -125,7 +125,7 @@
         const submit_div = document.createElement("div");
         const submit_button = document.createElement("button");
     
-        submit_button.innerText = "Purchase!"
+        submit_button.innerText = "Purchase"
         submit_button.onclick = function (){
             charge(password_input.value, pay_input.value);
         }

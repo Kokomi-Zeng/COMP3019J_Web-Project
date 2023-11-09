@@ -45,6 +45,12 @@ def getBuyerInfoPage():
     return render_template('buyerInfo.html', **user_info)
 
 
+@bp.route('/admin')
+def getAdminPage():
+    user_info = get_user_info()
+    return render_template('Admin.html', **user_info)
+
+
 @bp.route('/item')
 def getItemPage():
     product_info = get_product_id()
@@ -55,6 +61,10 @@ def getCommentPage():
     product_info = get_product_id()
     return render_template("comment.html", **product_info)
 
+@bp.route('/sellerAdd')
+def getSellerAddPage():
+    user_info = get_user_info()
+    return render_template('sellerAdd.html', **user_info)
 
 # This route is used to get the session
 @bp.route('/getSession')

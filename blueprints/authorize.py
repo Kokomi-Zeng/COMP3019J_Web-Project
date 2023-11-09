@@ -29,10 +29,14 @@ def login():
         return jsonify({"success": False, "message": "Invalid phone number."})
     user = User.query.filter_by(phone=phone).first()
     if user and check_password_hash(user.password, password):
-        # Passing data to the session
-        session['phone'] = user.phone
-        session['type'] = user.user_type
-        return jsonify({"success": True, "message": "Login successful"})
+        if user.user_type == 2:
+            return jsonify({"success": True, "message": "Login successful", "isAdmin": True})
+        else:
+
+            # Passing data to the session
+            session['phone'] = user.phone
+            session['type'] = user.user_type
+            return jsonify({"success": True, "message": "Login successful", "isAdmin": False})
     else:
         return jsonify({"success": False, "message": "Incorrect phone or password."})
 

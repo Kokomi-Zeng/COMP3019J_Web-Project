@@ -1,0 +1,214 @@
+{#
+    This HTML file is page for seller to add products.
+    It has such funtions:
+    1. get_session (Extends)
+    1. log_out (Extends)
+    2. render_add
+    3. create_item
+
+    Using js:
+    1. alert.js (Extends)
+    2. get_user_image.js (Extends)
+    3. render_user_info.js (Extends)
+
+    JS functions:
+    1. get_user_image (Extends)
+    2. alert_message (Extends)
+    3. render_user_info (Extends)
+#}
+
+{% extends "base_personInfo.html" %}
+
+{% block script %}
+    <script>
+    let container
+    $(document).on("sessionLoaded", function (){
+        container = $(".container")
+        if (type==="0"){
+            render_add();
+        }
+    })
+
+    /**
+     * This function is to render page
+     */
+    function render_add(){
+
+        {#clear DOM#}
+        container.empty();
+
+        {#Render FORM for input img#}
+        const img_form = document.createElement("form");
+        img_form.setAttribute("class", "img-form");
+
+        container.append(img_form);
+
+        {#Render INPUT img#}
+        const img_div = document.createElement("div");
+        const img_show = document.createElement("img");
+        const img_input = document.createElement("input");
+
+        img_div.setAttribute("class", "info-div");
+        img_div.setAttribute("id", "img-div");
+        img_div.style.alignItems = "center"
+        img_show.setAttribute("class", "show-img");
+        img_show.setAttribute("width", "300px");
+        img_show.setAttribute("height", "300px");
+        img_input.setAttribute("type", "file");
+        img_input.setAttribute("id", "file");
+        img_input.setAttribute("name", "image");
+        img_input.setAttribute("accept", "image/*");
+
+        {#when user choice a different image, preview it#}
+        img_input.onchange = function (){
+            let reader = new FileReader();
+            reader.onload = function (ev){
+                img_show.setAttribute("src", ev.target.result);
+            }
+            reader.readAsDataURL(img_input.files[0])
+        }
+
+        img_div.append(img_input);
+        img_div.append(img_show);
+        img_form.append(img_div);
+
+
+        {#Render INPUT message#}
+        const msg_form = document.createElement("form");
+        msg_form.setAttribute("class", "msg-form");
+
+        container.append(msg_form);
+
+        const name_div = document.createElement("div");
+        const name_input = document.createElement("input");
+
+        name_div.setAttribute("class", "item_name-div");
+        name_input.setAttribute("id", "item_name");
+        name_input.setAttribute("name", "product_name");
+        name_input.setAttribute("placeHolder", "name");
+
+        name_div.append(name_input);
+        msg_form.append(name_div);
+
+
+        {#Render INPUT storage#}
+        const storage_div = document.createElement("div");
+        const storage_input = document.createElement("input");
+
+        storage_div.setAttribute("class", "storage-div");
+        storage_input.setAttribute("id", "storage");
+        storage_input.setAttribute("name", "storage");
+        storage_input.setAttribute("type", "number");
+        storage_input.setAttribute("placeHolder", "storage");
+
+        storage_div.append(storage_input);
+        msg_form.append(storage_div);
+
+
+        {#Render INPUT description#}
+        const description_div = document.createElement("div");
+        const description_input = document.createElement("textarea");
+
+        description_div.setAttribute("class", "description-div");
+        description_input.setAttribute("id", "description");
+        description_input.setAttribute("name", "description");
+        description_input.setAttribute("placeHolder", "description");
+
+        description_div.append(description_input);
+        msg_form.append(description_div);
+
+
+        {#Render INPUT price#}
+        const price_div = document.createElement("div");
+        const price_input = document.createElement("input");
+
+        price_div.setAttribute("class", "price-div");
+        price_input.setAttribute("name", "price");
+        price_input.setAttribute("id", "price");
+        price_input.setAttribute("type", "number");
+        price_input.setAttribute("placeHolder", "price");
+
+        price_div.append(price_input);
+        msg_form.append(price_div);
+
+
+        {#Render BUTTON submit#}
+        const submit_div = document.createElement("div");
+        const submit_button = document.createElement("button");
+
+        submit_div.setAttribute("class", "submit-div");
+        submit_button.setAttribute("class", "submit-button");
+        submit_button.setAttribute("type", "button");
+
+        submit_button.innerText = "Confirm";
+        submit_button.onclick = function (){
+            const formdata = new FormData(img_form);
+            create_item(name_input.value, price_input.value, storage_input.value, description_input.value, formdata)
+        }
+        submit_div.append(submit_button);
+        msg_form.append(submit_div);
+    }
+
+    /**
+     * This function is to create items
+     * @param name is product name
+     * @param price is product price
+     * @param storage is product storage
+     * @param description is product description
+     * @param formdata is FormData object that contains product image
+     */
+    function create_item(name, price, storage, description, formdata){
+        $.ajax({
+            url:'/products/addItem',
+            type:'get',
+            contentType: "application/json",
+            dataType: "json",
+            data:{
+                seller_phone:phone,
+                description:description,
+                storage:storage,
+                price:price,
+                product_name:name
+            },
+            success:function (data){
+                if (data.success){
+
+                    {#Create item successfully: begin to upload item image#}
+                    upload_item_img(formdata, data.product_id);
+                    alert(data.message);
+
+                    {#reload page#}
+                    render_add();
+                }else {
+                    alert(data.message);
+                }
+            }
+        })
+    }
+
+    /**
+     * This function is to upload image depend on fromdata and product id
+     * @param formdata is FormData object that contains product image
+     * @param product_id is product id
+     */
+    function upload_item_img(formdata, product_id){
+        $.ajax({
+            url:"/images/upload_image_product?product_id=" + product_id,
+            type:"post",
+            data:formdata,
+            dataType:"json",
+            processData:false,
+            contentType:false,
+            success:function (data){
+                if (!data.success) {
+                    alert(data.message);
+                }
+            }
+        })
+    }
+    </script>
+{% endblock %}
+
+{% block body %}
+    <div class="container"></div>
+{% endblock %}
