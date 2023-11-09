@@ -3,8 +3,69 @@
 <head>
     <meta charset="UTF-8">
     <title>User Manage</title>
+    <script src="https://code.jquery.com/jquery-latest.js"></script>
+    <script>
+        let page_num = 1;
+
+        function get_and_render_users(){
+            $.ajax({
+                url:"getUser",
+                type:"get",
+                data:{
+                    admin_phone: phone
+                },
+                success: function (data){
+                    if (data.success){
+
+                        if ($("#search-box").val()!==""){
+                            page_num = 1;
+                        }
+                        render_users(data)
+                    }
+                }
+            })
+        }
+
+        function render_users(data){
+
+        }
+
+        function get_and_render_next_page_button(){
+            $.ajax({
+                url:"/hasNextUser",
+                type:"get",
+                data:{
+                    admin_phone: phone,
+                    keyword:$("#search-box").val(),
+                    page_num:page_num
+                },
+                success: function (data){
+                    if (data.exist) {
+                        render_next_page_button()
+                    }
+                }
+            })
+        }
+
+        function get_and_render_prev_page_button(){
+            if (page_num === 1){
+                const prev_button_box = $(".prev-page-box");
+                const prev_button = document.createElement("button", {
+                    type:"button",
+                    class:"page-button",
+                    id:"prev-page-button"
+                })
+                prev_button_box.append(prev_button);
+            }
+        }
+    </script>
 </head>
 <body>
-
+<div class="search">
+    <input type="search" placeholder="search:" id="search-box">
+</div>
+<div class="container"></div>
+<div class="prev-page-box"></div>
+<div class="next-page-box"></div>
 </body>
 </html>
