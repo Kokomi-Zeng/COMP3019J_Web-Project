@@ -42,7 +42,6 @@ def modify_item():
     return jsonify({"success": True, "message": "Product updated successfully"})
 
 # Provide modify item storage method for a seller to modify a product's storage
-def 
 
 
 
