@@ -1,0 +1,74 @@
+from flask import Blueprint, render_template, session, request, jsonify
+from werkzeug.security import generate_password_hash
+from models import Product, Comment, Buyer, User, Seller, Purchase
+from exts import db
+
+"""
+The following code is used to store the routes related to administer,
+such ?????????????????????????????????????????????????????????
+"""
+administer_bp = Blueprint('administer', __name__, url_prefix='/administer')
+
+@administer_bp.route('/deleteUser', methods=['GET'])
+def delete_user():
+    phone = request.args.get('phone')
+
+    # verify if the phone number is provided
+    if not phone:
+        return jsonify({"success": False, "message": "Phone number is required"})
+
+    user = User.query.filter_by(phone=phone).first()
+
+    # Verify that the user exists
+    if not user:
+        return jsonify({"success": False, "message": "User not found"})
+
+    # delete all data associated with the user
+    if user.user_type == '1':  # buyer
+        # delete all comments and purchases made by the buyer
+        Comment.query.filter_by(commenter_phone=phone).delete()
+        Purchase.query.filter_by(buyer_phone=phone).delete()
+        Buyer.query.filter_by(phone=phone).delete()
+    elif user.user_type == '0':  # seller
+        # first delete all products and their related comments and purchase records
+        products = Product.query.filter_by(seller_phone=phone).all()
+        for product in products:
+            Comment.query.filter_by(product_id=product.product_id).delete()
+            Purchase.query.filter_by(product_id=product.product_id).delete()
+        # then delete all products and seller
+        Product.query.filter_by(seller_phone=phone).delete()
+        Seller.query.filter_by(phone=phone).delete()
+
+    # finally delete the user itself
+    User.query.filter_by(phone=phone).delete()
+
+    db.session.commit()
+    return jsonify({"success": True, "message": "User deleted successfully"})
+
+@administer_bp.route('/updateBuyerAccount', methods=['GET'])
+def update_buyer_account():
+    phone = request.args.get('phone')
+    amount = request.args.get('amount')
+
+    # Validate that phone and amount are provided
+    if not phone or amount is None:
+        return jsonify({"success": False, "message": "Phone number and amount are required", "amount": amount})
+
+    try:
+        # Convert amount to float
+        amount = float(amount)
+    except ValueError:
+        return jsonify({"success": False, "message": "Invalid amount. Please provide a valid number.", "amount": amount})
+
+    # Find the buyer by phone number
+    buyer = Buyer.query.filter_by(phone=phone).first()
+
+    # Check if the buyer exists
+    if not buyer:
+        return jsonify({"success": False, "message": "Buyer not found", "amount": amount})
+
+    # Set the buyer's account balance to the provided amount
+    buyer.balance = amount
+
+    db.session.commit()
+    return jsonify({"success": True, "message": "Buyer account updated successfully", "amount": buyer.balance})
