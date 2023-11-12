@@ -130,3 +130,33 @@ def delete_buyer_item():
 
     db.session.commit()
     return jsonify({"success": True, "message": "Purchase record deleted successfully"})
+
+@administer_bp.route('/banUser', methods=['GET'])
+def ban_user():
+    admin_phone = request.args.get('admin_phone')
+    user_phone = request.args.get('user_phone')
+
+    # 验证管理员电话号码和用户电话号码是否提供
+    if not admin_phone or not user_phone:
+        return jsonify({"success": False, "message": "Admin and user phone numbers are required"})
+
+    # 验证操作者是否为管理员
+    admin = User.query.filter_by(phone=admin_phone).first()
+    if not admin or admin.user_type != '2':
+        return jsonify({"success": False, "message": "Operation not permitted. Admin privileges required."})
+
+    # 查找要操作的用户
+    user = User.query.filter_by(phone=user_phone).first()
+    if not user:
+        return jsonify({"success": False, "message": "User not found"})
+
+    # 根据用户当前状态切换禁止状态
+    if user.status == 'banned':
+        user.status = 'active'
+        message = "User has been unbanned successfully"
+    else:
+        user.status = 'banned'
+        message = "User has been banned successfully"
+
+    db.session.commit()
+    return jsonify({"success": True, "message": message})

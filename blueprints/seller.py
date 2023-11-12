@@ -80,6 +80,10 @@ def modify_seller_info():
     if not seller:
         return jsonify({"success": False, "message": "Seller not found"})
 
+    # If the status of the user is not active (banned)
+    if seller.user.status != 'active':
+        return jsonify({"success": False, "message": "User is banned"})
+
     # Update seller information
     if name:
         seller.name = name

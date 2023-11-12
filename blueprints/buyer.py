@@ -72,6 +72,10 @@ def charge():
     if charge_num < 10:
         return jsonify({"success": False, "message": "The minimum charge amount is 10"})
 
+    # If the status of the user is not active (banned)
+    if user.status != 'active':
+        return jsonify({"success": False, "message": "User is banned"})
+
     buyer.balance += charge_num
     db.session.commit()
 
@@ -131,6 +135,10 @@ def buy_item():
     if buyer.balance < total_price:
         return jsonify({"success": False, "message": "Insufficient funds"})
 
+    # If the status of the user is not active (banned)
+    if buyer.user.status != 'active':
+        return jsonify({"success": False, "message": "User is banned"})
+
     # balance decrease, storage decrease, new purchase added to the database
     buyer.balance -= total_price
     product.storage -= quantity
@@ -183,6 +191,10 @@ def modify_buyer_info():
     buyer = Buyer.query.filter_by(phone=phone).first()
     if not buyer:
         return jsonify({"success": False, "message": "Buyer not found"})
+
+    # If the status of the user is not active (banned)
+    if buyer.user.status != 'active':
+        return jsonify({"success": False, "message": "User is banned"})
 
     # update information
     if name:

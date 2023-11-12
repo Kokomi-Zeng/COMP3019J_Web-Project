@@ -60,7 +60,7 @@ def register():
         return jsonify({"success": False, "message": "Invalid user type."})
 
     # Create a new user, encrypted the password, and add it to the database
-    user = User(phone=phone, password=generate_password_hash(password), user_type=user_type, image_src="https://pinoss.com/kokomi/i/2023/10/20/default_image.jpg")
+    user = User(phone=phone, password=generate_password_hash(password), user_type=user_type, image_src="https://pinoss.com/kokomi/i/2023/10/20/default_image.jpg", status="active")
     db.session.add(user)
 
     if user_type == '0':

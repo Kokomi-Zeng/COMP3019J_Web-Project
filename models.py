@@ -7,6 +7,7 @@ class User(db.Model):
     password = db.Column(db.String(128))
     user_type = db.Column(db.String(10))
     image_src = db.Column(db.String(200))
+    status = db.Column(db.String(10))
 
     # The reason why we do this is to make it easier to query, so that we can query the user through buyer or seller
     buyer = db.relationship("Buyer", backref="user", uselist=False)
