@@ -160,3 +160,93 @@ def ban_user():
 
     db.session.commit()
     return jsonify({"success": True, "message": message})
+
+@administer_bp.route('/getUser', methods=['GET'])
+def get_users():
+    admin_phone = request.args.get('admin_phone')
+
+    # Check if admin phone number is provided
+    if not admin_phone:
+        return jsonify({"success": False, "message": "Admin phone number is required"})
+
+    # Check if the operator is an admin
+    admin = User.query.filter_by(phone=admin_phone).first()
+    if not admin or admin.user_type != '2':
+        return jsonify({"success": False, "message": "Operation not permitted. Admin privileges required."})
+
+    # Retrieve information of all users
+    users = User.query.all()
+    user_list = []
+    for user in users:
+        user_info = {
+            'phone': user.phone,
+            'user_type': user.user_type,
+            'image_src': user.image_src,
+            # Indicates if the user is banned ('banned') or active ('active')
+            'status': user.status
+        }
+        user_list.append(user_info)
+
+    return jsonify(user_list)
+
+@administer_bp.route('/hasNextUser', methods=['GET'])
+def has_next_user():
+    admin_phone = request.args.get('admin_phone')
+    keyword = request.args.get('keyword', "")
+
+    try:
+        page_num = int(request.args.get('page_num', 1))
+        if page_num <= 0:
+            page_num = 1
+    except ValueError:
+        return jsonify({"has_next": False})
+
+    per_page = 10
+    offset = page_num * per_page
+
+    # Check if the operator is an admin
+    admin = User.query.filter_by(phone=admin_phone).first()
+    if not admin or admin.user_type != '2':
+        return jsonify({"has_next": False, "message": "Operation not permitted. Admin privileges required."})
+
+    # Query for matching buyers and sellers based on the keyword
+    users_query = User.query
+    if keyword:
+        buyer_phones = [buyer.phone for buyer in Buyer.query.filter(Buyer.name.like(f"%{keyword}%"))]
+        seller_phones = [seller.phone for seller in Seller.query.filter(Seller.name.like(f"%{keyword}%"))]
+
+        # Combine user query with buyer and seller phone numbers
+        users_query = users_query.filter(User.phone.in_(buyer_phones + seller_phones))
+
+    # Count the total number of users that meet the criteria
+    total_users = users_query.count()
+
+    # Calculate if there is a next page
+    has_next = total_users > offset
+    return jsonify({"has_next": has_next})
+
+@administer_bp.route('/hasNextBuyerItem', methods=['GET'])
+def has_next_buyer_item():
+    admin_phone = request.args.get('admin_phone')
+
+    try:
+        page_num = int(request.args.get('page_num', 1))
+        if page_num <= 0:
+            page_num = 1
+    except ValueError:
+        return jsonify({"has_next": False})
+
+    per_page = 10
+    offset = page_num * per_page
+
+    # Check if the operator is an admin
+    admin = User.query.filter_by(phone=admin_phone).first()
+    if not admin or admin.user_type != '2':
+        return jsonify({"has_next": False, "message": "Operation not permitted. Admin privileges required."})
+
+    # Count the total number of purchases
+    total_purchases = Purchase.query.count()
+
+    # Calculate if there is a next page
+    has_next = total_purchases > offset
+    return jsonify({"has_next": has_next})
