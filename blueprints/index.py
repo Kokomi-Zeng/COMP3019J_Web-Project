@@ -61,6 +61,25 @@ def getCommentPage():
     product_info = get_product_id()
     return render_template("comment.html", **product_info)
 
+@bp.route('/userManage')
+def getUserManagePage():
+    phone = request.args.get('phone')
+    return render_template('userManage.html', phone=phone)
+
+@bp.route('/itemManage')
+def getItemManagePage():
+    try:
+        product_id = int(request.args.get('product_id'))
+    except (TypeError, ValueError):
+        return jsonify({"success": False, "message": "Invalid Product ID. Please provide a valid integer."})
+    return render_template('itemManage.html', product_id=product_id)
+
+@bp.route('/buyerItemManage')
+def getBuyerItemManagePage():
+    phone = request.args.get('phone')
+    return render_template('buyerItemManage.html', phone=phone)
+
+
 @bp.route('/sellerAdd')
 def getSellerAddPage():
     user_info = get_user_info()
