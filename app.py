@@ -1,4 +1,5 @@
 import config
+from blueprints.administer import administer_bp
 from blueprints.image import image_bp
 from flask import Flask
 
@@ -32,6 +33,7 @@ app.register_blueprint(seller_bp)
 app.register_blueprint(shop_bp)
 app.register_blueprint(image_bp)
 app.register_blueprint(user_bp)
+app.register_blueprint(administer_bp)
 
 # Make migration effective
 migrate = Migrate(app, db)
