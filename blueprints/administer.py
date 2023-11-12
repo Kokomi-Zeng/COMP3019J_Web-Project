@@ -72,3 +72,61 @@ def update_buyer_account():
 
     db.session.commit()
     return jsonify({"success": True, "message": "Buyer account updated successfully", "amount": buyer.balance})
+
+@administer_bp.route('/deleteItem', methods=['GET'])
+def delete_item():
+    try:
+        product_id = int(request.args.get('product_id'))
+    except (TypeError, ValueError):
+        return jsonify({"success": False, "message": "Invalid Product ID. Please provide a valid integer."})
+
+    # Check if the product exists
+    product = Product.query.get(product_id)
+    if not product:
+        return jsonify({"success": False, "message": "Product not found"})
+
+    # Delete related comments and purchases
+    Comment.query.filter_by(product_id=product_id).delete()
+    Purchase.query.filter_by(product_id=product_id).delete()
+
+    # Finally, delete the product itself
+    db.session.delete(product)
+
+    db.session.commit()
+    return jsonify({"success": True, "message": "Product deleted successfully"})
+
+@administer_bp.route('/deleteComment', methods=['GET'])
+def delete_comment():
+    try:
+        comment_id = int(request.args.get('comment_id'))
+    except (TypeError, ValueError):
+        return jsonify({"success": False, "message": "Invalid Comment ID. Please provide a valid integer."})
+
+    # Check if the comment exists
+    comment = Comment.query.get(comment_id)
+    if not comment:
+        return jsonify({"success": False, "message": "Comment not found"})
+
+    # Delete the comment
+    db.session.delete(comment)
+
+    db.session.commit()
+    return jsonify({"success": True, "message": "Comment deleted successfully"})
+
+@administer_bp.route('/deleteBuyerItem', methods=['GET'])
+def delete_buyer_item():
+    try:
+        purchase_id = int(request.args.get('purchase_id'))
+    except (TypeError, ValueError):
+        return jsonify({"success": False, "message": "Invalid Purchase ID. Please provide a valid integer."})
+
+    # Check if the purchase record exists
+    purchase = Purchase.query.get(purchase_id)
+    if not purchase:
+        return jsonify({"success": False, "message": "Purchase record not found"})
+
+    # Delete the purchase record
+    db.session.delete(purchase)
+
+    db.session.commit()
+    return jsonify({"success": True, "message": "Purchase record deleted successfully"})
