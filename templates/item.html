@@ -65,7 +65,7 @@
                 if (belong){
                     window.location.href = "/shop"
                 }else {
-                    render_modify_button();
+                    render_seller();
                 }
             }
         })
@@ -178,11 +178,12 @@
 
     function render_buyer() {
 
+        const left_box = $(".left-box");
         const buy_box = document.createElement("div");
 
         buy_box.setAttribute("class", "buy-box")
 
-        $(".left-box").append(buy_box);
+        left_box.append(buy_box);
         
         const buy_num = document.createElement("input");
         buy_num.setAttribute("type", "num");
@@ -206,7 +207,7 @@
                 success: function (data) {
                     alert(data.message);
                     if (data.success) {
-                        render_item_data();
+                        get_and_render_item_data();
                     }
                 }
             })
@@ -225,7 +226,7 @@
             type:"button"
         })
         delete_button.onclick = function (){
-            get_and_render_item_data()
+            window.location.replace("/shop")
         }
         delete_button_div.append(delete_button);
         $(".message-box").append(delete_button_div)

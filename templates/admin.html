@@ -2,16 +2,16 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>User Manage</title>
+    <title>Admin</title>
     <script src="https://code.jquery.com/jquery-latest.js"></script>
     <script>
         let page_num = 1;
 
-        $(document).on("sessionLoaded", function (){
+        window.onload = function (){
             get_and_render_users();
             get_and_render_next_page_button();
             get_and_render_prev_page_button();
-        })
+        }
 
         function get_and_render_users(){
             $.ajax({
@@ -33,6 +33,9 @@
         }
 
         function render_users(data){
+            const container = $(".container");
+            container.empty();
+
 
         }
 
@@ -56,6 +59,8 @@
         function get_and_render_prev_page_button(){
             if (page_num === 1){
                 const prev_button_box = $(".prev-page-box");
+                prev_button_box.empty();
+
                 const prev_button = document.createElement("button", {
                     type:"button",
                     class:"page-button",
@@ -71,6 +76,8 @@
 
         function render_next_page_button(){
             const next_button_box = $(".next-page-box");
+            next_button_box.empty();
+
             const next_button = document.createElement("button", {
                 type:"button",
                 class:"page-button",

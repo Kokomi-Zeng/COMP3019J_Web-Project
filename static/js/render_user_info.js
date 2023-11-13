@@ -1,12 +1,12 @@
 /**
  * This method is to render user info depend on the ajax response.
+ * This method render data in $(".user-info-box")
  * @param data is the ajax response.
  */
 function render_user_info(data) {
 
     // clear DOM
-    const container = $(".container");
-    container.empty();
+    user_info_box.empty();
 
     // Render FORM for img
     const img_form = document.createElement("form");
@@ -37,7 +37,7 @@ function render_user_info(data) {
     img_form.append(img_show);
     img_form.append(img_input)
     img_div.append(img_form);
-    container.append(img_div);
+    user_info_box.append(img_div);
 
     // Render INPUT TEXT name
     const name_div = document.createElement("div");
@@ -53,7 +53,7 @@ function render_user_info(data) {
 
     name_div.append(name_label);
     name_label.append(name_input)
-    container.append(name_div);
+    user_info_box.append(name_div);
 
     // Render INPUT TEXT phone
     const phone_div = document.createElement("div");
@@ -64,7 +64,7 @@ function render_user_info(data) {
     phone_span.innerText = "Phone: " + phone;
 
     phone_div.append(phone_span);
-    container.append(phone_div);
+    user_info_box.append(phone_div);
 
     // Render INPUT TEXT introduction
 
@@ -81,7 +81,7 @@ function render_user_info(data) {
 
     introduction_div.append(introduction_label);
     introduction_label.append(introduction_input);
-    container.append(introduction_div);
+    user_info_box.append(introduction_div);
 
 
     // Render INPUT PASSWORD password
@@ -97,7 +97,7 @@ function render_user_info(data) {
 
     password_div.append(password_label);
     password_label.append(password_input);
-    container.append(password_div);
+    user_info_box.append(password_div);
 
 
     // Render BUTTON submit
@@ -110,7 +110,7 @@ function render_user_info(data) {
         modify_user_info(name_input.value, password_input.value, introduction_input.value)
     }
     submit_div.append(submit_button);
-    container.append(submit_div);
+    user_info_box.append(submit_div);
 
     get_user_image($(".user-image"));
 }
