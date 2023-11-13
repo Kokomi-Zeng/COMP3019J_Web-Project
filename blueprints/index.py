@@ -48,7 +48,7 @@ def getBuyerInfoPage():
 @bp.route('/admin')
 def getAdminPage():
     user_info = get_user_info()
-    return render_template('userManage.html', **user_info)
+    return render_template('Admin.html', **user_info)
 
 
 @bp.route('/item')
