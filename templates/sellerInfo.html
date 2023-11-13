@@ -27,10 +27,12 @@
 {% block script %}
     <script>
     let container;
+    let user_info_box;
 
     {#when session is loaded#}
     $(document).on("sessionLoaded", function () {
         container = $(".container");
+        user_info_box = container;
 
         {#set title#}
         $("title").innerText = name;

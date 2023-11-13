@@ -1,5 +1,6 @@
 /**
  * This method is to render the comment data depend on the response.
+ * It will render comment in $(".comment-box")
  * @param data is the ajax response.
  */
 function render_comment(data){

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Seller Manage</title>
+    <script src="https://code.jquery.com/jquery-latest.js"></script>
+    <script src="/static/js/render_user_info.js"></script>
+    <script src="/static/js/render_item.js"></script>
+    <script>
+        window.onload = function (){
+            get_and_render_user_info()
+            get_and_render_item()
+        }
+
+        function get_and_render_user_info(){
+            $.ajax({
+                url:"",
+                type:"get",
+                data:{},
+                success: function (data){
+                    render_user_info(data)
+                }
+            })
+        }
+
+        function get_and_render_item(){
+            $.ajax({
+                url:"/searchItemByName",
+                type:"get",
+                data: {
+                    phone: "{{ id }}",
+                    keyword: "",
+                    page_num: page_num,
+                },
+            })
+        }
+    </script>
+
+</head>
+<body>
+<div class="user-info-box"></div>
+<div class="item-box"></div>
+</body>
+</html>
