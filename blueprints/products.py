@@ -1,5 +1,5 @@
 from flask import Blueprint, jsonify, request, render_template
-from models import Product, db, Comment
+from models import Product, db, Comment, User
 
 """
 The following code is used to store the routes related to product,
@@ -32,6 +32,11 @@ def modify_item():
     if product.seller_phone != seller_phone:
         return jsonify({"success": False, "message": "The product does not belong to this seller."})
 
+    # If the status of the user is not active (banned)
+    user = User.query.filter_by(phone=seller_phone).first()
+    if user.status != 'active':
+        return jsonify({"success": False, "message": "User is banned"})
+
     # Update product information
     product.price = price
     product.storage = storage
@@ -57,6 +62,12 @@ def add_item():
         storage = int(request.args.get('storage'))
     except (TypeError, ValueError):
         return jsonify({"success": False, "message": "Invalid input. Please ensure valid types for price and storage."})
+
+    # If the status of the user is not active (banned)
+    user = User.query.filter_by(phone=seller_phone).first()
+    if user.status != 'active':
+        return jsonify({"success": False, "message": "User is banned"})
+
 
     # Create a new product
     product = Product(
@@ -91,6 +102,11 @@ def delete_item():
     # Check if the product belongs to the seller
     if product.seller_phone != seller_phone:
         return jsonify({"success": False, "message": "Unauthorized"})
+
+    # If the status of the user is not active (banned)
+    user = User.query.filter_by(phone=seller_phone).first()
+    if user.status != 'active':
+        return jsonify({"success": False, "message": "User is banned"})
 
     # Delete the product
     db.session.delete(product)
@@ -143,6 +159,43 @@ def calculate_average_rating(product_id):
     # Round to the nearest integer
     average_rating = round(average_rating)
     return average_rating
+
+def reset_item_image():
+    try:
+        product_id = int(request.args.get('product_id'))
+    except (TypeError, ValueError):
+        return jsonify({"success": False, "message": "Invalid Product ID. Please provide a valid integer."})
+
+    product = Product.query.filter_by(product_id=product_id).first()
+
+    # 验证产品是否存在
+    if not product:
+        return jsonify({"success": False, "message": "Product not found"})
+
+    # 更新产品的 image_src
+    product.image_src = "https://pinoss.com/kokomi/i/2023/10/27/anime_girl.png"
+
+    db.session.commit()
+    return jsonify({"success": True, "message": "Product image reset successfully"})
+
+@products_bp.route('/resetItemName', methods=['GET'])
+def reset_item_name():
+    try:
+        product_id = int(request.args.get('product_id'))
+    except (TypeError, ValueError):
+        return jsonify({"success": False, "message": "Invalid Product ID. Please provide a valid integer."})
+
+    product = Product.query.filter_by(product_id=product_id).first()
+
+    # 验证产品是否存在
+    if not product:
+        return jsonify({"success": False, "message": "Product not found"})
+
+    # 更新产品的名称
+    product.product_name = "new product"
+
+    db.session.commit()
+    return jsonify({"success": True, "message": "Product name reset successfully"})
 
 
 
