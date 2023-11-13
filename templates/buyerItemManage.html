@@ -3,8 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <title>Manage Buyer Item</title>
+    <script src="https://code.jquery.com/jquery-latest.js"></script>
+    <script src="/static/js/render_purchased_items.js"></script>
+    <script>
+        let purchased_item_box;
+
+        window.onload = function (){
+            purchased_item_box = $(".container")
+            get_and_render_purchased_items()
+        }
+
+        function get_and_render_purchased_items(){
+            $.ajax({
+                url:"",
+                type:"get",
+                data:{
+
+                },
+                success: function (data){
+                    render_purchased_items(data)
+                }
+            })
+        }
+    </script>
 </head>
 <body>
-
+<div class="container"></div>
 </body>
 </html>
