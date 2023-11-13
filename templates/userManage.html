@@ -7,6 +7,12 @@
     <script>
         let page_num = 1;
 
+        $(document).on("sessionLoaded", function (){
+            get_and_render_users();
+            get_and_render_next_page_button();
+            get_and_render_prev_page_button();
+        })
+
         function get_and_render_users(){
             $.ajax({
                 url:"getUser",
@@ -55,8 +61,26 @@
                     class:"page-button",
                     id:"prev-page-button"
                 })
+                prev_button.onclick = function (){
+                    page_num--;
+                    get_and_render_users();
+                }
                 prev_button_box.append(prev_button);
             }
+        }
+
+        function render_next_page_button(){
+            const next_button_box = $(".next-page-box");
+            const next_button = document.createElement("button", {
+                type:"button",
+                class:"page-button",
+                id:"next-page-button"
+            })
+            next_button.onclick = function (){
+                page_num++;
+                get_and_render_users();
+            }
+            next_button_box.append(next_button);
         }
     </script>
 </head>
