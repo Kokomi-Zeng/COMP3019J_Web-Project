@@ -53,17 +53,23 @@
 
                 {#generate tag#}
                 const a = document.createElement("a");
+                const operation = document.createElement("a")
                 if (type==="0"){
                     a.setAttribute("href", "/sellerInfo");
                     a.innerText = name;
+                    operation.setAttribute("href", "/sellerAdd")
+                    operation.innerText = "Add Item";
                 }else if(type==="1") {
                     a.setAttribute("href", "/buyerInfo");
                     a.innerText = name;
+                    operation.setAttribute("href", "/buyerItemManage")
+                    operation.innerText = "My Item";
                 }else{
                     a.setAttribute("href", "/login");
                     a.innerText = "Login";
                 }
                 $(".user-name").append(a)
+                $(".user-operation").append(operation)
 
                 {#execue functions#}
                 $(document).trigger("sessionLoaded");
@@ -100,6 +106,10 @@
     </div>
 {#可能的searchbox#}
     <div class="search-box">
+        <input type="search" id="search-box" placeholder="search" style="display: none">
+    </div>
+{#用户operation#}
+    <div class="user-operation">
     </div>
 {#用户info#}
     <div class="user-box">

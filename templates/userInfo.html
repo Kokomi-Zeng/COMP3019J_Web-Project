@@ -1,0 +1,50 @@
+{#
+    This HTML file is page for buyer to check and modify their information.
+    User can also charge money and inspect purchased items in this page.
+    It has such funtions:
+    1. get_session (Extends)
+    1. log_out (Extends)
+    2. get_and_render_user_info
+    3. get_and_render_money
+    4. render_money
+    5. charge
+    6. get_and_render_purchased_items
+    7. render_purchased_items
+
+    Using js:
+    1. alert.js (Extends)
+    2. get_user_image.js (Extends)
+    3. render_user_info.js (Extends)
+
+    JS functions:
+    1. get_user_image (Extends)
+    2. alert_message (Extends)
+    3. render_user_info (Extends)
+#}
+{% extends "base.html" %}
+
+{% block script %}
+    <script src="/static/js/render_purchased_items.js"></script>
+    <script>
+    let container;
+    let user_info_box;
+    let user_amount_box
+
+    {#when session is loaded#}
+    $(document).on("sessionLoaded", function () {
+        container = $(".user-info-box");
+        user_info_box = container;
+
+        {#set title#}
+        $("title").innerText = name;
+
+        {#default to get and render buyer information#}
+        get_and_render_user_info();
+    });
+    </script>
+{% endblock %}
+
+{% block body %}
+<div class="user-info-box"></div>
+<div class="user-amount-box"></div>
+{% endblock %}

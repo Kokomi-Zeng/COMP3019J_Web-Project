@@ -49,16 +49,19 @@
         {#get and render item automatically#}
         get_and_render_item();
 
-        if (type==="1" || type === "0"){
-            render_search_box();
+        get_and_render_next_button();
+        get_and_render_prev_button();
 
-            get_and_render_next_button();
-            get_and_render_prev_button();
-            if (type==="0"){
-                render_buyer();
-            }else {
-                render_seller();
-            }
+        if (type==="1"){
+            const search_box = $(".search-box");
+            search_box.css("display", "block");
+            search_box.keyup(function (){
+                get_and_render_item();
+            })
+            render_buyer();
+        }
+        if (type==="0"){
+            render_seller();
         }
     });
 
@@ -107,18 +110,6 @@
     /**
      * This function is to render search box for buyer account
      */
-    function render_search_box(){
-        const search_input = document.createElement("input");
-
-        search_input.setAttribute("id", "search-box");
-        search_input.setAttribute("type", "text");
-        search_input.setAttribute("placeholder", "Search");
-        search_input.onkeyup = function (){
-            get_and_render_item();
-        }
-
-        $(".search-box").append(search_input);
-    }
 
     /**
      * This function is to get and render BUTTON prev
@@ -162,7 +153,7 @@
             dataType: "json",
             data: {
                 phone: phone,
-                keyword: $("#search-box").val(),
+                keyword: $("#search-box").val()===null?"":$("#search-box").val(),
                 page_num: page_num,
             },
             success: function (data) {
