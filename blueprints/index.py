@@ -39,7 +39,7 @@ def getRegisterPage():
     return render_template('register.html', **user_info)
 
 
-@bp.route('/buyerInfo')
+@bp.route('/userInfo')
 def getBuyerInfoPage():
     user_info = get_user_info()
     return render_template('userInfo.html', **user_info)
