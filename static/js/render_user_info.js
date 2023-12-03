@@ -4,7 +4,7 @@
  */
 function render_user_info() {
     get_and_render_user_basic_data()
-    if (type===1){
+    if (type==="1"){
         get_and_render_money()
     }
 }
@@ -148,6 +148,26 @@ function render_user_basic_data(data){
     user_info_box.append(submit_div);
 
     get_user_image($(".user-image"));
+
+    // Render Button logout
+    const logout_div = document.createElement("div", {
+        class: "logout-box"
+    })
+    const logout_button = document.createElement("button", {
+        type: "button",
+        class:"logout-button",
+    })
+    logout_button.onclick = function (){
+        $.ajax({
+            url:"/clearSession",
+            type:"get",
+            success:function (data){
+                if (data.success){
+                    window.location.replace("/shop");
+                }
+            }
+        })
+    }
 }
 
     // Render SPAN current money
