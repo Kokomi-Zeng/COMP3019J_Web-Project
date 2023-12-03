@@ -1,6 +1,6 @@
 /**
  * This method is to render user info depend on the ajax response.
- * This method render data in $(".user-info-box")， $(".user-amount-box")
+ * This method render data in user_info_box, user_amount_box
  */
 function render_user_info() {
     get_and_render_user_basic_data()
@@ -179,7 +179,7 @@ function render_money(data){
     const pay_input = document.createElement("input", {
         id:"pay",
         type:"number",
-        placeHolder:"recharge amount"
+        placeHolder:"recharge amount",
         name:"charge_num"
     });
 
@@ -260,7 +260,6 @@ function charge(){
             alert(data.message)
             if (data.success) {
 
-                {#Charge success, get and render money again#}
                 get_and_render_money();
             }
         }

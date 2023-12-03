@@ -102,10 +102,8 @@
         let price;
         let storage
 
-        img = document.createElement("img", {
-                src: data.image_src,
-                id: "item-image"
-            });
+        img = document.createElement("img");
+        img.setAttribute("src", data.image_src);
         {#buyer/visiter#}
         if (!belong) {
             name = document.createElement("span", {

@@ -24,27 +24,27 @@
 {% extends "base.html" %}
 
 {% block script %}
-    <script src="/static/js/render_purchased_items.js"></script>
+    <script src="/static/js/render_user_info.js"></script>
     <script>
     let container;
     let user_info_box;
-    let user_amount_box
+    let user_amount_box;
 
     {#when session is loaded#}
     $(document).on("sessionLoaded", function () {
-        container = $(".user-info-box");
-        user_info_box = container;
+        user_info_box = $(".user-info-box");
+        user_amount_box = $(".user-amount-box")
 
         {#set title#}
         $("title").innerText = name;
 
         {#default to get and render buyer information#}
-        get_and_render_user_info();
+        render_user_info();
     });
     </script>
 {% endblock %}
 
-{% block body %}
+{% block main %}
 <div class="user-info-box"></div>
 <div class="user-amount-box"></div>
 {% endblock %}
