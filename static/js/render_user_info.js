@@ -11,7 +11,7 @@ function render_user_info() {
 
 function get_and_render_user_basic_data(){
     $.ajax({
-        url: type===1?"/buyer/buyerInfo":"/seller/sellerInfo",
+        url: type==="1"?"/buyer/buyerInfo":"/seller/sellerInfo",
         type: 'get',
         contentType: "application/json",
         dataType: "json",
@@ -150,7 +150,7 @@ function render_user_basic_data(data){
     submit_div.setAttribute("class", "submit-box");
     submit_button.innerText = "Confirm";
     submit_button.onclick = function () {
-        modify_user_info(name_input.value, introduction_input.value)
+        modify_user_info(name_input.value, introduction_input.value, password_input.value)
     }
     submit_div.append(submit_button);
     user_info_box.append(submit_div);
@@ -255,7 +255,7 @@ function render_money(data){
  * @param introduction is the introduction after modified.
  * @param password is password that promise the security of this modification.
  */
-function modify_user_info(name, introduction){
+function modify_user_info(name, introduction, password){
     $.ajax({
         url: type==="1"?"/buyer/modifyBuyerInfo":'/seller/modifySellerInfo',
         type: 'post',
@@ -265,6 +265,7 @@ function modify_user_info(name, introduction){
             phone: phone,
             name: name,
             introduction: introduction,
+            password: password
         }),
         success: function (data) {
             if (data.success) {
