@@ -1,12 +1,177 @@
-/*
-    This file contains the css for base.html
-*/
+/* base.css */
+
+:root {
+    /* Day mode colors */
+    /*base.css*/
+    --navbar-bg-color: #007bff;
+    --navbar-text-color: #fff;
+    --primary-bg-color: #f5f5f5;
+    --primary-text-color: #000;
+    --logo-border-color: #9C1A1C;
+    --input-border-color: #000;
+    --input-focus-border-color: #007bff;
+    --user-img-border-color: #000;
+    --link-text-color: #fff;
+    --link-hover-text-color: orangered;
+    --button-bg-color: #007bff;
+    --button-text-color: #fff;
+    --button-hover-bg-color: white;
+    --button-hover-text-color: #007bff;
+    --text-color: #000;
+    --background-color: #fff;
+
+    /*alert.css*/
+    --alert-bg-color: white;
+    --alert-text-color: black;
+
+    /*base_begin.css*/
+    --left-box-border-color: black;
+    --left-box-bg-start: #FFFFFF;
+    --left-box-bg-end: #E0E0E0;
+    --right-box-border-color: black;
+    --right-box-bg-start: #e0ffff;
+    --right-box-bg-end: #ffffff;
+    --back-button-bg-start: #007bff;
+    --back-button-bg-end: #0056b3;
+    --back-button-hover-bg-color: white;
+    --back-button-hover-text-color: #007bff;
+
+    /*base_personInfo.css*/
+    --nav-button-bg-color: #007bff;
+    --nav-button-text-color: #fff;
+    --nav-button-hover-bg-color: white;
+    --nav-button-hover-text-color: #007bff;
+    --container-button-shadow: rgba(0, 0, 0, 0.1);
+
+    /*comment.css*/
+    --comment-border-color: black;
+    --comment-bg-color: #f2f2f2;
+    --comment-box-shadow: rgba(0, 0, 0, 0.1);
+    --comment-text-area-bg-color: #e6e6e6;
+    --comment-text-area-border-radius: 8px;
+    --comment-span-bg-color: white;
+    --comment-input-bg-color: white;
+    --comment-button-bg-color: #007bff;
+    --comment-button-text-color: #fff;
+    --comment-button-hover-bg-color: white;
+    --comment-button-hover-text-color: #007bff;
+
+    /*item.css*/
+
+    /*login.css*/
+    --input-gradient-start: #f2f2f2;
+    --input-gradient-end: #e6e6e6;
+    --input-border-color: black;
+    --register-link-color: #007bff;
+    --register-link-hover-color: orangered;
+    --submit-button-bg-start: #007bff;
+    --submit-button-bg-end: #0056b3;
+    --submit-button-hover-bg-color: white;
+    --submit-button-hover-text-color: #007bff;
+
+    /*register.css*/
+
+    /*shop.css*/
+    --shop-item-bg-color: #fff;
+    --shop-item-border-radius: 10px;
+    --shop-item-box-shadow: rgba(0, 0, 0, 0.1);
+    --shop-item-div-bg-color: lightgrey;
+    --shop-button-bg-color: #007bff;
+    --shop-button-text-color: #fff;
+    --shop-button-hover-bg-color: white;
+    --shop-button-hover-text-color: #007bff;
+}
+
+.dark-mode {
+    /* Night mode colors */
+    /*base.css*/
+    --navbar-bg-color: #343a40;
+    --navbar-text-color: #d3d3d3;
+    --primary-bg-color: #121212;
+    --primary-text-color: #ffffff;
+    --logo-border-color: #565656;
+    --input-border-color: #565656;
+    --input-focus-border-color: #1c1c1c;
+    --user-img-border-color: #565656;
+    --link-text-color: #d3d3d3;
+    --link-hover-text-color: #ffffff;
+    --button-bg-color: #343a40;
+    --button-text-color: #d3d3d3;
+    --button-hover-bg-color: #1d2124;
+    --button-hover-text-color: #d3d3d3;
+    --text-color: #fff;
+    --background-color: #000;
+
+    /*alert.css*/
+    --alert-bg-color: #242424;
+    --alert-text-color: #d3d3d3;
+
+    /*base_begin.css*/
+    --left-box-border-color: #565656;
+    --left-box-bg-start: #242424;
+    --left-box-bg-end: #343a40;
+    --right-box-border-color: #565656;
+    --right-box-bg-start: #2e2e2e;
+    --right-box-bg-end: #3b3b3b;
+    --back-button-bg-start: #343a40;
+    --back-button-bg-end: #1d2124;
+    --back-button-hover-bg-color: #1d2124;
+    --back-button-hover-text-color: #d3d3d3;
+
+    /*base_personInfo.css*/
+    --nav-button-bg-color: #343a40;
+    --nav-button-text-color: #d3d3d3;
+    --nav-button-hover-bg-color: #1d2124;
+    --nav-button-hover-text-color: #d3d3d3;
+    --container-button-shadow: rgba(255, 255, 255, 0.1);
+
+    /*comment.css*/
+    --comment-border-color: #565656;
+    --comment-bg-color: #343a40;
+    --comment-text-area-bg-color: #2e2e2e;
+    --comment-span-bg-color: #3b3b3b;
+    --comment-input-bg-color: #2e2e2e;
+    --comment-button-bg-color: #343a40;
+    --comment-button-text-color: #d3d3d3;
+    --comment-button-hover-bg-color: #1d2124;
+    --comment-button-hover-text-color: #d3d3d3;
+
+    /*item.css*/
+
+    /*login.css*/
+    --input-gradient-start: #242424;
+    --input-gradient-end: #343a40;
+    --input-border-color: #565656;
+    --register-link-color: #d3d3d3;
+    --register-link-hover-color: #ffffff;
+    --submit-button-bg-start: #343a40;
+    --submit-button-bg-end: #1d2124;
+    --submit-button-hover-bg-color: #1d2124;
+    --submit-button-hover-text-color: #d3d3d3;
+
+    /*register.css*/
+
+    /*shop.css*/
+    --shop-item-bg-color: #343a40;
+    --shop-item-div-bg-color: #2e2e2e;
+    --shop-button-bg-color: #1d2124;
+    --shop-button-text-color: #d3d3d3;
+    --shop-button-hover-bg-color: #565656;
+    --shop-button-hover-text-color: #d3d3d3;
+}
+
+body {
+    background-color: var(--background-color);
+    color: var(--text-color);
+
+}
+
 
 /* The top navigation bar */
 .top-box {
     height: 120px;
-    background-color: #007bff;
-    color: #fff;
+    background-color: var(--navbar-bg-color);
+    color: var(--navbar-text-color);
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -14,6 +179,7 @@
     border-radius: 20px;
     /* Add shadow effect */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 /* logo img */
@@ -23,8 +189,9 @@
     width: auto;
     margin-right: 50px;
     margin-left: 50px;
-    border: #9C1A1C 2px solid;
+    border: var(--logo-border-color) 2px solid;
     border-radius: 10px;
+    transition: border-color 0.3s ease;
 }
 
 /* search bar */
@@ -42,14 +209,14 @@
     padding: 10px;
     margin-bottom: 20px;
     border-radius: 10px;
-    border: black 2px solid;
+    border: var(--input-border-color) 2px solid;
     /* Add transition effect */
     transition: border-color 0.3s ease;
 }
 
 /* When the input field gets focus, change its border color to blue */
 #search-box:focus {
-    border-color: #007bff;
+    border-color: var(--input-focus-border-color);
 }
 
 /* user-box */
@@ -65,16 +232,17 @@
 .user-box img {
     height: 100px;
     width: 100px;
-    border: black 2px solid;
+    border: var(--user-img-border-color) 2px solid;
     margin-right: 10px;
     /* set the border radius to 50% to make the image a circle */
     border-radius: 50%;
+    transition: border-color 0.3s ease;
 }
 
 /* user-box user-name */
 .user-box .user-name a {
     font-style: normal;
-    color: white;
+    color: var(--link-text-color);
     /* remove the underline of the link */
     text-decoration: none;
     /* Add transition effect */
@@ -84,15 +252,15 @@
 /* set the color of the link to orangered when the mouse is over it */
 .user-box .user-name a:hover {
     font-style: italic;
-    color: orangered;
+    color: var(--link-hover-text-color);
 }
 
 /* main */
 .main {
     padding: 40px;
     border-radius: 0 0 20px 20px;
-    /* set background color to light grey to highlight the content area */
-    background-color: #f5f5f5;
+    /* set background color to highlight the content area */
+    background-color: var(--primary-bg-color);
     /* add some gap between the top navigation bar and the main content */
     margin-top: 20px;
     /* set main to flex container */
@@ -102,8 +270,8 @@
 
 /* set round corner and transition effect for the buttons */
 .back-button-box button {
-    background-color: #007bff;
-    color: #fff;
+    background-color: var(--button-bg-color);
+    color: var(--button-text-color);
     border: none;
     border-radius: 10px;
     padding: 15px 30px;
@@ -119,7 +287,7 @@
 
 /* set the color of the button to white when the mouse is over it */
 .back-button-box button:hover {
-    background-color: white;
-    color: #007bff;
+    background-color: var(--button-hover-bg-color);
+    color: var(--button-hover-text-color);
     font-style: italic;
 }
