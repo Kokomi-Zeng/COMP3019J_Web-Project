@@ -47,12 +47,12 @@ function render_data(data){
         const user_type_div = document.createElement("div", {
             class:"user-type-box"
         })
-        const user_type = document.createElement("span", {
+        const user_type_span = document.createElement("span", {
             class:"user-type"
         })
         user_type.innerText = user.user_type
         users_box.append(user_type_div)
-        user_type_div.append(user_type)
+        user_type_div.append(user_type_span)
 
         // Render DIV status
         const status_div = document.createElement("div", {
@@ -64,5 +64,19 @@ function render_data(data){
         status.innerText = user.status
         users_box.append(status_div);
         status_div.append(status);
+
+        const jump_div = document.createElement("div", {
+            class: "jump-button"
+        })
+        const jump_button = document.createElement("button", {
+            class:"jump-button",
+            type:"button"
+        })
+        jump_button.onclick = function (){
+            window.location.href = user_type==="1"?"/buyerManage":"/sellerManage" + "?phone=" + user.phone;
+        }
+        jump_button.innerText = "detail"
+        users_box.append(jump_div)
+        jump_div.append(jump_button)
     }
 }

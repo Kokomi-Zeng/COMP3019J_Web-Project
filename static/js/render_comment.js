@@ -1,6 +1,6 @@
 /**
  * This method is to render the comment data depend on the response.
- * It will render comment in $(".comment-box")
+ * It will render comment in comment_box
  * @param data is the ajax response.
  */
 function render_comment(data){
@@ -12,7 +12,7 @@ function render_comment(data){
 
         comment_div.setAttribute("class", "comment");
 
-        $(".comment-box").append(comment_div);
+        comment_box.append(comment_div);
 
         const commenter_window = create_commenter_window(comment)
 

@@ -35,9 +35,11 @@
     <script>
     let page_num = 1;
     let belong;
+    let comment_box
 
     {#when session is loaded#}
     $(document).on("sessionLoaded", function() {
+        comment_box = $(".comment-box");
         is_item_match_seller("{{ product_id }}")
 
         {#when belong is loaded#}

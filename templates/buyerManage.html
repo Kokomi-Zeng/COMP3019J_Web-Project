@@ -1,15 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>User Manage</title>
-    <script src="https://code.jquery.com/jquery-latest.js"></script>
+{% extends "base_admin.html" %}
+
+{% block script %}
     <script src="/static/js/render_comment.js"></script>
     <script src="/js/render_user_info.js"></script>
     <script>
         window.onload = function (){
             get_and_render_user_info()
-            get_and_render_comment();
+            render_user_manage_button();
         }
 
         function get_and_render_user_info(){
@@ -24,10 +21,14 @@
                 }
             })
         }
+
+        function render_user_manage_button(){
+
+        }
     </script>
-</head>
-<body>
+{% endblock %}
+
+{% block body %}
 <div class="user-info-box"></div>
 <div class="comment-box"></div>
-</body>
-</html>
+{% endblock %}
