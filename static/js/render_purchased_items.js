@@ -1,21 +1,8 @@
 /**
  * This method will render data in "purchased_item_box"
- * @param data
+ * @data data
  */
-function render_purchased_items(){
-    $.ajax({
-        url:"/buyer/buyerItem",
-        type:"get",
-        data: {
-            phone:phone
-        },
-        success:function (data){
-            render_items(data)
-        }
-    })
-}
-
-function render_items(data){
+function render_purchased_items(data){
 
     //clear DOM
     purchased_item_box.empty();

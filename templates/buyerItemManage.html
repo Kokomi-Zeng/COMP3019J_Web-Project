@@ -1,14 +1,27 @@
-{% extends "base.html" %}
+{% extends "base_admin.html" %}
 
 {% block script %}
     <script src="/static/js/render_purchased_items.js"></script>
     <script>
     let purchased_item_box;
 
-    $(document).on("sessionLoaded", function (){
+    window.onload = function (){
         purchased_item_box = $(".purchased-item-box");
-        render_purchased_items()
+        get_and_render_purchased_items()
+    }
+
+    function get_and_render_purchased_items(){
+    $.ajax({
+        url:"/buyer/buyerItem",
+        type:"get",
+        data: {
+            admin_phone: admin_phone
+        },
+        success:function (data){
+            render_purchased_items(data)
+        }
     })
+}
     </script>
 {% endblock %}
 

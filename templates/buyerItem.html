@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block script %}
+    <script src="/static/js/render_purchased_items.js"></script>
+    <script>
+    $(document).on("sessionLoaded", function (){
+        get_and_render_purchased_items()
+    })
+
+    function get_and_render_purchased_items(){
+        $.ajax({
+            url:"buyer/buyerItem",
+            type:"get",
+            data:{phone: phone}
+            success:function (data){
+                render_purchased_items(data)
+            }
+        })
+    }
+    </script>
+{% endblock %}
