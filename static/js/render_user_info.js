@@ -142,7 +142,7 @@ function render_user_basic_data(data){
     submit_div.setAttribute("class", "submit-box");
     submit_button.innerText = "Confirm";
     submit_button.onclick = function () {
-        modify_user_info(name_input.value, password_input.value, introduction_input.value)
+        modify_user_info(name_input.value, introduction_input.value, password_input.value)
     }
     submit_div.append(submit_button);
     user_info_box.append(submit_div);
@@ -168,6 +168,9 @@ function render_user_basic_data(data){
             }
         })
     }
+    logout_button.innerText = "Logout"
+    user_info_box.append(logout_div)
+    logout_div.append(logout_button)
 }
 
     // Render SPAN current money

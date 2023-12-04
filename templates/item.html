@@ -38,13 +38,17 @@
 
 {% block script %}
     <script src="/static/js/render_comment.js"></script>
+    <script src="/js/render_item_info.js"></script>
     <script src="/static/js/is_item_match_seller.js"></script>
     <script>
     let belong;
+    let info_box;
+    let rating_box;
 
     {#when session is loaded#}
     $(document).on("sessionLoaded", function () {
-
+        info_box = $(".info-box")
+        rating_box = $(".rating-box")
         is_item_match_seller("{{ product_id }}")
         $(document).on("belongLoaded", function () {
 
@@ -82,96 +86,10 @@
                 product_id: "{{ product_id }}"
             },
             success: function (data) {
-                render_item_data(data);
+                render_item_info(data);
                 render_rating(data.average_rating);
             }
         })
-    }
-
-    function render_item_data(data){
-
-        $(".img-box").empty();
-        $(".item-name-box").empty();
-        $(".item-description-box").empty();
-        $(".item-price-box").empty();
-        $(".item-storage-box").empty();
-
-        let img;
-        let name;
-        let description;
-        let price;
-        let storage
-
-        img = document.createElement("img");
-        img.setAttribute("src", data.image_src);
-        {#buyer/visiter#}
-        if (!belong) {
-            name = document.createElement("span", {
-                id:"item-name"
-            });
-            description = document.createElement("p", {
-                id:"item-description"
-            });
-            price = document.createElement("span", {
-                id:"item-price"
-            });
-            storage = document.createElement("span", {
-                id:"item-storage"
-            });
-
-            name.innerText ="Name: " + data.name;
-            description.innerText ="description: " + data.description;
-            price.innerText ="Price: " + data.price;
-            storage.innerText ="Storage: " + data.storage;
-        }else {
-            {#seller#}
-            const img_form = document.createElement("form", {
-                class: "img-form"
-            })
-            const img_input = document.createElement("input", {
-                type:"file",
-                id:"img-input",
-                accept:"image/*"
-            })
-            img_input.onchange = function (){
-                update_item_image(new FormData(img_form));
-            }
-            img_form.append(img_input);
-            $(".img-box").append(img_form);
-
-            name = document.createElement("input", {
-                type:"text",
-                value:"Name: " + data.name,
-                id:"item-name"
-            });
-            name.onblur = update_item_msg();
-
-            description = document.createElement("textarea", {
-                id:"item-description",
-            });
-            description.innerText = "description: " + data.description;
-            description.onblur = update_item_msg();
-
-            price = document.createElement("input", {
-                type:"text",
-                value:"Price: " + data.price,
-                id:"item-price"
-            });
-            price.onblur = update_item_msg();
-
-            storage = document.createElement("input", {
-                type:"text",
-                value:"Storage: " + data.storage,
-                id:"item-storage"
-            });
-            storage.onblur = update_item_msg();
-        }
-
-        $(".img-box").append(img);
-        $(".item-name-box").append(name);
-        $(".item-description-box").append(description);
-        $(".item-price-box").append(price);
-        $(".item-storage-box").append(storage);
     }
 
     function render_buyer() {
@@ -227,7 +145,7 @@
             window.location.replace("/shop")
         }
         delete_button_div.append(delete_button);
-        $(".message-box").append(delete_button_div)
+        $(".info-box").append(delete_button_div)
     }
 
     function get_and_render_comment(){
@@ -274,24 +192,6 @@
         rating_box.append(rating_text);
     }
 
-    function update_item_image(formdata, product_id){
-        $.ajax({
-            url:"/images/upload_image_product?product_id=" + product_id,
-            type:"post",
-            data:formdata,
-            dataType:"json",
-            processData:false,
-            contentType:false,
-            success:function (data){
-                if (!data.success) {
-                    alert(data.message);
-                }else{
-                    get_and_render_item_data()
-                }
-            }
-        })
-    }
-
     function update_item_msg(){
         /**$.ajax({
             url:"/products/modifyItem",
@@ -309,16 +209,7 @@
 {% block main %}
 <div class="left-box">
     <div class="img-box"></div>
-    <div class="message-box">
-        <div class="item-name-box">
-        </div>
-        <div class="item-description-box">
-        </div>
-        <div class="item-price-box">
-        </div>
-        <div class="item-storage-box">
-        </div>
-    </div>
+    <div class="info-box"></div>
 </div>
 <div class="rating-box"></div>
 <div class="comment-box"></div>

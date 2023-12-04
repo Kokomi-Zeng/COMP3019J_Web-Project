@@ -1,17 +1,28 @@
 {% extends "base_admin.html" %}
 
 {% block script %}
-    <script src="/static/js/render_purchased_items.js"></script>
+    <script src="/js/render_item_info.js"></script>
     <script>
-        let purchased_item_box;
+        let item_container;
 
         window.onload = function (){
-            purchased_item_box = $(".purchased-item-box");
-            render_purchased_items();
+            item_container = $(".item-container");
+            get_and_render_items();
+        }
+
+        function get_and_render_items(){
+            $.ajax({
+                url:"/shop/searchItemByName",
+                type:"get",
+                data:{phone: admin_phone},
+                success:function (data){
+                    render_item_info(data)
+                }
+            })
         }
     </script>
 {% endblock %}
 
 {% block body %}
-<div class="purchased-item-box"></div>
+<div class="item-container"></div>
 {% endblock %}

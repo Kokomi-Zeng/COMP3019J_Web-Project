@@ -6,7 +6,7 @@
     None-login user can only inspect ten popular items.
     It has such funtions:
     1. get_session (Extends)
-    2. get_and_render_item
+    2. get_and_render_items
     3. render_prev_page_button
     4. render_next_page_button
     5. get_and_render_prev_page
@@ -36,7 +36,7 @@
 {% endblock %}
 
 {% block script %}
-    <script src="/static/js/render_item.js"></script>
+    <script src="/static/js/render_items.js"></script>
     <script>
 
     let page_num = 1;
@@ -47,7 +47,7 @@
         item_container = $(".item-container")
 
         {#get and render item automatically#}
-        get_and_render_item();
+        get_and_render_items();
 
         get_and_render_next_button();
         get_and_render_prev_button();
@@ -56,7 +56,7 @@
             const search_box = $(".search-box");
             search_box.css("display", "block");
             search_box.keyup(function (){
-                get_and_render_item();
+                get_and_render_items();
             })
             render_buyer();
         }
@@ -68,7 +68,7 @@
     /**
      * This function is to get and render items
      */
-    function get_and_render_item(){
+    function get_and_render_items(){
 
         {#clear DOM#}
         $(".item-container").empty();
@@ -84,7 +84,7 @@
                 page_num: page_num,
             },
             success: function (data) {
-                render_item(data);
+                render_items(data);
 
                 {#Render BUTTON page button#}
                 get_and_render_next_button()
@@ -102,14 +102,10 @@
             button.innerText = "prev";
             button.onclick = function () {
                 page_num--;
-                get_and_render_item();
+                get_and_render_items();
             }
             $(".prev").append(button);
     }
-
-    /**
-     * This function is to render search box for buyer account
-     */
 
     /**
      * This function is to get and render BUTTON prev
@@ -133,7 +129,7 @@
         button.innerText = "next";
         button.onclick = function () {
             page_num++;
-            get_and_render_item();
+            get_and_render_items();
         }
         $(".next").append(button);
     }
