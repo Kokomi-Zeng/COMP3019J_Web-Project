@@ -1,5 +1,6 @@
 /**
  * This function will render users at users_box
+ * need admin_phone
  */
 function render_users(){
     $.ajax({
@@ -7,11 +8,7 @@ function render_users(){
         type:"get",
         data:{admin_phone: admin_phone},
         success:function (data){
-            if (data.success){
-                render_data(data);
-            }else {
-                console.log(data.message)
-            }
+            render_data(data);
         }
     })
 }
@@ -19,16 +16,23 @@ function render_users(){
 function render_data(data){
     users_box.empty();
 
-    for (let i=0; i<data; i++){
+    for (let i=0; i<data.length; i++){
         const user = data[i]
         // Render DIV image
         const image_div = document.createElement("div")
+        const image_button = document.createElement("button");
         const image = document.createElement("img")
-        phone_div.setAttribute("class", "image-box")
-        phone.setAttribute("class", "image")
+        image_div.setAttribute("class", "image-box")
+        image.setAttribute("class", "image")
         image.setAttribute("src", user.image_src);
+        image_button.setAttribute("type", "button")
+        image_button.setAttribute("class", "image-button")
+        image_button.onclick = function (){
+            window.location.href = user.user_type==="1"?"/buyerManage":"/sellerManage" + "?phone=" + user.phone;
+        }
         users_box.append(image_div);
-        image_div.append(image);
+        image_div.append(image_button);
+        image_button.append(image)
 
         // Render DIV phone
         const phone_div = document.createElement("div")
@@ -44,7 +48,7 @@ function render_data(data){
         const user_type_span = document.createElement("span")
         user_type_div.setAttribute("class", "user-type-box")
         user_type_span.setAttribute("class", "user-type")
-        user_type.innerText = user.user_type
+        user_type_span.innerText = user.user_type
         users_box.append(user_type_div)
         user_type_div.append(user_type_span)
 

@@ -1,44 +1,33 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Seller Manage</title>
-    <script src="https://code.jquery.com/jquery-latest.js"></script>
+{% extends "base_admin.html" %}
+
+{% block script %}
     <script src="/static/js/render_user_info.js"></script>
-    <script src="/js/render_items.js"></script>
+    <script src="/static/js/render_items.js"></script>
     <script>
-        window.onload = function (){
-            get_and_render_user_info()
-            get_and_render_item()
-        }
+    let phone = "{{ phone }}"
+    let user_info_box
+    let user_amount_box
 
-        function get_and_render_user_info(){
-            $.ajax({
-                url:"",
-                type:"get",
-                data:{},
-                success: function (data){
-                    render_user_info(data)
-                }
-            })
-        }
+    window.onload = function (){
+        user_info_box = $(".user-info-box")
+        user_amount_box = $(".user-amount-box")
+        get_and_render_user_info()
+    }
 
-        function get_and_render_item(){
-            $.ajax({
-                url:"/searchItemByName",
-                type:"get",
-                data: {
-                    phone: "{{ id }}",
-                    keyword: "",
-                    page_num: page_num,
-                },
-            })
-        }
+    function get_and_render_user_info(){
+        $.ajax({
+            url:"/seller/sellerInfo",
+            type:"get",
+            data:{phone: phone},
+            success: function (data){
+                render_user_info(data)
+            }
+        })
+    }
     </script>
+{% endblock %}
 
-</head>
-<body>
+{% block body %}
 <div class="user-info-box"></div>
-<div class="item-box"></div>
-</body>
-</html>
+<div class="user-amount-box"></div>
+{% endblock %}
