@@ -38,15 +38,19 @@ function render_item_info(data){
         // buyer
         const name_span = document.createElement("span");
         name_span.innerText ="Name: " + data.name;
+        name_div.append(name_span)
 
         const price_span = document.createElement("span");
         price_span.innerText ="Price: " + data.price;
+        price_div.append(price_span)
 
         const storage_span = document.createElement("span")
         storage_span.innerText ="Storage: " + data.storage;
+        storage_div.append(storage_span)
 
         const description_span = document.createElement("span")
         description_span.innerText ="description: " + data.description;
+        description_div.append(description_span)
 
     }else {
         // seller
