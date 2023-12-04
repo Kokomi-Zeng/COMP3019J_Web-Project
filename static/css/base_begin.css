@@ -5,13 +5,14 @@
 .left-box {
     flex: 2;
     height: 70vh;
-    border: 2px black solid;
+    border: 2px var(--left-box-border-color) solid;
     position: relative;
-    background: linear-gradient(to bottom, #FFFFFF, #E0E0E0);
+    background: linear-gradient(to bottom, var(--left-box-bg-start), var(--left-box-bg-end));
     border-radius: 10px;
     box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.1);
     box-sizing: border-box;
     overflow: hidden;
+    transition: border-color 0.3s ease, background-color 0.3s ease;
 }
 
 .left-box img {
@@ -26,33 +27,26 @@
 }
 
 .right-box {
-    /* let the right-box take up the rest space */
     flex: 1;
     height: 70vh;
-    border: 2px black solid;
-
-    /* set the background color */
-    background-color: #e0ffff;
-    background-image: linear-gradient(90deg, #e0ffff 0%, #ffffff 100%);
-
+    border: 2px var(--right-box-border-color) solid;
+    background-color: var(--right-box-bg-start);
+    background-image: linear-gradient(90deg, var(--right-box-bg-start) 0%, var(--right-box-bg-end) 100%);
     border-radius: 10px;
     box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.2);
     box-sizing: border-box;
     overflow: hidden;
     padding: 2%;
-
     display: flex;
-    /* center the content on the cross axis */
     justify-content: center;
-    /* center the content on the main axis */
     align-items: center;
-    /* make the content vertical */
     flex-direction: column;
+    transition: border-color 0.3s ease, background-color 0.3s ease;
 }
 
 .back-button-box .back-button {
-    background-color: #007bff;
-    color: #fff;
+    background-color: var(--back-button-bg-start);
+    color: var(--button-text-color);
     border: none;
     border-radius: 10px;
     padding: 15px 30px;
@@ -61,14 +55,12 @@
     text-align: center;
     margin-left: 10px;
     margin-top: 20px;
-
-    /* set the background color to gradient */
-    background: linear-gradient(to right, #007bff, #0056b3);
+    background: linear-gradient(to right, var(--back-button-bg-start), var(--back-button-bg-end));
     transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .back-button-box .back-button:hover {
-    background-color: white;
-    color: #007bff;
+    background-color: var(--back-button-hover-bg-color);
+    color: var(--back-button-hover-text-color);
     font-style: italic;
 }

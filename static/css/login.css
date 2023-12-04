@@ -1,12 +1,10 @@
 /*
     The following CSS code is the style of the login page.
- */
+*/
 
-/* set the background div pattern of the login page */
 .login-background-div {
     margin: 0 auto;
     display: flex;
-    /* vertical arrange the element inside the box */
     align-items: center;
     flex-direction: column;
 }
@@ -21,9 +19,8 @@
     width: 250px;
     font-size: 20px;
     border-radius: 10px;
-    /* set the background color of the input box */
-    background: linear-gradient(to right, #f2f2f2, #e6e6e6);
-    border: black 2px solid;
+    background: linear-gradient(to right, var(--input-gradient-start), var(--input-gradient-end));
+    border: 2px solid var(--input-border-color);
 }
 
 .login-background-div .register a {
@@ -31,18 +28,17 @@
     margin-bottom: 20px;
     margin-left: 10px;
     font-size: 20px;
-    color: #007bff;
-    /* set the transition effect of the color */
+    color: var(--register-link-color);
     transition: color 0.3s ease;
 }
 
 .login-background-div .register a:hover {
-    color: orangered;
+    color: var(--register-link-hover-color);
 }
 
 .login-background-div .submit button {
-    background-color: #007bff;
-    color: #fff;
+    background-color: var(--submit-button-bg-start);
+    color: var(--button-text-color);
     border: none;
     border-radius: 10px;
     padding: 15px 30px;
@@ -51,15 +47,12 @@
     text-align: center;
     margin-left: 10px;
     margin-top: 20px;
-    /* set the background color of the button */
-    background: linear-gradient(to right, #007bff, #0056b3);
-
-    /* set the transition effect of the color */
+    background: linear-gradient(to right, var(--submit-button-bg-start), var(--submit-button-bg-end));
     transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .login-background-div .submit button:hover {
-    background-color: white;
-    color: #007bff;
+    background-color: var(--submit-button-hover-bg-color);
+    color: var(--submit-button-hover-text-color);
     font-style: italic;
 }
