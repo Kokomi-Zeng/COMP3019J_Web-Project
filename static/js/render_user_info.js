@@ -50,6 +50,7 @@ function render_user_basic_data(data){
     const img_div = document.createElement("div");
     const img_show = document.createElement("img");
     const img_input = document.createElement("input");
+    const img_button = document.createElement("button")
 
     img_div.setAttribute("class", "info-div");
     img_div.setAttribute("id", "img-div");
@@ -57,11 +58,17 @@ function render_user_basic_data(data){
     img_show.setAttribute("class", "user-image");
     img_show.setAttribute("width", "300px")
     img_show.setAttribute("height", "300px")
+    img_button.setAttribute("type", "button")
+    img_button.setAttribute("class", "image-button")
+    img_button.onclick = function (){
+        img_input.click();
+    }
 
     img_input.setAttribute("type", "file");
     img_input.setAttribute("id", "file");
     img_input.setAttribute("name", "image");
     img_input.setAttribute("accept", "image/*");
+    img_input.style.display = "None"
     img_input.onchange = function () {
         const formdata = new FormData(img_form);
         formdata.append("phone", phone);
@@ -69,7 +76,8 @@ function render_user_basic_data(data){
         upload_user_img(formdata);
     }
 
-    img_form.append(img_show);
+    img_form.append(img_button);
+    img_button.append(img_show)
     img_form.append(img_input)
     img_div.append(img_form);
     user_info_box.append(img_div);
@@ -142,7 +150,7 @@ function render_user_basic_data(data){
     submit_div.setAttribute("class", "submit-box");
     submit_button.innerText = "Confirm";
     submit_button.onclick = function () {
-        modify_user_info(name_input.value, introduction_input.value, password_input.value)
+        modify_user_info(name_input.value, introduction_input.value)
     }
     submit_div.append(submit_button);
     user_info_box.append(submit_div);
@@ -247,7 +255,7 @@ function render_money(data){
  * @param introduction is the introduction after modified.
  * @param password is password that promise the security of this modification.
  */
-function modify_user_info(name, introduction, password){
+function modify_user_info(name, introduction){
     $.ajax({
         url: type==="1"?"/buyer/modifyBuyerInfo":'/seller/modifySellerInfo',
         type: 'post',
@@ -256,7 +264,6 @@ function modify_user_info(name, introduction, password){
         data: JSON.stringify({
             phone: phone,
             name: name,
-            password: password,
             introduction: introduction,
         }),
         success: function (data) {

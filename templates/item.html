@@ -130,14 +130,13 @@
     function render_seller(){
         const operation_box = $(".operation-box");
         operation_box.empty();
+
         //Delete BUTTON
-        const delete_button_div = document.createElement("button", {
-            class:"delete-button-box"
-        })
-        const delete_button = document.createElement("button", {
-            class:"delete_button",
-            type:"button"
-        })
+        const delete_button_div = document.createElement("button")
+        const delete_button = document.createElement("button")
+        delete_button_div.setAttribute("class", "delete-button-box")
+        delete_button.setAttribute("type", "button")
+        delete_button.setAttribute("class", "delete-button")
         delete_button.innerText = "Delete"
         delete_button.onclick = function (){
             $.ajax({

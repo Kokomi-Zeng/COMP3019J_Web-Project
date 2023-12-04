@@ -47,6 +47,7 @@
         const img_div = document.createElement("div");
         const img_show = document.createElement("img");
         const img_input = document.createElement("input");
+        const img_button = document.createElement("button");
 
         img_div.setAttribute("class", "info-div");
         img_div.setAttribute("id", "img-div");
@@ -58,6 +59,12 @@
         img_input.setAttribute("id", "file");
         img_input.setAttribute("name", "image");
         img_input.setAttribute("accept", "image/*");
+        img_input.style.display = "None"
+        img_button.setAttribute("type", "button");
+        img_button.setAttribute("class", "img-button");
+        img_button.onclick = function (){
+            img_input.click();
+        }
 
         {#when user choice a different image, preview it#}
         img_input.onchange = function (){
@@ -68,8 +75,9 @@
             reader.readAsDataURL(img_input.files[0])
         }
 
+        img_div.append(img_button);
+        img_button.append(img_show);
         img_div.append(img_input);
-        img_div.append(img_show);
         img_form.append(img_div);
 
 

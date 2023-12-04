@@ -5,127 +5,107 @@
  */
 function render_item_info(data){
 
-    const img_div = document.createElement("div", {
-        class:"item-imm-box"
-    })
-    const img = document.createElement("img", {
-        class:"item-img"
-    });
+    const img_div = document.createElement("div")
+    const img = document.createElement("img");
+    img_div.setAttribute("class", "item-img-box")
+    img.setAttribute("class", "item-img")
     img.setAttribute("src", data.image_src);
     info_box.append(img_div)
     img_div.append(img)
 
-    const name_div = document.createElement("div", {
-        class:"item-name-box"
-    })
+    const name_div = document.createElement("div")
+    name_div.setAttribute("class", "item-name-box")
     info_box.append(name_div)
 
-    const description_div = document.createElement("div", {
-        class:"item-description-box"
-    })
+    const description_div = document.createElement("div")
+    description_div.setAttribute("class", "item-description-box")
     info_box.append(description_div)
 
-    const price_div = document.createElement("div", {
-        class:"item-price-box"
-    })
+    const price_div = document.createElement("div")
+    price_div.setAttribute("class", "item-price-box")
     info_box.append(price_div)
 
-    const storage_div = document.createElement("div", {
-        class:"item-storage-box"
-    })
+    const storage_div = document.createElement("div")
+    storage_div.setAttribute("class", "item-storage-box")
     info_box.append(storage_div)
 
-    const rating_span = document.createElement("span", {
-        class:"item-rating"
-    })
+    const rating_span = document.createElement("span")
+    storage_div.setAttribute("class", "item-rating")
     rating_span.innerText = data.average_rating;
     rating_box.append(rating_span)
 
     if (!belong) {
         // buyer
-        const name_span = document.createElement("span", {
-            id:"item-name"
-        });
+        const name_span = document.createElement("span");
         name_span.innerText ="Name: " + data.name;
 
-        const price_span = document.createElement("span", {
-            id:"item-price"
-        });
+        const price_span = document.createElement("span");
         price_span.innerText ="Price: " + data.price;
 
-        const storage_span = document.createElement("span", {
-            id:"item-storage"
-        });
+        const storage_span = document.createElement("span")
         storage_span.innerText ="Storage: " + data.storage;
 
-        const description_span = document.createElement("span", {
-            id:"item-description"
-        });
+        const description_span = document.createElement("span")
         description_span.innerText ="description: " + data.description;
 
     }else {
         // seller
-        const img_form = document.createElement("form", {
-            class: "img-form"
-        })
-        img_form.style.display = "None";
-        const img_input = document.createElement("input", {
-            type:"file",
-            id:"img-input",
-            accept:"image/*",
-        })
-        const img_a = document.createElement("a", {
-            class:"item-img-a"
-        })
-        img_a.onclick = function (){
-            img_input.click();
-        }
+        const img_form = document.createElement("form")
+        const img_input = document.createElement("input")
+        const img_button = document.createElement("button")
 
+        img_form.setAttribute("class", "img-form")
+        img_form.style.display = "None";
+        img_input.setAttribute("type", "file")
+        img_input.setAttribute("id", "img-input")
+        img_input.setAttribute("name", "file")
+        img_input.setAttribute("accept", "image/*")
         img_input.onchange = function (){
             update_item_image(new FormData(img_form), data.product_id);
+        }
+        img_button.setAttribute("class", "img-button")
+        img_button.setAttribute("type", "button")
+        img_button.onclick = function (){
+            img_input.click();
         }
         img.onclick = function (){
             img_input.click();
         }
         img_div.append(img_form)
-        img_div.append(img_a)
-        img_a.append(img)
+        img_div.append(img_button)
+        img_button.append(img)
         img_form.append(img_input);
 
-        const name_input = document.createElement("input", {
-            type:"text",
-            value:"Name: " + data.name,
-            id:"item-name"
-        });
+        const name_input = document.createElement("input")
+        name_input.setAttribute("class", "item-name")
+        name_input.setAttribute("type", "text")
+        name_input.setAttribute("value", "Name: " + data.name)
         name_input.onblur = function (){
             update_item_msg(name_input.value, price_input.value, storage_input.value, description_textarea.value);
         }
 
         name_div.append(name_input)
 
-        const price_input = document.createElement("input", {
-            type:"text",
-            value:"Price: " + data.price,
-            id:"item-price"
-        });
+        const price_input = document.createElement("input")
+        price_input.setAttribute("class", "item-price")
+        price_input.setAttribute("type", "text")
+        price_input.setAttribute("value", "Price: " + data.price)
         price_input.onblur = function (){
             update_item_msg(name_input.value, price_input.value, storage_input.value, description_textarea.value);
         }
         price_div.append(price_input)
 
-        const storage_input = document.createElement("input", {
-            type:"text",
-            value:"Storage: " + data.storage,
-            id:"item-storage"
-        });
+        const storage_input = document.createElement("input")
+        price_input.setAttribute("class", "item-storage")
+        price_input.setAttribute("type", "text")
+        price_input.setAttribute("value", "Storage: " + data.storage)
         storage_input.onblur = function (){
             update_item_msg(name_input.value, price_input.value, storage_input.value, description_textarea.value);
         }
         storage_div.append(storage_input)
 
-        const description_textarea = document.createElement("textarea", {
-            id:"item-description",
-        });
+        const description_textarea = document.createElement("textarea")
+        description_textarea.setAttribute("class", "item-description")
         description_textarea.innerText = "description: " + data.description;
         description_textarea.onblur = function (){
             update_item_msg(name_input.value, price_input.value, storage_input.value, description_textarea.value);
