@@ -1,5 +1,6 @@
 /**
  * This function will render at info_box & rating_box
+ * need param product_id
  * @param data is data
  */
 function render_item_info(data){
@@ -57,7 +58,7 @@ function render_item_info(data){
         });
         storage_span.innerText ="Storage: " + data.storage;
 
-        const description_span = document.createElement("p", {
+        const description_span = document.createElement("span", {
             id:"item-description"
         });
         description_span.innerText ="description: " + data.description;
@@ -76,9 +77,12 @@ function render_item_info(data){
         const img_a = document.createElement("a", {
             class:"item-img-a"
         })
+        img_a.onclick = function (){
+            img_input.click();
+        }
 
         img_input.onchange = function (){
-            update_item_image(new FormData(img_form));
+            update_item_image(new FormData(img_form), data.product_id);
         }
         img.onclick = function (){
             img_input.click();
@@ -93,7 +97,10 @@ function render_item_info(data){
             value:"Name: " + data.name,
             id:"item-name"
         });
-        name_input.onblur = update_item_msg();
+        name_input.onblur = function (){
+            update_item_msg(name_input.value, price_input.value, storage_input.value, description_textarea.value);
+        }
+
         name_div.append(name_input)
 
         const price_input = document.createElement("input", {
@@ -101,7 +108,9 @@ function render_item_info(data){
             value:"Price: " + data.price,
             id:"item-price"
         });
-        price_input.onblur = update_item_msg();
+        price_input.onblur = function (){
+            update_item_msg(name_input.value, price_input.value, storage_input.value, description_textarea.value);
+        }
         price_div.append(price_input)
 
         const storage_input = document.createElement("input", {
@@ -109,19 +118,23 @@ function render_item_info(data){
             value:"Storage: " + data.storage,
             id:"item-storage"
         });
-        storage_input.onblur = update_item_msg();
+        storage_input.onblur = function (){
+            update_item_msg(name_input.value, price_input.value, storage_input.value, description_textarea.value);
+        }
         storage_div.append(storage_input)
 
-        const description_span = document.createElement("textarea", {
+        const description_textarea = document.createElement("textarea", {
             id:"item-description",
         });
-        description_span.innerText = "description: " + data.description;
-        description_span.onblur = update_item_msg();
-        description_div.append(description_span)
+        description_textarea.innerText = "description: " + data.description;
+        description_textarea.onblur = function (){
+            update_item_msg(name_input.value, price_input.value, storage_input.value, description_textarea.value);
+        }
+        description_div.append(description_textarea)
     }
 }
 
-function update_item_image(formdata, product_id){
+function update_item_image(formdata){
     $.ajax({
         url:"/images/upload_image_product?product_id=" + product_id,
         type:"post",
@@ -138,3 +151,18 @@ function update_item_image(formdata, product_id){
         }
     })
 }
+
+function update_item_msg(name, price, storage, description){
+        $.ajax({
+            url:"/products/modifyItem",
+            type:"get",
+            data:{
+                seller_phone: phone,
+                product_name: name,
+                description: description,
+                product_id: product_id,
+                price: price,
+                storage: storage,
+            }
+        })
+    }

@@ -35,12 +35,13 @@
     <script>
     let page_num = 1;
     let belong;
-    let comment_box
+    let product_id = "{{ product_id }}";
+    let comment_box;
 
     {#when session is loaded#}
     $(document).on("sessionLoaded", function() {
         comment_box = $(".comment-box");
-        is_item_match_seller("{{ product_id }}")
+        is_item_match_seller()
 
         {#when belong is loaded#}
         $(document).on("belongLoaded", function () {
@@ -49,7 +50,7 @@
 
             if (type==="1"){
                 render_self_comment_box();
-            } else if (type==="0" && !belong) {
+            } else if (!belong) {
                 window.location.href = document.referrer;
             }
             console.log(belong)
@@ -73,8 +74,8 @@
                 render_comment(data);
 
                 {#Render BUTTON page button#}
-                get_and_render_prev_page();
-                get_and_render_next_page();
+                {#get_and_render_prev_page();#}
+                {#get_and_render_next_page();#}
             }
         })
     }

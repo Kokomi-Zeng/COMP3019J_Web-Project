@@ -161,23 +161,6 @@
     }
 
     /**
-     * This function is to render "add" button for seller account
-     */
-    function render_add_button(){
-        const item_title_box = $(".item-title");
-
-        const item_add_button = document.createElement("button", {
-            class: "item-title-text",
-            type:"button",
-        })
-        item_add_button.onclick = function (){
-            window.location.href = "/sellerAdd"
-        }
-        item_add_button.innerText = "Product Management"
-        item_title_box.append(item_add_button);
-    }
-
-    /**
      * This method is to render buyer components
      */
     function render_buyer(){
@@ -203,8 +186,6 @@
         })
         item_title_text.innerText = "Product Management:"
         item_title_box.append(item_title_text);
-
-        render_add_button();
     }
     </script>
 {% endblock %}

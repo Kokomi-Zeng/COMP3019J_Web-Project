@@ -1,8 +1,9 @@
 {% extends "base_admin.html" %}
 
 {% block script %}
-    <script src="/js/render_item_info.js"></script>
+    <script src="/static/js/render_item_info.js"></script>
     <script>
+        let product_id = "{{ product_id }}"
         let item_container;
 
         window.onload = function (){

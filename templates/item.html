@@ -38,28 +38,28 @@
 
 {% block script %}
     <script src="/static/js/render_comment.js"></script>
-    <script src="/js/render_item_info.js"></script>
+    <script src="/static/js/render_item_info.js"></script>
     <script src="/static/js/is_item_match_seller.js"></script>
     <script>
     let belong;
+    let product_id = "{{ product_id }}"
     let info_box;
     let rating_box;
-
+    let comment_box;
     {#when session is loaded#}
     $(document).on("sessionLoaded", function () {
         info_box = $(".info-box")
         rating_box = $(".rating-box")
-        is_item_match_seller("{{ product_id }}")
+        comment_box = $(".comment-box")
+        is_item_match_seller()
         $(document).on("belongLoaded", function () {
 
             // invalid account
             if (!belong && type === "0") {
                 window.location.href = "/shop";
             }
-
             get_and_render_item_data();
             get_and_render_comment();
-
             {#buyer#}
             if (type === "1") {
                 render_buyer();
@@ -67,9 +67,9 @@
 
                 {#seller#}
                 if (belong){
-                    window.location.href = "/shop"
-                }else {
                     render_seller();
+                }else {
+                    window.location.href = "/shop"
                 }
             }
         })
@@ -87,20 +87,15 @@
             },
             success: function (data) {
                 render_item_info(data);
-                render_rating(data.average_rating);
             }
         })
     }
 
     function render_buyer() {
 
-        const left_box = $(".left-box");
-        const buy_box = document.createElement("div");
+        const operation_box = $(".operation-box");
+        operation_box.empty();
 
-        buy_box.setAttribute("class", "buy-box")
-
-        left_box.append(buy_box);
-        
         const buy_num = document.createElement("input");
         buy_num.setAttribute("type", "num");
         buy_num.setAttribute("placeHolder", "buy number");
@@ -128,11 +123,13 @@
                 }
             })
         };
-        buy_box.append(buy_num);
-        buy_box.append(buy_button);
+        operation_box.append(buy_num);
+        operation_box.append(buy_button);
     }
 
     function render_seller(){
+        const operation_box = $(".operation-box");
+        operation_box.empty();
         //Delete BUTTON
         const delete_button_div = document.createElement("button", {
             class:"delete-button-box"
@@ -141,11 +138,20 @@
             class:"delete_button",
             type:"button"
         })
+        delete_button.innerText = "Delete"
         delete_button.onclick = function (){
-            window.location.replace("/shop")
+            $.ajax({
+                url:"/products/deleteItem",
+                type:"get",
+                data:{product_id: product_id},
+                success: function (data){
+                    alert(data.message)
+                    window.location.replace("/shop")
+                }
+            })
         }
         delete_button_div.append(delete_button);
-        $(".info-box").append(delete_button_div)
+        operation_box.append(delete_button_div)
     }
 
     function get_and_render_comment(){
@@ -181,35 +187,13 @@
         more_comment_button_div.append(more_comment_button);
         $(".comment-box").append(more_comment_button_div);
     }
-
-    function render_rating(){
-        const rating_box = $(".rating-box");
-        rating_box.empty();
-
-        const rating_text = document.createElement("span", {
-            class: "rating-text"
-        })
-        rating_box.append(rating_text);
-    }
-
-    function update_item_msg(){
-        /**$.ajax({
-            url:"/products/modifyItem",
-            type:"get",
-            data:{
-                seller_phone: phone,
-
-            }
-        })
-         */
-    }
     </script>
 {% endblock %}
 
 {% block main %}
 <div class="left-box">
-    <div class="img-box"></div>
     <div class="info-box"></div>
+    <div class="operation-box"></div>
 </div>
 <div class="rating-box"></div>
 <div class="comment-box"></div>
