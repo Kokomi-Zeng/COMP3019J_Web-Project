@@ -1,103 +1,17 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Admin</title>
-    <script src="https://code.jquery.com/jquery-latest.js"></script>
+{% extends "base_admin.html" %}
+
+{% block script %}
     <script src="/static/js/render_users.js"></script>
     <script>
-        let page_num = 1;
+    let users_box;
 
-        window.onload = function (){
-            get_and_render_users();
-            get_and_render_next_page_button();
-            get_and_render_prev_page_button();
-        }
-
-        function get_and_render_users(){
-            $.ajax({
-                url:"getUser",
-                type:"get",
-                data:{
-                    admin_phone: phone
-                },
-                success: function (data){
-                    if (data.success){
-
-                        if ($("#search-box").val()!==""){
-                            page_num = 1;
-                        }
-                        render_users(data)
-                    }
-                }
-            })
-        }
-
-        function render_users(data){
-            const container = $(".container");
-            container.empty();
-
-
-        }
-
-        function get_and_render_next_page_button(){
-            $.ajax({
-                url:"/hasNextUser",
-                type:"get",
-                data:{
-                    admin_phone: phone,
-                    keyword:$("#search-box").val(),
-                    page_num:page_num
-                },
-                success: function (data){
-                    if (data.exist) {
-                        render_next_page_button()
-                    }
-                }
-            })
-        }
-
-        function get_and_render_prev_page_button(){
-            if (page_num === 1){
-                const prev_button_box = $(".prev-page-box");
-                prev_button_box.empty();
-
-                const prev_button = document.createElement("button", {
-                    type:"button",
-                    class:"page-button",
-                    id:"prev-page-button"
-                })
-                prev_button.onclick = function (){
-                    page_num--;
-                    get_and_render_users();
-                }
-                prev_button_box.append(prev_button);
-            }
-        }
-
-        function render_next_page_button(){
-            const next_button_box = $(".next-page-box");
-            next_button_box.empty();
-
-            const next_button = document.createElement("button", {
-                type:"button",
-                class:"page-button",
-                id:"next-page-button"
-            })
-            next_button.onclick = function (){
-                page_num++;
-                get_and_render_users();
-            }
-            next_button_box.append(next_button);
-        }
+    window.onload = function (){
+        users_box = $(".users-box")
+        render_users();
+    }
     </script>
-</head>
-<body>
-<div class="search">
-    <input type="search" placeholder="search:" id="search-box">
-</div>
-<div class="container"></div>
-<div class="prev-page-box"></div>
-<div class="next-page-box"></div>
-</body>
-</html>
+{% endblock %}
+
+{% block body %}
+<div class="users-box"></div>
+{% endblock %}

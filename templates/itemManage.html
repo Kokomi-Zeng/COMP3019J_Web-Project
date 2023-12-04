@@ -3,8 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <title>Manage Item</title>
+    <script src="/static/js/render_purchased_items.js"></script>
+    <script>
+        let purchased_item_box;
+
+        window.onload = function (){
+            purchased_item_box = $(".purchased-item-box");
+            render_purchased_items()
+        }
+    </script>
 </head>
 <body>
-
+<div class="purchased-item-box"></div>
 </body>
 </html>

@@ -7,21 +7,8 @@
 
     $(document).on("sessionLoaded", function (){
         purchased_item_box = $(".purchased-item-box");
-        get_and_render_purchased_item()
+        render_purchased_items()
     })
-
-    function get_and_render_purchased_item(){
-        $.ajax({
-            url:"/buyer/buyerItem",
-            type:"get",
-            data: {
-                phone:phone
-            },
-            success:function (data){
-                render_purchased_items(data)
-            }
-        })
-    }
     </script>
 {% endblock %}
 
