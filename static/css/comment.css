@@ -3,10 +3,10 @@
  */
 .comment-box,
 .self-comment-box {
-    border: 2px solid black;
+    border: 2px solid var(--comment-border-color);
     border-radius: 10px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    background-color: #f2f2f2;
+    box-shadow: 0 2px 5px var(--comment-box-shadow);
+    background-color: var(--comment-bg-color);
     padding: 1rem;
     margin-left: 5%;
     margin-right: 5%;
@@ -35,11 +35,11 @@
 .commenter-window {
     display: none;
     position: absolute;
-    background-color: white;
+    background-color: var(--comment-input-bg-color);
     border: 1px solid #ccc;
     padding: 10px;
     z-index: 100;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 5px var(--comment-box-shadow);
 }
 
 
@@ -56,16 +56,17 @@
 .comment-box div,
 .self-comment-box div {
     margin: 0.5rem 1rem;
-    background-color: #e6e6e6;
+    background-color: var(--comment-text-area-bg-color);
     padding: 0.5rem;
-    border-radius: 8px;
+    border-radius: var(--comment-text-area-border-radius);
 }
+
 
 /* The pattern of the span of the comment box and self-comment box is the same */
 .comment-box span,
 .self-comment-box span {
     display: block;
-    background-color: white;
+    background-color: var(--comment-span-bg-color);
     font-size: 1.25rem;
     padding: 0.5rem;
     border-radius: 5px;
@@ -81,6 +82,7 @@
     font-size: 1.125rem;
     margin: 1rem 0;
     border-radius: 5px;
+    background-color: var(--comment-input-bg-color);
     /* allow vertical resize, but not horizontal resize */
     resize: vertical;
     word-wrap: break-word;
@@ -97,8 +99,8 @@
 
 /* The pattern of the button of the comment box */
 .self-comment-box button {
-    background-color: #007bff;
-    color: #fff;
+    background-color: var(--comment-button-bg-color);
+    color: var(--comment-button-text-color);
     border: none;
     border-radius: 10px;
     padding: 0.75rem 1.5rem;
@@ -113,8 +115,8 @@
 
 /* Set the hover effect of the button in the user comment */
 .self-comment-box button:hover {
-    background-color: white;
-    color: #007bff;
+    background-color: var(--comment-button-hover-bg-color);
+    color: var(--comment-button-hover-text-color);
     font-style: italic;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }

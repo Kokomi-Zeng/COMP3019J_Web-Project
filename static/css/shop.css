@@ -18,8 +18,8 @@
     margin-bottom: 20px;
     border-radius: 10px;
     padding: 10px;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-    background-color: #fff;
+    box-shadow: var(--shop-item-box-shadow);
+    background-color: var(--shop-item-bg-color);
     text-align: center;
 }
 .item button {
@@ -31,7 +31,7 @@
     margin-top: 20px;
     margin-bottom: 20px;
     border-radius: 10px;
-    background-color: lightgrey;
+    background-color: var(--shop-item-div-bg-color);
     font-size: 20px;
 }
 
@@ -42,7 +42,7 @@
     border: none;
     margin-top: 20px;
     margin-bottom: 20px;
-    background-color: white;
+    background-color: var(--shop-item-bg-color);
 }
 
 .item img {
@@ -56,8 +56,8 @@
     view next page button
  */
 .next button{
-    background-color: #007bff;
-    color: #fff;
+    background-color: var(--shop-button-bg-color);
+    color: var(--shop-button-text-color);
     border: none;
     border-radius: 10px;
     padding: 15px 30px;
@@ -72,8 +72,8 @@
     transition: background-color 0.3s ease, color 0.3s ease;
 }
 .next button:hover{
-    background-color: white;
-    color: #007bff;
+    background-color: var(--shop-button-hover-bg-color);
+    color: var(--shop-button-hover-text-color);
     font-style: italic;
 }
 
@@ -81,8 +81,8 @@
     view previous page button
  */
 .prev button{
-    background-color: #007bff;
-    color: #fff;
+    background-color: var(--shop-button-bg-color);
+    color: var(--shop-button-text-color);
     border: none;
     border-radius: 10px;
     padding: 15px 30px;
@@ -97,7 +97,7 @@
     transition: background-color 0.3s ease, color 0.3s ease;
 }
 .prev button:hover{
-    background-color: white;
-    color: #007bff;
+    background-color: var(--shop-button-hover-bg-color);
+    color: var(--shop-button-hover-text-color);
     font-style: italic;
 }

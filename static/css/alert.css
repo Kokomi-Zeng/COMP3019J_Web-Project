@@ -1,25 +1,26 @@
 /*
     This file contains the css for the alert message
 */
-.alert{
+
+.alert {
     display: none;
     width: 600px;
     height: 200px;
-
     /* set the position to fixed so that the alert message will not be affected by the scrolling */
     position: fixed;
-    background: white;
+    background: var(--alert-bg-color);
     margin: auto;
-    color:black;
+    color: var(--alert-text-color);
     top: 0;
     bottom: 100%;
     left: 0;
     right: 0;
-
+    transition: background-color 0.3s ease, color 0.3s ease; /* Smooth transition for color and background */
 }
-#alert-message{
+
+#alert-message {
     display: contents;
     position: fixed;
-    background: black;
-    color:black;
+    background: var(--alert-bg-color); /* Assuming you want the alert background to be the same color */
+    color: var(--alert-text-color); /* This should probably be a contrasting color to be visible, hence reusing the variable */
 }
