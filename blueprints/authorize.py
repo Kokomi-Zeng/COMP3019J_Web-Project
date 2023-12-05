@@ -4,6 +4,10 @@ from werkzeug.security import generate_password_hash, check_password_hash
 
 from exts import db
 from models import User, Seller, Buyer
+from blueprints.log import setup_logging
+from datetime import datetime
+
+logger = setup_logging()
 
 """
 This following code is used to store the routes related to authorization,
@@ -21,23 +25,42 @@ bp = Blueprint("authorize", __name__, url_prefix="/authorize")
 # Provide login method for the front end login page
 @bp.route("/login", methods=["POST"])
 def login():
-
     phone = request.json.get('phone')
     password = request.json.get('password')
 
     if len(phone) > 15:
+        logger.warning("Invalid phone number attempt",
+                       extra={"phone": phone,
+                              "log_type": "WARNING",
+                              "log_content": "Invalid phone number."
+                              })
         return jsonify({"success": False, "message": "Invalid phone number."})
+
     user = User.query.filter_by(phone=phone).first()
     if user and check_password_hash(user.password, password):
         if user.user_type == 2:
+            logger.info("Admin login",
+                        extra={"phone": phone,
+                               "log_type": "INFO",
+                               "log_content": "Admin login."
+                               })
             return jsonify({"success": True, "message": "Login successful", "isAdmin": True})
         else:
-
             # Passing data to the session
             session['phone'] = user.phone
             session['type'] = user.user_type
+            logger.info("User login",
+                        extra={"phone": phone,
+                               "log_type": "INFO",
+                               "log_content": "User login."
+                               })
             return jsonify({"success": True, "message": "Login successful", "isAdmin": False})
     else:
+        logger.warning("Incorrect phone or password attempt",
+                          extra={"phone": phone,
+                                 "log_type": "WARNING",
+                                 "log_content": "Incorrect phone or password."
+                                 })
         return jsonify({"success": False, "message": "Incorrect phone or password."})
 
 # Provide logout method for the front end logout page
