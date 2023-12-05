@@ -29,7 +29,7 @@ function render_user_info(data) {
     img_input.setAttribute("accept", "image/*");
     img_input.onchange = function (){
         const formdata = new FormData(img_form);
-        formdata.append("phone", phone);
+        // formdata.append("phone", phone);
         console.log(formdata)
         upload_user_img(formdata);
     }
@@ -150,7 +150,7 @@ function modify_user_info(name, introduction, password){
  */
 function upload_user_img(formdata){
     $.ajax({
-        url:"/images/upload_image_user",
+        url:"/images/upload_image_user?phone="+phone,
         type:"post",
         data:formdata,
         dataType:"json",

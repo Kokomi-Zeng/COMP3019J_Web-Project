@@ -167,13 +167,13 @@ def get_money():
 
     # validate whether phone exists
     if not phone:
-        return jsonify({"success": False, "message": "手机号不能为空"})
+        return jsonify({"success": False, "message": "phone number is required"})
 
     buyer = Buyer.query.filter_by(phone=phone).first()
 
     # validate whether buyer exists
     if not buyer:
-        return jsonify({"success": False, "message": "买家不存在"})
+        return jsonify({"success": False, "message": "buyer not found"})
 
     return jsonify({"success": True, "phone": phone, "money": buyer.balance})
 

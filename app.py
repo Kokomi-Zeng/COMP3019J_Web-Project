@@ -11,8 +11,8 @@ from blueprints.seller import seller_bp
 from blueprints.shop import shop_bp
 from blueprints.user import user_bp
 from exts import db
-from blueprints.authorize import bp as authorize_bp
-from blueprints.log import bp as log_bp
+from blueprints.authorize import authorize_bp
+from blueprints.log import log_bp
 from flask_migrate import Migrate
 
 
