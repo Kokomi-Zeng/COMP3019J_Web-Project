@@ -199,3 +199,20 @@ def get_introduction_by_comment_id():
         "name": buyer.name,
         "introduction": buyer.description
     })
+
+@comment_bp.route('/getALlComments', methods=['GET'])
+def get_all_comments():
+    comments = Comment.query.all()
+    comments_data = []
+    for comment in comments:
+        buyer = Buyer.query.filter_by(phone=comment.commenter_phone).first()
+        user_commenter = User.query.filter_by(phone=comment.commenter_phone).first()
+        comments_data.append({
+            "comment_id": comment.comment_id,
+            "commenter_name": buyer.name,
+            "content": comment.content,
+            "rating": comment.rating,
+            "user_image": user_commenter.image_src,
+        })
+
+    return jsonify(comments_data)
