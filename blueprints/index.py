@@ -38,10 +38,15 @@ def getRegisterPage():
     return render_template('register.html', **user_info)
 
 
-@bp.route('/userInfo')
+@bp.route('/buyerInfo')
 def getBuyerInfoPage():
     user_info = get_user_info()
-    return render_template('userInfo.html', **user_info)
+    return render_template('buyerInfo.html', **user_info)
+
+@bp.route('/sellerInfo')
+def getSellerInfoPage():
+    user_info = get_user_info()
+    return render_template('sellerInfo.html', **user_info)
 
 
 @bp.route('/admin')

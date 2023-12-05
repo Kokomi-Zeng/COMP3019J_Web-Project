@@ -2,7 +2,7 @@
  * this method is for $("img") to set their src.
  * @param img is the img that need to set src.
  */
-function get_user_image(img){
+function get_user_image(img, phone){
     $.ajax({
         url: "/images/get_image_user",
         type: "get",

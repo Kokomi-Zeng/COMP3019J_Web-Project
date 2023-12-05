@@ -39,14 +39,9 @@
         $("title").innerText = name;
 
         {#default to get and render buyer information#}
-        get_user_image($(".user-image"))
+        get_user_image($(".user-image"), phone)
         render_user_info(type, phone);
         render_money(phone, $(".current-money"))
-        let formdata = new FormData($(".info-form")[0])
-        console.log(formdata.get("name"))
-        console.log(formdata.get("phone"))
-        console.log(formdata.get("introduction"))
-        console.log(formdata.get("password"))
     });
     </script>
 {% endblock %}

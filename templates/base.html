@@ -74,12 +74,12 @@
                 }
                 page_style_button.innerText = light_mode?"Light Mode":"Dark Mode";
                 if (type==="0"){
-                    a.setAttribute("href", "/userInfo");
+                    a.setAttribute("href", "/sellerInfo");
                     a.innerText = name;
                     operation.setAttribute("href", "/sellerAdd")
                     operation.innerText = "Add Item";
                 }else if(type==="1") {
-                    a.setAttribute("href", "/userInfo");
+                    a.setAttribute("href", "/buyerInfo");
                     a.innerText = name;
                     operation.setAttribute("href", "/buyerItem")
                     operation.innerText = "My Item";
@@ -94,7 +94,7 @@
                 {#execue functions#}
                 $(document).trigger("sessionLoaded");
 
-                get_user_image($(".user-image"));
+                get_user_image($(".user-image"), phone);
             },
             error:function (){
 
@@ -106,7 +106,7 @@
 
                 {#session not exist, continue to execue functions#}
                 $(document).trigger("sessionLoaded");
-                get_user_image($(".user-image"));
+                get_user_image($(".user-image"), phone);
             }
         })
     }

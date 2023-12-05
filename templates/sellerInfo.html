@@ -1,0 +1,97 @@
+{#
+    This HTML file is page for buyer to check and modify their information.
+    User can also charge money and inspect purchased items in this page.
+    It has such funtions:
+    1. get_session (Extends)
+    1. log_out (Extends)
+    2. get_and_render_user_info
+    3. get_and_render_money
+    4. render_money
+    5. charge
+    6. get_and_render_purchased_items
+    7. render_purchased_items
+
+    Using js:
+    1. alert.js (Extends)
+    2. get_user_image.js (Extends)
+    3. render_user_info.js (Extends)
+
+    JS functions:
+    1. get_user_image (Extends)
+    2. alert_message (Extends)
+    3. render_user_info (Extends)
+#}
+{% extends "base.html" %}
+
+{% block script %}
+    <script src="/static/js/modify_user_info.js"></script>
+    <script src="/static/js/render_user_info.js"></script>
+    <script src="/static/js/charge.js"></script>
+    <script src="/static/js/render_money.js"></script>
+    <script src="/static/js/upload_user_image.js"></script>
+    <script src="/static/js/logout.js"></script>
+    <script>
+
+    {#when session is loaded#}
+    $(document).on("sessionLoaded", function () {
+        $(".phone").val(phone)
+        {#set title#}
+        $("title").innerText = name;
+
+        {#default to get and render buyer information#}
+        get_user_image($(".user-image"), phone)
+        render_user_info(type, phone);
+    });
+    </script>
+{% endblock %}
+
+{% block main %}
+    <div class="user-info-box">
+
+        <div class="img-div">
+            <form class="img-form">
+                <button type="button" onclick="$('#file').click();">
+                    <img class="user-image">
+                </button>
+                <input type="file" name="image" id="file" accept="image/*" onchange="upload_user_image(new FormData($('.img-form')[0]), phone)" style="display: none">
+            </form>
+        </div>
+
+        <form class="info-form">
+            <div class="info-div" id="phone-div">
+                <label class="phone-span">
+                    <input type="hidden" class="phone" name="phone">
+                </label>
+            </div>
+
+            <div class="info-div" id="name-div">
+                <label class="name-span">
+                    Name:
+                    <input type="text" id="name" name="name">
+                </label>
+            </div>
+
+            <div class="info-div" id="introduction-div">
+                <label class="introduction-span">
+                    Introduction:
+                    <input type="text" id="introduction" name="introduction">
+                </label>
+            </div>
+
+            <div class="info-div" id="password-div">
+                <label class="password-span">
+                    Password:
+                    <input type="text" id="password" name="password">
+                </label>
+            </div>
+        </form>
+
+        <div class="confirm-box">
+            <button type="button" class="confirm-button" onclick="modify_user_info(new FormData($('.info-form')[0]))">Confirm</button>
+        </div>
+
+        <div class="logout-box">
+            <button type="button" class="logout-button" onclick="logout()">Logout</button>
+        </div>
+    </div>
+{% endblock %}

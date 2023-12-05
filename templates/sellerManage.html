@@ -3,26 +3,17 @@
 {% block script %}
     <script src="/static/js/modify_user_info.js"></script>
     <script src="/static/js/render_user_info.js"></script>
+    <script src="/static/js/get_user_image.js"></script>
     <script src="/static/js/charge.js"></script>
     <script src="/static/js/render_money.js"></script>
     <script src="/static/js/upload_user_image.js"></script>
     <script>
     let phone = "{{ phone }}"
-    let type = 0;
+    let type = "0"
 
     window.onload = function (){
-        get_and_render_user_info()
-    }
-
-    function get_and_render_user_info(){
-        $.ajax({
-            url:"/seller/sellerInfo",
-            type:"get",
-            data:{phone: phone},
-            success: function (data){
-                render_user_info(data)
-            }
-        })
+        get_user_image($(".user-image"), phone)
+        render_user_info(type, phone);
     }
     </script>
 {% endblock %}
@@ -30,64 +21,31 @@
 {% block body %}
     <div class="user-info-box">
 
-        <div class="info-div" id="img-div">
+        <div class="img-div">
             <form class="img-form">
                 <button type="button" onclick="$('#file').click();">
                     <img class="user-image">
                 </button>
-                <input type="hidden" name="phone" value="" class="phone">
-                <input type="file" name="file" id="file" accept="image/*" onchange="upload_user_image(new FormData())" style="display: none">
+                <input type="file" name="image" id="file" accept="image/*" onchange="upload_user_image(new FormData($('.img-form')[0]), phone)" style="display: none">
             </form>
         </div>
 
-        <div class="info-div" id="phone-div">
-            <label class="phone-span"></label>
-        </div>
+        <form class="info-form">
+            <div class="info-div" id="phone-div">
+                <span class="phone-span"></span>
+            </div>
 
-        <div class="info-div" id="name-div">
-            <label class="name-span">
-                Name:
-                <input type="text" id="name">
-            </label>
-        </div>
+            <div class="info-div" id="name-div">
+                <span class="name-span"></span>
+            </div>
 
-        <div class="info-div" id="introduction-div">
-            <label class="introduction-span">
-                Introduction:
-                <input type="text" id="introduction">
-            </label>
-        </div>
+            <div class="info-div" id="introduction-div">
+                <span class="introduction-span"></span>
+            </div>
 
-        <div class="info-div" id="password-div">
-            <label class="password-span">
-                Password:
-                <input type="text" id="password">
-            </label>
-        </div>
-
-        <div class="confirm-box">
-            <button type="button" class="confirm-button" onclick="modify_user_info()">Confirm</button>
-        </div>
-
-        <div class="logout-box">
-            <button type="button" class="logout-button" onclick="logout()">Logout</button>
-        </div>
-    </div>
-
-    <div class="user-amount-box">
-        <div class="current-money-box">
-            <span class="current-money"></span>
-        </div>
-
-        <div class="charge-money-box">
-            <form class="charge-form">
-                <input type="number" placeholder="amount: " id="charge-money" name="charge_num">
-                <input type="hidden" name="phone" value="" class="phone">
-            </form>
-        </div>
-
-        <div class="submit-charge-div">
-            <button class="submit-charge" type="button" onclick="charge(new FormData($('.charge-form')[0]))">Charge</button>
-        </div>
+            <div class="info-div" id="password-div">
+                <span class="password-span"></span>
+            </div>
+        </form>
     </div>
 {% endblock %}
