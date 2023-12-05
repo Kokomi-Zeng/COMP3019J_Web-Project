@@ -56,19 +56,5 @@ Open the project in PyCharm and follow the steps below:
      - Create a database named `flaskdb` in MySQL.
      - Import the SQL file provided in the project to have a database with data.
 
-4. **Configuration File**:
-
-   Add a `config.py` file to the project root with the following content: 
-
-   ```python
-   HOSTNAME = "127.0.0.1"
-   PORT = 3306
-   DATABASE = "flaskdb"
-   USERNAME = "YOUR MYSQL USERNAME"
-   PASSWORD = "YOUR MYSQL PASSWORD"
-   DB_URI = f"mysql+pymysql://{USERNAME}:{PASSWORD}@{HOSTNAME}:{PORT}/{DATABASE}?charset=utf8mb4"
-   SQLALCHEMY_DATABASE_URI = DB_URI
-   SECRET_KEY = "123456"
-   ```
 
    

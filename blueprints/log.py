@@ -31,9 +31,9 @@ def setup_logging():
 
 @bp.route("/get_log", methods=["GET"])
 def get_log():
-    phone = request.args.get('phone')
+    admin_phone = request.args.get('admin_phone')
     log_type = request.args.get('type')
-    user = User.query.filter_by(phone=phone).first()
+    user = User.query.filter_by(phone=admin_phone).first()
 
     if user and user.user_type == '2':
         root_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
