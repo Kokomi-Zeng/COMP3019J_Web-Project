@@ -25,12 +25,6 @@ register
     <script>
     let user_type;
 
-    window.onload = function (){
-        $("#phone")[0].onkeyup = function (){
-            phone_is_valid()
-        }
-    }
-
     {#
     update for register
     execute this function when user attmpt to register
@@ -91,7 +85,7 @@ register
     </div>
 
     <div class="phone">
-        <input type="text" id="phone" placeholder="phone">
+        <input type="text" id="phone" placeholder="phone" onclick="phone_is_valid()">
         <span class="phone-message"></span>
     </div>
 
