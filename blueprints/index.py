@@ -91,13 +91,13 @@ def getSession():
     phone = session.get('phone')
     # If there is no "phone" on the session
     if not phone:
-        return {'phone': "", 'name': "", 'type': ""}
+        return {'phone': "", 'name': "", 'type': "", 'status': ""}
     user = User.query.get(phone)
     if user:
         if user.user_type == '0':
-            return {'phone': phone, 'name': user.seller.name, 'type': user.user_type}
+            return {'phone': phone, 'name': user.seller.name, 'type': user.user_type, 'status': user.status}
         if user.user_type == '1':
-            return {'phone': phone, 'name': user.buyer.name, 'type': user.user_type}
+            return {'phone': phone, 'name': user.buyer.name, 'type': user.user_type, 'status': user.status}
     else:
         return {'phone': "", 'name': "", 'type': ""}
 
