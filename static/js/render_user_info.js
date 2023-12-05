@@ -13,9 +13,13 @@ function render_user_info(type, phone) {
             phone: phone
         },
         success:function (data){
+            // user
             $("#introduction").val(data.introduction)
             $("#name").val(data.name)
-            $("#phone").innerText = phone;
+
+            // admin
+            $("#introduction-span")[0].innerText = data.introduction
+            $("#name-span")[0].innerText = data.name
         }
     })
 }

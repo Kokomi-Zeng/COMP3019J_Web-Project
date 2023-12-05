@@ -1,5 +1,5 @@
 
-function reset_user_introduction(){
+function reset_user_introduction(type, phone){
     $.ajax({
         url:"/user/resetUserIntroduction",
         type:"get",
