@@ -34,6 +34,11 @@ def create_comment():
     if content is None or content == "" or content == "None":
         return jsonify({"success": False, "message": "Comment can't be empty or None"})
 
+    # if the buyer is banned
+    user = User.query.filter_by(phone=commenter_phone).first()
+    if user.status != 'active':
+        return jsonify({"success": False, "message": "User is banned"})
+
     # create a new comment
     comment = Comment(
         content=content,

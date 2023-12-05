@@ -160,6 +160,9 @@ def calculate_average_rating(product_id):
     average_rating = round(average_rating)
     return average_rating
 
+
+# Provide a method to administer to reset the image of a product
+@products_bp.route('/resetItemImage', methods=['GET'])
 def reset_item_image():
     try:
         product_id = int(request.args.get('product_id'))
@@ -168,16 +171,18 @@ def reset_item_image():
 
     product = Product.query.filter_by(product_id=product_id).first()
 
-    # 验证产品是否存在
+    # verify if the product exists
     if not product:
         return jsonify({"success": False, "message": "Product not found"})
 
-    # 更新产品的 image_src
+    # Update the image_src of the product
     product.image_src = "https://pinoss.com/kokomi/i/2023/10/27/anime_girl.png"
 
     db.session.commit()
     return jsonify({"success": True, "message": "Product image reset successfully"})
 
+
+# Provide a method to administer to reset the name of a product
 @products_bp.route('/resetItemName', methods=['GET'])
 def reset_item_name():
     try:
@@ -187,11 +192,11 @@ def reset_item_name():
 
     product = Product.query.filter_by(product_id=product_id).first()
 
-    # 验证产品是否存在
+    # verify if the product exists
     if not product:
         return jsonify({"success": False, "message": "Product not found"})
 
-    # 更新产品的名称
+    # Update the name of the product
     product.product_name = "new product"
 
     db.session.commit()

@@ -3,7 +3,14 @@ from models import User
 import logging
 import os
 
-bp = Blueprint('log', __name__, url_prefix='/log')
+"""
+The following code is used to store the routes related to log,
+such as get_log, which is used to get the log records.
+"""
+
+log_bp = Blueprint('log', __name__, url_prefix='/log')
+
+# A helper function to setup logging for the app
 def setup_logging():
     # create the directory for logging
     root_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
@@ -29,7 +36,8 @@ def setup_logging():
 
     return logger
 
-@bp.route("/get_log", methods=["GET"])
+# Provide get log method for the admin to get the log records
+@log_bp.route("/get_log", methods=["GET"])
 def get_log():
     admin_phone = request.args.get('admin_phone')
     log_type = request.args.get('type')

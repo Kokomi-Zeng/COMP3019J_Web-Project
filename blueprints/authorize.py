@@ -20,10 +20,10 @@ the first: the name of the blueprint,
 the second: __name__ represents the current module,
 the third: url_prefix represents the prefix, all the routes in here will add this prefix
 """
-bp = Blueprint("authorize", __name__, url_prefix="/authorize")
+authorize_bp = Blueprint("authorize", __name__, url_prefix="/authorize")
 
 # Provide login method for the front end login page
-@bp.route("/login", methods=["POST"])
+@authorize_bp.route("/login", methods=["POST"])
 def login():
     phone = request.json.get('phone')
     password = request.json.get('password')
@@ -64,7 +64,7 @@ def login():
         return jsonify({"success": False, "message": "Incorrect phone or password."})
 
 # Provide logout method for the front end logout page
-@bp.route("/register", methods=["POST"])
+@authorize_bp.route("/register", methods=["POST"])
 def register():
 
     phone = request.json.get('phone')
