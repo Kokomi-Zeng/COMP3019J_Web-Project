@@ -34,6 +34,11 @@ def create_comment():
     if content is None or content == "" or content == "None":
         return jsonify({"success": False, "message": "Comment can't be empty or None"})
 
+    # if the buyer is banned
+    user = User.query.filter_by(phone=commenter_phone).first()
+    if user.status != 'active':
+        return jsonify({"success": False, "message": "User is banned"})
+
     # create a new comment
     comment = Comment(
         content=content,
@@ -199,3 +204,20 @@ def get_introduction_by_comment_id():
         "name": buyer.name,
         "introduction": buyer.description
     })
+
+@comment_bp.route('/getALlComments', methods=['GET'])
+def get_all_comments():
+    comments = Comment.query.all()
+    comments_data = []
+    for comment in comments:
+        buyer = Buyer.query.filter_by(phone=comment.commenter_phone).first()
+        user_commenter = User.query.filter_by(phone=comment.commenter_phone).first()
+        comments_data.append({
+            "comment_id": comment.comment_id,
+            "commenter_name": buyer.name,
+            "content": comment.content,
+            "rating": comment.rating,
+            "user_image": user_commenter.image_src,
+        })
+
+    return jsonify(comments_data)

@@ -11,7 +11,8 @@ from blueprints.seller import seller_bp
 from blueprints.shop import shop_bp
 from blueprints.user import user_bp
 from exts import db
-from blueprints.authorize import bp as authorize_bp
+from blueprints.authorize import authorize_bp
+from blueprints.log import log_bp
 from flask_migrate import Migrate
 
 
@@ -34,6 +35,7 @@ app.register_blueprint(shop_bp)
 app.register_blueprint(image_bp)
 app.register_blueprint(user_bp)
 app.register_blueprint(administer_bp)
+app.register_blueprint(log_bp)
 
 # Make migration effective
 migrate = Migrate(app, db)

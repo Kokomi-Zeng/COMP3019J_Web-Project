@@ -5,8 +5,9 @@ from exts import db
 
 """
 The following code is used to store the routes related to users,
-such ?????????????????????????????????????????????????????????
+such as resetUserName, resetUserImage, resetUserIntroduction.
 """
+
 user_bp = Blueprint('user', __name__, url_prefix='/user')
 
 # Provide a method for administer to reset the user's name
@@ -58,6 +59,7 @@ def reset_user_image():
     db.session.commit()
     return jsonify({"success": True, "message": "Image reset successfully"})
 
+# Provide a method for administer to reset the user's introduction
 @user_bp.route('/resetUserIntroduction', methods=['GET'])
 def reset_user_introduction():
     phone = request.args.get('phone')

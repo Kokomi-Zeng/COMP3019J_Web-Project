@@ -3,7 +3,6 @@ from datetime import datetime
 from flask import Blueprint, render_template, request, jsonify, session
 from werkzeug.security import check_password_hash
 from werkzeug.security import generate_password_hash
-import logging
 from exts import db
 from models import Product, Comment, Buyer, User, Purchase
 
@@ -54,14 +53,17 @@ def charge():
         charge_num = float(request.args.get('charge_num'))
     except (TypeError, ValueError):
         return jsonify({"error": "Invalid charge amount."})
-    password = request.args.get('password')
+    # password = request.args.get('password')
 
     #  find the user
     user = User.query.filter_by(phone=phone).first()
 
     # If the user is not found or the password is incorrect
-    if not user or not check_password_hash(user.password, password):
-        return jsonify({"success": False, "message": "Can't find user or password incorrect"})
+    # if not user or not check_password_hash(user.password, password):
+
+    if not user:
+        # return jsonify({"success": False, "message": "Can't find user or password incorrect"})
+        return jsonify({"success": False, "message": "Can't find user"})
 
     # If the user is not a buyer
     buyer = Buyer.query.filter_by(phone=phone).first()
@@ -165,13 +167,13 @@ def get_money():
 
     # validate whether phone exists
     if not phone:
-        return jsonify({"success": False, "message": "手机号不能为空"})
+        return jsonify({"success": False, "message": "phone number is required"})
 
     buyer = Buyer.query.filter_by(phone=phone).first()
 
     # validate whether buyer exists
     if not buyer:
-        return jsonify({"success": False, "message": "买家不存在"})
+        return jsonify({"success": False, "message": "buyer not found"})
 
     return jsonify({"success": True, "phone": phone, "money": buyer.balance})
 

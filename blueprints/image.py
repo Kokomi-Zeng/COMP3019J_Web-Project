@@ -23,7 +23,6 @@ def upload_image_for_product():
     uploaded_file = request.files['image']
     # get the product_id from the form
     product_id = request.args.get('product_id')
-    print(product_id);
 
     # verify if the product exists
     product = Product.query.filter_by(product_id=product_id).first()
@@ -56,7 +55,7 @@ def upload_image_for_product():
 @image_bp.route('/upload_image_user', methods=['POST'])
 def upload_image_for_user():
     uploaded_file = request.files['image']
-    phone = request.form.get('phone')
+    phone = request.args.get('phone')
 
     # verify if the user exists
     user = User.query.filter_by(phone=phone).first()
