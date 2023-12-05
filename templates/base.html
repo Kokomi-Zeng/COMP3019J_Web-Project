@@ -32,6 +32,7 @@
     let type;
     let name;
     let light_mode;
+    const isAdmin = false;
 
     window.onload = function (){
         {#alert_message("test")#}
@@ -93,7 +94,6 @@
                 {#execue functions#}
                 $(document).trigger("sessionLoaded");
 
-                {#load user image#}
                 get_user_image($(".user-image"));
             },
             error:function (){
@@ -106,8 +106,6 @@
 
                 {#session not exist, continue to execue functions#}
                 $(document).trigger("sessionLoaded");
-
-                {#load user image#}
                 get_user_image($(".user-image"));
             }
         })
