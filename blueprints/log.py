@@ -48,6 +48,12 @@ def get_log():
 
         # get the last 200 log records after filtering
         logs = filtered_logs[-200:]
-        return jsonify({"success": True, "logs": logs})
+
+        # log example: "2023-12-05 09:55:17,012 - WARNING - qwetwqt - Incorrect phone or password."
+        # log_time, log_type, phone, log_content
+        logs = [log.split(' - ') for log in logs]
+        logs = [{'log_time': log[0], 'log_type': log[1], 'phone': log[2], 'log_content': log[3]} for log in logs]
+
+        return jsonify(logs)
 
     return jsonify({"success": False, "message": "Unauthorized access"})
