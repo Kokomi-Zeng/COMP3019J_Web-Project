@@ -26,22 +26,27 @@
 {% block script %}
     <script src="/static/js/modify_user_info.js"></script>
     <script src="/static/js/render_user_info.js"></script>
+    <script src="/static/js/charge.js"></script>
+    <script src="/static/js/render_money.js"></script>
+    <script src="/static/js/upload_user_image.js"></script>
     <script src="/static/js/logout.js"></script>
     <script>
-    let user_info_box;
-    let user_amount_box;
 
     {#when session is loaded#}
     $(document).on("sessionLoaded", function () {
-        user_info_box = $(".user-info-box");
-        user_amount_box = $(".user-amount-box")
-
+        $(".phone").val(phone)
         {#set title#}
         $("title").innerText = name;
 
         {#default to get and render buyer information#}
         get_user_image($(".user-image"))
-        render_user_info();
+        render_user_info(type, phone);
+        render_money(phone, $(".current-money"))
+        let formdata = new FormData($(".info-form")[0])
+        console.log(formdata.get("name"))
+        console.log(formdata.get("phone"))
+        console.log(formdata.get("introduction"))
+        console.log(formdata.get("password"))
     });
     </script>
 {% endblock %}
@@ -49,42 +54,46 @@
 {% block main %}
     <div class="user-info-box">
 
-        <div class="info-div" id="img-div">
+        <div class="img-div">
             <form class="img-form">
                 <button type="button" onclick="$('#file').click();">
                     <img class="user-image">
                 </button>
-                <input type="file" name="file" id="file" accept="image/*" style="display: none">
+                <input type="file" name="image" id="file" accept="image/*" onchange="upload_user_image(new FormData($('.img-form')[0]), phone)" style="display: none">
             </form>
         </div>
 
-        <div class="info-div" id="phone-div">
-            <label class="phone-span"></label>
-        </div>
+        <form class="info-form">
+            <div class="info-div" id="phone-div">
+                <label class="phone-span">
+                    <input type="hidden" class="phone" name="phone">
+                </label>
+            </div>
 
-        <div class="info-div" id="name-div">
-            <label class="name-span">
-                Name:
-                <input type="text" id="name">
-            </label>
-        </div>
+            <div class="info-div" id="name-div">
+                <label class="name-span">
+                    Name:
+                    <input type="text" id="name" name="name">
+                </label>
+            </div>
 
-        <div class="info-div" id="introduction-div">
-            <label class="introduction-span">
-                Introduction:
-                <input type="text" id="introduction">
-            </label>
-        </div>
+            <div class="info-div" id="introduction-div">
+                <label class="introduction-span">
+                    Introduction:
+                    <input type="text" id="introduction" name="introduction">
+                </label>
+            </div>
 
-        <div class="info-div" id="password-div">
-            <label class="password-span">
-                Password:
-                <input type="text" id="password">
-            </label>
-        </div>
+            <div class="info-div" id="password-div">
+                <label class="password-span">
+                    Password:
+                    <input type="text" id="password" name="password">
+                </label>
+            </div>
+        </form>
 
         <div class="confirm-box">
-            <button type="button" class="confirm-button" onclick="modify_user_info()">Confirm</button>
+            <button type="button" class="confirm-button" onclick="modify_user_info(new FormData($('.info-form')[0]))">Confirm</button>
         </div>
 
         <div class="logout-box">
@@ -92,5 +101,20 @@
         </div>
     </div>
 
-    <div class="user-amount-box"></div>
+    <div class="user-amount-box">
+        <div class="current-money-box">
+            <span class="current-money"></span>
+        </div>
+
+        <div class="charge-money-box">
+            <form class="charge-form">
+                <input type="number" placeholder="amount: " id="charge-money" name="charge_num">
+                <input type="hidden" name="phone" value="" class="phone">
+            </form>
+        </div>
+
+        <div class="submit-charge-div">
+            <button class="submit-charge" type="button" onclick="charge(new FormData($('.charge-form')[0]))">Charge</button>
+        </div>
+    </div>
 {% endblock %}
