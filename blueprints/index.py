@@ -165,6 +165,8 @@ def getSession():
             return {'phone': phone, 'name': user.seller.name, 'type': user.user_type, 'status': user.status}
         if user.user_type == '1':
             return {'phone': phone, 'name': user.buyer.name, 'type': user.user_type, 'status': user.status}
+        if user.user_type == '2':
+            return {'phone': phone, 'name': "administer", 'type': user.user_type, 'status': user.status}
     else:
         return {'phone': "", 'name': "", 'type': ""}
 

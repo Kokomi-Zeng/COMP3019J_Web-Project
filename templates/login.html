@@ -43,6 +43,7 @@ login
                 if(response.success){
                     if (response.isAdmin){
                         window.location.replace("/admin")
+                        console.log("dddddddd")
                     }else {
                         {#success login: render previous page#}
                         window.location.href = document.referrer
