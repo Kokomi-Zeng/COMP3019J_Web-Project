@@ -20,6 +20,7 @@ function modify_user_info(form_data){
         }),
         success: function (data){
             alert(data.message)
+            $(".user-name").text(form_data.get("name"))
             render_user_info(type, form_data.get("phone"))
         }
     })

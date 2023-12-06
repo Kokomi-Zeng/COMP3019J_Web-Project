@@ -41,6 +41,9 @@
     <script src="/static/js/render_item_info.js"></script>
     <script src="/static/js/render_basic_comment.js"></script>
     <script src="/static/js/modify_item_info.js"></script>
+    <script src="/static/js/delete_item.js"></script>
+    <script src="/static/js/upload_item_image.js"></script>
+    <script src="/static/js/get_item_image.js"></script>
     <script>
     let product_id = "{{ product_id }}"
     let info_box;
@@ -58,7 +61,12 @@
 <div class="left-box">
     <div class="info-box">
         <div class="item-img-box">
-            <img id="item-img">
+            <form class="img-form">
+                <button type="button" onclick="$('#file').click();">
+                    <img id="item-img">
+                </button>
+                <input type="file" name="image" id="file" accept="image/*" onchange="upload_item_img($('#item-img'), new FormData($('.img-form')[0]), product_id)" style="display: none">
+            </form>
         </div>
         <div class="item-name-box">
             <span>Name:</span>
@@ -84,7 +92,7 @@
 
     <div class="seller-box">
         <div class="delete-box">
-            <button class="buy-button" type="button" onclick="delete_item(product_id)">DELETE</button>
+            <button class="buy-button" type="button" onclick="delete_item(product_id, phone)">DELETE</button>
         </div>
     </div>
 </div>

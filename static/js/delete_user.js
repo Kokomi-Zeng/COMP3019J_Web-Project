@@ -3,7 +3,7 @@ function delete_user(phone){
     if (!confirm("Delete?")){
         return;
     }
-    
+
     $.ajax({
         url:"administer/deleteUser",
         type:"get",
