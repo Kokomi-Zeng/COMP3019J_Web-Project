@@ -93,48 +93,6 @@
         operation_box.append(buy_num);
         operation_box.append(buy_button);
     }
-
-    function render_seller(){
-        const operation_box = $(".operation-box");
-        operation_box.empty();
-
-        //Delete BUTTON
-        const delete_button_div = document.createElement("button")
-        const delete_button = document.createElement("button")
-        delete_button_div.setAttribute("class", "delete-button-box")
-        delete_button.setAttribute("type", "button")
-        delete_button.setAttribute("class", "delete-button")
-        delete_button.innerText = "Delete"
-        delete_button.onclick = function (){
-            $.ajax({
-                url:"/products/deleteItem",
-                type:"get",
-                data:{product_id: product_id},
-                success: function (data){
-                    alert(data.message)
-                    window.location.replace("/shop")
-                }
-            })
-        }
-        delete_button_div.append(delete_button);
-        operation_box.append(delete_button_div)
-    }
-
-    function get_and_render_comment(){
-        $.ajax({
-            url: "/comment/commentBasicInfoById",
-            type: "get",
-            contentType: "application/json",
-            dataType: "json",
-            data: {
-                product_id: "{{ product_id }}"
-            },
-            success: function (data) {
-                render_comment(data)
-                render_more_comment_button()
-            }
-        })
-    }
     </script>
 {% endblock %}
 
@@ -169,6 +127,9 @@
 
 <div class="right-box">
     <div class="comment-box"></div>
+    <div class="more-comment-box">
+        <button class="more-comment-button" type="button" onclick="window.location.href = '/comment'"></button>
+    </div>
 </div>
 
 <div class="back-button-box">
