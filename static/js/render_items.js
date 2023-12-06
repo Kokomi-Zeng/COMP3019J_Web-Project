@@ -1,10 +1,11 @@
 /**
  * This method is to render Products depend on products data
  * This method will render items in "item_container"
+ * @param DOM
  * @param data is JSON that contains items info
  * @param type
  */
-function render_items(data, type){
+function render_items(DOM, data, type){
 
     for (let i=0; i<data.length; i++){
         // get each item
@@ -31,7 +32,7 @@ function render_items(data, type){
                 window.location.href = "/item?product_id="+ item.product_id;
             }
         }
-        item_container.append(item_box);
+        DOM.append(item_box);
         item_box.append(item_button);
 
         // Render IMG img

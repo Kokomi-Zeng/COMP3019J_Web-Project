@@ -38,13 +38,10 @@
 {% block script %}
     <script src="/static/js/render_items.js"></script>
     <script>
-
     let page_num = 1;
-    let item_container;
 
     {#when session is loaded#}
     $(document).on("sessionLoaded", function() {
-        item_container = $(".item-container")
 
         {#get and render item automatically#}
         get_and_render_items();
@@ -81,7 +78,7 @@
                 page_num: page_num,
             },
             success: function (data) {
-                render_items(data, type);
+                render_items($(".item-container"), data, type);
 
                 {#Render BUTTON page button#}
                 get_and_render_next_button()
