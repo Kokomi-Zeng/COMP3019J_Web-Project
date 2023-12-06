@@ -3,7 +3,7 @@
  * @param DOM
  * @param product_id
  */
-function render_all_comment(DOM, product_id){
+function render_product_all_comment(DOM, product_id){
     $.ajax({
         url:"/comment/commentInfoById",
         type:"get",

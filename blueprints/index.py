@@ -137,6 +137,12 @@ def getItemManagePage():
 
     return render_template('itemManage.html', product_id=product_id, **mode_info)
 
+
+
+@bp.route('/commentManage')
+def getCommentManagePage():
+    return render_template('commentManage.html')
+
 @bp.route('/buyerItemManage')
 def getBuyerItemManagePage():
     phone = request.args.get('phone')

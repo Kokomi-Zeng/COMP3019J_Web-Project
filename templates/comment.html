@@ -30,7 +30,7 @@
 {% endblock %}
 
 {% block script %}
-    <script src="/static/js/render_all_comment.js"></script>
+    <script src="/js/render_product_all_comment.js"></script>
     <script src="/static/js/is_item_match_seller.js"></script>
     <script>
     let page_num = 1;
@@ -40,7 +40,7 @@
 
     {#when session is loaded#}
     $(document).on("sessionLoaded", function() {
-        render_all_comment()
+        render_product_all_comment()
 
         if (type==="1"){
             render_self_comment_box();

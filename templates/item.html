@@ -39,7 +39,7 @@
 {% block script %}
     <script src="/static/js/render_comment.js"></script>
     <script src="/static/js/render_item_info.js"></script>
-    <script src="/static/js/render_basic_comment.js"></script>
+    <script src="/js/render_product_basic_comment.js"></script>
     <script src="/static/js/is_item_match_seller.js"></script>
     <script>
     let product_id = "{{ product_id }}"
@@ -49,7 +49,7 @@
     {#when session is loaded#}
     $(document).on("sessionLoaded", function () {
         render_item_info(product_id)
-        render_basic_comment($(".comment-box"), product_id)
+        render_product_basic_comment($(".comment-box"), product_id)
     });
     </script>
 {% endblock %}

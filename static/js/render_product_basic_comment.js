@@ -1,4 +1,4 @@
-function render_basic_comment(DOM, product_id){
+function render_product_basic_comment(DOM, product_id){
     $.ajax({
         url:"/comment/commentBasicInfoById",
         type:"get",
