@@ -112,9 +112,10 @@ def get_all_buyer_items():
     purchased_items = []
     for purchase in Purchase.query.all():
         buyer_name = Buyer.query.filter_by(phone=purchase.buyer_phone).first().name
+        product_name = Product.query.filter_by(product_id=purchase.product_id).first().product_name
         purchased_items.append({
             'product_id': purchase.product_id,
-            'product_name': purchase.product.product_name,
+            'product_name': product_name,
             'buyer_name': buyer_name,
             'purchase_quantity': purchase.purchase_number,
             'total_price': purchase.purchase_price,
