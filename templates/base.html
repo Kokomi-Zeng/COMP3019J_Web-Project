@@ -101,6 +101,8 @@
 
     function switch_mode(){
         const mode_button = $(".mode-button")
+        const logo_img = $(".logo-img")
+        const login_logo_img = $(".login-logo-img")
         $.ajax({
             url:"/user/switchMode",
             type:"get",
@@ -108,8 +110,12 @@
                 light_mode = data.mode;
                 if (light_mode){
                     mode_button.text("light mode");
+                    logo_img.attr("src", "/static/img/Logo.jpeg")
+                    login_logo_img.attr("src", "/static/img/login-logo.png")
                 }else {
                     mode_button.text("dark mode")
+                    logo_img.attr("src", "/static/img/logo_dark.jpeg")
+                    login_logo_img.attr("src", "/static/img/login-logo-dark.png")
                 }
                 document.body.classList.toggle('dark-mode');
             }
@@ -123,7 +129,11 @@
 {#LOGO#}
     <div class="logo-box">
         <a href='/'>
-        <img src="/static/img/Logo.jpeg" alt="LOGO">
+            {% if user_mode=='dark-mode' %}
+                <img class="logo-img" src="/static/img/logo_dark.jpeg" alt="LOGO">
+            {% else %}
+                <img class="logo-img" src="/static/img/Logo.jpeg" alt="LOGO">
+            {% endif %}
         </a>
     </div>
 {#可能的searchbox#}
