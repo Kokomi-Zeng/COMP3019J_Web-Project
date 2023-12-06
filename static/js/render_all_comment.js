@@ -66,5 +66,20 @@ function render_data(DOM, data){
         comment_content.innerText = comment.content
         comment_box.append(comment_content_div)
         comment_content_div.append(comment_content)
+
+        // Render BUTTON delete
+        const delete_button_div = document.createElement("div")
+        const delete_button = document.createElement("button")
+        delete_button_div.setAttribute("class", "delete-button-box")
+        delete_button_div.setAttribute("class", "delete-button")
+        delete_button.innerText = "Delete"
+        delete_button.onclick = function (){
+            if (!confirm("Delete?")){
+                return;
+            }
+            delete_comment(DOM, comment.comment_id)
+        }
+        comment_box.append(delete_button_div)
+        delete_button_div.append(delete_button)
     }
 }
