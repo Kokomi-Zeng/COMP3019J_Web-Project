@@ -81,12 +81,23 @@
     width: 90%;
     font-size: 1.125rem;
     margin: 1rem 0;
+    border: rgb(0, 0, 0, 0.0);
     border-radius: 5px;
-    background-color: var(--comment-input-bg-color);
+    background-color: var(--comment-span-bg-color);
+    box-shadow: 0 2px 5px var(--comment-box-shadow);
+    color: var(--text-color);
     /* allow vertical resize, but not horizontal resize */
     resize: vertical;
     word-wrap: break-word;
     overflow-wrap: break-word;
+}
+
+.self-comment-box input::placeholder{
+    color: var(--text-color);
+}
+
+.self-comment-box textarea::placeholder{
+    color: var(--text-color);
 }
 
 .self-comment-box input {

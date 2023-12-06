@@ -78,10 +78,20 @@
 }
 
 .left-box input {
+    border: rgb(0, 0, 0, 0.0);
+    border-radius: 5px;
+    box-shadow: 0 2px 5px var(--comment-box-shadow);
+    background-color: var(--comment-span-bg-color);
+    color: var(--text-color);
+
     font-size: 1.125rem;
     margin: 1rem 0;
-    border-radius: 5px;
     height: 2rem;
+}
+
+
+.left-box input::placeholder {
+    color: var(--text-color);
 }
 
 .left-box button,

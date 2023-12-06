@@ -33,8 +33,14 @@
     width: 250px;
     font-size: 20px;
     border-radius: 10px;
+    color: var(--text-color);
     background: linear-gradient(to right, var(--input-gradient-start), var(--input-gradient-end));
     border: 2px solid var(--input-border-color);
+}
+
+.phone input::placeholder,
+.password input::placeholder {
+    color: var(--text-color);
 }
 
 .register-background-div .submit button {
