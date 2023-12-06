@@ -1,8 +1,9 @@
 /**
- * This method will render data in "purchased_item_box"
- * @data data
+ *
+ * @param DOM
+ * @param data
  */
-function render_purchased_items(data){
+function render_purchased_items(DOM, data){
 
     //clear DOM
     purchased_item_box.empty();
