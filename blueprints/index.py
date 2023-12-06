@@ -60,6 +60,16 @@ def getItemPage():
     product_info = get_product_id()
     return render_template("item.html", **product_info)
 
+@bp.route('/itemSeller')
+def getItemSellerPage():
+    product_info = get_product_id()
+    return render_template("itemSeller.html", **product_info)
+
+@bp.route('/itemBuyer')
+def getItemBuyerPage():
+    product_info = get_product_id()
+    return render_template("itemBuyer.html", **product_info)
+
 @bp.route('/comment')
 def getCommentPage():
     product_info = get_product_id()

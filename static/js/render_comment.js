@@ -1,9 +1,9 @@
 /**
  * This method is to render the comment data depend on the response.
- * It will render comment in comment_box
- * @param data is the ajax response.
+ * @param DOM
+ * @param data
  */
-function render_comment(data){
+function render_comment(DOM, data){
     for (let i = 0; i < data.length; i++) {
         let timeoutId;
         const comment = data[i];
@@ -12,7 +12,7 @@ function render_comment(data){
 
         comment_div.setAttribute("class", "comment");
 
-        comment_box.append(comment_div);
+        DOM.append(comment_div);
 
         const commenter_window = create_commenter_window(comment)
 

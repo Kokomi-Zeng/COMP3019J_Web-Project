@@ -41,7 +41,7 @@
         {#default to get and render buyer information#}
         get_user_image($(".user-image"), phone)
         render_user_info(type, phone);
-        render_money(phone, $(".current-money"))
+        render_money($(".current-money"), phone)
     });
     </script>
 {% endblock %}
@@ -102,14 +102,11 @@
         </div>
 
         <div class="charge-money-box">
-            <form class="charge-form">
-                <input type="number" placeholder="amount: " id="charge-money" name="charge_num">
-                <input type="hidden" name="phone" value="" class="phone">
-            </form>
+            <input type="number" placeholder="amount: " id="charge-money" name="charge_num">
         </div>
 
         <div class="submit-charge-div">
-            <button class="submit-charge" type="button" onclick="charge(new FormData($('.charge-form')[0]))">Charge</button>
+            <button class="submit-charge" type="button" onclick="charge($('.current-money'), $('#charge-money'), phone)">Charge</button>
         </div>
     </div>
 {% endblock %}

@@ -39,24 +39,40 @@
 {% block script %}
     <script src="/static/js/render_comment.js"></script>
     <script src="/static/js/render_item_info.js"></script>
-    <script src="/static/js/render_basic_comment.js"></script>
     <script src="/static/js/is_item_match_seller.js"></script>
     <script>
+    let belong;
     let product_id = "{{ product_id }}"
     let info_box;
     let rating_box;
     let comment_box;
     {#when session is loaded#}
     $(document).on("sessionLoaded", function () {
-        render_item_info(product_id)
-        render_basic_comment($(".comment-box"), product_id)
+        info_box = $(".info-box")
+        rating_box = $(".rating-box")
+        comment_box = $(".comment-box")
+        is_item_match_seller()
+        $(document).on("belongLoaded", function () {
 
-        {#buyer#}
-        if (type === "1") {
-            render_buyer();
-        } else if (type === "0") {
-            render_seller();
-        }
+            // invalid account
+            if (!belong && type === "0") {
+                window.location.href = "/shop";
+            }
+            get_and_render_item_data();
+            get_and_render_comment();
+            {#buyer#}
+            if (type === "1") {
+                render_buyer();
+            } else if (type === "0") {
+
+                {#seller#}
+                if (belong){
+                    render_seller();
+                }else {
+                    window.location.href = "/shop"
+                }
+            }
+        })
     });
 
     function get_and_render_item_data(){
@@ -176,35 +192,12 @@
 {% block main %}
 <div class="left-box">
     <div class="info-box">
-        <div class="item-img-box">
-            <img id="item-img">
-        </div>
-        <div class="item-name-box">
-            <span>Name:</span>
-            <span id="item-name"></span>
-        </div>
-        <div class="item-rating-box">
-            <span>Rating:</span>
-            <span id="item-rating"></span>
-        </div>
-        <div class="item-description-box">
-            <span>Description:</span>
-            <span id="item-description"></span>
-        </div>
-        <div class="item-price-box">
-            <span>Price:</span>
-            <span id="item-price"></span>
-        </div>
-        <div class="item-storage-box">
-            <span>Storage:</span>
-            <span id="item-storage"></span>
-        </div>
+        <div class="item-img-box"></div>
     </div>
+    <div class="operation-box"></div>
 </div>
-
-<div class="right-box">
-    <div class="comment-box"></div>
-</div>
+<div class="rating-box"></div>
+<div class="comment-box"></div>
 
 <div class="back-button-box">
     <button class="back-button" onclick="history.back()">Back</button>

@@ -1,8 +1,9 @@
 /**
  * This function is to render buyer money
+ * @param DOM
  * @param phone is user phone
  */
-function render_money(phone, DOM){
+function render_money(DOM, phone){
     $.ajax({
         url: "/buyer/getMoney",
         type: "get",

@@ -1,20 +1,23 @@
 /**
  * This function will update user charge amount
- * @param form_data contains
- * phone
- * charge_num
+ * @param current_money_DOM
+ * @param charge_num_DOM
+ * @param phone
  */
-function charge(form_data){
+function charge(current_money_DOM, charge_num_DOM, phone){
     $.ajax({
         url:'/buyer/charge',
         type:'get',
         data:{
-            phone: form_data.get("phone"),
-            charge_num: form_data.get("charge_num"),
+            phone:phone,
+            charge_num: charge_num_DOM.val(),
         },
         success:function (data){
             alert(data.message)
-
+            if (data.success){
+                charge_num_DOM.empty();
+                render_money(current_money_DOM, phone)
+            }
         }
     })
 }

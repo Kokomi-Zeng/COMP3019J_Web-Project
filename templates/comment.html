@@ -30,7 +30,7 @@
 {% endblock %}
 
 {% block script %}
-    <script src="/static/js/render_comment.js"></script>
+    <script src="/static/js/render_all_comment.js"></script>
     <script src="/static/js/is_item_match_seller.js"></script>
     <script>
     let page_num = 1;
@@ -40,21 +40,11 @@
 
     {#when session is loaded#}
     $(document).on("sessionLoaded", function() {
-        comment_box = $(".comment-box");
-        is_item_match_seller()
+        render_all_comment()
 
-        {#when belong is loaded#}
-        $(document).on("belongLoaded", function () {
-
-            get_and_render_comment();
-
-            if (type==="1"){
-                render_self_comment_box();
-            } else if (!belong) {
-                window.location.href = document.referrer;
-            }
-            console.log(belong)
-        })
+        if (type==="1"){
+            render_self_comment_box();
+        }
     })
 
     {#This function is to get and render comment#}

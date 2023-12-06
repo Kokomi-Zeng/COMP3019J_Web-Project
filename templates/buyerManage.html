@@ -60,14 +60,11 @@
             </div>
 
             <div class="charge-money-box">
-                <form class="charge-form">
                     <input type="number" placeholder="amount: " id="charge-money" name="charge_num">
-                    <input type="hidden" name="phone" value="" class="phone">
-                </form>
             </div>
 
             <div class="submit-charge-div">
-                <button class="submit-charge" type="button" onclick="charge(new FormData($('.charge-form')[0]))">Charge</button>
+                <button class="submit-charge" type="button" onclick="charge($('.current-money'), $('#charge-money'), phone)">Charge</button>
             </div>
         </div>
     </div>
