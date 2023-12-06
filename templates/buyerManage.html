@@ -63,11 +63,7 @@
             </div>
 
             <div class="charge-money-box">
-                    <input type="number" placeholder="amount: " id="charge-money" name="charge_num">
-            </div>
-
-            <div class="submit-charge-div">
-                <button class="submit-charge" type="button" onclick="modify_balance($('.current-money'), $('#charge-money'), phone)">Modify</button>
+                    <input type="number" placeholder="modify to: " id="charge-money" name="charge_num" onblur="modify_balance($('.current-money'), $('#charge-money'), phone)">
             </div>
         </div>
     </div>

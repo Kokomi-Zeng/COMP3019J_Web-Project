@@ -132,16 +132,17 @@ def getItemManagePage():
     except (TypeError, ValueError):
         return jsonify({"success": False, "message": "Invalid Product ID. Please provide a valid integer."})
 
-    mode_info = get_mode_info()
-
-
-    return render_template('itemManage.html', product_id=product_id, **mode_info)
+    return render_template('itemManage.html', product_id=product_id)
 
 
 
 @bp.route('/commentManage')
 def getCommentManagePage():
     return render_template('commentManage.html')
+
+@bp.route('/shopManage')
+def getShopManagePage():
+    return render_template('shopManage.html')
 
 @bp.route('/buyerItemManage')
 def getBuyerItemManagePage():

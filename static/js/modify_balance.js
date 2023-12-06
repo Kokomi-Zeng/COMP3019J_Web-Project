@@ -4,6 +4,9 @@
  * @param amount
  */
 function modify_balance(phone, amount){
+    if (!confirm("Delete?")){
+        return;
+    }
     $.ajax({
         url:"/administer/updateBuyerAccount",
         type:"get",
