@@ -114,6 +114,7 @@ def get_all_buyer_items():
         buyer_name = Buyer.query.filter_by(phone=purchase.buyer_phone).first().name
         product_name = Product.query.filter_by(product_id=purchase.product_id).first().product_name
         purchased_items.append({
+            'purchase_id': purchase.purchase_id,
             'product_id': purchase.product_id,
             'product_name': product_name,
             'buyer_name': buyer_name,
