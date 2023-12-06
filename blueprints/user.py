@@ -79,3 +79,13 @@ def reset_user_introduction():
 
     db.session.commit()
     return jsonify({"success": True, "message": "Introduction reset successfully"})
+
+@user_bp.route('/lightMode', methods=['GET'])
+def light_mode():
+    mode = session.get('mode')
+    if not mode:
+        session['mode'] = True
+        return jsonify({"mode": True})
+    else:
+        session['mode'] = not mode
+        return jsonify({"mode": not mode})
