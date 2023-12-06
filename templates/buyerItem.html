@@ -1,11 +1,10 @@
 {% extends "base.html" %}
 
 {% block script %}
-    <script src="/static/js/render_purchased_items.js"></script>
+    <script src="/static/js/render_buyer_purchased_items.js"></script>
     <script>
-    let purchased_item_box
+    
     $(document).on("sessionLoaded", function (){
-        purchased_item_box = $(".purchased-item-box")
         get_and_render_purchased_items()
     })
 
@@ -15,7 +14,7 @@
             type:"get",
             data:{phone: phone},
             success:function (data){
-                render_purchased_items(data)
+                render_buyer_purchased_items($(".purchased-item-box"), data)
             }
         })
     }
