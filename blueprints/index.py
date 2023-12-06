@@ -152,6 +152,10 @@ def getSellerAddPage():
     mode_info = get_mode_info()
     return render_template('sellerAdd.html', **user_info, **mode_info)
 
+@bp.route('/logManage')
+def getLogManagePage():
+    return render_template('logManage.html')
+
 # This route is used to get the session
 @bp.route('/getSession')
 def getSession():
