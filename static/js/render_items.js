@@ -3,7 +3,7 @@
  * This method will render items in "item_container"
  * @param data is JSON that contains items info
  */
-function render_item(data){
+function render_items(data){
 
     for (let i=0; i<data.length; i++){
         // get each item

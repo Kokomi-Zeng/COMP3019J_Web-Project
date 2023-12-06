@@ -20,12 +20,11 @@ def getLoginPage():
     return render_template('login.html', **user_info)
 
 
-@bp.route('/sellerInfo')
+@bp.route('/buyerItem')
 def getSellerInfo():
     user_info = get_user_info()
-    return render_template('sellerInfo.html', **user_info)
+    return render_template('buyerItem.html', **user_info)
 
-@bp.route('/shop/')
 @bp.route('/shop')
 @bp.route('/')
 def getShopPage():
@@ -44,6 +43,11 @@ def getBuyerInfoPage():
     user_info = get_user_info()
     return render_template('buyerInfo.html', **user_info)
 
+@bp.route('/sellerInfo')
+def getSellerInfoPage():
+    user_info = get_user_info()
+    return render_template('sellerInfo.html', **user_info)
+
 
 @bp.route('/admin')
 def getAdminPage():
@@ -61,10 +65,19 @@ def getCommentPage():
     product_info = get_product_id()
     return render_template("comment.html", **product_info)
 
-@bp.route('/userManage')
-def getUserManagePage():
+
+# Admin
+
+
+@bp.route('/buyerManage')
+def getBuyerManagePage():
     phone = request.args.get('phone')
-    return render_template('userManage.html', phone=phone)
+    return render_template('buyerManage.html', phone=phone)
+
+@bp.route('/sellerManage')
+def getSellerManagePage():
+    phone = request.args.get('phone')
+    return render_template('sellerManage.html', phone=phone)
 
 @bp.route('/itemManage')
 def getItemManagePage():

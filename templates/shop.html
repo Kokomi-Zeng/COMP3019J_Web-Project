@@ -6,7 +6,7 @@
     None-login user can only inspect ten popular items.
     It has such funtions:
     1. get_session (Extends)
-    2. get_and_render_item
+    2. get_and_render_items
     3. render_prev_page_button
     4. render_next_page_button
     5. get_and_render_prev_page
@@ -36,7 +36,7 @@
 {% endblock %}
 
 {% block script %}
-    <script src="/static/js/render_item.js"></script>
+    <script src="/static/js/render_items.js"></script>
     <script>
 
     let page_num = 1;
@@ -47,25 +47,28 @@
         item_container = $(".item-container")
 
         {#get and render item automatically#}
-        get_and_render_item();
+        get_and_render_items();
 
-        if (type==="1" || type === "0"){
-            render_search_box();
+        get_and_render_next_button();
+        get_and_render_prev_button();
 
-            get_and_render_next_button();
-            get_and_render_prev_button();
-            if (type==="0"){
-                render_buyer();
-            }else {
-                render_seller();
-            }
+        if (type==="1"){
+            const search_box = $("#search-box");
+            search_box.css("display", "block");
+            search_box.keyup(function (){
+                get_and_render_items();
+            })
+            render_buyer();
+        }
+        if (type==="0"){
+            render_seller();
         }
     });
 
     /**
      * This function is to get and render items
      */
-    function get_and_render_item(){
+    function get_and_render_items(){
 
         {#clear DOM#}
         $(".item-container").empty();
@@ -81,7 +84,7 @@
                 page_num: page_num,
             },
             success: function (data) {
-                render_item(data);
+                render_items(data);
 
                 {#Render BUTTON page button#}
                 get_and_render_next_button()
@@ -99,25 +102,9 @@
             button.innerText = "prev";
             button.onclick = function () {
                 page_num--;
-                get_and_render_item();
+                get_and_render_items();
             }
             $(".prev").append(button);
-    }
-
-    /**
-     * This function is to render search box for buyer account
-     */
-    function render_search_box(){
-        const search_input = document.createElement("input");
-
-        search_input.setAttribute("id", "search-box");
-        search_input.setAttribute("type", "text");
-        search_input.setAttribute("placeholder", "Search");
-        search_input.onkeyup = function (){
-            get_and_render_item();
-        }
-
-        $(".search-box").append(search_input);
     }
 
     /**
@@ -142,7 +129,7 @@
         button.innerText = "next";
         button.onclick = function () {
             page_num++;
-            get_and_render_item();
+            get_and_render_items();
         }
         $(".next").append(button);
     }
@@ -162,7 +149,7 @@
             dataType: "json",
             data: {
                 phone: phone,
-                keyword: $("#search-box").val(),
+                keyword: $("#search-box").val()===null?"":$("#search-box").val(),
                 page_num: page_num,
             },
             success: function (data) {
@@ -174,27 +161,11 @@
     }
 
     /**
-     * This function is to render "add" button for seller account
-     */
-    function render_add_button(){
-        const item_title_box = $(".item-title");
-
-        const item_add_button = document.createElement("button", {
-            class: "item-title-text",
-            type:"button",
-        })
-        item_add_button.onclick = function (){
-            window.location.href = "/sellerAdd"
-        }
-        item_add_button.innerText = "Product Management"
-        item_title_box.append(item_add_button);
-    }
-
-    /**
      * This method is to render buyer components
      */
     function render_buyer(){
         const item_title_box = $(".item-title");
+        item_title_box.empty();
 
         const item_title_text = document.createElement("span", {
             class: "item-title-text"
@@ -208,14 +179,13 @@
      */
     function render_seller(){
         const item_title_box = $(".item-title");
+        item_title_box.empty();
 
         const item_title_text = document.createElement("span", {
             class: "item-title-text"
         })
         item_title_text.innerText = "Product Management:"
         item_title_box.append(item_title_text);
-
-        render_add_button();
     }
     </script>
 {% endblock %}

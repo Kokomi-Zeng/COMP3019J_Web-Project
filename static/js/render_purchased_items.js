@@ -1,6 +1,6 @@
 /**
  * This method will render data in "purchased_item_box"
- * @param data
+ * @data data
  */
 function render_purchased_items(data){
 

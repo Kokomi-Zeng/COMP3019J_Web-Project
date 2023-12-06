@@ -1,0 +1,32 @@
+{% extends "base_admin.html" %}
+
+{% block script %}
+    <script src="/static/js/render_comment.js"></script>
+    <script>
+
+    window.onload = function (){
+        get_and_render_comment();
+    }
+
+    function get_and_render_comment(){
+        $.ajax({
+            url:"",
+            type:"get",
+            success:function (data){
+                if (data.success){
+                    render_comment(data)
+                }
+                else {
+                    console.log(data.message)
+                }
+            }
+        })
+    }
+    </script>
+
+
+{% endblock %}
+
+{% block body %}
+
+{% endblock %}

@@ -1,10 +1,29 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Manage Item</title>
-</head>
-<body>
+{% extends "base_admin.html" %}
 
-</body>
-</html>
+{% block script %}
+    <script src="/static/js/render_item_info.js"></script>
+    <script>
+        let product_id = "{{ product_id }}"
+        let item_container;
+
+        window.onload = function (){
+            item_container = $(".item-container");
+            get_and_render_items();
+        }
+
+        function get_and_render_items(){
+            $.ajax({
+                url:"/shop/searchItemByName",
+                type:"get",
+                data:{phone: admin_phone},
+                success:function (data){
+                    render_item_info(data)
+                }
+            })
+        }
+    </script>
+{% endblock %}
+
+{% block body %}
+<div class="item-container"></div>
+{% endblock %}
