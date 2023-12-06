@@ -18,8 +18,8 @@ function render_user_info(type, phone) {
             $("#name").val(data.name)
 
             // admin
-            $("#introduction-span")[0].innerText = data.introduction
-            $("#name-span")[0].innerText = data.name
+            $("#introduction-span").text(data.introduction)
+            $("#name-span").text(data.name)
         }
     })
 }

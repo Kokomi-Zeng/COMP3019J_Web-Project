@@ -4,6 +4,9 @@
  * @param phone
  */
 function reset_user_name(type, phone){
+    if (!confirm("Reset?")){
+        return;
+    }
     $.ajax({
         url:"/user/resetUserName",
         type:"get",
