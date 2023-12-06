@@ -71,8 +71,7 @@
                     a.setAttribute("href", "/login");
                     a.innerText = "Login";
                 }
-                $(".user-name").append(a);
-                $(".mode-button").append(page_style_button);
+                $(".user-name").append(a);x
                 $(".user-operation").append(operation);
 
                 {#execue functions#}
@@ -94,21 +93,29 @@
             }
         })
     }
+    function get_mode(){
+        $.ajax({
+            url:"/user/getMode",
+            type:"get",
+            success:function (data) {
+                light_mode = data.mode;
+            }
+        })
+    }
 
     function switch_mode(){
         const mode_button = $(".mode-button")
         $.ajax({
-            url:"/user/lightMode",
+            url:"/user/switchMode",
             type:"get",
             success:function (data){
                 light_mode = data.mode;
                 if (light_mode){
                     mode_button.innerText = "light mode"
-                    document.body.classList.toggle('');
                 }else {
                     mode_button.innerText = "dark mode"
-                    document.body.classList.toggle('dark-mode');
                 }
+                document.body.classList.toggle('dark-mode');
             }
         })
     }
