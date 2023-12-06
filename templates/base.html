@@ -36,7 +36,7 @@
 
     window.onload = function (){
         {#alert_message("test")#}
-
+        switch_mode()
         get_session();
     }
 
@@ -57,22 +57,6 @@
                 {#generate tag#}
                 const a = document.createElement("a");
                 const operation = document.createElement("a")
-                const page_style_button = document.createElement("button", {
-                    class:"page_style_button",
-                    type: "button"
-                })
-                page_style_button.onclick = function (){
-                    if (!light_mode){
-                        this.innerText = "Light Mode";
-                        document.body.classList.toggle("");
-                    }else {
-                        this.innerText = "Dark Mode";
-                        document.body.classList.toggle('dark-mode');
-                    }
-                    light_mode = !light_mode;
-                    console.log(light_mode)
-                }
-                page_style_button.innerText = light_mode?"Light Mode":"Dark Mode";
                 if (type==="0"){
                     a.setAttribute("href", "/sellerInfo");
                     a.innerText = name;
@@ -110,6 +94,24 @@
             }
         })
     }
+
+    function switch_mode(){
+        const mode_button = $(".mode-button")
+        $.ajax({
+            url:"/user/lightMode",
+            type:"get",
+            success:function (data){
+                light_mode = data.mode;
+                if (light_mode){
+                    mode_button.innerText = "light mode"
+                    document.body.classList.toggle('');
+                }else {
+                    mode_button.innerText = "dark mode"
+                    document.body.classList.toggle('dark-mode');
+                }
+            }
+        })
+    }
     </script>
      {% block script %}{% endblock %}
 </head>
@@ -129,9 +131,11 @@
     <div class="home-box">
         <a href="/shop">Home</a>
     </div>
-    <div class="user-operation">
+    <div class="user-operation-box">
     </div>
-    <div class="mode-button"></div>
+    <div class="mode-button-box">
+        <button class="mode-button"></button>
+    </div>
 {#用户info#}
     <div class="user-box">
         <div class="user-img">
