@@ -1,7 +1,6 @@
 /**
  * This function will render at info_box & rating_box
- * need param product_id
- * @param data is data
+ * @param product_id is product id
  */
 function render_item_info(product_id){
     $.ajax({

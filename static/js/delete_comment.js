@@ -1,5 +1,8 @@
 
 function delete_comment(DOM, comment_id){
+    if (!confirm("Delete?")){
+        return;
+    }
     $.ajax({
         url:"/administer/deleteComment",
         type:"get",
