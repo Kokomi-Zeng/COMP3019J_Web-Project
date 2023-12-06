@@ -28,7 +28,7 @@ function render_data(data){
         image_button.setAttribute("type", "button")
         image_button.setAttribute("class", "image-button")
         image_button.onclick = function (){
-            window.location.href = user.user_type==="1"?"/buyerManage":"/sellerManage" + "?phone=" + user.phone;
+            window.location.href = user.user_type==="1"?"/buyerManage" + "?phone=" + user.phone:"/sellerManage" + "?phone=" + user.phone;
         }
         users_box.append(image_div);
         image_div.append(image_button);
@@ -48,7 +48,7 @@ function render_data(data){
         const user_type_span = document.createElement("span")
         user_type_div.setAttribute("class", "user-type-box")
         user_type_span.setAttribute("class", "user-type")
-        user_type_span.innerText = user.user_type
+        user_type_span.innerText = user.user_type==="1"?"Buyer":"Seller"
         users_box.append(user_type_div)
         user_type_div.append(user_type_span)
 
@@ -59,17 +59,5 @@ function render_data(data){
         status.innerText = user.status
         users_box.append(status_div);
         status_div.append(status);
-
-        const jump_div = document.createElement("div")
-        const jump_button = document.createElement("button")
-        jump_div.setAttribute("class", "jump-box")
-        jump_button.setAttribute("class", "jump-button")
-        jump_button.setAttribute("type", "button")
-        jump_button.onclick = function (){
-            window.location.href = user_type==="1"?"/buyerManage":"/sellerManage" + "?phone=" + user.phone;
-        }
-        jump_button.innerText = "detail"
-        users_box.append(jump_div)
-        jump_div.append(jump_button)
     }
 }

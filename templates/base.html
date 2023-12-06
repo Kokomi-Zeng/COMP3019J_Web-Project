@@ -147,7 +147,11 @@
     <div class="user-operation-box">
     </div>
     <div class="mode-button-box">
-        <button class="mode-button" type="button" onclick="switch_mode()"></button>
+        {% if user_mode=='dark-mode' %}
+        <button class="mode-button" type="button" onclick="switch_mode()">dark mode</button>
+        {% else %}
+        <button class="mode-button" type="button" onclick="switch_mode()">light mode</button>
+        {% endif %}
     </div>
 {#用户info#}
     <div class="user-box">

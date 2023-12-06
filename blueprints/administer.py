@@ -175,7 +175,7 @@ def get_users():
         return jsonify({"success": False, "message": "Operation not permitted. Admin privileges required."})
 
     # Retrieve information of all users
-    users = User.query.all()
+    users = User.query.filter(User.user_type != '2').all()
     user_list = []
     for user in users:
         user_info = {
