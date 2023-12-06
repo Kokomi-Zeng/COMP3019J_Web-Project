@@ -122,6 +122,7 @@ def get_all_buyer_items():
             # convert datetime object to string
             'purchase_time': purchase.purchase_time.strftime('%Y-%m-%d %H:%M:%S')
         })
+    return jsonify(purchased_items)
 
 
 # Provide a method for a buyer to buy an item
