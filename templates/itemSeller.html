@@ -62,7 +62,7 @@
         </div>
         <div class="item-name-box">
             <span>Name:</span>
-            <input id="item-name" type="text" onblur="modify_item_info($('#item-name'), $('#item-description'), $('#item-price'), $('#item-storage'), product_id, phone)">
+            <input id="item-name" type="text" onchange="modify_item_info($('#item-name'), $('#item-description'), $('#item-price'), $('#item-storage'), product_id, phone)">
         </div>
         <div class="item-rating-box">
             <span>Rating:</span>
@@ -70,15 +70,15 @@
         </div>
         <div class="item-description-box">
             <span>Description:</span>
-            <input id="item-description" type="text" onblur="modify_item_info($('#item-name'), $('#item-description'), $('#item-price'), $('#item-storage'), product_id, phone)">
+            <input id="item-description" type="text" onchange="modify_item_info($('#item-name'), $('#item-description'), $('#item-price'), $('#item-storage'), product_id, phone)">
         </div>
         <div class="item-price-box">
             <span>Price:</span>
-            <input id="item-price" type="number" onblur="modify_item_info($('#item-name'), $('#item-description'), $('#item-price'), $('#item-storage'), product_id, phone)">
+            <input id="item-price" type="number" onchange="modify_item_info($('#item-name'), $('#item-description'), $('#item-price'), $('#item-storage'), product_id, phone)">
         </div>
         <div class="item-storage-box">
             <span>Storage:</span>
-            <input id="item-storage" type="number" onblur="modify_item_info($('#item-name'), $('#item-description'), $('#item-price'), $('#item-storage'), product_id, phone)">
+            <input id="item-storage" type="number" onchange="modify_item_info($('#item-name'), $('#item-description'), $('#item-price'), $('#item-storage'), product_id, phone)">
         </div>
     </div>
 

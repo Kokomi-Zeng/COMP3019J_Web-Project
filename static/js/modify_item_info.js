@@ -18,6 +18,10 @@ function modify_item_info(name, description, price, storage, product_id, phone){
             product_id: product_id,
             price: price.val(),
             storage: storage.val(),
+        },
+        success: function (data){
+            alert(data.message)
+            render_item_info(product_id)
         }
     })
 }

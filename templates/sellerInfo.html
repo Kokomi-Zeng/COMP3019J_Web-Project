@@ -30,6 +30,7 @@
     <script src="/static/js/render_money.js"></script>
     <script src="/static/js/upload_user_image.js"></script>
     <script src="/static/js/logout.js"></script>
+    <script src="/static/js/delete_user.js"></script>
     <script>
 
     {#when session is loaded#}
@@ -92,6 +93,10 @@
 
         <div class="logout-box">
             <button type="button" class="logout-button" onclick="logout()">Logout</button>
+        </div>
+
+        <div class="delete-user-box">
+            <button type="button" class="delete-user-button" onclick="delete_user(phone)"></button>
         </div>
     </div>
 {% endblock %}
