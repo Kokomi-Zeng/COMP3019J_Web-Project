@@ -107,6 +107,22 @@ def get_buyer_items():
 
     return jsonify(purchased_items)
 
+@buyer_bp.route('/getAllBuyerItem', methods=['GET'])
+def get_all_buyer_items():
+    purchased_items = []
+    for purchase in Purchase.query.all():
+        buyer_name = Buyer.query.filter_by(phone=purchase.buyer_phone).first().name
+        purchased_items.append({
+            'product_id': purchase.product_id,
+            'product_name': purchase.product.product_name,
+            'buyer_name': buyer_name,
+            'purchase_quantity': purchase.purchase_number,
+            'total_price': purchase.purchase_price,
+            'image_src': purchase.image_src_at_time_of_purchase,
+            # convert datetime object to string
+            'purchase_time': purchase.purchase_time.strftime('%Y-%m-%d %H:%M:%S')
+        })
+
 
 # Provide a method for a buyer to buy an item
 @buyer_bp.route('/buyItem', methods=['GET'])
