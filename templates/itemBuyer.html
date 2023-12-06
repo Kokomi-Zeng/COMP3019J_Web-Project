@@ -40,7 +40,7 @@
     <script src="/static/js/render_comment.js"></script>
     <script src="/static/js/render_item_info.js"></script>
     <script src="/js/render_product_basic_comment.js"></script>
-    <script src="/static/js/is_item_match_seller.js"></script>
+    <script src="/static/js/buy_item.js"></script>
     <script>
     let product_id = "{{ product_id }}"
     let info_box;
@@ -81,12 +81,21 @@
             <span id="item-storage"></span>
         </div>
     </div>
+
+    <div class="buyer-box">
+        <div class="buy-amount-box">
+            <input type="number" id="buy-amount" placeholder="amount">
+        </div>
+        <div class="buy-box">
+            <button class="buy-button" type="button" onclick="buy_item($('#buy-amount'), product_id, phone)">BUY</button>
+        </div>
+    </div>
 </div>
 
 <div class="right-box">
     <div class="comment-box"></div>
     <div class="more-comment-box">
-        <button class="more-comment-button" type="button" onclick="window.location.href = '/comment'"></button>
+        <button class="more-comment-button" type="button" onclick="window.location.href = '/comment'">More Comment</button>
     </div>
 </div>
 

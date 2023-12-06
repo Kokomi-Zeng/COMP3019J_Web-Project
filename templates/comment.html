@@ -30,7 +30,7 @@
 {% endblock %}
 
 {% block script %}
-    <script src="/static/js/render_comment.js"></script>
+    <script src="/js/render_product_all_comment.js"></script>
     <script src="/static/js/is_item_match_seller.js"></script>
     <script>
     let page_num = 1;
@@ -40,96 +40,12 @@
 
     {#when session is loaded#}
     $(document).on("sessionLoaded", function() {
-        comment_box = $(".comment-box");
-        is_item_match_seller()
+        render_product_all_comment()
 
-        {#when belong is loaded#}
-        $(document).on("belongLoaded", function () {
-
-            get_and_render_comment();
-
-            if (type==="1"){
-                render_self_comment_box();
-            } else if (!belong) {
-                window.location.href = document.referrer;
-            }
-            console.log(belong)
-        })
+        if (type==="1"){
+            render_self_comment_box();
+        }
     })
-
-    {#This function is to get and render comment#}
-    function get_and_render_comment(){
-
-        $(".comment-box").empty();
-        $.ajax({
-            url:"/comment/commentInfoById",
-            type:"get",
-            contentType: "application/json",
-            dataType: "json",
-            data:{
-                product_id:"{{ product_id }}",
-                phone:phone,
-            },
-            success:function(data){
-                render_comment(data);
-
-                {#Render BUTTON page button#}
-                {#get_and_render_prev_page();#}
-                {#get_and_render_next_page();#}
-            }
-        })
-    }
-
-    {#This function is to render next page button#}
-    function render_next_page_button() {
-        const button = document.createElement("button");
-        button.setAttribute("class", "page-button");
-        button.innerText = "next";
-        button.onclick = function () {
-            page_num++;
-            get_and_render_comment();
-        }
-        $(".next").append(button);
-    }
-
-    {#This function is to get and render next page button#}
-    function get_and_render_next_page(){
-        $.ajax({
-            url:"/comment/hasNextComment",
-            type:"get",
-            contentType: "application/json",
-            dataType: "json",
-            data: {
-                phone: phone,
-                keyword: $("#search-box").val(),
-                page_num: page_num,
-            },
-            success: function (data) {
-                if (data.has_next) {
-                    render_next_page_button(data)
-                }
-            }
-        })
-    }
-
-    {#This function is to render prev page button#}
-    function render_prev_page_button(){
-        const button = document.createElement("button");
-        button.setAttribute("class", "page-button");
-        button.innerText = "prev";
-        button.onclick = function () {
-            page_num--;
-            get_and_render_comment();
-        }
-        $(".prev").append(button);
-    }
-
-    {#This function is to get and render prev page button#}
-    function get_and_render_prev_page(){
-        if (page_num>1){
-            render_prev_page_button()
-        }
-    }
 
     {#This function is to render self comment box#}
     function render_self_comment_box() {
@@ -141,6 +57,16 @@
 
 
         {#Render INPUT NUMBER rating#}
+        const self_message_div = document.createElement("div");
+        const self_message = document.createElement("span");
+
+        self_message_div.setAttribute("class", "self-message-box");
+
+        self_comment_box.append(self_message_div);
+        self_message_div.append(self_message);
+
+
+        {#Render INPUT NUMBER rating#}
         const self_rating_div = document.createElement("div");
         const self_rating = document.createElement("input");
 
@@ -148,6 +74,9 @@
         self_rating.setAttribute("class", "self-rating");
         self_rating.setAttribute("placeHolder", "rating");
         self_rating.setAttribute("type", "number");
+        self_rating.onkeyup = function (){
+            self_message.innerText = check_rating(this.value)
+        }
 
         self_comment_box.append(self_rating_div);
         self_rating_div.append(self_rating);
@@ -166,15 +95,17 @@
         self_content_div.append(self_content);
 
         {#Render BUTTON submit#}
-        const self_content_button = document.createElement("button");
+        const self_submit_div = document.createElement("div");
+        const self_submit_button = document.createElement("button");
 
-        self_content_button.setAttribute("id", "self-content-button");
-        self_content_button.innerText = "Submit->"
-        self_content_button.onclick = function () {
+        self_submit_button.setAttribute("id", "self-content-button");
+        self_submit_button.innerText = "Submit"
+        self_submit_button.onclick = function () {
             create_comment(self_rating.value, self_content.value)
         }
 
-        self_comment_box.append(self_content_button);
+        self_comment_box.append(self_submit_div);
+        self_submit_div.append(self_submit_button)
 
     }
 
@@ -202,6 +133,14 @@
                 }
             }
         })
+    }
+
+    function check_rating(value){
+        if (value===1 || value===2 || value===3 || value===4 || value===5)
+            return ""
+        else {
+            return "Rating must be 1 or 2 or 3 or 4 or 5"
+        }
     }
 
     </script>

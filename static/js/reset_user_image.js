@@ -4,6 +4,9 @@
  * @param phone
  */
 function reset_user_image(DOM, phone){
+    if (!confirm("Reset?")){
+        return;
+    }
     $.ajax({
         url:"/user/resetUserImage",
         type:"get",

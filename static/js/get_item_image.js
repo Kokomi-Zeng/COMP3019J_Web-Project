@@ -1,16 +1,16 @@
 /**
- * this method is for $("img") to set their src.
- * @param DOM is the img that need to set src.
- * @param phone
+ *
+ * @param DOM
+ * @param product_id
  */
-function get_user_image(DOM, phone){
+function get_item_image(DOM, product_id){
     $.ajax({
-        url: "/images/get_image_user",
+        url: "/images/get_image_product",
         type: "get",
         contentType: "application/json",
         dataType: "json",
         data:{
-            phone: phone,
+            product_id: product_id,
         },
         success: function (data) {
             DOM.attr("src", data.url)

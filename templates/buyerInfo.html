@@ -30,6 +30,7 @@
     <script src="/static/js/render_money.js"></script>
     <script src="/static/js/upload_user_image.js"></script>
     <script src="/static/js/logout.js"></script>
+    <script src="/static/js/delete_user.js"></script>
     <script>
 
     {#when session is loaded#}
@@ -41,7 +42,7 @@
         {#default to get and render buyer information#}
         get_user_image($(".user-image"), phone)
         render_user_info(type, phone);
-        render_money(phone, $(".current-money"))
+        render_money($(".current-money"), phone)
     });
     </script>
 {% endblock %}
@@ -54,7 +55,7 @@
                 <button type="button" onclick="$('#file').click();">
                     <img class="user-image">
                 </button>
-                <input type="file" name="image" id="file" accept="image/*" onchange="upload_user_image(new FormData($('.img-form')[0]), phone)" style="display: none">
+                <input type="file" name="image" id="file" accept="image/*" onchange="upload_user_image($('.user-image'), new FormData($('.img-form')[0]), phone)" style="display: none">
             </form>
         </div>
 
@@ -94,6 +95,10 @@
         <div class="logout-box">
             <button type="button" class="logout-button" onclick="logout()">Logout</button>
         </div>
+
+        <div class="delete-user-box">
+            <button type="button" class="delete-user-button" onclick="delete_user(phone)">Delete User</button>
+        </div>
     </div>
 
     <div class="user-amount-box">
@@ -102,14 +107,11 @@
         </div>
 
         <div class="charge-money-box">
-            <form class="charge-form">
-                <input type="number" placeholder="amount: " id="charge-money" name="charge_num">
-                <input type="hidden" name="phone" value="" class="phone">
-            </form>
+            <input type="number" placeholder="amount: " id="charge-money" name="charge_num">
         </div>
 
         <div class="submit-charge-div">
-            <button class="submit-charge" type="button" onclick="charge(new FormData($('.charge-form')[0]))">Charge</button>
+            <button class="submit-charge" type="button" onclick="charge($('.current-money'), $('#charge-money'), phone)">Charge</button>
         </div>
     </div>
 {% endblock %}

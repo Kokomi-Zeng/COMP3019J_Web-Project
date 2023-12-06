@@ -56,12 +56,9 @@
             const search_box = $("#search-box");
             search_box.css("display", "block");
             search_box.keyup(function (){
+                page_num = 1;
                 get_and_render_items();
             })
-            render_buyer();
-        }
-        if (type==="0"){
-            render_seller();
         }
     });
 
@@ -84,7 +81,7 @@
                 page_num: page_num,
             },
             success: function (data) {
-                render_items(data);
+                render_items(data, type);
 
                 {#Render BUTTON page button#}
                 get_and_render_next_button()
@@ -158,34 +155,6 @@
                 }
             }
         })
-    }
-
-    /**
-     * This method is to render buyer components
-     */
-    function render_buyer(){
-        const item_title_box = $(".item-title");
-        item_title_box.empty();
-
-        const item_title_text = document.createElement("span", {
-            class: "item-title-text"
-        })
-        item_title_text.innerText = "All Products:"
-        item_title_box.append(item_title_text);
-    }
-
-    /**
-     * This method is to render seller components
-     */
-    function render_seller(){
-        const item_title_box = $(".item-title");
-        item_title_box.empty();
-
-        const item_title_text = document.createElement("span", {
-            class: "item-title-text"
-        })
-        item_title_text.innerText = "Product Management:"
-        item_title_box.append(item_title_text);
     }
     </script>
 {% endblock %}

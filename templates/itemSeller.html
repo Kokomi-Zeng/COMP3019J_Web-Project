@@ -40,7 +40,10 @@
     <script src="/static/js/render_comment.js"></script>
     <script src="/static/js/render_item_info.js"></script>
     <script src="/js/render_product_basic_comment.js"></script>
-    <script src="/static/js/is_item_match_seller.js"></script>
+    <script src="/static/js/modify_item_info.js"></script>
+    <script src="/static/js/delete_item.js"></script>
+    <script src="/static/js/upload_item_image.js"></script>
+    <script src="/static/js/get_item_image.js"></script>
     <script>
     let product_id = "{{ product_id }}"
     let info_box;
@@ -58,11 +61,16 @@
 <div class="left-box">
     <div class="info-box">
         <div class="item-img-box">
-            <img id="item-img">
+            <form class="img-form">
+                <button type="button" onclick="$('#file').click();">
+                    <img id="item-img">
+                </button>
+                <input type="file" name="image" id="file" accept="image/*" onchange="upload_item_img($('#item-img'), new FormData($('.img-form')[0]), product_id)" style="display: none">
+            </form>
         </div>
         <div class="item-name-box">
             <span>Name:</span>
-            <span id="item-name"></span>
+            <input id="item-name" type="text" onchange="modify_item_info($('#item-name'), $('#item-description'), $('#item-price'), $('#item-storage'), product_id, phone)">
         </div>
         <div class="item-rating-box">
             <span>Rating:</span>
@@ -70,15 +78,21 @@
         </div>
         <div class="item-description-box">
             <span>Description:</span>
-            <span id="item-description"></span>
+            <input id="item-description" type="text" onchange="modify_item_info($('#item-name'), $('#item-description'), $('#item-price'), $('#item-storage'), product_id, phone)">
         </div>
         <div class="item-price-box">
             <span>Price:</span>
-            <span id="item-price"></span>
+            <input id="item-price" type="number" onchange="modify_item_info($('#item-name'), $('#item-description'), $('#item-price'), $('#item-storage'), product_id, phone)">
         </div>
         <div class="item-storage-box">
             <span>Storage:</span>
-            <span id="item-storage"></span>
+            <input id="item-storage" type="number" onchange="modify_item_info($('#item-name'), $('#item-description'), $('#item-price'), $('#item-storage'), product_id, phone)">
+        </div>
+    </div>
+
+    <div class="seller-box">
+        <div class="delete-box">
+            <button class="buy-button" type="button" onclick="delete_item(product_id, phone)">DELETE</button>
         </div>
     </div>
 </div>
@@ -86,7 +100,7 @@
 <div class="right-box">
     <div class="comment-box"></div>
     <div class="more-comment-box">
-        <button class="more-comment-button" type="button" onclick="window.location.href = '/comment'"></button>
+        <button class="more-comment-button" type="button" onclick="window.location.href = '/comment'">More Comment</button>
     </div>
 </div>
 

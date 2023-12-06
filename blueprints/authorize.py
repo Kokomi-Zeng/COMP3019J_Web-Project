@@ -38,7 +38,8 @@ def login():
 
     user = User.query.filter_by(phone=phone).first()
     if user and check_password_hash(user.password, password):
-        if user.user_type == 2:
+        if user.user_type == '2':
+            session['phone'] = user.phone
             logger.info("Admin login",
                         extra={"phone": phone,
                                "log_type": "INFO",

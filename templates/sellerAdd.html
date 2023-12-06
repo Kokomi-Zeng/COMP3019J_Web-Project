@@ -20,6 +20,7 @@
 {% extends "base.html" %}
 
 {% block script %}
+    <script src="/static/js/upload_item_image.js"></script>
     <script>
     let container
     $(document).on("sessionLoaded", function (){
@@ -182,33 +183,12 @@
                 if (data.success){
 
                     {#Create item successfully: begin to upload item image#}
-                    upload_item_img(formdata, data.product_id);
+                    upload_item_img($(".show-img"), formdata, data.product_id);
                     alert(data.message);
 
                     {#reload page#}
                     render_add();
                 }else {
-                    alert(data.message);
-                }
-            }
-        })
-    }
-
-    /**
-     * This function is to upload image depend on fromdata and product id
-     * @param formdata is FormData object that contains product image
-     * @param product_id is product id
-     */
-    function upload_item_img(formdata, product_id){
-        $.ajax({
-            url:"/images/upload_image_product?product_id=" + product_id,
-            type:"post",
-            data:formdata,
-            dataType:"json",
-            processData:false,
-            contentType:false,
-            success:function (data){
-                if (!data.success) {
                     alert(data.message);
                 }
             }

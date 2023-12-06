@@ -11,59 +11,99 @@ bp = Blueprint('index', __name__, url_prefix='/')
 
 @bp.route('/authorize')
 def getAuthorizePage():
-    return render_template('authorize.html')
+    mode_info = get_mode_info()
+
+    return render_template('authorize.html', **mode_info)
 
 
 @bp.route('/login')
 def getLoginPage():
     user_info = get_user_info()
-    return render_template('login.html', **user_info)
+    mode_info = get_mode_info()
+
+    return render_template('login.html', **user_info, **mode_info)
 
 
 @bp.route('/buyerItem')
 def getSellerInfo():
     user_info = get_user_info()
-    return render_template('buyerItem.html', **user_info)
+    mode_info = get_mode_info()
+
+    return render_template('buyerItem.html', **user_info, **mode_info)
 
 @bp.route('/shop')
 @bp.route('/')
 def getShopPage():
     user_info = get_user_info()
-    return render_template('shop.html', **user_info)
+    mode_info = get_mode_info()
+
+    return render_template('shop.html', **user_info, **mode_info)
 
 
 @bp.route('/register')
 def getRegisterPage():
     user_info = get_user_info()
-    return render_template('register.html', **user_info)
+    mode_info = get_mode_info()
+
+    return render_template('register.html', **user_info, **mode_info)
 
 
 @bp.route('/buyerInfo')
 def getBuyerInfoPage():
     user_info = get_user_info()
-    return render_template('buyerInfo.html', **user_info)
+    mode_info = get_mode_info()
+
+    return render_template('buyerInfo.html', **user_info, **mode_info)
 
 @bp.route('/sellerInfo')
 def getSellerInfoPage():
     user_info = get_user_info()
-    return render_template('sellerInfo.html', **user_info)
+    mode_info = get_mode_info()
+
+
+    return render_template('sellerInfo.html', **user_info, **mode_info)
 
 
 @bp.route('/admin')
 def getAdminPage():
     user_info = get_user_info()
-    return render_template('admin.html', **user_info)
+    mode_info = get_mode_info()
+
+
+    return render_template('admin.html', **user_info, **mode_info)
 
 
 @bp.route('/item')
 def getItemPage():
     product_info = get_product_id()
-    return render_template("item.html", **product_info)
+    mode_info = get_mode_info()
+
+
+    return render_template("item.html", **product_info, **mode_info)
+
+@bp.route('/itemSeller')
+def getItemSellerPage():
+    product_info = get_product_id()
+    mode_info = get_mode_info()
+
+
+    return render_template("itemSeller.html", **product_info, **mode_info)
+
+@bp.route('/itemBuyer')
+def getItemBuyerPage():
+    product_info = get_product_id()
+    mode_info = get_mode_info()
+
+
+    return render_template("itemBuyer.html", **product_info, **mode_info)
 
 @bp.route('/comment')
 def getCommentPage():
     product_info = get_product_id()
-    return render_template("comment.html", **product_info)
+    mode_info = get_mode_info()
+
+
+    return render_template("comment.html", **product_info, **mode_info)
 
 
 # Admin
@@ -72,12 +112,18 @@ def getCommentPage():
 @bp.route('/buyerManage')
 def getBuyerManagePage():
     phone = request.args.get('phone')
-    return render_template('buyerManage.html', phone=phone)
+    mode_info = get_mode_info()
+
+
+    return render_template('buyerManage.html', phone=phone, **mode_info)
 
 @bp.route('/sellerManage')
 def getSellerManagePage():
     phone = request.args.get('phone')
-    return render_template('sellerManage.html', phone=phone)
+    mode_info = get_mode_info()
+
+
+    return render_template('sellerManage.html', phone=phone, **mode_info)
 
 @bp.route('/itemManage')
 def getItemManagePage():
@@ -85,18 +131,37 @@ def getItemManagePage():
         product_id = int(request.args.get('product_id'))
     except (TypeError, ValueError):
         return jsonify({"success": False, "message": "Invalid Product ID. Please provide a valid integer."})
+
     return render_template('itemManage.html', product_id=product_id)
+
+
+
+@bp.route('/commentManage')
+def getCommentManagePage():
+    return render_template('commentManage.html')
+
+@bp.route('/shopManage')
+def getShopManagePage():
+    return render_template('shopManage.html')
 
 @bp.route('/buyerItemManage')
 def getBuyerItemManagePage():
     phone = request.args.get('phone')
-    return render_template('buyerItemManage.html', phone=phone)
+
+    mode_info = get_mode_info()
+    return render_template('buyerItemManage.html', phone=phone, **mode_info)
 
 
 @bp.route('/sellerAdd')
 def getSellerAddPage():
     user_info = get_user_info()
-    return render_template('sellerAdd.html', **user_info)
+
+    mode_info = get_mode_info()
+    return render_template('sellerAdd.html', **user_info, **mode_info)
+
+@bp.route('/logManage')
+def getLogManagePage():
+    return render_template('logManage.html')
 
 # This route is used to get the session
 @bp.route('/getSession')
@@ -111,6 +176,8 @@ def getSession():
             return {'phone': phone, 'name': user.seller.name, 'type': user.user_type, 'status': user.status}
         if user.user_type == '1':
             return {'phone': phone, 'name': user.buyer.name, 'type': user.user_type, 'status': user.status}
+        if user.user_type == '2':
+            return {'phone': phone, 'name': "administer", 'type': user.user_type, 'status': user.status}
     else:
         return {'phone': "", 'name': "", 'type': ""}
 
@@ -120,6 +187,15 @@ def getSession():
 def clearSession():
     session.clear()
     return {'success': True}
+
+
+def get_mode_info():
+    user_mode = session.get('mode', '')
+    if user_mode:
+        user_mode = ''
+    else:
+        user_mode = 'dark-mode'
+    return {'user_mode': user_mode}
 
 
 # This route is used to get the user info

@@ -205,7 +205,7 @@ def get_introduction_by_comment_id():
         "introduction": buyer.description
     })
 
-@comment_bp.route('/getALlComments', methods=['GET'])
+@comment_bp.route('/getAllComments', methods=['GET'])
 def get_all_comments():
     comments = Comment.query.all()
     comments_data = []
