@@ -1,7 +1,7 @@
 {% extends "base_admin.html" %}
 
 {% block script %}
-    <script src="/static/js/render_purchased_items.js"></script>
+    <script src="/static/js/render_buyer_purchased_items.js"></script>
     <script>
 
     window.onload = function (){
@@ -10,13 +10,10 @@
 
     function get_and_render_purchased_items(){
     $.ajax({
-        url:"/buyer/buyerItem",
+        url:"/buyer/getAllBuyerItem",
         type:"get",
-        data: {
-            admin_phone: admin_phone
-        },
         success:function (data){
-            render_purchased_items($(".purchased-item-box"), data)
+            render_buyer_purchased_items($(".purchased-item-box"), data)
         }
     })
 }

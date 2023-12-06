@@ -1,12 +1,13 @@
 /**
  *
+ *
  * @param DOM
  * @param data
  */
-function render_purchased_items(DOM, data){
+function render_buyer_purchased_items(DOM, data){
 
     //clear DOM
-    purchased_item_box.empty();
+    DOM.empty();
 
     console.log("data length: " + data.length)
     for (let i = 0; i<data.length; i++) {
@@ -16,7 +17,7 @@ function render_purchased_items(DOM, data){
         // Render DIV item container
         const item_div = document.createElement("div");
         item_div.setAttribute("class", "item-box");
-        purchased_item_box.append(item_div);
+        DOM.append(item_div);
 
         const item_img_div = document.createElement("div");
         const item_img = document.createElement("img");
