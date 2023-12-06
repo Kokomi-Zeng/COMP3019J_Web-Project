@@ -5,19 +5,8 @@
     <script>
 
     $(document).on("sessionLoaded", function (){
-        get_and_render_purchased_items()
+        render_buyer_purchased_items($(".purchased-item-box"), phone)
     })
-
-    function get_and_render_purchased_items(){
-        $.ajax({
-            url:"buyer/buyerItem",
-            type:"get",
-            data:{phone: phone},
-            success:function (data){
-                render_buyer_purchased_items($(".purchased-item-box"), data)
-            }
-        })
-    }
     </script>
 {% endblock %}
 

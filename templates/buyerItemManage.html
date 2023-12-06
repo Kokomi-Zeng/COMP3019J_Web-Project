@@ -1,25 +1,15 @@
 {% extends "base_admin.html" %}
 
 {% block script %}
-    <script src="/static/js/render_buyer_purchased_items.js"></script>
+    <script src="/static/js/render_all_purchased_items.js"></script>
     <script>
 
     window.onload = function (){
-        get_and_render_purchased_items()
+        render_all_purchased_items($(".purchased-item-box"))
     }
-
-    function get_and_render_purchased_items(){
-    $.ajax({
-        url:"/buyer/getAllBuyerItem",
-        type:"get",
-        success:function (data){
-            render_buyer_purchased_items($(".purchased-item-box"), data)
-        }
-    })
-}
     </script>
 {% endblock %}
 
-{% block main %}
+{% block body %}
     <div class="purchased-item-box"></div>
 {% endblock %}

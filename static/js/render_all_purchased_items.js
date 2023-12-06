@@ -1,9 +1,11 @@
-
+/**
+ *
+ * @param DOM
+ */
 function render_all_purchased_items(DOM){
     $.ajax({
-        url:"buyer/buyerItem",
+        url:"buyer/getAllBuyerItem",
         type:"get",
-        data:{phone: phone},
         success:function (data){
             render_data(DOM, data)
         }
@@ -25,13 +27,19 @@ function render_data(DOM, data){
         item_div.setAttribute("class", "item-box");
         DOM.append(item_div);
 
-        // Render IMG image
+        // Render SPAN buyer name
+        const purchase_id_div = document.createElement("div");
+        const purchase_id = document.createElement("span");
+        purchase_id_div.setAttribute("class", "item-img-box");
+        purchase_id.setAttribute("src", item.purchase_id);
+        purchase_id_div.append(purchase_id);
+        item_div.append(purchase_id_div);
+
+        // Render SPAN buyer name
         const buyer_name_div = document.createElement("div");
-        const buyer_name = document.createElement("img");
-
-        buyer_name_div.setAttribute("class", "item-img-box");
-        buyer_name.setAttribute("src", item.buyer_name);
-
+        const buyer_name = document.createElement("span");
+        buyer_name_div.setAttribute("class", "buyer-name-box");
+        buyer_name.innerText = item.buyer_name;
         buyer_name_div.append(buyer_name);
         item_div.append(buyer_name_div);
 

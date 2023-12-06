@@ -1,10 +1,20 @@
 /**
  *
- *
  * @param DOM
- * @param data
+ * @param phone
  */
-function render_buyer_purchased_items(DOM, data){
+function render_buyer_purchased_items(DOM, phone){
+    $.ajax({
+        url:"/buyer/buyerItem",
+        type:"get",
+        data:{phone: phone},
+        success: function (data){
+            render_data(DOM, data)
+        }
+    })
+}
+
+function render_data(DOM, data){
 
     //clear DOM
     DOM.empty();
