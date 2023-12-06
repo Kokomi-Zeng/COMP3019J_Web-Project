@@ -62,7 +62,7 @@ register
         if (isNaN(phone)){
             $(".phone-message")[0].innerText = "NAN"
             $("#phone")[0].style.border = "2px solid red"
-        }else if (phone.length<5 || phone.length>20) {
+        }else if (phone.length<5 || phone.length>12) {
             $(".phone-message")[0].innerText = "length invalid"
             $("#phone")[0].style.border = "2px solid red"
         }else {
@@ -84,9 +84,12 @@ register
             </label>
     </div>
 
+    <div class="message">
+        <span class="phone-message"></span>
+    </div>
+
     <div class="phone">
         <input type="text" id="phone" placeholder="phone" onclick="phone_is_valid()">
-        <span class="phone-message"></span>
     </div>
 
     <div class="password">

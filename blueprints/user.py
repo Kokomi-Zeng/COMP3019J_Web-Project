@@ -85,17 +85,21 @@ def light_mode():
     mode = session.get('mode')
     if not mode:
         session['mode'] = True
+        print(session['mode'])
         return jsonify({"mode": True})
     else:
         session['mode'] = not mode
+        print(session['mode'])
         return jsonify({"mode": not mode})
 
 
 @user_bp.route('/getMode', methods=['GET'])
 def get_mode():
     mode = session.get('mode')
-    if not mode:
+    if mode is None:
         session['mode'] = True
+        print(mode)
         return jsonify({"mode": True})
     else:
+        print(mode)
         return jsonify({"mode": mode})
