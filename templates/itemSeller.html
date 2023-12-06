@@ -40,7 +40,7 @@
     <script src="/static/js/render_comment.js"></script>
     <script src="/static/js/render_item_info.js"></script>
     <script src="/static/js/render_basic_comment.js"></script>
-    <script src="/static/js/is_item_match_seller.js"></script>
+    <script src="/static/js/modify_item_info.js"></script>
     <script>
     let product_id = "{{ product_id }}"
     let info_box;
@@ -62,23 +62,23 @@
         </div>
         <div class="item-name-box">
             <span>Name:</span>
-            <input id="item-name" type="text" onblur="modify_item_info()">
+            <input id="item-name" type="text" onblur="modify_item_info($('#item-name'), $('#item-description'), $('#item-price'), $('#item-storage'), product_id, phone)">
         </div>
         <div class="item-rating-box">
             <span>Rating:</span>
-            <input id="item-rating">
+            <span id="item-rating"></span>
         </div>
         <div class="item-description-box">
             <span>Description:</span>
-            <input id="item-description">
+            <input id="item-description" type="text" onblur="modify_item_info($('#item-name'), $('#item-description'), $('#item-price'), $('#item-storage'), product_id, phone)">
         </div>
         <div class="item-price-box">
             <span>Price:</span>
-            <input id="item-price">
+            <input id="item-price" type="number" onblur="modify_item_info($('#item-name'), $('#item-description'), $('#item-price'), $('#item-storage'), product_id, phone)">
         </div>
         <div class="item-storage-box">
             <span>Storage:</span>
-            <input id="item-storage">
+            <input id="item-storage" type="number" onblur="modify_item_info($('#item-name'), $('#item-description'), $('#item-price'), $('#item-storage'), product_id, phone)">
         </div>
     </div>
 
