@@ -53,7 +53,7 @@
                 <button type="button" onclick="$('#file').click();">
                     <img class="user-image">
                 </button>
-                <input type="file" name="image" id="file" accept="image/*" onchange="upload_user_image(new FormData($('.img-form')[0]), phone)" style="display: none">
+                <input type="file" name="image" id="file" accept="image/*" onchange="upload_user_image($('.user-image'), new FormData($('.img-form')[0]), phone)" style="display: none">
             </form>
         </div>
 

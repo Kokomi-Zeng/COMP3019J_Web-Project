@@ -2,8 +2,9 @@
  * This method is to render Products depend on products data
  * This method will render items in "item_container"
  * @param data is JSON that contains items info
+ * @param type
  */
-function render_items(data){
+function render_items(data, type){
 
     for (let i=0; i<data.length; i++){
         // get each item
@@ -19,7 +20,15 @@ function render_items(data){
 
         item_button.setAttribute("class", "item-button")
         item_button.onclick = function (){
-            window.location.href = "/item?product_id="+ item.product_id;
+            if (isAdmin){
+                window.location.href = "/itemManage?product_id="+ item.product_id;
+            } else if (type==="1"){
+                window.location.href = "/itemBuyer?product_id="+ item.product_id;
+            } else if (type==="0"){
+                window.location.href = "/itemSeller?product_id="+ item.product_id;
+            } else {
+                window.location.href = "/item?product_id="+ item.product_id;
+            }
         }
         item_container.append(item_box);
         item_box.append(item_button);

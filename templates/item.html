@@ -59,24 +59,7 @@
         }
     });
 
-    function get_and_render_item_data(){
-
-        $.ajax({
-            url: "/products/itemInfoById",
-            type: "get",
-            contentType: "application/json",
-            dataType: "json",
-            data: {
-                product_id: "{{ product_id }}"
-            },
-            success: function (data) {
-                render_item_info(data);
-            }
-        })
-    }
-
     function render_buyer() {
-
         const operation_box = $(".operation-box");
         operation_box.empty();
 
@@ -151,24 +134,6 @@
                 render_more_comment_button()
             }
         })
-    }
-
-    function render_more_comment_button() {
-        const more_comment_button_div = document.createElement("div");
-        const more_comment_button = document.createElement("button");
-
-        more_comment_button_div.setAttribute("class", "comment-text");
-        more_comment_button.innerText = "More Comment";
-        more_comment_button.onclick = function () {
-            if (type === "1" || type === "0") {
-                window.location.href = "/comment?product_id=" + "{{ product_id }}";
-            } else {
-                window.location.href = "/login";
-            }
-        }
-
-        more_comment_button_div.append(more_comment_button);
-        $(".comment-box").append(more_comment_button_div);
     }
     </script>
 {% endblock %}

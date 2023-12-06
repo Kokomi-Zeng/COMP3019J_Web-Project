@@ -85,7 +85,7 @@
                 page_num: page_num,
             },
             success: function (data) {
-                render_items(data);
+                render_items(data, type);
 
                 {#Render BUTTON page button#}
                 get_and_render_next_button()

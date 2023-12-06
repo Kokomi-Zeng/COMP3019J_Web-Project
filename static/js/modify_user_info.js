@@ -19,7 +19,8 @@ function modify_user_info(form_data){
             password:form_data.get("password")
         }),
         success: function (data){
-            console.log(data.message)
+            alert(data.message)
+            render_user_info(type, form_data.get("phone"))
         }
     })
 }
