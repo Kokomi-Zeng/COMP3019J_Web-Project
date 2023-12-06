@@ -62,29 +62,29 @@
         </div>
         <div class="item-name-box">
             <span>Name:</span>
-            <span id="item-name"></span>
+            <input id="item-name" type="text" onblur="modify_item_info()">
         </div>
         <div class="item-rating-box">
             <span>Rating:</span>
-            <span id="item-rating"></span>
+            <input id="item-rating">
         </div>
         <div class="item-description-box">
             <span>Description:</span>
-            <span id="item-description"></span>
+            <input id="item-description">
         </div>
         <div class="item-price-box">
             <span>Price:</span>
-            <span id="item-price"></span>
+            <input id="item-price">
         </div>
         <div class="item-storage-box">
             <span>Storage:</span>
-            <span id="item-storage"></span>
+            <input id="item-storage">
         </div>
     </div>
 
     <div class="seller-box">
         <div class="delete-box">
-            <button class="buy-button" type="button" onclick="delete_item(product_id)">BUY</button>
+            <button class="buy-button" type="button" onclick="delete_item(product_id)">DELETE</button>
         </div>
     </div>
 </div>
