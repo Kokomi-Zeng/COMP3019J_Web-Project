@@ -50,49 +50,7 @@
     $(document).on("sessionLoaded", function () {
         render_item_info(product_id)
         render_basic_comment($(".comment-box"), product_id)
-
-        {#buyer#}
-        if (type === "1") {
-            render_buyer();
-        } else if (type === "0") {
-            render_seller();
-        }
     });
-
-    function render_buyer() {
-        const operation_box = $(".operation-box");
-        operation_box.empty();
-
-        const buy_num = document.createElement("input");
-        buy_num.setAttribute("type", "num");
-        buy_num.setAttribute("placeHolder", "buy number");
-        buy_num.setAttribute("id", "buy-num");
-
-        const buy_button = document.createElement("button");
-        buy_button.setAttribute("id", "buy-button");
-        buy_button.innerText = "BUY";
-        buy_button.onclick = function () {
-            $.ajax({
-                url: "/buyer/buyItem",
-                type: "get",
-                contentType: "application/json",
-                dataType: "json",
-                data: {
-                    product_id: "{{ product_id }}",
-                    phone: phone,
-                    quantity: buy_num.value,
-                },
-                success: function (data) {
-                    alert(data.message);
-                    if (data.success) {
-                        get_and_render_item_data();
-                    }
-                }
-            })
-        };
-        operation_box.append(buy_num);
-        operation_box.append(buy_button);
-    }
     </script>
 {% endblock %}
 

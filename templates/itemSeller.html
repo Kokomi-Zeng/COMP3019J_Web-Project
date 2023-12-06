@@ -1,10 +1,96 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{#
+    This HTML file is page for users to inspect items in detail.
+    This page will also show the highest five comments and lowest five comments.
+    Buyers can buy the item in this page.
+    Sellers can modify their items in this page.
+    It has such funtions:
+    1. get_session (Extends)
+    2. get_and_render_item_data
+    3. render_item_data
+    4. render_prev_page_button
+    5. render_buyer
+    6. render_modify_button
+    7. get_and_render_comment
+    8. render_more_comment_button
+    9. get_and_render_rating
 
-</body>
-</html>
+    Using js:
+    1. alert.js (Extends)
+    2. get_user_image.js (Extends)
+    3. render_comment.js
+    4. is_item_match_seller.js
+
+    JS functions:
+    1. get_user_image (Extends)
+    2. alert_message (Extends)
+    3. render_comment
+    4. is_item_match_seller
+#}
+{% extends "base.html" %}
+
+{% block title %}
+{{ product_id }}
+{% endblock %}
+
+{% block css %}
+    <link rel="stylesheet" href="/static/css/item.css">
+{% endblock %}
+
+{% block script %}
+    <script src="/static/js/render_comment.js"></script>
+    <script src="/static/js/render_item_info.js"></script>
+    <script src="/static/js/render_basic_comment.js"></script>
+    <script src="/static/js/is_item_match_seller.js"></script>
+    <script>
+    let product_id = "{{ product_id }}"
+    let info_box;
+    let rating_box;
+    let comment_box;
+    {#when session is loaded#}
+    $(document).on("sessionLoaded", function () {
+        render_item_info(product_id)
+        render_basic_comment($(".comment-box"), product_id)
+    });
+    </script>
+{% endblock %}
+
+{% block main %}
+<div class="left-box">
+    <div class="info-box">
+        <div class="item-img-box">
+            <img id="item-img">
+        </div>
+        <div class="item-name-box">
+            <span>Name:</span>
+            <span id="item-name"></span>
+        </div>
+        <div class="item-rating-box">
+            <span>Rating:</span>
+            <span id="item-rating"></span>
+        </div>
+        <div class="item-description-box">
+            <span>Description:</span>
+            <span id="item-description"></span>
+        </div>
+        <div class="item-price-box">
+            <span>Price:</span>
+            <span id="item-price"></span>
+        </div>
+        <div class="item-storage-box">
+            <span>Storage:</span>
+            <span id="item-storage"></span>
+        </div>
+    </div>
+</div>
+
+<div class="right-box">
+    <div class="comment-box"></div>
+    <div class="more-comment-box">
+        <button class="more-comment-button" type="button" onclick="window.location.href = '/comment'"></button>
+    </div>
+</div>
+
+<div class="back-button-box">
+    <button class="back-button" onclick="history.back()">Back</button>
+</div>
+{% endblock %}
