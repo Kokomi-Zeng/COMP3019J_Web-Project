@@ -19,6 +19,7 @@ function render_items(data, type){
         const item_button = document.createElement("button");
 
         item_button.setAttribute("class", "item-button")
+        item_button.setAttribute("type", "button")
         item_button.onclick = function (){
             if (isAdmin){
                 window.location.href = "/itemManage?product_id="+ item.product_id;
@@ -33,7 +34,6 @@ function render_items(data, type){
         item_container.append(item_box);
         item_box.append(item_button);
 
-
         // Render IMG img
         const img_box = document.createElement("div");
         const img = document.createElement("img");
@@ -41,18 +41,23 @@ function render_items(data, type){
         img_box.setAttribute("class", "img-box");
         img.setAttribute("src", item.image_src);
 
-        item_button.append(img_box);
-        img_box.append(img);
+        item_box.append(img_box)
+        img_box.append(item_button);
+        item_button.append(img);
 
+        // Render DIV item info box
+        const item_info_box = document.createElement("div")
+        item_info_box.setAttribute("class", "item-info-box")
+        item_box.append(item_info_box)
 
-        // Rendder SPAN price
+        // Render SPAN price
         const price_box = document.createElement("div");
         const price = document.createElement("span");
 
-        img_box.setAttribute("class", "price-box");
+        price_box.setAttribute("class", "price-box");
         price.innerText = "Price: " + item.price;
 
-        item_box.append(price_box);
+        item_info_box.append(price_box);
         price_box.append(price);
 
 
@@ -60,10 +65,10 @@ function render_items(data, type){
         const name_box = document.createElement("div");
         const name = document.createElement("span");
 
-        img_box.setAttribute("class", "name-box");
+        name_box.setAttribute("class", "name-box");
         name.innerText = "Name: " + item.product_name;
 
-        item_box.append(name_box);
+        item_info_box.append(name_box);
         name_box.append(name);
 
 
@@ -71,10 +76,10 @@ function render_items(data, type){
         const rating_box = document.createElement("div");
         const rating = document.createElement("span");
 
-        img_box.setAttribute("class", "rating-box");
+        rating_box.setAttribute("class", "rating-box");
         rating.innerText = "Rating: " + item.rating;
 
-        item_box.append(rating_box);
+        item_info_box.append(rating_box);
         rating_box.append(rating);
 
     }

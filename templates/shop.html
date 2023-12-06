@@ -59,10 +59,6 @@
                 page_num = 1;
                 get_and_render_items();
             })
-            render_buyer();
-        }
-        if (type==="0"){
-            render_seller();
         }
     });
 
@@ -159,34 +155,6 @@
                 }
             }
         })
-    }
-
-    /**
-     * This method is to render buyer components
-     */
-    function render_buyer(){
-        const item_title_box = $(".item-title");
-        item_title_box.empty();
-
-        const item_title_text = document.createElement("span", {
-            class: "item-title-text"
-        })
-        item_title_text.innerText = "All Products:"
-        item_title_box.append(item_title_text);
-    }
-
-    /**
-     * This method is to render seller components
-     */
-    function render_seller(){
-        const item_title_box = $(".item-title");
-        item_title_box.empty();
-
-        const item_title_text = document.createElement("span", {
-            class: "item-title-text"
-        })
-        item_title_text.innerText = "Product Management:"
-        item_title_box.append(item_title_text);
     }
     </script>
 {% endblock %}
