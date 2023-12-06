@@ -209,11 +209,12 @@ def get_all_products():
     for product in products:
         result.append({
             "product_id": product.product_id,
-            "product_name": product.product_name,
+            "seller_phone": product.seller_phone,
             "price": product.price,
             "storage": product.storage,
+            "product_name": product.product_name,
             "image_src": product.image_src,
-            "seller_phone": product.seller_phone
+            "description": product.description
         })
     return jsonify(result)
 
