@@ -202,5 +202,21 @@ def reset_item_name():
     db.session.commit()
     return jsonify({"success": True, "message": "Product name reset successfully"})
 
+@products_bp.route('/getAllProducts', methods=['GET'])
+def get_all_products():
+    products = Product.query.all()
+    result = []
+    for product in products:
+        result.append({
+            "product_id": product.product_id,
+            "seller_phone": product.seller_phone,
+            "price": product.price,
+            "storage": product.storage,
+            "product_name": product.product_name,
+            "image_src": product.image_src,
+            "description": product.description
+        })
+    return jsonify(result)
+
 
 
