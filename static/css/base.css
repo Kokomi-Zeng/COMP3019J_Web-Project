@@ -265,7 +265,7 @@ body {
     margin-top: 20px;
     /* set main to flex container */
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
 }
 
 /* set round corner and transition effect for the buttons */
