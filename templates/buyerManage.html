@@ -10,6 +10,7 @@
         window.onload = function (){
             get_and_render_user_info()
             get_and_render_comment();
+            changeUI()
         }
 
         function get_and_render_user_info(){
@@ -23,6 +24,10 @@
                     render_user_info(data)
                 }
             })
+        }
+
+        function changeUI(){
+            $("")
         }
     </script>
 </head>
