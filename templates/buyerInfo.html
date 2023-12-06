@@ -21,163 +21,95 @@
     2. alert_message (Extends)
     3. render_user_info (Extends)
 #}
-{% extends "base_personInfo.html" %}
-
-{% block nav_bar %}
-    <button class="nav-button" id="info" onclick="get_and_render_buyer_info()">info</button>
-    <button class="nav-button" id="charge" onclick="get_and_render_money()">charge</button>
-    <button class="nav-button" id="purchased" onclick="get_and_render_purchased_items()">purchased</button>
-{% endblock %}
+{% extends "base.html" %}
 
 {% block script %}
-    <script src="/static/js/render_purchased_items.js"></script>
+    <script src="/static/js/modify_user_info.js"></script>
+    <script src="/static/js/render_user_info.js"></script>
+    <script src="/static/js/charge.js"></script>
+    <script src="/static/js/render_money.js"></script>
+    <script src="/static/js/upload_user_image.js"></script>
+    <script src="/static/js/logout.js"></script>
     <script>
-    let container;
-    let user_info_box;
-    let purchased_item_box;
 
     {#when session is loaded#}
     $(document).on("sessionLoaded", function () {
-        container = $(".container");
-        user_info_box = container;
-        purchased_item_box = container;
-
+        $(".phone").val(phone)
         {#set title#}
         $("title").innerText = name;
 
         {#default to get and render buyer information#}
-        get_and_render_buyer_info();
+        get_user_image($(".user-image"), phone)
+        render_user_info(type, phone);
+        render_money(phone, $(".current-money"))
     });
-
-    {#This method is to get and render buyer information#}
-    function get_and_render_buyer_info(){
-        $.ajax({
-            url:"/buyer/buyerInfo",
-            type: 'get',
-            contentType: "application/json",
-            dataType: "json",
-            data:{
-                phone: phone
-            },
-            success:function (data){
-                render_user_info(data)
-            }
-        })
-    }
-
-    {#This method is to get and render buyer's money information#}
-    function get_and_render_money() {
-        $.ajax({
-            url: "/buyer/getMoney",
-            type: "get",
-            contentType: "application/json",
-            dataType: "json",
-            data: {
-                phone: phone,
-            },
-            success: function (data) {
-                render_money(data);
-            }
-        })
-    }
-
-    {#This method is to render buyer's money information#}
-    function render_money(data){
-
-        {#clear DOM#}
-        container.empty();
-
-        {#Render SPAN current money#}
-        const current = data.money;
-        const current_div = document.createElement("div");
-        const current_span = document.createElement("span");
-    
-        current_div.setAttribute("class", "charge-div");
-        current_div.setAttribute("id", "current-div");
-        current_span.innerText = "Current: "+current;
-
-        current_div.append(current_span);
-        container.append(current_div);
-
-        {#Render INPUT NUMBER current money#}
-        const pay_div = document.createElement("div");
-        const pay_input = document.createElement("input");
-    
-        pay_div.setAttribute("class", "charge-div");
-        pay_div.setAttribute("id", "pay-div");
-        pay_input.setAttribute("id", "pay");
-        pay_input.setAttribute("type", "number");
-        pay_input.setAttribute("placeHolder", "recharge amount");
-    
-        pay_div.append(pay_input);
-        container.append(pay_div);
-
-        {#Render INPUT PASSWORD password#}
-        const password_div = document.createElement("div");
-        const password_input = document.createElement("input");
-    
-        password_div.setAttribute("class", "charge-div");
-        password_div.setAttribute("id", "password-div");
-        password_input.setAttribute("type", "password");
-        password_input.setAttribute("id", "password");
-        password_input.setAttribute("placeHolder", "password");
-    
-        password_div.append(password_input);
-        container.append(password_div);
-
-        {#Render BUTTON purchase#}
-        const submit_div = document.createElement("div");
-        const submit_button = document.createElement("button");
-    
-        submit_button.innerText = "Purchase"
-        submit_button.onclick = function (){
-            charge(password_input.value, pay_input.value);
-        }
-        submit_div.append(submit_button);
-        container.append(submit_div);
-    }
-
-    {#This method is to charge money#}
-    function charge(password, pay){
-        $.ajax({
-            url:'/buyer/charge',
-            type:'get',
-            contentType: "application/json",
-            dataType: "json",
-            data:{
-                phone:phone,
-                password:password,
-                charge_num:pay,
-            },
-            success:function (data){
-                alert(data.message)
-                if (data.success) {
-
-                    {#Charge success, get and render money again#}
-                    get_and_render_money();
-                }
-            }
-        })
-    }
-
-    {#This function is to get and render purchased items#}
-    function get_and_render_purchased_items(){
-        $.ajax({
-            url:"/buyer/buyerItem",
-            type:"get",
-            contentType: "application/json",
-            dataType: "json",
-            data:{
-                phone:phone,
-            },
-            success:function (data){
-                render_purchased_items(data)
-            }
-        })
-    }
     </script>
 {% endblock %}
 
-{% block body %}
-<div class="container"></div>
+{% block main %}
+    <div class="user-info-box">
+
+        <div class="img-div">
+            <form class="img-form">
+                <button type="button" onclick="$('#file').click();">
+                    <img class="user-image">
+                </button>
+                <input type="file" name="image" id="file" accept="image/*" onchange="upload_user_image(new FormData($('.img-form')[0]), phone)" style="display: none">
+            </form>
+        </div>
+
+        <form class="info-form">
+            <div class="info-div" id="phone-div">
+                <label class="phone-span">
+                    <input type="hidden" class="phone" name="phone">
+                </label>
+            </div>
+
+            <div class="info-div" id="name-div">
+                <label class="name-span">
+                    Name:
+                    <input type="text" id="name" name="name">
+                </label>
+            </div>
+
+            <div class="info-div" id="introduction-div">
+                <label class="introduction-span">
+                    Introduction:
+                    <input type="text" id="introduction" name="introduction">
+                </label>
+            </div>
+
+            <div class="info-div" id="password-div">
+                <label class="password-span">
+                    Password:
+                    <input type="text" id="password" name="password">
+                </label>
+            </div>
+        </form>
+
+        <div class="confirm-box">
+            <button type="button" class="confirm-button" onclick="modify_user_info(new FormData($('.info-form')[0]))">Confirm</button>
+        </div>
+
+        <div class="logout-box">
+            <button type="button" class="logout-button" onclick="logout()">Logout</button>
+        </div>
+    </div>
+
+    <div class="user-amount-box">
+        <div class="current-money-box">
+            <span class="current-money"></span>
+        </div>
+
+        <div class="charge-money-box">
+            <form class="charge-form">
+                <input type="number" placeholder="amount: " id="charge-money" name="charge_num">
+                <input type="hidden" name="phone" value="" class="phone">
+            </form>
+        </div>
+
+        <div class="submit-charge-div">
+            <button class="submit-charge" type="button" onclick="charge(new FormData($('.charge-form')[0]))">Charge</button>
+        </div>
+    </div>
 {% endblock %}

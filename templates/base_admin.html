@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin</title>
+    <script src="https://code.jquery.com/jquery-latest.js"></script>
+    <script>
+        const admin_phone = "zzzaaa";
+        const isAdmin = true;
+    </script>
+    {% block script %}{% endblock %}
+</head>
+<body>
+<div class="nav-bar">
+    <button type="button" class="nav-button" onclick="window.location.href = '/admin'">User Manage</button>
+    <button type="button" class="nav-button" onclick="window.location.href = '/buyerItemManage'">Purchased Manage</button>
+    <button type="button" class="nav-button" onclick="window.location.href = '/itemManage'">Product Manage</button>
+    <button type="button" class="nav-button" onclick="window.location.href = '/commentManage'">Comment Manage</button>
+</div>
+{% block body %}{% endblock %}
+</body>
+</html>

@@ -1,44 +1,57 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Seller Manage</title>
-    <script src="https://code.jquery.com/jquery-latest.js"></script>
+{% extends "base_admin.html" %}
+
+{% block script %}
     <script src="/static/js/render_user_info.js"></script>
-    <script src="/static/js/render_item.js"></script>
+    <script src="/static/js/get_user_image.js"></script>
+    <script src="/static/js/reset_user_introduction.js"></script>
+    <script src="/static/js/reset_user_name.js"></script>
+    <script src="/static/js/reset_user_image.js"></script>
     <script>
-        window.onload = function (){
-            get_and_render_user_info()
-            get_and_render_item()
-        }
+    let phone = "{{ phone }}"
+    let type = "0"
 
-        function get_and_render_user_info(){
-            $.ajax({
-                url:"",
-                type:"get",
-                data:{},
-                success: function (data){
-                    render_user_info(data)
-                }
-            })
-        }
-
-        function get_and_render_item(){
-            $.ajax({
-                url:"/searchItemByName",
-                type:"get",
-                data: {
-                    phone: "{{ id }}",
-                    keyword: "",
-                    page_num: page_num,
-                },
-            })
-        }
+    window.onload = function (){
+        get_user_image($(".user-image"), phone)
+        render_user_info(type, phone);
+    }
     </script>
+{% endblock %}
 
-</head>
-<body>
-<div class="user-info-box"></div>
-<div class="item-box"></div>
-</body>
-</html>
+{% block body %}
+    <div class="user-info-box">
+
+        <div class="img-div">
+            <img class="user-image">
+        </div>
+
+        <form class="info-form">
+            <div class="info-div" id="phone-div">
+                <span id="phone-span"></span>
+            </div>
+
+            <div class="info-div" id="name-div">
+                <span id="name-span"></span>
+            </div>
+
+            <div class="info-div" id="introduction-div">
+                <span id="introduction-span"></span>
+            </div>
+
+            <div class="info-div" id="password-div">
+                <span id="password-span"></span>
+            </div>
+        </form>
+
+        <div class="operation-box">
+            <div class="reset-user-image">
+                <button type="button" onclick="reset_user_image($('.user-image'), phone)" class="operation-button">Reset Image</button>
+            </div>
+            <div class="reset-user-name">
+                <button type="button" onclick="reset_user_name(type, phone)" class="operation-button">Reset Name</button>
+            </div>
+            <div class="reset-user-introduction">
+                <button type="button" onclick="reset_user_introduction(type, phone)" class="operation-button">Reset Introduction</button>
+            </div>
+        </div>
+    </div>
+{% endblock %}
