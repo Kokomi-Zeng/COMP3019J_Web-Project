@@ -18,6 +18,7 @@
         get_user_image($(".user-image"), phone)
         render_user_info(user_type, phone);
         render_money($(".current-money"), phone)
+        $("#phone-span").text(phone)
     }
     </script>
 {% endblock %}
@@ -31,22 +32,22 @@
 
         <form class="info-form">
             <div class="info-div" id="phone-div">
+                Phone:
                 <span id="phone-span"></span>
             </div>
 
             <div class="info-div" id="name-div">
+                Name:
                 <span id="name-span"></span>
             </div>
 
             <div class="info-div" id="introduction-div">
+                Introduction:
                 <span id="introduction-span"></span>
             </div>
 
-            <div class="info-div" id="password-div">
-                <span id="password-span"></span>
-            </div>
-
             <div class="info-div" id="status-div">
+                Status:
                 <span id="status-span"></span>
             </div>
         </form>

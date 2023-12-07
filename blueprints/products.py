@@ -207,6 +207,8 @@ def get_all_products():
     products = Product.query.all()
     result = []
     for product in products:
+        # Calculate the average rating of the product
+        avg_rating = calculate_average_rating(product.product_id)
         result.append({
             "product_id": product.product_id,
             "seller_phone": product.seller_phone,
@@ -214,7 +216,8 @@ def get_all_products():
             "storage": product.storage,
             "product_name": product.product_name,
             "image_src": product.image_src,
-            "description": product.description
+            "description": product.description,
+            "rating": avg_rating
         })
     return jsonify(result)
 

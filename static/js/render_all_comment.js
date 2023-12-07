@@ -74,9 +74,6 @@ function render_data(DOM, data){
         delete_button_div.setAttribute("class", "delete-button")
         delete_button.innerText = "Delete"
         delete_button.onclick = function (){
-            if (!confirm("Delete?")){
-                return;
-            }
             delete_comment(DOM, comment.comment_id)
         }
         comment_box.append(delete_button_div)
