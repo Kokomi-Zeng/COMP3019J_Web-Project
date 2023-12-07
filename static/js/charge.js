@@ -1,8 +1,8 @@
 /**
  * This function will update user charge amount
- * @param current_money_DOM
- * @param charge_num_DOM
- * @param phone
+ * @param current_money_DOM is jQuery selector object
+ * @param charge_num_DOM is jQuery selector object
+ * @param phone is user phone
  */
 function charge(current_money_DOM, charge_num_DOM, phone){
     $.ajax({
