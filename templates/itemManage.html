@@ -4,26 +4,48 @@
     <script src="/static/js/render_item_info.js"></script>
     <script>
         let product_id = "{{ product_id }}"
-        let item_container;
 
         window.onload = function (){
-            item_container = $(".item-container");
-            get_and_render_items();
-        }
-
-        function get_and_render_items(){
-            $.ajax({
-                url:"/shop/searchItemByName",
-                type:"get",
-                data:{phone: admin_phone},
-                success:function (data){
-                    render_item_info(data)
-                }
-            })
+            render_item_info(product_id)
         }
     </script>
 {% endblock %}
 
 {% block body %}
-<div class="item-container"></div>
+<div class="left-box">
+    <div class="info-box">
+        <div class="item-img-box">
+            <img id="item-img">
+        </div>
+        <div class="item-name-box">
+            <span>Name:</span>
+            <span id="item-name"></span>
+        </div>
+        <div class="item-rating-box">
+            <span>Rating:</span>
+            <span id="item-rating"></span>
+        </div>
+        <div class="item-description-box">
+            <span>Description:</span>
+            <span id="item-description"></span>
+        </div>
+        <div class="item-price-box">
+            <span>Price:</span>
+            <span id="item-price"></span>
+        </div>
+        <div class="item-storage-box">
+            <span>Storage:</span>
+            <span id="item-storage"></span>
+        </div>
+    </div>
+</div>
+
+<div class="right-box">
+    <div class="reset-img-box">
+        <button class="reset-image-button" type="button" onclick="reset_item_image($('#item-img'), product_id)">Reset Image</button>
+    </div>
+    <div class="reset-name-box">
+        <button class="reset-name-button" type="button" onclick="reset_item_name($('#item-name'), product_id)">Reset Name</button>
+    </div>
+</div>
 {% endblock %}

@@ -1,95 +1,24 @@
 {% extends "base_admin.html" %}
 
 {% block script %}
-    <script src="/js/render_items.js"></script>
+    <script src="/static/js/render_items.js"></script>
     <script>
         let item_container;
 
         window.onload = function (){
             item_container = $(".item-container");
             get_and_render_items();
-
-            get_and_render_next_button();
-            get_and_render_prev_button();
         }
 
         function get_and_render_items(){
             $.ajax({
-                url:"/shop/searchItemByName",
+                url:"/products/getAllProducts",
                 type:"get",
-                data:{phone: admin_phone},
                 success:function (data){
-                    render_items(data)
+                    render_items($(".item-container"), data)
                 }
             })
         }
-
-        /**
-     * This function is to render BUTTON prev
-     */
-    function render_prev_page_button(){
-            const button = document.createElement("button");
-            button.setAttribute("class", "page-button");
-            button.innerText = "prev";
-            button.onclick = function () {
-                page_num--;
-                get_and_render_item();
-            }
-            $(".prev").append(button);
-    }
-
-    /**
-     * This function is to get and render BUTTON prev
-     */
-    function get_and_render_prev_button(){
-
-        {#clear DOM#}
-        $(".prev").empty();
-
-        if (page_num>1){
-            render_prev_page_button()
-        }
-    }
-
-    /**
-     * This function is to render BUTTON next
-     */
-    function render_next_page_button() {
-        const button = document.createElement("button");
-        button.setAttribute("class", "page-button");
-        button.innerText = "next";
-        button.onclick = function () {
-            page_num++;
-            get_and_render_item();
-        }
-        $(".next").append(button);
-    }
-
-    /**
-     * This function is to get and render BUTTON next
-     */
-    function get_and_render_next_button(){
-
-        {#clear DOM#}
-        $(".next").empty();
-
-        $.ajax({
-            url:"/shop/hasNextPage",
-            type:"get",
-            contentType: "application/json",
-            dataType: "json",
-            data: {
-                phone: phone,
-                keyword: $("#search-box").val()===null?"":$("#search-box").val(),
-                page_num: page_num,
-            },
-            success: function (data) {
-                if (data.has_next) {
-                    render_next_page_button(data)
-                }
-            }
-        })
-    }
     </script>
 {% endblock %}
 
