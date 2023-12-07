@@ -42,8 +42,7 @@ login
             success:function (response){
                 if(response.success){
                     if (response.isAdmin){
-                        window.location.replace("/admin")
-                        console.log("dddddddd")
+                       window.location.href = "/admin"
                     }else {
                         {#success login: render previous page#}
                         window.location.href = '/shop'
