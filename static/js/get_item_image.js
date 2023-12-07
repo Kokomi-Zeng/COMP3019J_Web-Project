@@ -1,6 +1,6 @@
 /**
  * This function is to load product image
- * @param DOM is JQuery selector where picture is loaded
+ * @param DOM is JQuery Selector where picture is loaded
  * @param product_id is product id
  */
 function get_item_image(DOM, product_id){

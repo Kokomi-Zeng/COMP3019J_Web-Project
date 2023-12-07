@@ -1,6 +1,6 @@
 /**
  * This function is for admin to modify user account
- * @param DOM is where current money is in
+ * @param DOM is JQuery Selector where current money is in
  * @param amount is modify amount
  * @param phone is user phone
  */

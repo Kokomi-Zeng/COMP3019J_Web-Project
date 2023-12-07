@@ -4,7 +4,7 @@
     <script src="/static/js/render_log.js"></script>
     <script>
     window.onload = function (){
-        render_log($(".log-box"), "");
+        render_log($(".log-box"), admin_phone, "");
     }
     </script>
 
@@ -13,9 +13,9 @@
 
 {% block body %}
 <div class="log-button-box">
-    <button class="log-button" type="button" onclick="render_log($('.log-box'), '')">ALL</button>
-    <button class="log-button" type="button" onclick="render_log($('.log-box'), 'WARNING')">WARNING</button>
-    <button class="log-button" type="button" onclick="render_log($('.log-box'), 'INFO')">INFO</button>
+    <button class="log-button" type="button" onclick="render_log($('.log-box'), admin_phone, '')">ALL</button>
+    <button class="log-button" type="button" onclick="render_log($('.log-box'), admin_phone, 'WARNING')">WARNING</button>
+    <button class="log-button" type="button" onclick="render_log($('.log-box'), admin_phone, 'INFO')">INFO</button>
 </div>
 <div class="log-container">
     <div class="log-title">

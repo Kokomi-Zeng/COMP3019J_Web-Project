@@ -1,6 +1,6 @@
 /**
  * This function is for admin to delete comment
- * @param DOM is where comment are rendered
+ * @param DOM is JQuery Selector where comments are rendered
  * @param comment_id deleted comment id
  */
 function delete_comment(DOM, comment_id){

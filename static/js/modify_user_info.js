@@ -1,27 +1,31 @@
 /**
  * This function is to modify user information
- * @param form_data contains
- * phone
- * introduction
- * name
- * password
+ * @param phone is user phone
+ * @param introduction is user introduction
+ * @param name is user name
+ * @param password is user password
+ * @param type is user type
  */
-function modify_user_info(form_data){
+function modify_user_info(phone, introduction, name, password, type){
     $.ajax({
         url:type==="1"?"buyer/modifyBuyerInfo":"seller/modifySellerInfo",
         type:"post",
         dataType:"json",
         contentType: "application/json",
         data:JSON.stringify({
-            phone:form_data.get("phone"),
-            introduction:form_data.get("introduction"),
-            name:form_data.get("name"),
-            password:form_data.get("password")
+            phone:phone,
+            introduction:introduction,
+            name:name,
+            password:password
         }),
         success: function (data){
             alert(data.message)
-            $(".user-name").text(form_data.get("name"))
-            render_user_info(type, form_data.get("phone"))
+
+            // update base name
+            $(".user-name").text(name)
+
+            // reload
+            render_user_info(type, phone)
         }
     })
 }

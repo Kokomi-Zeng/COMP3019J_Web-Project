@@ -1,6 +1,6 @@
 /**
  * This function is for buyer to buy product
- * @param buy_num_DOM is jQuery selector object
+ * @param buy_num_DOM is JQuery Selector object
  * @param product_id is product id
  * @param phone is user phone
  */

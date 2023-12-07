@@ -1,5 +1,5 @@
 /**
- * This function will render at info_box & rating_box
+ * This function will get and insert message of a product
  * @param product_id is product id
  */
 function render_item_info(product_id){

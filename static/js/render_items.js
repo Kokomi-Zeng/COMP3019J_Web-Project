@@ -1,7 +1,6 @@
 /**
  * This method is to render Products depend on products data
- * This method will render items in "item_container"
- * @param DOM
+ * @param DOM is JQuery Selector where products are loaded
  * @param data is JSON that contains items info
  */
 function render_items(DOM, data){

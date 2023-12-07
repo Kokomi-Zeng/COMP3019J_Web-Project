@@ -1,6 +1,6 @@
 /**
  * This method is to load user image
- * @param DOM is JQuery selector where user image is loaded
+ * @param DOM is JQuery Selector where user image is loaded
  * @param phone is user phone
  */
 function get_user_image(DOM, phone){
