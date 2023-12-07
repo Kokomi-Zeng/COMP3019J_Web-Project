@@ -3,7 +3,7 @@
  * @param admin_phone is admin phone
  * @param user_phone is user phone
  */
-function ban_user(admin_phone, user_phone){
+function ban_user(type, admin_phone, user_phone){
     $.ajax({
         url:"/administer/banUser",
         type:"get",

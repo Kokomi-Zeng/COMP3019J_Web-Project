@@ -1,5 +1,6 @@
 
 function reset_user_introduction(type, phone){
+    console.log(type)
     if (!confirm("Reset?")){
         return;
     }

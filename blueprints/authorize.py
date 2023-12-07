@@ -40,6 +40,7 @@ def login():
     if user and check_password_hash(user.password, password):
         if user.user_type == '2':
             session['phone'] = user.phone
+            session['is_admin'] = True
             logger.info("Admin login",
                         extra={"phone": phone,
                                "log_type": "INFO",

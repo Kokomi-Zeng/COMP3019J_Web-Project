@@ -42,6 +42,7 @@ def buyer_info():
             "phone": buyer.phone,
             "name": buyer.name,
             "introduction": buyer.description,
+            "status": buyer.user.status
         })
 
 
