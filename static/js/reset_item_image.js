@@ -1,4 +1,8 @@
-
+/**
+ * This function is for admin to reset item image
+ * @param DOM is JQuery Selector where the image is loaded
+ * @param product_id is product id
+ */
 function reset_item_image(DOM, product_id){
     if (!confirm("Reset?")){
         return;
