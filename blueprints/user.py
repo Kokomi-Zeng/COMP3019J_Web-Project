@@ -75,7 +75,14 @@ def reset_user_introduction():
         return jsonify({"success": False, "message": "User not found"})
 
     # reset the user's introduction
-    user.description = ""
+    if user.user_type == '1':
+        buyer = Buyer.query.filter_by(phone=phone).first()
+        if buyer:
+            buyer.description = ""
+    elif user.user_type == '0':
+        seller = Seller.query.filter_by(phone=phone).first()
+        if seller:
+            seller.description = ""
 
     db.session.commit()
     return jsonify({"success": True, "message": "Introduction reset successfully"})

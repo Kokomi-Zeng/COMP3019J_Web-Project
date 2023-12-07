@@ -22,15 +22,6 @@ function render_data(DOM, data){
         const comment_box = document.createElement("div")
         DOM.append(comment_box)
 
-        // Render SPAN comment id
-        const comment_id_div = document.createElement("div")
-        const comment_id = document.createElement("span")
-        comment_id_div.setAttribute("class", "comment-id-box")
-        comment_id.setAttribute("class" ,"comment-id")
-        comment_id.innerText = comment.comment_id
-        comment_box.append(comment_id_div)
-        comment_id_div.append(comment_id)
-
         // Render IMG commenter image
         const commenter_img_div = document.createElement("div")
         const commenter_img = document.createElement("img")
@@ -40,13 +31,27 @@ function render_data(DOM, data){
         comment_box.append(commenter_img_div)
         commenter_img_div.append(commenter_img)
 
+        // Render DIV comment info
+        const comment_info_div = document.createElement("div")
+        comment_info_div.setAttribute("class", "comment-info-box")
+        comment_box.append(comment_info_div)
+
+        // Render SPAN comment id
+        const comment_id_div = document.createElement("div")
+        const comment_id = document.createElement("span")
+        comment_id_div.setAttribute("class", "comment-id-box")
+        comment_id.setAttribute("class" ,"comment-id")
+        comment_id.innerText = "Comment Id: " + comment.comment_id
+        comment_info_div.append(comment_id_div)
+        comment_id_div.append(comment_id)
+
         // Render SPAN commenter name
         const commenter_name_div = document.createElement("div")
         const commenter_name = document.createElement("span")
         commenter_name_div.setAttribute("class", "commenter-name-box")
         commenter_name.setAttribute("class" ,"commenter-name")
-        commenter_name.innerText = comment.commenter_name
-        comment_box.append(commenter_name_div)
+        commenter_name.innerText = "Commenter: " + comment.commenter_name
+        comment_info_div.append(commenter_name_div)
         commenter_name_div.append(commenter_name)
 
         // Render SPAN rating
@@ -54,8 +59,8 @@ function render_data(DOM, data){
         const comment_rating = document.createElement("span")
         comment_rating_div.setAttribute("class", "comment-rating-box")
         comment_rating.setAttribute("class" ,"comment-rating")
-        comment_rating.innerText = comment.rating
-        comment_box.append(comment_rating_div)
+        comment_rating.innerText = "Rating: " + comment.rating
+        comment_info_div.append(comment_rating_div)
         comment_rating_div.append(comment_rating)
 
         // Render SPAN content
@@ -63,8 +68,8 @@ function render_data(DOM, data){
         const comment_content = document.createElement("span")
         comment_content_div.setAttribute("class", "comment-content-box")
         comment_content.setAttribute("class" ,"comment-content")
-        comment_content.innerText = comment.content
-        comment_box.append(comment_content_div)
+        comment_content.innerText = "Content: " + comment.content
+        comment_info_div.append(comment_content_div)
         comment_content_div.append(comment_content)
 
         // Render BUTTON delete
@@ -74,12 +79,9 @@ function render_data(DOM, data){
         delete_button_div.setAttribute("class", "delete-button")
         delete_button.innerText = "Delete"
         delete_button.onclick = function (){
-            if (!confirm("Delete?")){
-                return;
-            }
             delete_comment(DOM, comment.comment_id)
         }
-        comment_box.append(delete_button_div)
+        comment_info_div.append(delete_button_div)
         delete_button_div.append(delete_button)
     }
 }

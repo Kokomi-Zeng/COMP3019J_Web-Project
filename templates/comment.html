@@ -30,17 +30,17 @@
 {% endblock %}
 
 {% block script %}
-    <script src="/js/render_product_all_comment.js"></script>
+    <script src="/static/js/render_product_all_comment.js"></script>
+    <script src="/static/js/render_comment.js"></script>
     <script src="/static/js/is_item_match_seller.js"></script>
     <script>
     let page_num = 1;
     let belong;
     let product_id = "{{ product_id }}";
-    let comment_box;
 
     {#when session is loaded#}
     $(document).on("sessionLoaded", function() {
-        render_product_all_comment()
+        render_product_all_comment($(".comment-box"), product_id, phone)
 
         if (type==="1"){
             render_self_comment_box();
@@ -149,6 +149,4 @@
 {% block main %}
     <div class="comment-box">
     </div>
-    <div class="prev"></div>
-    <div class="next"></div>
 {% endblock %}

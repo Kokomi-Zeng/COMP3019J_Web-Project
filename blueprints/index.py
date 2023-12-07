@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, session, jsonify, request
+from flask import Blueprint, render_template, session, jsonify, request,abort
 from models import User
 
 """
@@ -69,6 +69,9 @@ def getAdminPage():
     user_info = get_user_info()
     mode_info = get_mode_info()
 
+    if not session.get('is_admin'):
+        abort(401)
+
 
     return render_template('admin.html', **user_info, **mode_info)
 
@@ -112,10 +115,9 @@ def getCommentPage():
 @bp.route('/buyerManage')
 def getBuyerManagePage():
     phone = request.args.get('phone')
-    mode_info = get_mode_info()
 
 
-    return render_template('buyerManage.html', phone=phone, **mode_info)
+    return render_template('buyerManage.html', phone=phone)
 
 @bp.route('/sellerManage')
 def getSellerManagePage():
@@ -188,6 +190,7 @@ def clearSession():
     session.pop('phone', None)
     session.pop('type', None)
     session.pop('status', None)
+    session.pop('is_admin', None)
 
     return {'success': True}
 

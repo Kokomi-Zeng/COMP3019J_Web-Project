@@ -176,7 +176,7 @@ def reset_item_image():
         return jsonify({"success": False, "message": "Product not found"})
 
     # Update the image_src of the product
-    product.image_src = "https://pinoss.com/kokomi/i/2023/10/27/anime_girl.png"
+    product.image_src = "https://pinoss.com/kokomi/i/2023/12/07/k7c.png"
 
     db.session.commit()
     return jsonify({"success": True, "message": "Product image reset successfully"})
@@ -207,6 +207,8 @@ def get_all_products():
     products = Product.query.all()
     result = []
     for product in products:
+        # Calculate the average rating of the product
+        avg_rating = calculate_average_rating(product.product_id)
         result.append({
             "product_id": product.product_id,
             "seller_phone": product.seller_phone,
@@ -214,7 +216,8 @@ def get_all_products():
             "storage": product.storage,
             "product_name": product.product_name,
             "image_src": product.image_src,
-            "description": product.description
+            "description": product.description,
+            "rating": avg_rating
         })
     return jsonify(result)
 

@@ -6,13 +6,15 @@
     <script src="/static/js/reset_user_introduction.js"></script>
     <script src="/static/js/reset_user_name.js"></script>
     <script src="/static/js/reset_user_image.js"></script>
+    <script src="/static/js/ban_user.js"></script>
     <script>
     let phone = "{{ phone }}"
-    let type = "0"
+    let user_type = "0"
 
     window.onload = function (){
         get_user_image($(".user-image"), phone)
-        render_user_info(type, phone);
+        render_user_info(user_type, phone);
+        $("#phone-span").text(phone)
     }
     </script>
 {% endblock %}
@@ -26,19 +28,23 @@
 
         <form class="info-form">
             <div class="info-div" id="phone-div">
+                Phone:
                 <span id="phone-span"></span>
             </div>
 
             <div class="info-div" id="name-div">
+                Name:
                 <span id="name-span"></span>
             </div>
 
             <div class="info-div" id="introduction-div">
+                Introduction:
                 <span id="introduction-span"></span>
             </div>
 
-            <div class="info-div" id="password-div">
-                <span id="password-span"></span>
+            <div class="info-div" id="status-div">
+                Status:
+                <span id="status-span"></span>
             </div>
         </form>
 
@@ -47,10 +53,13 @@
                 <button type="button" onclick="reset_user_image($('.user-image'), phone)" class="operation-button">Reset Image</button>
             </div>
             <div class="reset-user-name">
-                <button type="button" onclick="reset_user_name(type, phone)" class="operation-button">Reset Name</button>
+                <button type="button" onclick="reset_user_name(user_type, phone)" class="operation-button">Reset Name</button>
             </div>
             <div class="reset-user-introduction">
-                <button type="button" onclick="reset_user_introduction(type, phone)" class="operation-button">Reset Introduction</button>
+                <button type="button" onclick="reset_user_introduction(user_type, phone)" class="operation-button">Reset Introduction</button>
+            </div>
+            <div class="ban-user">
+                <button type="button" id="ban-user-button" onclick="if(!confirm(status)){return;}ban_user(user_type, admin_phone, phone)">Ban User</button>
             </div>
         </div>
     </div>
