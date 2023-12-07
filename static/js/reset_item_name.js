@@ -1,10 +1,10 @@
 
 function reset_item_name(DOM, product_id){
-    if (!confirm("Delete?")){
+    if (!confirm("Reset?")){
         return;
     }
     $.ajax({
-        url:"/product/resetItemName",
+        url:"/products/resetItemName",
         type:"get",
         data:{product_id: product_id},
         success: function (data){

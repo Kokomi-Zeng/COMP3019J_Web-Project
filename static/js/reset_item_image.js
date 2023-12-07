@@ -4,7 +4,7 @@ function reset_item_image(DOM, product_id){
         return;
     }
     $.ajax({
-        url:"/product/resetItemImage",
+        url:"/products/resetItemImage",
         type:"get",
         data:{product_id: product_id},
         success: function (data){

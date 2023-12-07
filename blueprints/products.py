@@ -176,7 +176,7 @@ def reset_item_image():
         return jsonify({"success": False, "message": "Product not found"})
 
     # Update the image_src of the product
-    product.image_src = "https://pinoss.com/kokomi/i/2023/10/27/anime_girl.png"
+    product.image_src = "https://pinoss.com/kokomi/i/2023/12/07/k7c.png"
 
     db.session.commit()
     return jsonify({"success": True, "message": "Product image reset successfully"})
