@@ -182,10 +182,13 @@ def getSession():
         return {'phone': "", 'name': "", 'type': ""}
 
 
-# This route is used to clear the session
+# This route is used to clear the session except for the mode
 @bp.route('/clearSession')
 def clearSession():
-    session.clear()
+    session.pop('phone', None)
+    session.pop('type', None)
+    session.pop('status', None)
+
     return {'success': True}
 
 
