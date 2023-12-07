@@ -43,9 +43,6 @@
     <script src="/static/js/buy_item.js"></script>
     <script>
     let product_id = "{{ product_id }}"
-    let info_box;
-    let rating_box;
-    let comment_box;
     {#when session is loaded#}
     $(document).on("sessionLoaded", function () {
         render_item_info(product_id)

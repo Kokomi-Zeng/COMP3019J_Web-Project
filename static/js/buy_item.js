@@ -1,7 +1,7 @@
 /**
  * This function is for buyer to buy product
  * @param buy_num_DOM is jQuery selector object
- * @param product_id is jQuery selector object
+ * @param product_id is product id
  * @param phone is user phone
  */
 function buy_item(buy_num_DOM, product_id, phone){

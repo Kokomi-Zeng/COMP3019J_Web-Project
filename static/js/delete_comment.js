@@ -15,6 +15,7 @@ function delete_comment(DOM, comment_id){
         },
         success: function (data){
             alert(data.message)
+            // reload
             render_all_comment(DOM)
         }
     })

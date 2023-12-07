@@ -1,4 +1,7 @@
-
+/**
+ * This function is for user to delete account
+ * @param phone is user phone to be deleted
+ */
 function delete_user(phone){
     if (!confirm("Delete?")){
         return;
@@ -10,7 +13,11 @@ function delete_user(phone){
         data:{phone: phone},
         success: function (data){
             alert(data.message)
-            logout()
+
+            if (data.success){
+                // clear session
+                logout()
+            }
         }
     })
 }

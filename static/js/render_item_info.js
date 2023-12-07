@@ -10,13 +10,14 @@ function render_item_info(product_id){
         success: function (data){
             $("#item-img").attr("src", data.image_src);
 
+            // SPAN
             $("#item-price").text(data.price);
             $("#item-name").text(data.name)
             $("#item-storage").text(data.storage);
             $("#item-description").text(data.description);
             $("#item-rating").text(data.average_rating);
 
-
+            // INPUT
             $("#item-name").val(data.name)
             $("#item-storage").val(data.storage);
             $("#item-description").val(data.description);
