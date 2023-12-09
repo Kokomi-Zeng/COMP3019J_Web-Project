@@ -19,6 +19,7 @@
     --button-hover-text-color: #007bff;
     --text-color: #000;
     --background-color: #fff;
+    --mode-box-bg-color: #002060;
 
     /*alert.css*/
     --alert-bg-color: white;
@@ -55,6 +56,12 @@
     --comment-button-text-color: #fff;
     --comment-button-hover-bg-color: white;
     --comment-button-hover-text-color: #007bff;
+
+    /*buyerInfo.css*/
+    --buyer-info-bg-color: #bdbdbd;
+
+    /*sellerAdd.css*/
+    --seller-add-image-bg-color: white;
 
     /*item.css*/
 
@@ -94,13 +101,14 @@
     --input-focus-border-color: #1c1c1c;
     --user-img-border-color: #565656;
     --link-text-color: #d3d3d3;
-    --link-hover-text-color: #ffffff;
+    --link-hover-text-color: #7d8be0;
     --button-bg-color: #343a40;
     --button-text-color: #d3d3d3;
     --button-hover-bg-color: #1d2124;
     --button-hover-text-color: #d3d3d3;
     --text-color: #fff;
     --background-color: #000;
+    --mode-box-bg-color: #101214;
 
     /*alert.css*/
     --alert-bg-color: #242424;
@@ -136,6 +144,12 @@
     --comment-button-hover-bg-color: #1d2124;
     --comment-button-hover-text-color: #d3d3d3;
 
+    /*buyerInfo.css*/
+    --buyer-info-bg-color: #131313;
+
+    /*sellerAdd.css*/
+    --seller-add-image-bg-color: #343a40;
+
     /*item.css*/
 
     /*login.css*/
@@ -163,6 +177,7 @@
 body {
     background-color: var(--background-color);
     color: var(--text-color);
+    font-size: 16px;
 
 }
 
@@ -291,3 +306,76 @@ body {
     color: var(--button-hover-text-color);
     font-style: italic;
 }
+
+
+
+
+
+
+/* Home box style */
+.home-box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--mode-box-bg-color);
+    border-radius: 10px;
+    margin-right: 10px;
+}
+
+.home-box a {
+    color: var(--link-text-color);
+    text-decoration: none;
+    padding: 10px;
+    transition: color 0.3s ease;
+}
+
+.home-box a:hover {
+    color: var(--link-hover-text-color);
+}
+
+/* User operation box style */
+.user-operation-box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--mode-box-bg-color);
+    border-radius: 10px;
+    margin-right: 10px;
+}
+
+.user-operation-box a {
+    color: var(--link-text-color);
+    text-decoration: none;
+    padding: 10px;
+    transition: color 0.3s ease;
+}
+
+.user-operation-box a:hover {
+    color: var(--link-hover-text-color);
+}
+
+/* Mode button box style */
+.mode-button-box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+}
+
+.mode-button-box .mode-button {
+    background-color: var(--mode-box-bg-color);
+    color: var(--button-text-color);
+    border: none;
+    border-radius: 10px;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    font-size: 16px;
+}
+
+.mode-button-box .mode-button:hover {
+    color: var(--link-hover-text-color);
+}
+
+
+

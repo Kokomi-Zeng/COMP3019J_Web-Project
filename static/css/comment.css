@@ -18,9 +18,41 @@
     display: flex;
     flex-direction: column;
     /* set the element inside the box align to center */
-    align-items: center;
     justify-content: center;
+
+    align-items: stretch;
+    width: 100%;
 }
+
+.self-message-box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.self-rating-box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.self-content-box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.self-submit-box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.self-submit-box button {
+    width: 100%;
+    height: 100%;
+}
+
 
 /* comment box */
 .comment-box {
@@ -119,7 +151,6 @@
     cursor: pointer;
     font-size: 1.25rem;
     text-align: center;
-    margin-left: 1rem;
     /* set transition effect */
     transition: background-color 0.3s, color 0.3s;
 }
@@ -130,4 +161,13 @@
     color: var(--comment-button-hover-text-color);
     font-style: italic;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+div.self-message-box {
+    background-color: transparent;
+}
+
+.self-message-box span{
+    background-color: transparent;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.0);
 }

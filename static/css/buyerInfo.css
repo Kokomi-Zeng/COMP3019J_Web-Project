@@ -1,0 +1,167 @@
+.main {
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: var(--shop-item-box-shadow);
+  background-color: var(--comment-text-area-bg-color);
+}
+
+
+
+.main .user-info-box{
+  flex-grow: 1;
+  flex-shrink: 1;
+  flex-basis: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.main .user-info-box,
+.main .user-amount-box{
+      padding: 30px;
+    border-radius: 10px;
+    background-color: var(--buyer-info-bg-color);
+}
+
+.main .user-amount-box{
+    display: flex;
+    flex-direction: column;
+}
+
+.submit-charge-div{
+    width: 100%;
+}
+
+.submit-charge-div button{
+    width: 100%;
+}
+
+.user-info-box{
+    margin-right: 15px;
+}
+
+
+
+.user-amount-box{
+    margin-left: 15px;
+}
+
+.user-info-box > div,
+.info-form > div {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.user-info-box label {
+  min-width: 100px;
+}
+
+/*设置其子元素*/
+.user-info-box > div:not(:last-child) {
+  margin: 0 0 10px 0;
+}
+
+.user-amount-box > div:not(:last-child) {
+  margin: 0 0 10px 0;
+}
+
+.user-info-box > form{
+  margin: 0 0 10px 0;
+}
+
+.info-form > div {
+    margin: 0 0 10px 0;
+}
+
+
+.info-form{
+}
+.confirm-box,
+.logout-box,
+.delete-user-box {
+}
+
+
+
+.user-info-box input,
+.user-info-box button,
+.user-info-box label,
+.user-info-box form,
+.user-info-box button {
+  width: 100%;
+}
+
+
+.img-form,
+.phone-span,
+.name-span,
+.introduction-span,
+.password-span {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+.user-image {
+  max-width: 100%;
+  max-height: 100%;
+  border-radius: 10px;
+}
+
+
+.main input{
+    border: rgb(0, 0, 0, 0.0);
+    border-radius: 5px;
+    box-shadow: 0 2px 5px var(--comment-box-shadow);
+    background-color: var(--comment-span-bg-color);
+    color: var(--text-color);
+
+    font-size: 25px;
+    height: 2rem;
+}
+
+.main input::placeholder{
+  color: var(--text-color);
+}
+
+.main label,
+.main span{
+      color: var(--text-color);
+    font-size: 25px;
+    height: 2rem;
+}
+
+
+.user-amount-box > div button,
+.confirm-box button,
+.logout-box button,
+.delete-user-box button{
+    background-color: var(--comment-button-bg-color);
+    color: var(--comment-button-text-color);
+    border: none;
+    border-radius: 10px;
+    padding: 0.75rem 1.5rem;
+    cursor: pointer;
+    font-size: 1.25rem;
+    text-align: center;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.main > div button:hover {
+  background-color: var(--button-hover-bg-color);
+  color: var(--button-hover-text-color);
+  font-style: italic;
+  box-shadow: 0 2px 5px var(--comment-box-shadow);
+}
+
+.img-form button {
+  background-color: var(--seller-add-image-bg-color);
+  color: var(--comment-button-text-color);
+  border: none;
+  border-radius: 10px;
+  padding: 0.75rem 1.5rem;
+  cursor: pointer;
+  font-size: 1.25rem;
+}

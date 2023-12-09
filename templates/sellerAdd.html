@@ -19,6 +19,10 @@
 
 {% extends "base.html" %}
 
+{% block css %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/sellerAdd.css') }}">
+{% endblock %}
+
 {% block script %}
     <script src="/static/js/upload_item_image.js"></script>
     <script src="/static/js/get_item_image.js"></script>
@@ -53,10 +57,10 @@
 
         img_div.setAttribute("class", "info-div");
         img_div.setAttribute("id", "img-div");
-        img_div.style.alignItems = "center"
+        // img_div.style.alignItems = "center"
         img_show.setAttribute("class", "show-img");
-        img_show.setAttribute("width", "300px");
-        img_show.setAttribute("height", "300px");
+        // img_show.setAttribute("width", "300px");
+        // img_show.setAttribute("height", "300px");
         img_input.setAttribute("type", "file");
         img_input.setAttribute("id", "file");
         img_input.setAttribute("name", "image");
