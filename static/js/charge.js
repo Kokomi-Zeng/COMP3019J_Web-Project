@@ -15,7 +15,7 @@ function charge(current_money_DOM, charge_num_DOM, phone){
         success:function (data){
             alert(data.message)
             if (data.success){
-                charge_num_DOM.empty();
+                // reload money data
                 render_money(current_money_DOM, phone)
             }
         }

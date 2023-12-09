@@ -1,7 +1,7 @@
 /**
- *
- * @param type
- * @param phone
+ * This function is for admin to reset user name
+ * @param type is user type
+ * @param phone is user phone
  */
 function reset_user_name(type, phone){
     if (!confirm("Reset?")){

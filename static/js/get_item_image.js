@@ -1,7 +1,7 @@
 /**
- *
- * @param DOM
- * @param product_id
+ * This function is to load product image
+ * @param DOM is JQuery Selector where picture is loaded
+ * @param product_id is product id
  */
 function get_item_image(DOM, product_id){
     $.ajax({
@@ -13,6 +13,7 @@ function get_item_image(DOM, product_id){
             product_id: product_id,
         },
         success: function (data) {
+            // load image
             DOM.attr("src", data.url)
         }
     })

@@ -1,5 +1,6 @@
 /**
  * This function is to ban user depend on admin phone & user phone
+ * @param type is user type
  * @param admin_phone is admin phone
  * @param user_phone is user phone
  */

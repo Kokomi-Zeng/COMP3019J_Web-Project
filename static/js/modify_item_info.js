@@ -1,11 +1,11 @@
 /**
- * This function is to modify item info
- * @param name INPUT
- * @param description INPUT
- * @param price INPUT
- * @param storage INPUT
- * @param product_id is product_id
- * @param phone is phone
+ * This function is to modify item information
+ * @param name is JQuery Selector where name is loaded
+ * @param description is JQuery Selector where description is loaded
+ * @param price is JQuery Selector where price is loaded
+ * @param storage is JQuery Selector where storage is loaded
+ * @param product_id is product id
+ * @param phone is seller phone
  */
 function modify_item_info(name, description, price, storage, product_id, phone){
     $.ajax({
