@@ -1,0 +1,145 @@
+/* main */
+.main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+/* user-info-box */
+.user-info-box {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  width: 40%;
+
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: var(--shop-item-box-shadow);
+  background-color: var(--comment-text-area-bg-color);
+}
+
+/* img-div */
+.img-div {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+/* info-form */
+.info-form {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+/* info-div  */
+.info-div {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.confirm-box,
+.logout-box,
+.delete-user-box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10px;
+}
+
+/* input 和 button */
+.user-info-box input,
+.user-info-box button {
+  padding: 10px 0;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  font-size: 16px;
+  color: var(--text-color);
+}
+
+.user-info-box input{
+  border: rgb(0, 0, 0, 0.0);
+  box-shadow: 0 2px 5px var(--comment-box-shadow);
+  background-color: var(--comment-span-bg-color);
+  color: var(--text-color);
+}
+
+.img-form button {
+  padding: 10px;
+}
+
+
+/* 设置input宽度为100% */
+.user-info-box input {
+  width: 100%;
+}
+
+
+.info-div label {
+  width: 150px;
+}
+
+
+.user-info-box .confirm-button,
+.user-info-box .logout-button,
+.user-info-box .delete-user-button {
+  width: 100%;
+  padding: 10px;
+  margin-top: 10px;
+  background-color: var(--button-bg-color);
+  color: var(--button-text-color);
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+
+.user-info-box .confirm-button:hover,
+.user-info-box .logout-button:hover,
+.user-info-box .delete-user-button:hover {
+    background-color: var(--comment-button-hover-bg-color);
+    color: var(--comment-button-hover-text-color);
+    font-style: italic;
+    box-shadow: 0 2px 5px var(--comment-box-shadow);
+}
+
+
+.user-image {
+  max-width: 100%;
+  height: auto;
+  border-radius: 10px;
+}
+
+.img-form {
+  width : 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.img-form button {
+  width: 100%;
+}
+
+.info-div{
+  width: 100%;
+}
+
+.info-div label{
+  width: 100%;
+}
+
+.img-form button {
+    background-color: var(--seller-add-image-bg-color);
+    color: var(--comment-button-text-color);
+    border: none;
+    border-radius: 10px;
+    padding: 0.75rem 1.5rem;
+    cursor: pointer;
+    font-size: 1.25rem;
+    text-align: center;
+    transition: background-color 0.3s, color 0.3s;
+}

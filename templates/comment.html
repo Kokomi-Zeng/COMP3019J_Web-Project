@@ -36,11 +36,24 @@
     <script>
     let page_num = 1;
     let belong;
-    let product_id = "{{ product_id }}";
+    let product_id = "{{ product_id }}"
+
+    {#this method is to hide empty span#};
+    function hide_empty_span(){
+        const span_list = document.querySelector(".self-message-box").getElementsByTagName("span");
+        for (let i=0; i<span_list.length; i++){
+            if (span_list[i].innerText===""){
+                span_list[i].parentElement.style.display = "none";
+            }
+        }
+    }
+
+    {#this method is to get and load session#};
 
     {#when session is loaded#}
     $(document).on("sessionLoaded", function() {
         render_product_all_comment($(".comment-box"), product_id, phone)
+        // hide_empty_span();
 
         if (type==="1"){
             render_self_comment_box();
@@ -98,6 +111,7 @@
         const self_submit_div = document.createElement("div");
         const self_submit_button = document.createElement("button");
 
+        self_submit_div.setAttribute("class", "self-submit-box");
         self_submit_button.setAttribute("id", "self-content-button");
         self_submit_button.innerText = "Submit"
         self_submit_button.onclick = function () {

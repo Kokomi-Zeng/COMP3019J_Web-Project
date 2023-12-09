@@ -37,6 +37,17 @@
         get_session();
     }
 
+    {#this method is to hide empty a#}
+    function hide_empty_a(){
+        const a_list = document.querySelector(".user-operation-box").getElementsByTagName("a");
+        for (let i=0; i<a_list.length; i++){
+            if (a_list[i].innerText===""){
+                a_list[i].parentElement.style.display = "none";
+            }
+        }
+    }
+
+
     {#this method is to get and load session#}
     function get_session(){
         $.ajax({
@@ -82,6 +93,7 @@
                 $(document).trigger("sessionLoaded");
 
                 get_user_image($(".user-image"), phone);
+                hide_empty_a();
             },
             error:function (){
 
