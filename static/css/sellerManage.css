@@ -1,0 +1,93 @@
+.nav-bar {
+  flex-basis: 20%;
+  background-color: lightblue;
+  height: 100%;
+  position: fixed;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.right-bar {
+  flex-grow: 1;
+  margin-left: 15%;
+  overflow-y: auto;
+  height: 100%;
+  padding: 0 200px;
+}
+
+
+.user-image {
+  max-width: 100%;
+  max-height: 200px;
+  display: block;
+  margin: 0 auto;
+}
+
+.info-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.info-div {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.info-div label,
+.info-div span {
+  margin-right: 10px;
+}
+
+
+.info-div span {
+  display: inline-block;
+  width: calc(100% - 20px);
+  text-align: center;
+  margin-bottom: 5px;
+  padding: 10px;
+}
+
+
+.operation-box {
+  display: flex;
+  flex-direction: column;
+}
+
+.operation-box button {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 5px;
+  text-align: center;
+}
+
+.reset-user-image {
+  margin-top: 10px;
+}
+
+
+.ban-user-button {
+  background-color: #ff4d4d;
+  color: white;
+}
+
+button{
+    background-color: #298088;
+    color: #ffffff;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    text-align: center;
+    transition: background-color 0.3s, color 0.3s;
+    padding: 30px 5px;
+}
+
+button:hover{
+  background-color: #7ecdd0;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  /*padding: 30px 5px;*/
+}

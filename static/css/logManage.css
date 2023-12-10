@@ -1,0 +1,117 @@
+.nav-bar {
+  flex-basis: 20%;
+  background-color: lightblue;
+  height: 100%;
+  position: fixed;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.right-bar {
+  flex-grow: 1;
+  margin-left: 15%;
+  overflow-y: auto;
+  height: 100%;
+  padding: 20px;
+}
+
+.log-button-box {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 10px;
+}
+
+/* 设置按钮的宽度为平均分配 */
+.log-button-box button {
+  flex-grow: 1;
+  text-align: center;
+  margin: 0 10px;
+  padding: 10px;
+}
+
+/* 去除第一个按钮的左边距 */
+.log-button-box button:first-child {
+  margin-left: 0;
+}
+
+/* 去除最后一个按钮的右边距 */
+.log-button-box button:last-child {
+  margin-right: 0;
+}
+
+.log-container {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+}
+
+
+.log-title {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+}
+
+.log-box{
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+}
+
+
+
+.log-title span {
+  font-weight: bold;
+  padding: 5px;
+  text-align: center;
+  border-bottom: 1px solid #ccc;
+}
+
+.log {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  border-bottom: 1px solid #eee;
+}
+
+.log span {
+  text-overflow: ellipsis;
+    padding: 5px 85px;
+    text-align: center;
+}
+
+button{
+    background-color: #298088;
+    color: #ffffff;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    text-align: center;
+    transition: background-color 0.3s, color 0.3s;
+    padding: 30px 5px;
+}
+
+button:hover{
+  background-color: #7ecdd0;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.image-box button{
+  background-color: white;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  padding: 0.75rem 1.5rem;
+  cursor: pointer;
+  font-size: 1.25rem;
+}
+
+.user-box{
+    border: 1px solid #393967;
+}
+
+
+
