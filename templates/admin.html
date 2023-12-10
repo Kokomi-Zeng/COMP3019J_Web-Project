@@ -1,17 +1,21 @@
 {% extends "base_admin.html" %}
 
+{% block css %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/admin.css') }}">
+{% endblock %}
+
 {% block script %}
     <script src="/static/js/render_users.js"></script>
     <script>
     let users_box;
 
     window.onload = function (){
-        users_box = $(".users-box")
+        users_box = $(".right-bar")
         render_users();
     }
     </script>
 {% endblock %}
 
 {% block body %}
-<div class="users-box"></div>
+<div class="right-bar"></div>
 {% endblock %}

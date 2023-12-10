@@ -6,7 +6,7 @@
         let item_container;
 
         window.onload = function (){
-            item_container = $(".item-container");
+            item_container = $(".right-bar");
             get_and_render_items();
         }
 
@@ -15,7 +15,7 @@
                 url:"/products/getAllProducts",
                 type:"get",
                 success:function (data){
-                    render_items($(".item-container"), data)
+                    render_items($(".right-bar"), data)
                 }
             })
         }
@@ -23,5 +23,5 @@
 {% endblock %}
 
 {% block body %}
-<div class="item-container"></div>
+<div class="right-bar"></div>
 {% endblock %}

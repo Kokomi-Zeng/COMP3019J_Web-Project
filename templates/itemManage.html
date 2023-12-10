@@ -16,7 +16,7 @@
 {% endblock %}
 
 {% block body %}
-<div class="left-box">
+<div class="right-bar">
     <div class="info-box">
         <div class="item-img-box">
             <img id="item-img">
@@ -41,15 +41,12 @@
             <span>Storage:</span>
             <span id="item-storage"></span>
         </div>
-    </div>
-</div>
-
-<div class="right-box">
-    <div class="reset-img-box">
-        <button class="reset-image-button" type="button" onclick="reset_item_image($('#item-img'), product_id)">Reset Image</button>
-    </div>
-    <div class="reset-name-box">
-        <button class="reset-name-button" type="button" onclick="reset_item_name($('#item-name'), product_id)">Reset Name</button>
+        <div class="reset-img-box">
+            <button class="reset-image-button" type="button" onclick="reset_item_image($('#item-img'), product_id)">Reset Image</button>
+        </div>
+        <div class="reset-name-box">
+            <button class="reset-name-button" type="button" onclick="reset_item_name($('#item-name'), product_id)">Reset Name</button>
+        </div>
     </div>
 </div>
 {% endblock %}

@@ -6,7 +6,7 @@
     <script>
 
     window.onload = function (){
-        render_all_comment($(".comment-box"));
+        render_all_comment($(".right-bar"));
     }
     </script>
 
@@ -15,16 +15,8 @@
 
 {% block body %}
 
-<div class="comment-container">
-    <div class="comment-title">
-        <span class="comment-id">ID</span>
-        <span class="commenter-img">Image</span>
-        <span class="commenter-name">Name</span>
-        <span class="comment-rating">Rating</span>
-        <span class="comment-content">Content</span>
-        <span class="comment-operation">Operation</span>
-    </div>
-    <div class="comment-box"></div>
+<div class="right-bar">
+<!--    <div class="comments-box"></div>-->
 </div>
 
 {% endblock %}

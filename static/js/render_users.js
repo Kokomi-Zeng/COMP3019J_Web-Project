@@ -18,6 +18,11 @@ function render_data(data){
 
     for (let i=0; i<data.length; i++){
         const user = data[i]
+
+        const user_box_div = document.createElement("div");
+        user_box_div.setAttribute("class", "user-box");
+
+
         // Render DIV image
         const image_div = document.createElement("div")
         const image_button = document.createElement("button");
@@ -30,14 +35,15 @@ function render_data(data){
         image_button.onclick = function (){
             window.location.href = (user.user_type==="1"?"/buyerManage":"/sellerManage") + "?phone=" + user.phone
         }
-        users_box.append(image_div);
+        user_box_div.append(image_div);
         image_div.append(image_button);
         image_button.append(image)
 
         // Render DIV container
         const user_info_div = document.createElement("div")
         user_info_div.setAttribute("class", "user-info-box")
-        users_box.append(user_info_div)
+
+        user_box_div.append(user_info_div);
 
         // Render DIV phone
         const phone_div = document.createElement("div")
@@ -64,5 +70,7 @@ function render_data(data){
         status.innerText = "status: " + user.status
         user_info_div.append(status_div);
         status_div.append(status);
+
+        users_box.append(user_box_div);
     }
 }
