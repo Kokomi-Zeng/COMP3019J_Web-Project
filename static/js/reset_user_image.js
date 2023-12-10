@@ -1,7 +1,7 @@
 /**
- *
- * @param DOM
- * @param phone
+ * This function is for admin to reset user image
+ * @param DOM is JQuery Selector where the image is loaded
+ * @param phone is user phone
  */
 function reset_user_image(DOM, phone){
     if (!confirm("Reset?")){

@@ -1,7 +1,7 @@
 /**
- *
- * @param DOM
- * @param phone
+ * This function is for buyer to render its purchased messages
+ * @param DOM is JQuery Selector where purchased messages are loaded
+ * @param phone is buyer phone
  */
 function render_buyer_purchased_items(DOM, phone){
     $.ajax({

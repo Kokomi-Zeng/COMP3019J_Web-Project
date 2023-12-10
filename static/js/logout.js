@@ -1,3 +1,6 @@
+/**
+ * This function is for users and admin to log out (clear session)
+ */
 function logout(){
     $.ajax({
         url:"/clearSession",

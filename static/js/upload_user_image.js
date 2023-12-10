@@ -1,8 +1,8 @@
 /**
- * This method is to upload user image
- * @param DOM
- * @param form_data contains image
- * @param phone
+ * This method is for user to upload user image
+ * @param DOM is JQuery Selector where the image is loaded
+ * @param form_data is Formdata object that contains image
+ * @param phone is user phone
  */
 function upload_user_image(DOM, form_data, phone){
     $.ajax({

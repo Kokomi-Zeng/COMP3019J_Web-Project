@@ -1,8 +1,8 @@
 /**
- * This function will render users at users_box
- * need admin_phone
+ * This function is to render all users in database
+ * @param admin_phone is admin phone
  */
-function render_users(){
+function render_users(admin_phone){
     $.ajax({
         url:"/administer/getUser",
         type:"get",

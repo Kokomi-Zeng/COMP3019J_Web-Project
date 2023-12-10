@@ -1,7 +1,7 @@
 /**
  * This method is to render the comment data depend on the response.
- * @param DOM
- * @param data
+ * @param DOM is JQuery Selector where comments are loaded
+ * @param data is comment data
  */
 function render_comment(DOM, data){
     for (let i = 0; i < data.length; i++) {

@@ -1,14 +1,15 @@
 /**
- *
- * @param DOM container
- * @param type
+ * This function is for admin to render logs
+ * @param DOM is JQuery Selector where logs are loaded
+ * @param admin_phone is admin phone
+ * @param type is keywords of log type, contains: ['', 'WARNING', 'INFO']
  */
-function render_log(DOM, type){
+function render_log(DOM, admin_phone, type){
     $.ajax({
         url:"log/get_log",
         type:"get",
         data:{
-            admin_phone,
+            admin_phone: admin_phone,
             type:type
         },
         success: function (data){

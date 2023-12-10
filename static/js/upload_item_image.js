@@ -1,6 +1,6 @@
 /**
- * This function is to upload image depend on fromdata and product id
- * @param DOM
+ * This function is for seller to upload product image
+ * @param DOM is JQuery Selector where the image is loaded
  * @param formdata is FormData object that contains product image
  * @param product_id is product id
  */
