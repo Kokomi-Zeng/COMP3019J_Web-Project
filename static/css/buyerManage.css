@@ -1,0 +1,119 @@
+.nav-bar {
+  flex-basis: 20%;
+  background-color: lightblue;
+  height: 100%;
+  position: fixed;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.right-bar {
+  flex-grow: 1;
+  margin-left: 15%;
+  overflow-y: auto;
+  height: 100%;
+  padding: 0 200px;
+}
+
+/* 用户图片样式 */
+.user-image {
+  max-width: 100%;
+  max-height: 200px;
+  display: block;
+  margin: 0 auto;
+}
+
+/* 信息表单样式 */
+.info-form {
+  display: flex;
+  flex-direction: column;
+}
+
+/* 信息区域样式 */
+.info-div {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+/* 信息区域内的label和span样式 */
+.info-div label,
+.info-div span {
+  margin-right: 10px;
+}
+
+/* span元素样式 */
+.info-div span {
+  display: inline-block;
+  width: calc(100% - 20px); /* 计算宽度以使span填满除去margin的宽度 */
+  text-align: center; /* 文字左对齐 */
+  padding: 10px;
+}
+
+/* 操作区域样式 */
+.operation-box {
+  display: flex;
+  flex-direction: column;
+  gap: 10px; /* 设置元素之间的间距 */
+}
+
+/* 操作按钮样式 */
+.operation-box button {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 5px;
+  text-align: center;
+}
+
+/* 余额显示区域样式 */
+.user-amount-box {
+  display: flex;
+  flex-direction: column;
+  margin-top: 20px;
+}
+
+/* 当前余额显示样式 */
+.current-money-box {
+  margin-bottom: 10px;
+}
+
+/* 充值输入框样式 */
+.charge-money-box input {
+  width: 100%; /* 输入框宽度填满父元素 */
+  padding: 10px;
+  margin-bottom: 10px; /* 和下一个元素的间距 */
+}
+
+/* 禁用按钮样式 */
+.ban-user-button {
+  background-color: #ff4d4d; /* 红色背景表示危险操作 */
+  color: white;
+  padding: 10px;
+  margin-top: 10px; /* 与上方元素的间距 */
+}
+
+/* 特殊操作按钮样式 */
+.reset-user-image {
+  margin-top: 10px;
+}
+
+button{
+    background-color: #298088;
+    color: #ffffff;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    text-align: center;
+    transition: background-color 0.3s, color 0.3s;
+    padding: 30px 5px;
+}
+
+button:hover{
+  background-color: #7ecdd0;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  /*padding: 30px 5px;*/
+}
