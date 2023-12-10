@@ -1,5 +1,9 @@
 {% extends "base_admin.html" %}
 
+{% block css %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/admin.css') }}">
+{% endblock %}
+
 {% block script %}
     <script src="/static/js/render_user_info.js"></script>
     <script src="/static/js/modify_balance.js"></script>
