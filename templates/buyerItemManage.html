@@ -1,15 +1,19 @@
 {% extends "base_admin.html" %}
 
+{% block css %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/admin.css') }}">
+{% endblock %}
+
 {% block script %}
     <script src="/static/js/render_all_purchased_items.js"></script>
     <script>
 
     window.onload = function (){
-        render_all_purchased_items($(".purchased-item-box"))
+        render_all_purchased_items($(".right-bar"))
     }
     </script>
 {% endblock %}
 
 {% block body %}
-    <div class="purchased-item-box"></div>
+    <div class="right-bar"></div>
 {% endblock %}

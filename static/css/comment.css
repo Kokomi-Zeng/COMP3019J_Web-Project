@@ -122,6 +122,7 @@
     resize: vertical;
     word-wrap: break-word;
     overflow-wrap: break-word;
+    font-family: "Times New Roman", Times, serif;
 }
 
 .self-comment-box input::placeholder{

@@ -1,10 +1,14 @@
 {% extends "base_admin.html" %}
 
+{% block css %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/admin.css') }}">
+{% endblock %}
+
 {% block script %}
     <script src="/static/js/render_log.js"></script>
     <script>
     window.onload = function (){
-        render_log($(".log-box"), admin_phone, "");
+        render_log($(".log-box"), "");
     }
     </script>
 
@@ -12,18 +16,20 @@
 {% endblock %}
 
 {% block body %}
-<div class="log-button-box">
-    <button class="log-button" type="button" onclick="render_log($('.log-box'), admin_phone, '')">ALL</button>
-    <button class="log-button" type="button" onclick="render_log($('.log-box'), admin_phone, 'WARNING')">WARNING</button>
-    <button class="log-button" type="button" onclick="render_log($('.log-box'), admin_phone, 'INFO')">INFO</button>
-</div>
-<div class="log-container">
-    <div class="log-title">
-        <span class="log-type">Type</span>
-        <span class="log-time">Time</span>
-        <span class="log-phone">Phone</span>
-        <span class="log-content">Content</span>
+<div class="right-bar">
+    <div class="log-button-box">
+        <button class="log-button" type="button" onclick="render_log($('.log-box'), '')">ALL</button>
+        <button class="log-button" type="button" onclick="render_log($('.log-box'), 'WARNING')">WARNING</button>
+        <button class="log-button" type="button" onclick="render_log($('.log-box'), 'INFO')">INFO</button>
     </div>
-    <div class="log-box"></div>
+    <div class="log-container">
+        <div class="log-title">
+            <span class="log-type">Type</span>
+            <span class="log-time">Time</span>
+            <span class="log-phone">Phone</span>
+            <span class="log-content">Content</span>
+        </div>
+        <div class="log-box"></div>
+    </div>
 </div>
 {% endblock %}

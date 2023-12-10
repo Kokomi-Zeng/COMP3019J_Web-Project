@@ -20,6 +20,7 @@ function render_data(DOM, data){
 
         // Render DIV comment box
         const comment_box = document.createElement("div")
+        comment_box.setAttribute("class", "comment-box");
         DOM.append(comment_box)
 
         // Render IMG commenter image
