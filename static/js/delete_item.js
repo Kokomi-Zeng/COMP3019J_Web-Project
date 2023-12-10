@@ -1,3 +1,8 @@
+/**
+ * This function is for seller to delete item
+ * @param product_id is product id to be deleted
+ * @param phone is seller phone
+ */
 function delete_item(product_id, phone){
     if (!confirm("Delete?")){
         return;
@@ -11,7 +16,11 @@ function delete_item(product_id, phone){
         },
         success: function (data){
             alert(data.message)
-            window.location.replace("/shop")
+
+            if (data.success){
+                // Jump to shop page
+                window.location.replace("/shop")
+            }
         }
     })
 }

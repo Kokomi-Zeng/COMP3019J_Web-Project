@@ -1,6 +1,6 @@
 /**
- *
- * @param DOM
+ * This function is for admin to render all purchased messages
+ * @param DOM is JQuery Selector where purchased messages are loaded
  */
 function render_all_purchased_items(DOM){
     $.ajax({

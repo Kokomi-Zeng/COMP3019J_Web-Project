@@ -1,7 +1,7 @@
 /**
- * this method is for $("img") to set their src.
- * @param DOM is the img that need to set src.
- * @param phone
+ * This method is to load user image
+ * @param DOM is JQuery Selector where user image is loaded
+ * @param phone is user phone
  */
 function get_user_image(DOM, phone){
     $.ajax({

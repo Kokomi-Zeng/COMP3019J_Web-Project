@@ -1,6 +1,6 @@
 /**
- *
- * @param DOM
+ * This function is for admin to render all comment
+ * @param DOM is JQuery Selector where comments are loaded
  */
 function render_all_comment(DOM){
     $.ajax({

@@ -1,4 +1,8 @@
-
+/**
+ * This function is for admin to reset user introduction
+ * @param type is user type
+ * @param phone is user phone
+ */
 function reset_user_introduction(type, phone){
     console.log(type)
     if (!confirm("Reset?")){

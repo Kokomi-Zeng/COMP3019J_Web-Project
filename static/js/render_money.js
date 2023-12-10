@@ -1,7 +1,7 @@
 /**
  * This function is to render buyer money
- * @param DOM
- * @param phone is user phone
+ * @param DOM is JQuery Selector where buyer money is loaded
+ * @param phone is buyer phone
  */
 function render_money(DOM, phone){
     $.ajax({
@@ -14,6 +14,7 @@ function render_money(DOM, phone){
         },
         success: function (data) {
             if (data.success){
+                // Insert Data
                 DOM.text("Current Money: " + data.money);
             }else {
                 console.log(data.message)
