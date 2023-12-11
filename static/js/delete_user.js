@@ -1,8 +1,9 @@
 /**
  * This function is for user to delete account
  * @param phone is user phone to be deleted
+ * @param isAdmin is authority
  */
-function delete_user(phone){
+function delete_user(phone, isAdmin){
     if (!confirm("Delete?")){
         return;
     }
@@ -15,8 +16,13 @@ function delete_user(phone){
             alert(data.message)
 
             if (data.success){
-                // clear session
-                logout()
+                if (isAdmin){
+                    // back to admin page
+                    window.location.href = "/admin"
+                }else {
+                    // clear session
+                    logout()
+                }
             }
         }
     })

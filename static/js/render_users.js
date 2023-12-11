@@ -1,20 +1,21 @@
 /**
  * This function is to render all users in database
+ * @param DOM is JQuery Selector where users are loaded
  * @param admin_phone is admin phone
  */
-function render_users(admin_phone){
+function render_users(DOM, admin_phone){
     $.ajax({
         url:"/administer/getUser",
         type:"get",
         data:{admin_phone: admin_phone},
         success:function (data){
-            render_data(data);
+            render_data(DOM, data);
         }
     })
 }
 
-function render_data(data){
-    users_box.empty();
+function render_data(DOM, data){
+    DOM.empty();
 
     for (let i=0; i<data.length; i++){
         const user = data[i]
@@ -71,6 +72,6 @@ function render_data(data){
         user_info_div.append(status_div);
         status_div.append(status);
 
-        users_box.append(user_box_div);
+        DOM.append(user_box_div);
     }
 }
