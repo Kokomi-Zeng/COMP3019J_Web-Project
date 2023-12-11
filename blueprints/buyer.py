@@ -223,7 +223,7 @@ def modify_buyer_info():
         buyer.name = name
     if introduction:
         buyer.description = introduction
-    if password:
+    if password and password != "":
         # encrypt password
         hashed_password = generate_password_hash(password)
         buyer.user.password = hashed_password

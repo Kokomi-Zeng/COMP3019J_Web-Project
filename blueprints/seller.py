@@ -91,7 +91,7 @@ def modify_seller_info():
     if introduction:
         seller.description = introduction
 
-    if password:
+    if password and password != "":
         # encrypt password
         hashed_password = generate_password_hash(password)
         seller.user.password = hashed_password
