@@ -35,7 +35,6 @@
     <script src="/static/js/is_item_match_seller.js"></script>
     <script>
     let page_num = 1;
-    let belong;
     let product_id = "{{ product_id }}"
 
     {#this method is to hide empty span#};
@@ -140,8 +139,7 @@
                 if (data.success){
                     alert(data.message)
                     {#reload comment#}
-
-                    get_and_render_comment();
+                    render_product_all_comment($(".comment-box"), product_id, phone)
                 }else {
                     alert(data.message)
                 }
@@ -150,7 +148,7 @@
     }
 
     function check_rating(value){
-        if (value===1 || value===2 || value===3 || value===4 || value===5)
+        if (value==="1" || value==="2" || value==="3" || value==="4" || value==="5")
             return ""
         else {
             return "Rating must be 1 or 2 or 3 or 4 or 5"

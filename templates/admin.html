@@ -7,11 +7,8 @@
 {% block script %}
     <script src="/static/js/render_users.js"></script>
     <script>
-    let users_box;
-
     window.onload = function (){
-        users_box = $(".right-bar")
-        render_users(admin_phone);
+        render_users($(".right-bar"), admin_phone);
     }
     </script>
 {% endblock %}
