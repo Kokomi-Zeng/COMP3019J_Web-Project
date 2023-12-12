@@ -4,6 +4,8 @@
  * @param data is comment data
  */
 function render_comment(DOM, data){
+    DOM.empty();
+
     for (let i = 0; i < data.length; i++) {
         let timeoutId;
         const comment = data[i];

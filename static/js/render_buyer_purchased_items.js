@@ -49,7 +49,7 @@ function render_data(DOM, data){
         const item_name = document.createElement("span");
 
         item_name_div.setAttribute("class", "item-name-box");
-        item_name.innerText = item.product_name;
+        item_name.innerText = "Product Name: " + item.product_name;
 
         item_name_div.append(item_name);
         item_info_div.append(item_name_div);
@@ -59,7 +59,7 @@ function render_data(DOM, data){
         const item_quantity = document.createElement("span");
 
         item_quantity_div.setAttribute("class", "item-quantity-box");
-        item_quantity.innerText = item.purchase_quantity;
+        item_quantity.innerText = "Purchase Quantity: " + item.purchase_quantity;
 
         item_quantity_div.append(item_quantity);
         item_info_div.append(item_quantity_div);
@@ -69,7 +69,7 @@ function render_data(DOM, data){
         const item_time = document.createElement("span");
 
         item_time_div.setAttribute("class", "item-time-box");
-        item_time.innerText = item.purchase_time;
+        item_time.innerText = "Purchase Time: " + item.purchase_time;
 
         item_time_div.append(item_time);
         item_info_div.append(item_time_div);
@@ -79,7 +79,7 @@ function render_data(DOM, data){
         const item_price = document.createElement("span");
 
         item_price_div.setAttribute("class", "item-price-box");
-        item_price.innerText = item.total_price;
+        item_price.innerText = "Total Price: " + item.total_price;
 
         item_price_div.append(item_price);
         item_info_div.append(item_price_div);
