@@ -34,6 +34,11 @@ def create_comment():
     if content is None or content == "" or content == "None":
         return jsonify({"success": False, "message": "Comment can't be empty or None"})
 
+    # if the buyer already commented this product
+    comment = Comment.query.filter_by(product_id=product_id, commenter_phone=commenter_phone).first()
+    if comment:
+        return jsonify({"success": False, "message": "You have already commented this product"})
+
     # if the buyer is banned
     user = User.query.filter_by(phone=commenter_phone).first()
     if user.status != 'active':
