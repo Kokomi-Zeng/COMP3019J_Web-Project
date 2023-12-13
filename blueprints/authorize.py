@@ -25,6 +25,11 @@ authorize_bp = Blueprint("authorize", __name__, url_prefix="/authorize")
 # Provide login method for the front end login page
 @authorize_bp.route("/login", methods=["POST"])
 def login():
+    session.pop('phone', None)
+    session.pop('type', None)
+    session.pop('status', None)
+    session.pop('is_admin', None)
+
     phone = request.json.get('phone')
     password = request.json.get('password')
 

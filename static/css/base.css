@@ -227,11 +227,18 @@ body {
     border: var(--input-border-color) 2px solid;
     /* Add transition effect */
     transition: border-color 0.3s ease;
+    box-shadow: 0 2px 5px var(--comment-box-shadow);
+    background-color: var(--comment-span-bg-color);
+    color: var(--text-color);
 }
 
 /* When the input field gets focus, change its border color to blue */
 #search-box:focus {
     border-color: var(--input-focus-border-color);
+}
+
+#search-box::placeholder {
+    color: var(--text-color);
 }
 
 /* user-box */
