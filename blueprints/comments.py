@@ -31,8 +31,8 @@ def create_comment():
         return jsonify({"success": False, "message": "Rating must be 1 or 2 or 3 or 4 or 5"})
 
     # if the buyer enter an empty comment or None
-    if content is None or content == "" or content == "None":
-        return jsonify({"success": False, "message": "Comment can't be empty or None"})
+    if content is None or content == "" or content == "None" or len(content)>1000:
+        return jsonify({"success": False, "message": "Comment can't be empty or None or too long"})
 
     # if the buyer already commented this product
     comment = Comment.query.filter_by(product_id=product_id, commenter_phone=commenter_phone).first()

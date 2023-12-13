@@ -141,6 +141,7 @@ function create_commenter_window(comment) {
 function get_introduction(comment_id){
     let introduction = ""
     $.ajax({
+        async: false,
         url:"/comment/getIntroductionByCommentID",
         type: "get",
         contentType: "application/json",

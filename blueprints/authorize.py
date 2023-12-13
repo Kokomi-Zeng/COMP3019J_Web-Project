@@ -78,7 +78,7 @@ def register():
     password = request.json.get('password')
     user_type = request.json.get('user_type')
 
-    if len(phone) > 15:
+    if len(phone) > 15 or len(phone) < 5:
         return jsonify({"success": False, "message": "Invalid phone number."})
 
     # Verify that the phone number has been registered
