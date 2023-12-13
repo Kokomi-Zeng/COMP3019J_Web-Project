@@ -29,6 +29,9 @@ def getSellerInfo():
     user_info = get_user_info()
     mode_info = get_mode_info()
 
+    if not session.get('phone'):
+        abort(401)
+
     return render_template('buyerItem.html', **user_info, **mode_info)
 
 @bp.route('/shop')
@@ -53,12 +56,18 @@ def getBuyerInfoPage():
     user_info = get_user_info()
     mode_info = get_mode_info()
 
+    if not session.get('phone') or session.get('type') != '1':
+        abort(401)
+
     return render_template('buyerInfo.html', **user_info, **mode_info)
 
 @bp.route('/sellerInfo')
 def getSellerInfoPage():
     user_info = get_user_info()
     mode_info = get_mode_info()
+
+    if not session.get('phone') or session.get('type') != '0':
+        abort(401)
 
 
     return render_template('sellerInfo.html', **user_info, **mode_info)
@@ -89,6 +98,8 @@ def getItemSellerPage():
     product_info = get_product_id()
     mode_info = get_mode_info()
 
+    if not session.get('phone') or session.get('type') != '0':
+        abort(401)
 
     return render_template("itemSeller.html", **product_info, **mode_info)
 
@@ -97,7 +108,6 @@ def getItemBuyerPage():
     product_info = get_product_id()
     mode_info = get_mode_info()
 
-
     return render_template("itemBuyer.html", **product_info, **mode_info)
 
 @bp.route('/comment')
@@ -105,6 +115,8 @@ def getCommentPage():
     product_info = get_product_id()
     mode_info = get_mode_info()
 
+    if not session.get('phone'):
+        abort(401)
 
     return render_template("comment.html", **product_info, **mode_info)
 
@@ -116,14 +128,12 @@ def getCommentPage():
 def getBuyerManagePage():
     phone = request.args.get('phone')
 
-
     return render_template('buyerManage.html', phone=phone)
 
 @bp.route('/sellerManage')
 def getSellerManagePage():
     phone = request.args.get('phone')
     mode_info = get_mode_info()
-
 
     return render_template('sellerManage.html', phone=phone, **mode_info)
 
@@ -140,10 +150,12 @@ def getItemManagePage():
 
 @bp.route('/commentManage')
 def getCommentManagePage():
+
     return render_template('commentManage.html')
 
 @bp.route('/shopManage')
 def getShopManagePage():
+
     return render_template('shopManage.html')
 
 @bp.route('/buyerItemManage')

@@ -273,7 +273,7 @@ body {
 
 /* set the color of the link to orangered when the mouse is over it */
 .user-box .user-name a:hover {
-    font-style: italic;
+    /*font-style: italic;*/
     color: var(--link-hover-text-color);
 }
 
