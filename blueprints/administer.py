@@ -57,6 +57,9 @@ def update_buyer_account():
     try:
         # Convert amount to float
         amount = float(amount)
+
+        if amount > 100000:
+            return jsonify({"success": False, "message": "Amount too large."})
     except ValueError:
         return jsonify({"success": False, "message": "Invalid amount. Please provide a valid number.", "amount": amount})
 

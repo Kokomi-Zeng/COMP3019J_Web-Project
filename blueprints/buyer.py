@@ -52,8 +52,10 @@ def charge():
     phone = request.args.get('phone')
     try:
         charge_num = float(request.args.get('charge_num'))
+        if charge_num > 100000:
+            return jsonify({"success": False, "message": "Charge amount too large."})
     except (TypeError, ValueError):
-        return jsonify({"error": "Invalid charge amount."})
+        return jsonify({"success": False, "message": "Invalid charge amount."})
     # password = request.args.get('password')
 
     #  find the user
@@ -217,6 +219,13 @@ def modify_buyer_info():
     # If the status of the user is not active (banned)
     if buyer.user.status != 'active':
         return jsonify({"success": False, "message": "User is banned"})
+
+    if len(introduction) > 100:
+        return jsonify({"success": False, "message": "Introduction is too long"})
+    if len(name) > 20:
+        return jsonify({"success": False, "message": "Name is too long"})
+    if len(password) > 100:
+        return jsonify({"success": False, "message": "Password is too long"})
 
     # update information
     if name:

@@ -20,6 +20,10 @@ def modify_item():
         product_id = int(request.args.get('product_id'))
         price = float(request.args.get('price'))
         storage = int(request.args.get('storage'))
+
+        if price > 100000 or storage > 100000 or len(description) > 1000 or len(product_name)> 100:
+            return jsonify({"success": False, "message": "Invalid input. Please ensure message is not too long."})
+
     except (TypeError, ValueError):
         return jsonify({"success": False, "message": "Invalid input. Please ensure valid types for product_id, price, and storage."})
 
@@ -60,6 +64,10 @@ def add_item():
     try:
         price = float(request.args.get('price'))
         storage = int(request.args.get('storage'))
+
+        if price > 100000 or storage > 100000 or len(description) > 1000 or len(product_name)> 100:
+            return jsonify({"success": False, "message": "Invalid input. Please ensure message is not too long."})
+
     except (TypeError, ValueError):
         return jsonify({"success": False, "message": "Invalid input. Please ensure valid types for price and storage."})
 

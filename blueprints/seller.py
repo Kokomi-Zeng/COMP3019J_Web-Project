@@ -85,6 +85,13 @@ def modify_seller_info():
     if seller.user.status != 'active':
         return jsonify({"success": False, "message": "User is banned"})
 
+    if len(introduction) > 100:
+        return jsonify({"success": False, "message": "Introduction is too long"})
+    if len(name) > 20:
+        return jsonify({"success": False, "message": "Name is too long"})
+    if len(password) > 100:
+        return jsonify({"success": False, "message": "Password is too long"})
+
     # Update seller information
     if name:
         seller.name = name
