@@ -4,8 +4,6 @@
  * need type, phone
  */
 function render_user_info(type, phone) {
-    // console.log(type==="1")
-    // console.log(type)
     $.ajax({
         url: type==="1"?"/buyer/buyerInfo":"/seller/sellerInfo",
         type: 'get',
@@ -16,8 +14,9 @@ function render_user_info(type, phone) {
         },
         success:function (data){
             // user
-            $("#introduction").val(data.introduction)
+            console.log(data.name + " dataname")
             $("#name").val(data.name)
+            $("#introduction").val(data.introduction)
 
             // admin
             $("#introduction-span").text(data.introduction)
